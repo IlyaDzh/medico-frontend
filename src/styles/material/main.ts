@@ -3,43 +3,7 @@ import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 
 const breakpoints = createBreakpoints({});
 
-export default createMuiTheme({
-    overrides: {
-        MuiButton: {
-            root: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 8,
-                textTransform: "inherit",
-                fontSize: 18,
-                fontWeight: 400,
-                lineHeight: "28px"
-            },
-            contained: {
-                fontWeight: 500,
-                padding: "10px 36px"
-            },
-            outlined: {
-                padding: "8px 36px",
-                borderWidth: "2px"
-            },
-            containedPrimary: {
-                color: "#fff",
-                "&:hover": {
-                    backgroundColor: "#2d85ec"
-                }
-            },
-            outlinedPrimary: {
-                borderColor: "#2d85ec",
-                "&:hover": {
-                    color: "#fff",
-                    backgroundColor: "#2d85ec",
-                    borderColor: "#2d85ec"
-                }
-            }
-        }
-    },
+const globalTheme = createMuiTheme({
     palette: {
         primary: {
             main: "#5ea1f0",
@@ -62,12 +26,12 @@ export default createMuiTheme({
         },
         background: {
             default: "#f6f9fc"
+        },
+        border: {
+            main: "#eceff9"
         }
     },
     typography: {
-        allVariants: {
-            color: "#192035"
-        },
         h1: {
             fontSize: 52,
             fontWeight: 500,
@@ -136,3 +100,56 @@ export default createMuiTheme({
         fontFamily: "Rubik, sans-serif"
     }
 });
+
+const theme = createMuiTheme(
+    {
+        overrides: {
+            MuiButton: {
+                root: {
+                    borderRadius: 8,
+                    textTransform: "inherit",
+                    fontSize: 18,
+                    fontWeight: 400,
+                    lineHeight: "28px"
+                },
+                contained: {
+                    fontWeight: 500,
+                    padding: "10px 36px"
+                },
+                outlined: {
+                    padding: "9px 36px"
+                },
+                containedPrimary: {
+                    color: "#fff",
+                    "&:hover": {
+                        backgroundColor: globalTheme.palette.primary.dark
+                    },
+                    "&$disabled": {
+                        backgroundColor: globalTheme.palette.border?.main,
+                        color: globalTheme.palette.text.disabled
+                    }
+                },
+                outlinedPrimary: {
+                    borderColor: globalTheme.palette.primary.dark,
+                    "&:hover": {
+                        color: "#fff",
+                        backgroundColor: globalTheme.palette.primary.dark,
+                        borderColor: globalTheme.palette.primary.dark
+                    },
+                    "&$disabled": {
+                        color: globalTheme.palette.text.disabled,
+                        borderColor: globalTheme.palette.border?.main
+                    }
+                }
+            }
+        },
+        typography: {
+            allVariants: {
+                color: globalTheme.palette.text.primary
+            }
+        }
+    },
+    globalTheme
+);
+
+export default theme;

@@ -1,11 +1,14 @@
 import React from "react";
-import { Grid, Button, Typography, makeStyles } from "@material-ui/core";
+import { Grid, Typography, makeStyles } from "@material-ui/core";
+
+import { Button } from "../components";
 
 const useStyles = makeStyles(() => ({
     container: {
         padding: "15px 30px",
         "& .MuiButton-root": {
-            marginBottom: "10px"
+            marginBottom: "10px",
+            marginRight: "20px"
         }
     },
     title: {
@@ -23,15 +26,18 @@ export const UiKitPage: React.FC = () => {
                     Buttons
                 </Typography>
 
-                <Button variant="contained" color="primary" disableElevation>
+                <Button variant="contained">Написать отзыв</Button>
+                <Button variant="outlined">Показать ещё</Button>
+                <Button variant="contained" to="/doctors">
+                    Специалисты
+                </Button>
+                <Button variant="contained" disabled>
                     Написать отзыв
                 </Button>
-                <Button variant="outlined" color="primary">
+                <Button variant="outlined" disabled>
                     Показать ещё
                 </Button>
-                <Button variant="text" color="primary">
-                    Facebook
-                </Button>
+                <Button variant="text">Facebook</Button>
             </Grid>
         </Grid>
     );
