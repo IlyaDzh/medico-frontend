@@ -1,9 +1,13 @@
 import React from "react";
+import { CssBaseline } from "@material-ui/core";
+
+import { UiKitPage } from "./pages";
 
 export const App: React.FC = () => {
     return (
-        <div className="App">
-            <h1>Test</h1>
-        </div>
+        <React.Fragment>
+            <CssBaseline />
+            <UiKitPage />
+        </React.Fragment>
     );
 };
