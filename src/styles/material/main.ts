@@ -9,6 +9,9 @@ const globalTheme = createMuiTheme({
             main: "#5ea1f0",
             dark: "#2d85ec"
         },
+        secondary: {
+            main: "#2d85ec"
+        },
         error: {
             main: "#e34242"
         },
@@ -140,6 +143,78 @@ const theme = createMuiTheme(
                         color: globalTheme.palette.text.disabled,
                         borderColor: globalTheme.palette.border?.main
                     }
+                },
+                containedSizeLarge: {
+                    fontSize: 18,
+                    fontWeight: 500,
+                    padding: "16px 84px 16px 36px"
+                }
+            },
+            MuiInputBase: {
+                root: {
+                    fontSize: 18,
+                    fontWeight: 300,
+                    lineHeight: "28px",
+                    "&$disabled": {
+                        color: globalTheme.palette.text.disabled
+                    }
+                }
+            },
+            MuiOutlinedInput: {
+                root: {
+                    overflow: "hidden",
+                    borderRadius: 8,
+                    "&$disabled $notchedOutline": {
+                        borderColor: globalTheme.palette.border?.main
+                    }
+                },
+                input: {
+                    padding: "12px 16px",
+                    height: "auto",
+                    backgroundColor: "#fff"
+                }
+            },
+            MuiListSubheader: {
+                sticky: {
+                    backgroundColor: "#fff",
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    lineHeight: "18px",
+                    padding: "12px 16px"
+                }
+            },
+            MuiCheckbox: {
+                root: {
+                    "& .MuiSvgIcon-root": {
+                        width: 26,
+                        height: 26
+                    }
+                }
+            },
+            MuiChip: {
+                root: {
+                    height: 34,
+                    borderRadius: 8,
+                    padding: "8px 12px"
+                },
+                outlined: {
+                    backgroundColor: globalTheme.palette.border?.main,
+                    "&:hover, &:focus": {
+                        borderColor: globalTheme.palette.primary.dark,
+                        "& svg path": {
+                            fill: globalTheme.palette.primary.dark
+                        }
+                    }
+                },
+                label: {
+                    fontSize: 13,
+                    lineHeight: "18px",
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginRight: 25
+                },
+                deleteIcon: {
+                    marginRight: 0
                 }
             }
         },

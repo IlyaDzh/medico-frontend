@@ -10,13 +10,11 @@ import { main } from "./styles/material";
 import "./styles/index.scss";
 
 ReactDOM.render(
-    <React.StrictMode>
-        <MuiThemeProvider theme={main}>
-            <Router>
-                <App />
-            </Router>
-        </MuiThemeProvider>
-    </React.StrictMode>,
+    <MuiThemeProvider theme={main}>
+        <Router>
+            <App />
+        </Router>
+    </MuiThemeProvider>,
     document.getElementById("root")
 );
 

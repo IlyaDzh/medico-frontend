@@ -1,1 +1,1 @@
-export { UiKitPage } from "./UiKitPage";
+export * from "./UiKitPage";
