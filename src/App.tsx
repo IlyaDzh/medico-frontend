@@ -1,13 +1,31 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+import { Route, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
-import { UiKitPage } from "./pages";
+import { UiKitPage, HomePage } from "./pages";
+
+const DashboardApp = lazy(() => import("./Dashboard"));
 
 export const App: React.FC = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <UiKitPage />
+            <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                    <Route exact path="/ui-kit" component={UiKitPage} />
+                    <Route exact path={["/", "/home"]} component={HomePage} />
+                    <Route exact path="/doctors" component={HomePage} />
+                    <Route exact path="/doctor/:id" component={HomePage} />
+                    <Route exact path="/tariffs" component={HomePage} />
+                    <Route
+                        exact
+                        path="/sign-up"
+                        component={() => <div>Sign-up page</div>}
+                    />
+                    <Route path="/dashboard" component={DashboardApp} />
+                    <Route component={() => <div>Error</div>} />
+                </Switch>
+            </Suspense>
         </React.Fragment>
     );
 };

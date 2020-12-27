@@ -14,14 +14,14 @@ import {
     makeStyles
 } from "@material-ui/core";
 
-import { Button } from "../components";
+import { Button } from "components";
 import {
     ArrowRightIcon,
     CameraIcon,
     PhoneIcon,
     EnvelopeIcon,
     CrossIcon
-} from "../icons";
+} from "icons";
 
 const useStyles = makeStyles(() => ({
     container: {
