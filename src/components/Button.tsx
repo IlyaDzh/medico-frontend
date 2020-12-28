@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 60,
         backgroundColor: theme.palette.primary.dark,
         borderRadius: 8,
-        zIndex: 1
+        zIndex: 1,
+        [theme.breakpoints.down("xs")]: {
+            width: 46
+        }
     },
     iconDisabed: {
         backgroundColor: theme.palette.border?.main,

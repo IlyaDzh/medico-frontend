@@ -1,2 +1,3 @@
 export * from "./UiKitPage";
-export * from "./HomePage";
+export * from "./Home";
+export * from "./Dashboard";

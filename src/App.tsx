@@ -4,7 +4,7 @@ import { CssBaseline } from "@material-ui/core";
 
 import { UiKitPage, HomePage } from "./pages";
 
-const DashboardApp = lazy(() => import("./Dashboard"));
+const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
 export const App: React.FC = () => {
     return (
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
                         path="/sign-up"
                         component={() => <div>Sign-up page</div>}
                     />
-                    <Route path="/dashboard" component={DashboardApp} />
+                    <Route path="/dashboard" component={DashboardPage} />
                     <Route component={() => <div>Error</div>} />
                 </Switch>
             </Suspense>

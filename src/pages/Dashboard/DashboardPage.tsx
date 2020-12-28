@@ -17,7 +17,7 @@ import {
     ErrorPage
 } from "./pages";
 
-export const DashboardApp: React.FC = () => {
+export const DashboardPage: React.FC = () => {
     const isDoctor: boolean = true;
 
     return (

@@ -4,6 +4,15 @@ import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 const breakpoints = createBreakpoints({});
 
 const globalTheme = createMuiTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 600,
+            md: 960,
+            lg: 1400,
+            xl: 1920
+        }
+    },
     palette: {
         primary: {
             main: "#5ea1f0",
@@ -113,7 +122,12 @@ const theme = createMuiTheme(
                     textTransform: "inherit",
                     fontSize: 18,
                     fontWeight: 400,
-                    lineHeight: "28px"
+                    lineHeight: "28px",
+                    color: "#fff",
+                    [breakpoints.down("xs")]: {
+                        fontSize: 14,
+                        lineHeight: "24px"
+                    }
                 },
                 contained: {
                     fontWeight: 500,
@@ -147,7 +161,11 @@ const theme = createMuiTheme(
                 containedSizeLarge: {
                     fontSize: 18,
                     fontWeight: 500,
-                    padding: "16px 84px 16px 36px"
+                    padding: "16px 84px 16px 36px",
+                    [breakpoints.down("xs")]: {
+                        fontSize: 14,
+                        padding: "8px 65px 8px 20px"
+                    }
                 }
             },
             MuiInputBase: {
