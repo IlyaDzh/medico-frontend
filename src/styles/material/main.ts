@@ -48,6 +48,10 @@ const globalTheme = createMuiTheme({
             fontSize: 52,
             fontWeight: 500,
             lineHeight: "66px",
+            [breakpoints.down("sm")]: {
+                fontSize: 38,
+                lineHeight: "49px"
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 24,
                 lineHeight: "32px"
@@ -57,6 +61,9 @@ const globalTheme = createMuiTheme({
             fontSize: 42,
             fontWeight: 400,
             lineHeight: "56px",
+            [breakpoints.down("sm")]: {
+                fontSize: 32
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 24
             }
@@ -65,6 +72,9 @@ const globalTheme = createMuiTheme({
             fontSize: 28,
             fontWeight: 500,
             lineHeight: "36px",
+            [breakpoints.down("sm")]: {
+                fontSize: 24
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 20
             }
@@ -73,6 +83,9 @@ const globalTheme = createMuiTheme({
             fontSize: 20,
             fontWeight: 400,
             lineHeight: "26px",
+            [breakpoints.down("sm")]: {
+                fontSize: 18
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 14
             }
@@ -81,6 +94,9 @@ const globalTheme = createMuiTheme({
             fontSize: 18,
             fontWeight: 500,
             lineHeight: "28px",
+            [breakpoints.down("sm")]: {
+                fontSize: 16
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 14
             }
@@ -97,6 +113,9 @@ const globalTheme = createMuiTheme({
             fontSize: 18,
             fontWeight: 300,
             lineHeight: "28px",
+            [breakpoints.down("sm")]: {
+                fontSize: 16
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 14
             }
@@ -105,6 +124,9 @@ const globalTheme = createMuiTheme({
             fontSize: 18,
             fontWeight: 400,
             lineHeight: "28px",
+            [breakpoints.down("sm")]: {
+                fontSize: 16
+            },
             [breakpoints.down("xs")]: {
                 fontSize: 14
             }
@@ -124,6 +146,10 @@ const theme = createMuiTheme(
                     fontWeight: 400,
                     lineHeight: "28px",
                     color: "#fff",
+                    [breakpoints.down("sm")]: {
+                        fontSize: 16,
+                        lineHeight: "26px"
+                    },
                     [breakpoints.down("xs")]: {
                         fontSize: 14,
                         lineHeight: "24px"
@@ -162,6 +188,10 @@ const theme = createMuiTheme(
                     fontSize: 18,
                     fontWeight: 500,
                     padding: "16px 84px 16px 36px",
+                    [breakpoints.down("sm")]: {
+                        fontSize: 16,
+                        padding: "12px 74px 12px 28px"
+                    },
                     [breakpoints.down("xs")]: {
                         fontSize: 14,
                         padding: "8px 65px 8px 20px"

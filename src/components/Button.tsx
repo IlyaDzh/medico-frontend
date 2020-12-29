@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.primary.dark,
         borderRadius: 8,
         zIndex: 1,
+        [theme.breakpoints.down("sm")]: {
+            width: 54
+        },
         [theme.breakpoints.down("xs")]: {
             width: 46
         }
