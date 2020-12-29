@@ -1,12 +1,14 @@
 import React from "react";
 import { Container } from "@material-ui/core";
 
+import { Header } from "components";
 import { HomeHeader } from "./components";
 
 export const HomePage: React.FC = () => {
     return (
         <React.Fragment>
-            <HomeHeader />
+            {/* <HomeHeader /> */}
+            <Header />
             <footer>
                 <Container>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore

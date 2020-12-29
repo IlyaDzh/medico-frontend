@@ -54,6 +54,12 @@ export const UiKitPage: React.FC = () => {
 
                 <Button variant="contained">Написать отзыв</Button>
                 <Button variant="outlined">Показать ещё</Button>
+                <Button variant="contained" size="small">
+                    Написать отзыв
+                </Button>
+                <Button variant="outlined" size="small">
+                    Показать ещё
+                </Button>
                 <Button variant="contained" to="/doctors">
                     Специалисты
                 </Button>

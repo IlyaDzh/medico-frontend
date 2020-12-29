@@ -138,6 +138,12 @@ const globalTheme = createMuiTheme({
 const theme = createMuiTheme(
     {
         overrides: {
+            MuiContainer: {
+                root: {
+                    paddingLeft: 20,
+                    paddingRight: 20
+                }
+            },
             MuiButton: {
                 root: {
                     borderRadius: 8,
@@ -195,6 +201,38 @@ const theme = createMuiTheme(
                     [breakpoints.down("xs")]: {
                         fontSize: 14,
                         padding: "8px 65px 8px 20px"
+                    }
+                },
+                containedSizeSmall: {
+                    fontSize: 18,
+                    fontWeight: 400,
+                    padding: "7px 24px",
+                    [breakpoints.down("sm")]: {
+                        fontSize: 14,
+                        padding: "5px 18px"
+                    },
+                    [breakpoints.down("xs")]: {
+                        fontSize: 12,
+                        padding: "2px 12px"
+                    }
+                },
+                outlinedSizeSmall: {
+                    fontSize: 18,
+                    fontWeight: 400,
+                    padding: "7px 24px",
+                    [breakpoints.down("sm")]: {
+                        fontSize: 14,
+                        padding: "5px 18px"
+                    },
+                    [breakpoints.down("xs")]: {
+                        fontSize: 12,
+                        padding: "2px 12px"
+                    }
+                },
+                text: {
+                    [breakpoints.down("xs")]: {
+                        fontSize: 16,
+                        lineHeight: "26px"
                     }
                 }
             },
