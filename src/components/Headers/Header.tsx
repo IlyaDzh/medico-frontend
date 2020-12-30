@@ -23,11 +23,32 @@ import {
 
 interface IHeader {
     isAuthorized?: boolean;
+    isAbsolute?: boolean;
+    isTransparent?: boolean;
+    leftBarIsLight?: boolean;
+    rightBarIsLight?: boolean;
+    isHeader?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
     appBar: {
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        [theme.breakpoints.down("sm")]: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2
+        }
+    },
+    appBarAbsolute: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0
+    },
+    appBarTransparent: {
+        backgroundColor: "transparent"
     },
     appBarContainer: {
         display: "flex",
@@ -74,6 +95,10 @@ const useStyles = makeStyles((theme: Theme) => ({
             backgroundSize: "100% 3px"
         }
     },
+    animatedLinkIsLight: {
+        color: "#fff",
+        backgroundImage: "linear-gradient(#fff, #fff)"
+    },
     signInLink: {
         padding: " 8px 24px"
     },
@@ -89,6 +114,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.primary.dark
         }
     },
+    accountMenuBtnLight: {
+        color: "#fff",
+        "&:hover": {
+            color: "#fff"
+        }
+    },
     accountMenuItem: {
         color: theme.palette.text.secondary,
         fontWeight: 400
@@ -102,7 +133,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
+export const Header: React.FC<IHeader> = ({
+    isAuthorized = false,
+    isAbsolute,
+    isTransparent,
+    leftBarIsLight,
+    rightBarIsLight,
+    isHeader
+}) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -114,8 +152,14 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
         setAnchorEl(null);
     };
 
-    return (
-        <div className={classes.appBar}>
+    const navigation = (
+        <nav
+            className={clsx(
+                classes.appBar,
+                isAbsolute && classes.appBarAbsolute,
+                isTransparent && classes.appBarTransparent
+            )}
+        >
             <Container
                 className={clsx(
                     classes.appBarContainer,
@@ -124,10 +168,16 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
             >
                 <div className={classes.leftBar}>
                     <Link to="/" className={classes.logo}>
-                        <LogoIcon />
+                        <LogoIcon isLight={leftBarIsLight} />
                     </Link>
                     <Hidden smDown>
-                        <Link to="/doctors" className={classes.animatedLink}>
+                        <Link
+                            to="/doctors"
+                            className={clsx(
+                                classes.animatedLink,
+                                leftBarIsLight && classes.animatedLinkIsLight
+                            )}
+                        >
                             Специалисты
                         </Link>
                     </Hidden>
@@ -136,6 +186,7 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                     <div>
                         <Button
                             variant="text"
+                            color={rightBarIsLight ? "default" : "primary"}
                             to="/sign-in"
                             className={classes.signInLink}
                             startIcon={<UserIcon />}
@@ -145,6 +196,7 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                         <Hidden smDown>
                             <Button
                                 variant="outlined"
+                                color={rightBarIsLight ? "default" : "primary"}
                                 size="small"
                                 className={classes.conslutationBtn}
                             >
@@ -155,20 +207,36 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                 ) : (
                     <div className={classes.rightBar}>
                         <Hidden smDown>
-                            <Link to="/doctors" className={classes.animatedLink}>
+                            <Link
+                                to="/doctors"
+                                className={clsx(
+                                    classes.animatedLink,
+                                    rightBarIsLight && classes.animatedLinkIsLight
+                                )}
+                            >
                                 Записаться на приём
                             </Link>
                             <div className={classes.iconButtons}>
                                 <IconButton aria-label="Открыть уведомления">
-                                    <AccountNotificationIcon isNew />
+                                    <AccountNotificationIcon
+                                        isLight={rightBarIsLight}
+                                        isNew
+                                    />
                                 </IconButton>
                                 <IconButton aria-label="Открыть сообщения">
-                                    <AccountEnvelopeIcon isNew />
+                                    <AccountEnvelopeIcon
+                                        isLight={rightBarIsLight}
+                                        isNew
+                                    />
                                 </IconButton>
                             </div>
                             <div>
                                 <Button
-                                    className={classes.accountMenuBtn}
+                                    className={clsx(
+                                        classes.accountMenuBtn,
+                                        rightBarIsLight &&
+                                            classes.accountMenuBtnLight
+                                    )}
                                     variant="text"
                                     color="default"
                                     startIcon={
@@ -196,7 +264,6 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                                         vertical: "top",
                                         horizontal: "center"
                                     }}
-                                    keepMounted
                                 >
                                     <MenuItem
                                         onClick={handleClose}
@@ -224,12 +291,14 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                         </Hidden>
                         <Hidden mdUp>
                             <IconButton aria-label="Открыть меню">
-                                <MenuIcon isNew />
+                                <MenuIcon isLight={rightBarIsLight} isNew />
                             </IconButton>
                         </Hidden>
                     </div>
                 )}
             </Container>
-        </div>
+        </nav>
     );
+
+    return isHeader ? <header>{navigation}</header> : navigation;
 };

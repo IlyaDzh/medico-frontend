@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
-import { UiKitPage, HomePage } from "./pages";
+import { UiKitPage, HomePage, DoctorsPage, DoctorPage } from "./pages";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
@@ -14,8 +14,8 @@ export const App: React.FC = () => {
                 <Switch>
                     <Route exact path="/ui-kit" component={UiKitPage} />
                     <Route exact path={["/", "/home"]} component={HomePage} />
-                    <Route exact path="/doctors" component={HomePage} />
-                    <Route exact path="/doctor/:id" component={HomePage} />
+                    <Route exact path="/doctors" component={DoctorsPage} />
+                    <Route exact path="/doctor/:id" component={DoctorPage} />
                     <Route exact path="/tariffs" component={HomePage} />
                     <Route
                         exact

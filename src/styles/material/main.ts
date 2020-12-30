@@ -166,7 +166,8 @@ const theme = createMuiTheme(
                     padding: "10px 36px"
                 },
                 outlined: {
-                    padding: "9px 36px"
+                    padding: "9px 36px",
+                    border: "1px solid #fff"
                 },
                 containedPrimary: {
                     color: "#fff",
@@ -230,9 +231,17 @@ const theme = createMuiTheme(
                     }
                 },
                 text: {
+                    "& svg path": {
+                        fill: "#fff"
+                    },
                     [breakpoints.down("xs")]: {
                         fontSize: 16,
                         lineHeight: "26px"
+                    }
+                },
+                textPrimary: {
+                    "& svg path": {
+                        fill: globalTheme.palette.primary.main
                     }
                 }
             },

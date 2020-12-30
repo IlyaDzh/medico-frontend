@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Container, Typography, makeStyles, Theme } from "@material-ui/core";
+import { Container, Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 
-import { Button } from "components";
+import { Button, Header } from "components";
 import { ArrowRightIcon } from "icons";
 
 import backgroundLeft from "images/home/background/home-background-left.jpg";
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("sm")]: {
             width: "100%",
             backgroundColor: theme.palette.background.default,
-            padding: "44px 32px 28px 24px"
+            padding: "98px 32px 28px 24px"
         }
     },
     headerContentRight: {
@@ -246,6 +246,12 @@ export const HomeHeader: React.FC = () => {
 
     return (
         <header className={classes.header}>
+            <Hidden smDown>
+                <Header isAbsolute isTransparent rightBarIsLight />
+            </Hidden>
+            <Hidden mdUp>
+                <Header />
+            </Hidden>
             <Container className={classes.headerContainer}>
                 <div className={classes.headerContentLeft}>
                     <Typography variant="h1" className={classes.headerTitle}>
