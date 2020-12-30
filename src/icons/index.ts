@@ -8,3 +8,4 @@ export * from "./UserIcon";
 export * from "./AccountNotificationIcon";
 export * from "./AccountEnvelopeIcon";
 export * from "./MenuIcon";
+export * from "./ExitIcon";

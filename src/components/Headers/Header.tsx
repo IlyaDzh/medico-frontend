@@ -17,7 +17,8 @@ import {
     UserIcon,
     AccountNotificationIcon,
     AccountEnvelopeIcon,
-    MenuIcon
+    MenuIcon,
+    ExitIcon
 } from "icons";
 
 interface IHeader {
@@ -59,14 +60,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center"
     },
-    doctorsLink: {
+    animatedLink: {
         paddingBottom: 4,
+        marginBottom: -4,
         color: theme.palette.text.secondary,
         textDecoration: "none",
         backgroundImage: `linear-gradient(${theme.palette.primary.dark}, ${theme.palette.primary.dark})`,
         backgroundPosition: "100% 100%",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "25% 3px",
+        backgroundSize: "0% 3px",
         transition: "background-size .3s",
         "&:hover": {
             backgroundSize: "100% 3px"
@@ -78,19 +80,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     conslutationBtn: {
         marginLeft: 24
     },
-    buyDoctorLink: {
-        paddingBottom: 4,
-        marginRight: 14,
+    iconButtons: {
+        margin: "0 16px"
+    },
+    accountMenuBtn: {
         color: theme.palette.text.secondary,
-        textDecoration: "none",
-        backgroundImage: `linear-gradient(${theme.palette.primary.dark}, ${theme.palette.primary.dark})`,
-        backgroundPosition: "100% 100%",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "0% 3px",
-        transition: "background-size .3s",
         "&:hover": {
-            backgroundSize: "100% 3px"
+            color: theme.palette.primary.dark
         }
+    },
+    accountMenuItem: {
+        color: theme.palette.text.secondary,
+        fontWeight: 400
+    },
+    accountMenuItemExit: {
+        color: theme.palette.error.main
+    },
+    accountMenuIcon: {
+        display: "inline-flex",
+        marginRight: 16
     }
 }));
 
@@ -119,7 +127,7 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                         <LogoIcon />
                     </Link>
                     <Hidden smDown>
-                        <Link to="/doctors" className={classes.doctorsLink}>
+                        <Link to="/doctors" className={classes.animatedLink}>
                             Специалисты
                         </Link>
                     </Hidden>
@@ -147,18 +155,22 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                 ) : (
                     <div className={classes.rightBar}>
                         <Hidden smDown>
-                            <Link to="/doctors" className={classes.buyDoctorLink}>
+                            <Link to="/doctors" className={classes.animatedLink}>
                                 Записаться на приём
                             </Link>
-                            <IconButton aria-label="Открыть уведомления">
-                                <AccountNotificationIcon isNew />
-                            </IconButton>
-                            <IconButton aria-label="Открыть сообщения">
-                                <AccountEnvelopeIcon isNew />
-                            </IconButton>
+                            <div className={classes.iconButtons}>
+                                <IconButton aria-label="Открыть уведомления">
+                                    <AccountNotificationIcon isNew />
+                                </IconButton>
+                                <IconButton aria-label="Открыть сообщения">
+                                    <AccountEnvelopeIcon isNew />
+                                </IconButton>
+                            </div>
                             <div>
                                 <Button
+                                    className={classes.accountMenuBtn}
                                     variant="text"
+                                    color="default"
                                     startIcon={
                                         <Avatar alt="Евгений К." src={undefined} />
                                     }
@@ -166,6 +178,7 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                                     aria-label="Аккаунт пользователя"
                                     aria-controls="account-menu"
                                     aria-haspopup="true"
+                                    disableTouchRipple
                                 >
                                     Евгений К.
                                 </Button>
@@ -185,10 +198,27 @@ export const Header: React.FC<IHeader> = ({ isAuthorized = true }) => {
                                     }}
                                     keepMounted
                                 >
-                                    <MenuItem onClick={handleClose}>
+                                    <MenuItem
+                                        onClick={handleClose}
+                                        className={classes.accountMenuItem}
+                                    >
+                                        <span className={classes.accountMenuIcon}>
+                                            <UserIcon color="#5a5f6f" />
+                                        </span>{" "}
                                         Мой кабинет
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose}>Выйти</MenuItem>
+                                    <MenuItem
+                                        onClick={handleClose}
+                                        className={clsx(
+                                            classes.accountMenuItem,
+                                            classes.accountMenuItemExit
+                                        )}
+                                    >
+                                        <span className={classes.accountMenuIcon}>
+                                            <ExitIcon />
+                                        </span>{" "}
+                                        Выйти
+                                    </MenuItem>
                                 </Menu>
                             </div>
                         </Hidden>
