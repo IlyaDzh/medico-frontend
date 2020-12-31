@@ -80,13 +80,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     headerBackgroundLeft: {
         width: "60%",
         background: `url(${backgroundLeft}) no-repeat bottom right ${theme.palette.background.default}`,
-        backgroundSize: "cover"
+        backgroundSize: "cover",
+        [theme.breakpoints.down("md")]: {
+            width: "50%"
+        }
     },
     headerBackgroundRight: {
         width: "40%",
         background: `url(${backgroundRight}) no-repeat bottom right ${theme.palette.primary.main}`,
         backgroundSize: "cover",
-        borderBottomLeftRadius: 30
+        borderBottomLeftRadius: 30,
+        [theme.breakpoints.down("md")]: {
+            width: "50%"
+        }
     },
     headerContainer: {
         display: "flex",
@@ -99,6 +105,10 @@ const useStyles = makeStyles((theme: Theme) => ({
             display: "block",
             padding: 0,
             minHeight: "auto"
+        },
+        "@media (max-height: 600px) and (min-width: 960px)": {
+            paddingTop: 82,
+            paddingBottom: 82
         }
     },
     headerContentLeft: {
@@ -120,7 +130,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: "52px 24px 24px 8px"
         },
         "@media (max-height: 600px) and (min-width: 960px)": {
-            paddingTop: 20
+            paddingTop: 0
         }
     },
     headerTitle: {
@@ -319,6 +329,7 @@ export const HomeHeader: React.FC = () => {
                                     variant="text"
                                     color="default"
                                     onClick={() => setActiveButton(item.label)}
+                                    disableTouchRipple
                                 >
                                     {item.title}
                                 </Button>

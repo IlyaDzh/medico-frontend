@@ -134,7 +134,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const Header: React.FC<IHeader> = ({
-    isAuthorized = false,
+    isAuthorized = true,
     isAbsolute,
     isTransparent,
     leftBarIsLight,

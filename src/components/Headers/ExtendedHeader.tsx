@@ -11,10 +11,13 @@ import {
 import { Breadcrumbs, Button } from "components";
 import { Header } from "./Header";
 
+import headerBackground from "images/header/header-background.jpg";
+
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
         paddingTop: 120,
-        backgroundColor: theme.palette.primary.main,
+        background: `url(${headerBackground}) no-repeat bottom right ${theme.palette.primary.main}`,
+        backgroundSize: "cover",
         [theme.breakpoints.down("sm")]: {
             paddingTop: 68
         }
