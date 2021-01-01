@@ -15,6 +15,7 @@ import headerBackground from "images/header/header-background.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
+        position: "relative",
         paddingTop: 120,
         background: `url(${headerBackground}) no-repeat bottom right ${theme.palette.primary.main}`,
         backgroundSize: "cover",
@@ -22,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingTop: 68
         }
     },
-    headerBottom: {},
     headerContent: {
         display: "flex",
         alignItems: "center",
@@ -53,12 +53,12 @@ export const ExtendedHeader: React.FC = () => {
     return (
         <header className={classes.header}>
             <Hidden smDown>
-                <Header isAbsolute isTransparent leftBarIsLight rightBarIsLight />
+                <Header isAbsolute leftBarIsLight rightBarIsLight />
             </Hidden>
             <Hidden mdUp>
                 <Header />
             </Hidden>
-            <Container className={classes.headerBottom}>
+            <Container>
                 <Breadcrumbs />
                 <div className={classes.headerContent}>
                     <Typography className={classes.headerTitle} variant="h1">

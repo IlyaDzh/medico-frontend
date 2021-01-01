@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { DashboardHeader } from "components";
+import { Header } from "components";
 import { Menu } from "./components";
 import {
     DoctorMainPage,
@@ -21,8 +21,8 @@ export const DashboardPage: React.FC = () => {
     const isDoctor: boolean = true;
 
     return (
-        <div>
-            <DashboardHeader isDoctor={isDoctor} />
+        <React.Fragment>
+            <Header isHeader />
 
             <Menu isDoctor={isDoctor} />
 
@@ -95,6 +95,6 @@ export const DashboardPage: React.FC = () => {
                     <Route component={ErrorPage} />
                 </Switch>
             )}
-        </div>
+        </React.Fragment>
     );
 };

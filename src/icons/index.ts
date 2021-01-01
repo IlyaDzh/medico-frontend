@@ -1,4 +1,5 @@
 export * from "./LogoIcon";
+export * from "./ArrowLeftIcon";
 export * from "./ArrowRightIcon";
 export * from "./CameraIcon";
 export * from "./PhoneIcon";
@@ -9,3 +10,4 @@ export * from "./AccountNotificationIcon";
 export * from "./AccountEnvelopeIcon";
 export * from "./MenuIcon";
 export * from "./ExitIcon";
+export * from "./InfoIcon";

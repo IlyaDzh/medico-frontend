@@ -1,12 +1,13 @@
 import React from "react";
 import { Container } from "@material-ui/core";
 
-import { HomeHeader } from "./components";
+import { HomeHeader, DoctorsCarousel } from "./components";
 
 export const HomePage: React.FC = () => {
     return (
         <React.Fragment>
             <HomeHeader />
+            <DoctorsCarousel />
             <footer>
                 <Container>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis

@@ -73,7 +73,7 @@ export const UiKitPage: React.FC = () => {
                 <Button
                     variant="contained"
                     size="large"
-                    icon={<ArrowRightIcon />}
+                    icon={<ArrowRightIcon color="#fff" />}
                     to="/home"
                 >
                     Записаться на прием

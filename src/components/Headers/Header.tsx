@@ -24,7 +24,6 @@ import {
 interface IHeader {
     isAuthorized?: boolean;
     isAbsolute?: boolean;
-    isTransparent?: boolean;
     leftBarIsLight?: boolean;
     rightBarIsLight?: boolean;
     isHeader?: boolean;
@@ -45,9 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: "absolute",
         top: 0,
         left: 0,
-        right: 0
-    },
-    appBarTransparent: {
+        right: 0,
         backgroundColor: "transparent"
     },
     appBarContainer: {
@@ -136,7 +133,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Header: React.FC<IHeader> = ({
     isAuthorized = true,
     isAbsolute,
-    isTransparent,
     leftBarIsLight,
     rightBarIsLight,
     isHeader
@@ -153,13 +149,7 @@ export const Header: React.FC<IHeader> = ({
     };
 
     const navigation = (
-        <nav
-            className={clsx(
-                classes.appBar,
-                isAbsolute && classes.appBarAbsolute,
-                isTransparent && classes.appBarTransparent
-            )}
-        >
+        <nav className={clsx(classes.appBar, isAbsolute && classes.appBarAbsolute)}>
             <Container
                 className={clsx(
                     classes.appBarContainer,

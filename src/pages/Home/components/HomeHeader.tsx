@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.primary.main,
             padding: "52px 24px 24px 8px"
         },
-        "@media (max-height: 600px) and (min-width: 960px)": {
+        [`@media (max-height: 600px) and (min-width: ${theme.breakpoints.values.md}px)`]: {
             paddingTop: 0
         }
     },
@@ -151,6 +151,9 @@ const useStyles = makeStyles((theme: Theme) => ({
                 height: "auto"
             },
             "@media (min-height: 800px)": {
+                height: "auto"
+            },
+            [`@media (max-height: 500px) and (min-width: ${theme.breakpoints.values.md}px)`]: {
                 height: "auto"
             }
         }
@@ -257,7 +260,7 @@ export const HomeHeader: React.FC = () => {
     return (
         <header className={classes.header}>
             <Hidden smDown>
-                <Header isAbsolute isTransparent rightBarIsLight />
+                <Header isAbsolute rightBarIsLight />
             </Hidden>
             <Hidden mdUp>
                 <Header />
@@ -278,7 +281,7 @@ export const HomeHeader: React.FC = () => {
                         variant="contained"
                         size="large"
                         to="/home"
-                        icon={<ArrowRightIcon />}
+                        icon={<ArrowRightIcon color="#fff" />}
                     >
                         Записаться на приём
                     </Button>
