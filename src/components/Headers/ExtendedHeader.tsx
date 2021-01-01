@@ -16,11 +16,11 @@ import headerBackground from "images/header/header-background.jpg";
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "relative",
-        paddingTop: 120,
+        paddingTop: 118,
         background: `url(${headerBackground}) no-repeat bottom right ${theme.palette.primary.main}`,
         backgroundSize: "cover",
         [theme.breakpoints.down("sm")]: {
-            paddingTop: 68
+            paddingTop: 78
         }
     },
     headerContent: {

@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Paper, Typography, makeStyles, Theme } from "@material-ui/core";
 
 import doctorImage from "images/home/doctor/doctor.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
+        position: "relative",
         "&:hover": {
             boxShadow: "0px 4px 8px rgba(45, 96, 156, 0.2)"
         }
@@ -13,7 +15,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         "& img": {
             objectFit: "cover",
             width: "100%",
-            height: 235
+            height: 235,
+            [theme.breakpoints.down("xs")]: {
+                height: 130
+            }
+        },
+        "&:after": {
+            content: "''",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0
         }
     },
     cardContent: {
@@ -21,7 +34,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     doctorName: {
         marginTop: 4,
-        marginBottom: 12
+        marginBottom: 12,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 6
+        }
     }
 }));
 
@@ -30,9 +46,9 @@ export const DoctorCard: React.FC = () => {
 
     return (
         <Paper className={classes.card} variant="outlined">
-            <div className={classes.cardImage}>
+            <Link to="/doctor/123" className={classes.cardImage}>
                 <img src={doctorImage} alt="Фото Елена Леонидовна Докторова" />
-            </div>
+            </Link>
             <div className={classes.cardContent}>
                 <Typography variant="h6" color="primary">
                     Терапевт

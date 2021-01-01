@@ -7,7 +7,9 @@ export const HomePage: React.FC = () => {
     return (
         <React.Fragment>
             <HomeHeader />
-            <DoctorsCarousel />
+            <main>
+                <DoctorsCarousel />
+            </main>
             <footer>
                 <Container>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis

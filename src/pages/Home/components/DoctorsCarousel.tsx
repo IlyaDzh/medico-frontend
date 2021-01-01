@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import Slider, { Settings } from "react-slick";
 import {
     Container,
     Typography,
     IconButton,
+    Hidden,
     makeStyles,
+    useMediaQuery,
     Theme
 } from "@material-ui/core";
 
@@ -18,16 +20,35 @@ const useStyles = makeStyles((theme: Theme) => ({
     doctorsSection: {
         paddingTop: 120,
         paddingBottom: 106,
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        [theme.breakpoints.down("xs")]: {
+            paddingTop: 31,
+            paddingBottom: 53
+        }
     },
     sectionTitle: {
         display: "flex",
         justifyContent: "space-between",
-        marginBottom: 45
+        marginBottom: 45,
+        [theme.breakpoints.down(800)]: {
+            display: "block"
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 29
+        }
+    },
+    sectionTitleText: {
+        [theme.breakpoints.down(800)]: {
+            textAlign: "center",
+            marginBottom: 20
+        }
     },
     sectionSubtitle: {
         display: "flex",
-        maxWidth: 450
+        maxWidth: 450,
+        [theme.breakpoints.down(800)]: {
+            maxWidth: "unset"
+        }
     },
     sectionSubtitleIcon: {
         paddingTop: 4,
@@ -43,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         "& .slick-track": {
             paddingBottom: 10
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 18
         }
     },
     actions: {
@@ -50,12 +74,27 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         justifyContent: "space-between"
     },
+    allDoctorsBtn: {
+        [theme.breakpoints.down("sm")]: {
+            padding: "7px 24px",
+            fontSize: "18px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "6px 22px",
+            fontSize: "16px"
+        }
+    },
     sliderArrow: {
         "&:hover svg path": {
             fill: theme.palette.primary.dark
+        },
+        "&.Mui-disabled svg path": {
+            fill: theme.palette.text.disabled
         }
     }
 }));
+
+const LENGTH_OF_ARRAY = 7;
 
 const settings: Settings = {
     dots: false,
@@ -64,27 +103,67 @@ const settings: Settings = {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    swipe: false
-    // lazyLoad: "ondemand"
+    swipe: false,
+    swipeToSlide: true,
+    responsive: [
+        {
+            breakpoint: 960,
+            settings: {
+                slidesToShow: 4,
+                swipe: true
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2.5,
+                swipe: true
+            }
+        },
+        {
+            breakpoint: 375,
+            settings: {
+                slidesToShow: 2.1,
+                swipe: true
+            }
+        },
+        {
+            breakpoint: 350,
+            settings: {
+                slidesToShow: 1.75,
+                swipe: true
+            }
+        }
+    ]
 };
 
 export const DoctorsCarousel: React.FC = () => {
     const classes = useStyles();
+    const [nextSlideNumber, setNextSlideNumber] = useState<number>(0);
     const sliderRef = useRef<Slider>(null);
+    const matches1 = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
-    const handleClickNextSlide = (): void => {
+    const slidesToShow: number = matches1 ? 4 : 5;
+
+    const handleClickNextSlide = useCallback((): void => {
         sliderRef?.current?.slickNext();
-    };
+    }, [sliderRef]);
 
-    const handleClickPrevSlide = (): void => {
+    const handleClickPrevSlide = useCallback((): void => {
         sliderRef?.current?.slickPrev();
+    }, [sliderRef]);
+
+    const beforeChangeHandler = (_: number, nextSlide: number): void => {
+        setNextSlideNumber(nextSlide);
     };
 
     return (
         <section className={classes.doctorsSection}>
             <Container>
                 <div className={classes.sectionTitle}>
-                    <Typography variant="h2">Специалисты</Typography>
+                    <Typography className={classes.sectionTitleText} variant="h2">
+                        Специалисты
+                    </Typography>
                     <div className={classes.sectionSubtitle}>
                         <span className={classes.sectionSubtitleIcon}>
                             <InfoIcon />
@@ -95,33 +174,50 @@ export const DoctorsCarousel: React.FC = () => {
                         </Typography>
                     </div>
                 </div>
-                <Slider ref={sliderRef} {...settings} className={classes.slider}>
-                    {new Array(10).fill(undefined).map((_, index) => (
+                <Slider
+                    ref={sliderRef}
+                    beforeChange={beforeChangeHandler}
+                    {...settings}
+                    className={classes.slider}
+                >
+                    {new Array(LENGTH_OF_ARRAY).fill(undefined).map((_, index) => (
                         <DoctorCard key={index} />
                     ))}
                 </Slider>
                 <div className={classes.actions}>
-                    <Button variant="outlined" size="small" to="/doctors">
+                    <Button
+                        className={classes.allDoctorsBtn}
+                        variant="outlined"
+                        size="small"
+                        to="/doctors"
+                    >
                         Все врачи
                     </Button>
-                    <div>
-                        <IconButton
-                            className={classes.sliderArrow}
-                            color="primary"
-                            onClick={handleClickPrevSlide}
-                            aria-label="Предыдущий слайд"
-                        >
-                            <ArrowLeftIcon />
-                        </IconButton>
-                        <IconButton
-                            className={classes.sliderArrow}
-                            color="primary"
-                            onClick={handleClickNextSlide}
-                            aria-label="Следующий слайд"
-                        >
-                            <ArrowRightIcon />
-                        </IconButton>
-                    </div>
+                    <Hidden xsDown>
+                        <div>
+                            <IconButton
+                                className={classes.sliderArrow}
+                                color="primary"
+                                onClick={handleClickPrevSlide}
+                                disabled={nextSlideNumber === 0}
+                                aria-label="Предыдущий слайд"
+                            >
+                                <ArrowLeftIcon />
+                            </IconButton>
+                            <IconButton
+                                className={classes.sliderArrow}
+                                color="primary"
+                                onClick={handleClickNextSlide}
+                                disabled={
+                                    LENGTH_OF_ARRAY <= slidesToShow ||
+                                    nextSlideNumber >= LENGTH_OF_ARRAY - slidesToShow
+                                }
+                                aria-label="Следующий слайд"
+                            >
+                                <ArrowRightIcon />
+                            </IconButton>
+                        </div>
+                    </Hidden>
                 </div>
             </Container>
         </section>

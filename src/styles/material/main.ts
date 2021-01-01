@@ -84,10 +84,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 400,
             lineHeight: "26px",
             [breakpoints.down("sm")]: {
-                fontSize: 18
+                fontSize: 18,
+                lineHeight: "22px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 14
+                fontSize: 14,
+                lineHeight: "18px"
             }
         },
         h5: {
@@ -106,7 +108,8 @@ const globalTheme = createMuiTheme({
             fontWeight: 400,
             lineHeight: "18px",
             [breakpoints.down("xs")]: {
-                fontSize: 10
+                fontSize: 10,
+                lineHeight: "14px"
             }
         },
         body1: {
@@ -114,10 +117,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 300,
             lineHeight: "28px",
             [breakpoints.down("sm")]: {
-                fontSize: 16
+                fontSize: 16,
+                lineHeight: "24px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 14
+                fontSize: 14,
+                lineHeight: "18px"
             }
         },
         body2: {
@@ -125,10 +130,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 400,
             lineHeight: "28px",
             [breakpoints.down("sm")]: {
-                fontSize: 16
+                fontSize: 16,
+                lineHeight: "24px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 14
+                fontSize: 14,
+                lineHeight: "18px"
             }
         },
         fontFamily: "Rubik, sans-serif"
