@@ -37,7 +37,9 @@ const globalTheme = createMuiTheme({
             disabled: "#bdbfc6"
         },
         background: {
-            default: "#f6f9fc"
+            default: "#f6f9fc",
+            dark: "#5a5f6f",
+            blue: "#5ea1f0"
         },
         border: {
             main: "#eceff9"

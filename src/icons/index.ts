@@ -1,3 +1,4 @@
+export * from "./Social";
 export * from "./LogoIcon";
 export * from "./ArrowLeftIcon";
 export * from "./ArrowRightIcon";

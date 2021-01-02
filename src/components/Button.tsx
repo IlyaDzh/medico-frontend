@@ -41,9 +41,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const CustomButton: React.FC<IButton & ButtonProps> = ({ ...props }) => {
+const CustomButton: React.FC<IButton & ButtonProps> = ({
+    variant,
+    disabled,
+    to,
+    icon,
+    children,
+    ...props
+}) => {
     const classes = useStyles();
-    const { variant, disabled, to, icon, children } = props;
 
     const component = to
         ? React.forwardRef((props, ref) => (
@@ -62,9 +68,11 @@ const CustomButton: React.FC<IButton & ButtonProps> = ({ ...props }) => {
         >
             {children}
             {icon && (
-                <div className={clsx(classes.icon, disabled && classes.iconDisabed)}>
+                <span
+                    className={clsx(classes.icon, disabled && classes.iconDisabed)}
+                >
                     {icon}
-                </div>
+                </span>
             )}
         </BaseButton>
     );

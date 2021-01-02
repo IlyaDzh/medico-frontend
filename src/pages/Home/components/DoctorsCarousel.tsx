@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     sectionSubtitle: {
         display: "flex",
-        maxWidth: 450,
+        maxWidth: 485,
         [theme.breakpoints.down(800)]: {
             maxWidth: "unset"
         }

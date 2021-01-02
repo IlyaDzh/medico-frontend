@@ -8,6 +8,7 @@ import {
 
 interface IAvatarProps {
     size?: "sm" | "lg";
+    componentTag?: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -25,11 +26,18 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const Avatar: React.FC<IAvatarProps & AvatarProps> = ({ size, ...props }) => {
+export const Avatar: React.FC<IAvatarProps & AvatarProps> = ({
+    size,
+    componentTag,
+    ...props
+}) => {
     const classes = useStyles();
+
+    const component = componentTag || "div";
 
     return (
         <MaterialAvatar
+            component={component as any}
             className={clsx(
                 classes.avatar,
                 size === "sm" && classes.small,

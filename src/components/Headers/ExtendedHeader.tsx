@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "relative",
         paddingTop: 118,
-        background: `url(${headerBackground}) no-repeat bottom right ${theme.palette.primary.main}`,
+        background: `url(${headerBackground}) no-repeat bottom right ${theme.palette.background.blue}`,
         backgroundSize: "cover",
         [theme.breakpoints.down("sm")]: {
             paddingTop: 78

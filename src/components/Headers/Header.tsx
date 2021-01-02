@@ -157,8 +157,17 @@ export const Header: React.FC<IHeader> = ({
                 )}
             >
                 <div className={classes.leftBar}>
-                    <Link to="/" className={classes.logo}>
-                        <LogoIcon isLight={leftBarIsLight} />
+                    <Link
+                        to="/"
+                        className={classes.logo}
+                        aria-label="Перейти на главную"
+                    >
+                        <Hidden xsDown>
+                            <LogoIcon isLight={leftBarIsLight} />
+                        </Hidden>
+                        <Hidden smUp>
+                            <LogoIcon width={64} isLight={leftBarIsLight} />
+                        </Hidden>
                     </Link>
                     <Hidden smDown>
                         <Link
@@ -230,7 +239,11 @@ export const Header: React.FC<IHeader> = ({
                                     variant="text"
                                     color="default"
                                     startIcon={
-                                        <Avatar alt="Евгений К." src={undefined} />
+                                        <Avatar
+                                            componentTag="span"
+                                            alt="Евгений К."
+                                            src={undefined}
+                                        />
                                     }
                                     onClick={handleClick}
                                     aria-label="Аккаунт пользователя"

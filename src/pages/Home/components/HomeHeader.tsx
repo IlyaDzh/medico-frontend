@@ -44,19 +44,6 @@ type TListItem = {
     title: string;
 };
 
-type TImageItem = {
-    label: TActiveButton;
-    alt: string;
-    phonePng: string;
-    phonePng2x: string;
-    phoneWebp: string;
-    phoneWebp2x: string;
-    phoneMobilePng: string;
-    phoneMobilePng2x: string;
-    phoneMobileWebp: string;
-    phoneMobileWebp2x: string;
-};
-
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "relative",
@@ -87,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     headerBackgroundRight: {
         width: "40%",
-        background: `url(${backgroundRight}) no-repeat bottom right ${theme.palette.primary.main}`,
+        background: `url(${backgroundRight}) no-repeat bottom right ${theme.palette.background.blue}`,
         backgroundSize: "cover",
         borderBottomLeftRadius: 30,
         [theme.breakpoints.down("md")]: {
@@ -126,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: 80,
         [theme.breakpoints.down("sm")]: {
             width: "100%",
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.background.blue,
             padding: "52px 24px 24px 8px"
         },
         [`@media (max-height: 600px) and (min-width: ${theme.breakpoints.values.md}px)`]: {
@@ -168,10 +155,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-        width: "100%",
-        listStyle: "none",
-        padding: 0,
-        margin: 0
+        width: "100%"
     },
     headerListItem: {
         position: "relative",
@@ -214,7 +198,7 @@ const labelList: TListItem[] = [
     { label: "chat", title: "Чат" }
 ];
 
-const images: TImageItem[] = [
+const images = [
     {
         label: "video",
         alt: "Звонок по видеосвязи",
