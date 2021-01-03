@@ -64,10 +64,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 400,
             lineHeight: "56px",
             [breakpoints.down("sm")]: {
-                fontSize: 32
+                fontSize: 32,
+                lineHeight: "46px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 24
+                fontSize: 24,
+                lineHeight: "35px"
             }
         },
         h3: {

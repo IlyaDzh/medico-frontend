@@ -162,64 +162,66 @@ export const Footer: React.FC = () => {
         <footer>
             <div className={classes.footerTop}>
                 <Container className={classes.footerTopContainer}>
-                    <ul className={classes.footerTopList} role="navigation">
-                        <li className={classes.footerTopListColumn}>
-                            <ul>
-                                <li>
-                                    <Link
-                                        to="/#doctors"
-                                        className={classes.topListLink}
-                                    >
-                                        Врачи
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/#about"
-                                        className={classes.topListLink}
-                                    >
-                                        О сервисе
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/#how-it-works"
-                                        className={classes.topListLink}
-                                    >
-                                        Как это работает
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li className={classes.footerTopListColumn}>
-                            <ul>
-                                <li>
-                                    <Link
-                                        to="/#reviews"
-                                        className={classes.topListLink}
-                                    >
-                                        Отзывы
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/#tarifs"
-                                        className={classes.topListLink}
-                                    >
-                                        Тарифы
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/#news"
-                                        className={classes.topListLink}
-                                    >
-                                        Новости
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <nav>
+                        <ul className={classes.footerTopList}>
+                            <li className={classes.footerTopListColumn}>
+                                <ul>
+                                    <li>
+                                        <Link
+                                            to="/#doctors"
+                                            className={classes.topListLink}
+                                        >
+                                            Врачи
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/#about"
+                                            className={classes.topListLink}
+                                        >
+                                            О сервисе
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/#how-it-works"
+                                            className={classes.topListLink}
+                                        >
+                                            Как это работает
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className={classes.footerTopListColumn}>
+                                <ul>
+                                    <li>
+                                        <Link
+                                            to="/#reviews"
+                                            className={classes.topListLink}
+                                        >
+                                            Отзывы
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/#tarifs"
+                                            className={classes.topListLink}
+                                        >
+                                            Тарифы
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/#news"
+                                            className={classes.topListLink}
+                                        >
+                                            Новости
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
                     <div className={classes.contacts}>
                         <div className={classes.telNumber}>
                             <a href="tel:+79781234567">+7 978 123 45 67</a>

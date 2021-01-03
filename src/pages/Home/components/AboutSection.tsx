@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Typography, makeStyles } from "@material-ui/core";
+import clsx from "clsx";
+import { Container, Typography, makeStyles, Theme } from "@material-ui/core";
 
 import aboutConsultationPNG from "images/home/about/about-consultation.png";
 import aboutConsultationPNG2x from "images/home/about/about-consultation@2x.png";
@@ -37,18 +38,79 @@ import aboutChatMobilePNG2x from "images/home/about/about-chat-mobile@2x.png";
 import aboutChatMobileWEBP from "images/home/about/about-chat-mobile.webp";
 import aboutChatMobileWEBP2x from "images/home/about/about-chat-mobile@2x.webp";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     aboutSection: {
         display: "flex",
         alignItems: "center",
-        padding: "54px 0"
+        justifyContent: "space-between",
+        padding: "34px 0 41px",
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column-reverse"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "30px 0 20px"
+        }
+    },
+    sectionReverse: {
+        flexDirection: "row-reverse",
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column-reverse"
+        },
+        "& $sectionContent": {
+            marginRight: 0,
+            marginLeft: 30,
+            [theme.breakpoints.down("sm")]: {
+                marginLeft: 0
+            }
+        }
+    },
+    sectionContent: {
+        marginRight: 30,
+        [theme.breakpoints.down("sm")]: {
+            marginRight: 0
+        }
+    },
+    sectionTitle: {
+        marginBottom: 24,
+        maxWidth: 580,
+        [theme.breakpoints.down("sm")]: {
+            textAlign: "center"
+        }
+    },
+    sectionImage: {
+        "& img": {
+            width: "100%"
+        }
+    },
+    list: {
+        paddingLeft: 24,
+        maxWidth: 596
+    },
+    listItem: {
+        position: "relative",
+        marginBottom: 16,
+        "&:after": {
+            content: "''",
+            position: "absolute",
+            top: 8,
+            left: -22,
+            width: 8,
+            height: 8,
+            backgroundColor: theme.palette.primary.dark,
+            borderRadius: "50%",
+            [theme.breakpoints.down("xs")]: {
+                top: 4,
+                width: 6,
+                height: 6
+            }
+        }
     }
 }));
 
 const aboutItems = [
     {
-        sectionTitle: "Консультации из любой точки России",
-        sectionList: [
+        title: "Консультации из любой точки России",
+        list: [
             "Доступ к онлайн консультации с высокоспециализированными врачами из любой точки страны",
             "Удобный способ консультации: аудио, видеозвонок, текстовый мессенджер",
             "Прозрачная ценовая политика, выгодные тарифы, без дополнительных платежей"
@@ -66,21 +128,12 @@ const aboutItems = [
         }
     },
     {
-        inverse: true,
-        sectionTitle: "Результаты сохраняются в личном кабинете",
-        sectionList: [
+        reverse: true,
+        title: "Результаты сохраняются в личном кабинете",
+        list: [
             "Автоматический сбор анамнеза (симптомов и жалоб). В зависимости от выбранных вами симптомов, система предложит вам лучшего специалиста",
             "Вся информация о ваших медицинских данных у вас в личном кабинете всегда под рукой",
             "Загружайте результаты лабораторных данных или исследовании для более эффективной персонализации"
-        ],
-        negativeList: [
-            "Травма головного или спинного мозга",
-            "Боль в груди и/или онемение",
-            "Рвота или кашель кровью",
-            "Разрывы",
-            "Потеря сознания",
-            "Переломы костей",
-            "Сильные ожоги"
         ],
         imageAlt: "Планшет с изображением страницы личного кабинета",
         images: {
@@ -95,8 +148,8 @@ const aboutItems = [
         }
     },
     {
-        sectionTitle: "Консультации с врачом",
-        sectionList: [
+        title: "Консультации с врачом",
+        list: [
             "Дерматология: акне, сыпь, розацеа, экзема, целлюлит, солнечный ожог, укусы насекомых, герпес",
             "Аллергия: общие, сезонные аллергии, сыпь",
             "Простуда и грипп",
@@ -118,9 +171,9 @@ const aboutItems = [
         }
     },
     {
-        inverse: true,
-        sectionTitle: "Консультации с психологом",
-        sectionList: [
+        reverse: true,
+        title: "Консультации с психологом",
+        list: [
             "Личное благополучие, психологическая устойчивость и саморегуляция",
             "Нехимические зависимости: любовная зависимость, нарушения пищевого поведения",
             "Трудности в общении, с созданием пары и семьи",
@@ -128,15 +181,6 @@ const aboutItems = [
             "Прохождение семейных кризисов: измены, психологическое и физическое насилие, развод",
             "Депрессия, биполярное расстройство, усталость",
             "Развитие, самоэффективность, самореализация"
-        ],
-        negativeList: [
-            "Травма головного или спинного мозга",
-            "Боль в груди и/или онемение",
-            "Рвота или кашель кровью",
-            "Разрывы",
-            "Потеря сознания",
-            "Переломы костей",
-            "Сильные ожоги"
         ],
         imageAlt: "Общение с доктором в чате",
         images: {
@@ -157,48 +201,50 @@ export const AboutSection: React.FC = () => {
 
     return (
         <Container>
-            <section className={classes.aboutSection}>
-                {aboutItems.map((section, index) => (
-                    <React.Fragment key={index}>
-                        <div>
-                            <Typography variant="h2">
-                                Консультации из любой точки России
-                            </Typography>
-                            <ul>
-                                {section.sectionList.map((item, index) => (
-                                    <li key={index}>
-                                        <Typography variant="body1">
-                                            {item}
-                                        </Typography>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div>
-                            <picture>
-                                <source
-                                    srcSet={`${section.images.aboutWebp} 1x, ${section.images.aboutWebp2x} 2x`}
-                                    type="image/webp"
-                                    media="(min-width: 600px)"
-                                />
-                                <source
-                                    srcSet={`${section.images.aboutPng} 1x, ${section.images.aboutPng2x} 2x`}
-                                    media="(min-width: 600px)"
-                                />
-                                <source
-                                    srcSet={`${section.images.aboutMobileWebp} 1x, ${section.images.aboutMobileWebp2x} 2x`}
-                                    type="image/webp"
-                                />
-                                <img
-                                    src={section.images.aboutMobilePng}
-                                    srcSet={`${section.images.aboutMobilePng2x} 2x`}
-                                    alt={section.imageAlt}
-                                />
-                            </picture>
-                        </div>
-                    </React.Fragment>
-                ))}
-            </section>
+            {aboutItems.map((section, index) => (
+                <section
+                    key={index}
+                    className={clsx(
+                        classes.aboutSection,
+                        section.reverse && classes.sectionReverse
+                    )}
+                >
+                    <div className={classes.sectionContent}>
+                        <Typography variant="h2" className={classes.sectionTitle}>
+                            {section.title}
+                        </Typography>
+                        <ul className={classes.list}>
+                            {section.list.map((item, index) => (
+                                <li key={index} className={classes.listItem}>
+                                    <Typography variant="body1">{item}</Typography>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className={classes.sectionImage}>
+                        <picture>
+                            <source
+                                srcSet={`${section.images.aboutWebp} 1x, ${section.images.aboutWebp2x} 2x`}
+                                type="image/webp"
+                                media="(min-width: 600px)"
+                            />
+                            <source
+                                srcSet={`${section.images.aboutPng} 1x, ${section.images.aboutPng2x} 2x`}
+                                media="(min-width: 600px)"
+                            />
+                            <source
+                                srcSet={`${section.images.aboutMobileWebp} 1x, ${section.images.aboutMobileWebp2x} 2x`}
+                                type="image/webp"
+                            />
+                            <img
+                                src={section.images.aboutMobilePng}
+                                srcSet={`${section.images.aboutMobilePng2x} 2x`}
+                                alt={section.imageAlt}
+                            />
+                        </picture>
+                    </div>
+                </section>
+            ))}
         </Container>
     );
 };

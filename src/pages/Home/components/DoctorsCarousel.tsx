@@ -66,7 +66,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingBottom: 10
         },
         [theme.breakpoints.down("xs")]: {
-            marginBottom: 18
+            marginBottom: 18,
+            marginRight: "-14px",
+            marginLeft: "-14px"
         }
     },
     actions: {
