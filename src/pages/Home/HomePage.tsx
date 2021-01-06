@@ -1,15 +1,25 @@
 import React from "react";
 
-import { HomeHeader, DoctorsCarousel, AboutSection } from "./components";
+import {
+    HomeHeader,
+    DoctorsSection,
+    AboutSection,
+    HowItWorksSection,
+    ReviewsSection
+} from "./components";
 import { Footer } from "components";
+
+import "slick-carousel/slick/slick.css";
 
 export const HomePage: React.FC = () => {
     return (
         <React.Fragment>
             <HomeHeader />
             <main>
-                <DoctorsCarousel />
+                <DoctorsSection />
                 <AboutSection />
+                <HowItWorksSection />
+                <ReviewsSection />
             </main>
             <Footer />
         </React.Fragment>

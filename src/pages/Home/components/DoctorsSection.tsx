@@ -14,8 +14,6 @@ import { DoctorCard } from "./DoctorCard";
 import { Button } from "components";
 import { InfoIcon, ArrowLeftIcon, ArrowRightIcon } from "icons";
 
-import "slick-carousel/slick/slick.css";
-
 const useStyles = makeStyles((theme: Theme) => ({
     doctorsSection: {
         paddingTop: 120,
@@ -139,13 +137,13 @@ const settings: Settings = {
     ]
 };
 
-export const DoctorsCarousel: React.FC = () => {
+export const DoctorsSection: React.FC = () => {
     const classes = useStyles();
     const [nextSlideNumber, setNextSlideNumber] = useState<number>(0);
     const sliderRef = useRef<Slider>(null);
-    const matches1 = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
-    const slidesToShow: number = matches1 ? 4 : 5;
+    const slidesToShow: number = matches ? 4 : 5;
 
     const handleClickNextSlide = useCallback((): void => {
         sliderRef?.current?.slickNext();

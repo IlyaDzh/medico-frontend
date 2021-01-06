@@ -1,3 +1,5 @@
 export * from "./HomeHeader";
-export * from "./DoctorsCarousel";
+export * from "./DoctorsSection";
 export * from "./AboutSection";
+export * from "./HowItWorksSection";
+export * from "./ReviewsSection";
