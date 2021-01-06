@@ -8,8 +8,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     card: {
         position: "relative",
         padding: "36px 32px",
-        maxWidth: 437,
-        userSelect: "text"
+        userSelect: "text",
+        [theme.breakpoints.down("xs")]: {
+            padding: "32px 24px"
+        }
     },
     cardHeader: {
         display: "flex",
@@ -22,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: 64,
             height: 64,
             borderRadius: "50%"
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginRight: 12
         }
     },
     reviewerSocial: {

@@ -5,7 +5,8 @@ import {
     DoctorsSection,
     AboutSection,
     HowItWorksSection,
-    ReviewsSection
+    ReviewsSection,
+    TariffsSection
 } from "./components";
 import { Footer } from "components";
 
@@ -20,6 +21,7 @@ export const HomePage: React.FC = () => {
                 <AboutSection />
                 <HowItWorksSection />
                 <ReviewsSection />
+                <TariffsSection />
             </main>
             <Footer />
         </React.Fragment>

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     sectionSubtitleIcon: {
-        paddingTop: 4,
+        paddingTop: 2,
         marginRight: 12
     },
     slider: {
@@ -109,8 +109,7 @@ const settings: Settings = {
         {
             breakpoint: 960,
             settings: {
-                slidesToShow: 4,
-                swipe: true
+                slidesToShow: 4
             }
         },
         {

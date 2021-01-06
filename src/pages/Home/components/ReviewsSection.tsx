@@ -15,12 +15,10 @@ import { ArrowLeftIcon, ArrowRightIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     reviewsSection: {
-        paddingTop: 120,
-        paddingBottom: 120,
+        padding: "120px 0",
         background: `linear-gradient(0, transparent 50%, ${theme.palette.primary.main} 50%)`,
-        [theme.breakpoints.down("xs")]: {
-            paddingTop: 60,
-            paddingBottom: 60
+        [theme.breakpoints.down("sm")]: {
+            padding: "60px 0"
         }
     },
     sectionHeader: {
@@ -38,7 +36,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     sliderArrow: {
         "&:first-child": {
-            marginRight: 14
+            marginRight: 14,
+            [theme.breakpoints.down("xs")]: {
+                marginRight: 6
+            }
         },
         "&:hover": {
             background: "#ECEFF9",
@@ -52,10 +53,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     slider: {
         "& .slick-list": {
-            margin: "0 -6px"
+            margin: "0 -6px",
+            [theme.breakpoints.down("xs")]: {
+                margin: "0 -3px"
+            }
         },
         "& .slick-slide > div": {
-            padding: "0 6px"
+            padding: "0 6px",
+            [theme.breakpoints.down("xs")]: {
+                margin: "0 -3px"
+            }
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginRight: "-14px",
+            marginLeft: "-14px"
         }
     }
 }));
@@ -67,36 +78,35 @@ const settings: Settings = {
     infinite: false,
     arrows: false,
     speed: 500,
-    slidesToShow: 3.7,
+    slidesToShow: 3,
     slidesToScroll: 1,
     swipe: false,
     swipeToSlide: true,
     responsive: [
         {
-            breakpoint: 960,
+            breakpoint: 850,
             settings: {
-                slidesToShow: 4,
-                swipe: true
+                slidesToShow: 2
             }
         },
         {
             breakpoint: 600,
             settings: {
-                slidesToShow: 2.5,
+                slidesToShow: 2.15,
                 swipe: true
             }
         },
         {
-            breakpoint: 375,
-            settings: {
-                slidesToShow: 2.1,
-                swipe: true
-            }
-        },
-        {
-            breakpoint: 350,
+            breakpoint: 520,
             settings: {
                 slidesToShow: 1.75,
+                swipe: true
+            }
+        },
+        {
+            breakpoint: 450,
+            settings: {
+                slidesToShow: 1.2,
                 swipe: true
             }
         }
@@ -107,9 +117,9 @@ export const ReviewsSection: React.FC = () => {
     const classes = useStyles();
     const [nextSlideNumber, setNextSlideNumber] = useState<number>(0);
     const sliderRef = useRef<Slider>(null);
-    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down(850));
 
-    const slidesToShow: number = matches ? 4 : 3.7;
+    const slidesToShow: number = matches ? 2 : 3;
 
     const handleClickNextSlide = useCallback((): void => {
         sliderRef?.current?.slickNext();
