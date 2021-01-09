@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, makeStyles, Theme } from "@material-ui/core";
+import { Container, Grid, Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { TariffCard } from "./TariffCard";
 import { InfoIcon } from "icons";
@@ -7,6 +7,9 @@ import { InfoIcon } from "icons";
 const useStyles = makeStyles((theme: Theme) => ({
     tariffsSection: {
         paddingBottom: 120,
+        [theme.breakpoints.down("md")]: {
+            paddingBottom: 60
+        },
         [theme.breakpoints.down("xs")]: {
             paddingBottom: 53
         }
@@ -60,9 +63,47 @@ export const TariffsSection: React.FC = () => {
                         </Typography>
                     </div>
                 </div>
-                <div>
-                    <TariffCard />
-                </div>
+                <Grid container spacing={4}>
+                    <Grid item md={4} sm={6} xs={12}>
+                        <TariffCard
+                            tariffName="Пробная консультация"
+                            price="Бесплатно"
+                            receptions="1 приём"
+                            descriptionList={[
+                                "15 минут",
+                                "Подбор врача",
+                                "Чат",
+                                "Возрастные ограничения 16+"
+                            ]}
+                        />
+                    </Grid>
+                    <Grid item md={4} sm={6} xs={12}>
+                        <TariffCard
+                            tariffName="Разовый приём"
+                            price="1000 ₽"
+                            receptions="1 приём"
+                            descriptionList={[
+                                "25 минут",
+                                "Подбор врача",
+                                "Чат, видео/аудиозвонок",
+                                "Возрастные ограничения 16+"
+                            ]}
+                        />
+                    </Grid>
+                    <Grid item md={4} sm={12} xs={12}>
+                        <TariffCard
+                            tariffName="Индивидуальный"
+                            price="8000 ₽"
+                            receptions="8 приёмов/месяц"
+                            descriptionList={[
+                                "25 минут/приём",
+                                "Подбор врача",
+                                "Чат",
+                                "Возрастные ограничения 16+"
+                            ]}
+                        />
+                    </Grid>
+                </Grid>
             </Container>
         </section>
     );
