@@ -6,11 +6,11 @@ import {
 
 declare module "@material-ui/core/styles/createPalette" {
     interface Palette {
-        border?: Palette["primary"];
+        other?: Palette["primary"];
     }
 
     interface PaletteOptions {
-        border?: PaletteOptions["primary"];
+        other?: PaletteOptions["primary"];
     }
 
     interface TypeBackground {

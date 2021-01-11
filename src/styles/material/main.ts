@@ -41,7 +41,7 @@ const globalTheme = createMuiTheme({
             dark: "#5a5f6f",
             blue: "#5ea1f0"
         },
-        border: {
+        other: {
             main: "#eceff9"
         }
     },
@@ -186,7 +186,7 @@ const theme = createMuiTheme(
                         backgroundColor: globalTheme.palette.primary.dark
                     },
                     "&$disabled": {
-                        backgroundColor: globalTheme.palette.border?.main,
+                        backgroundColor: globalTheme.palette.other?.main,
                         color: globalTheme.palette.text.disabled
                     }
                 },
@@ -199,7 +199,7 @@ const theme = createMuiTheme(
                     },
                     "&$disabled": {
                         color: globalTheme.palette.text.disabled,
-                        borderColor: globalTheme.palette.border?.main
+                        borderColor: globalTheme.palette.other?.main
                     }
                 },
                 containedSizeLarge: {
@@ -271,7 +271,7 @@ const theme = createMuiTheme(
                     overflow: "hidden",
                     borderRadius: 8,
                     "&$disabled $notchedOutline": {
-                        borderColor: globalTheme.palette.border?.main
+                        borderColor: globalTheme.palette.other?.main
                     }
                 },
                 input: {
@@ -295,32 +295,6 @@ const theme = createMuiTheme(
                         width: 26,
                         height: 26
                     }
-                }
-            },
-            MuiChip: {
-                root: {
-                    height: 34,
-                    borderRadius: 8,
-                    padding: "8px 12px"
-                },
-                outlined: {
-                    backgroundColor: globalTheme.palette.border?.main,
-                    "&:hover, &:focus": {
-                        borderColor: globalTheme.palette.primary.dark,
-                        "& svg path": {
-                            fill: globalTheme.palette.primary.dark
-                        }
-                    }
-                },
-                label: {
-                    fontSize: 13,
-                    lineHeight: "18px",
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    marginRight: 25
-                },
-                deleteIcon: {
-                    marginRight: 0
                 }
             }
         },

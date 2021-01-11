@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     iconDisabed: {
-        backgroundColor: theme.palette.border?.main,
+        backgroundColor: theme.palette.other?.main,
         "& svg path": {
             fill: theme.palette.text.disabled
         }

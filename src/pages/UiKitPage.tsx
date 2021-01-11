@@ -9,19 +9,11 @@ import {
     FormControlLabel,
     Radio,
     RadioGroup,
-    Chip,
-    Icon,
     makeStyles
 } from "@material-ui/core";
 
 import { Button } from "components";
-import {
-    ArrowRightIcon,
-    CameraIcon,
-    PhoneIcon,
-    EnvelopeIcon,
-    CrossIcon
-} from "icons";
+import { ArrowRightIcon, CameraIcon, PhoneIcon, EnvelopeIcon } from "icons";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -193,7 +185,7 @@ export const UiKitPage: React.FC = () => {
             </Grid>
             <Grid item sm={6} xs={12}>
                 <Typography className={classes.title} variant="h1">
-                    Checkboxes, radio, chips
+                    Checkboxes and radio
                 </Typography>
 
                 <FormControlLabel
@@ -212,16 +204,6 @@ export const UiKitPage: React.FC = () => {
                         label="Male"
                     />
                 </RadioGroup>
-                <Chip
-                    label="Custom delete icon"
-                    variant="outlined"
-                    deleteIcon={
-                        <Icon>
-                            <CrossIcon />
-                        </Icon>
-                    }
-                    onDelete={() => console.log("delete")}
-                />
             </Grid>
         </Grid>
     );
