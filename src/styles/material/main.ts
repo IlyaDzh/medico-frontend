@@ -31,7 +31,7 @@ const globalTheme = createMuiTheme({
             main: "#2ab841"
         },
         text: {
-            primary: "#192035",
+            primary: "#2d85ec",
             secondary: "#5a5f6f",
             hint: "#bdbfc6",
             disabled: "#bdbfc6"
@@ -46,6 +46,9 @@ const globalTheme = createMuiTheme({
         }
     },
     typography: {
+        allVariants: {
+            color: "#192035"
+        },
         h1: {
             fontSize: 52,
             fontWeight: 500,
@@ -261,6 +264,7 @@ const theme = createMuiTheme(
                     fontSize: 18,
                     fontWeight: 300,
                     lineHeight: "28px",
+                    color: "#192035",
                     "&$disabled": {
                         color: globalTheme.palette.text.disabled
                     }
@@ -296,11 +300,6 @@ const theme = createMuiTheme(
                         height: 26
                     }
                 }
-            }
-        },
-        typography: {
-            allVariants: {
-                color: globalTheme.palette.text.primary
             }
         }
     },

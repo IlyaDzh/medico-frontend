@@ -46,7 +46,7 @@ export const DoctorCard: React.FC = () => {
                     <img src={doctorImage} alt="Фото Елена Леонидовна Докторова" />
                 </div>
                 <div className={classes.cardContent}>
-                    <Typography variant="h6" color="primary">
+                    <Typography variant="h6" color="textPrimary">
                         Терапевт
                     </Typography>
                     <Typography className={classes.doctorName} variant="h4">

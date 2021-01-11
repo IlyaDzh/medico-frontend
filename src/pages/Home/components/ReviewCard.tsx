@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "block",
         fontSize: 14,
         lineHeight: "18px",
-        color: theme.palette.primary.dark,
+        color: theme.palette.text.primary,
         marginBottom: 2,
         "&:hover": {
             textDecoration: "none"

@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     accountMenuBtn: {
         color: theme.palette.text.secondary,
         "&:hover": {
-            color: theme.palette.primary.dark
+            color: theme.palette.text.primary
         }
     },
     accountMenuBtnLight: {

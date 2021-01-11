@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderColor: theme.palette.primary.dark
     },
     chipLabelActive: {
-        color: theme.palette.primary.dark,
+        color: theme.palette.text.primary,
         transition: "0.2s color ease"
     }
 }));

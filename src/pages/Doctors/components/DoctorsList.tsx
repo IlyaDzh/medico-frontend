@@ -7,7 +7,12 @@ import doctorOleg from "images/doctors/oleg.jpg";
 import doctorTalgat from "images/doctors/talgat.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
-    list: {}
+    list: {
+        paddingLeft: 60,
+        [theme.breakpoints.down("sm")]: {
+            paddingLeft: 0
+        }
+    }
 }));
 
 const doctorsList = [

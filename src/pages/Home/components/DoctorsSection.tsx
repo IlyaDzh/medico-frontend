@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     sliderArrow: {
         "&:hover svg path": {
-            fill: theme.palette.primary.dark
+            fill: theme.palette.text.primary
         },
         "&.Mui-disabled svg path": {
             fill: theme.palette.text.disabled

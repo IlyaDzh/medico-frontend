@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             background: "#ECEFF9",
             "& svg path": {
-                fill: theme.palette.primary.dark
+                fill: theme.palette.text.primary
             }
         },
         "&.Mui-disabled svg path": {

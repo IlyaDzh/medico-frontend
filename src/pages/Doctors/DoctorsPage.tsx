@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DoctorsCategories, DoctorsList } from "./components";
+import { DoctorsCategories, DoctorsList, DoctorsPagination } from "./components";
 import { ExtendedHeader, Footer } from "components";
 
 export const DoctorsPage: React.FC = () => {
@@ -10,6 +10,7 @@ export const DoctorsPage: React.FC = () => {
             <main>
                 <DoctorsCategories />
                 <DoctorsList />
+                <DoctorsPagination />
             </main>
             <Footer />
         </React.Fragment>

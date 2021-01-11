@@ -106,7 +106,7 @@ export const TariffCard: React.FC<ITariffCard> = ({
                 </Typography>
                 <div className={classes.tariffPrice}>
                     <Typography variant="h3">{price}</Typography>
-                    <Typography variant="h6" color="primary">
+                    <Typography variant="h6" color="textPrimary">
                         {receptions}
                     </Typography>
                 </div>
