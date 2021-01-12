@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { Container, makeStyles, useMediaQuery, Theme } from "@material-ui/core";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -18,13 +18,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorsPagination: React.FC = () => {
     const classes = useStyles();
+    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
 
     return (
         <Container>
             <div className={classes.pagination}>
                 <Pagination
                     count={23}
-                    siblingCount={3}
+                    siblingCount={matches ? 0 : 3}
                     renderItem={item => (
                         <PaginationItem
                             classes={{ root: classes.paginationItem }}

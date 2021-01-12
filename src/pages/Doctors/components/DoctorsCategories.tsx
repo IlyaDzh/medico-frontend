@@ -1,18 +1,25 @@
 import React, { useState } from "react";
-import { Container, makeStyles } from "@material-ui/core";
+import { Container, makeStyles, Theme } from "@material-ui/core";
 
 import { CategoryChip } from "./CategoryChip";
 import { categories } from "utils/constants";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     categories: {
         display: "flex",
         flexWrap: "wrap",
         margin: "0 -12px",
-        padding: "36px 0 56px"
+        padding: "36px 0 56px",
+        [theme.breakpoints.down("xs")]: {
+            padding: "25px 0",
+            margin: "0 -6px"
+        }
     },
     category: {
-        margin: "6px 12px"
+        margin: "6px 12px",
+        [theme.breakpoints.down("xs")]: {
+            margin: "6px"
+        }
     }
 }));
 

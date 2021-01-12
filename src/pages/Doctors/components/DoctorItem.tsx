@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
 import { Button } from "components";
@@ -23,7 +23,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         marginBottom: 80,
         [theme.breakpoints.down("xs")]: {
-            marginBottom: 36
+            marginBottom: 36,
+            flexDirection: "column"
+        }
+    },
+    doctorInner: {
+        display: "flex",
+        [theme.breakpoints.down("xs")]: {
+            margin: "8px 0 24px"
         }
     },
     doctorImage: {
@@ -35,10 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             objectFit: "cover",
             maxHeight: 346,
             height: "100%",
-            width: "100%",
-            [theme.breakpoints.down("xs")]: {
-                maxHeight: 176
-            }
+            width: "100%"
         },
         [theme.breakpoints.down("xs")]: {
             marginRight: 18,
@@ -48,11 +52,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     doctorInfo: {
         maxWidth: 624
     },
+    doctorCategory: {
+        marginBottom: 6
+    },
     doctorAbout: {
         marginBottom: 12
     },
     doctorJobTime: {
-        marginBottom: 20
+        marginBottom: 20,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 0
+        }
     }
 }));
 
@@ -61,39 +71,74 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
 
     return (
         <section className={classes.doctor}>
-            <div className={classes.doctorImage}>
-                <img src={doctor.image} alt="" />
-            </div>
-            <div className={classes.doctorInfo}>
-                <Typography variant="body2" color="textPrimary">
-                    {doctor.category}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    {doctor.time}
-                </Typography>
-                <Typography variant="h3">{doctor.fullName}</Typography>
+            <Hidden smUp>
                 <div>
-                    <Rating value={doctor.rating} size="small" readOnly />
+                    <Typography
+                        className={classes.doctorCategory}
+                        variant="body2"
+                        color="textPrimary"
+                    >
+                        {doctor.category}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                        {doctor.time}
+                    </Typography>
                 </div>
-                <Typography className={classes.doctorAbout} color="textSecondary">
-                    {doctor.description}
-                </Typography>
-                <Typography
-                    className={classes.doctorJobTime}
-                    variant="h5"
-                    color="textSecondary"
-                >
-                    Стаж работы: {doctor.jobTime}
-                </Typography>
-                <Button
-                    variant="contained"
-                    size="large"
-                    to={`/doctor/${doctor.id}`}
-                    icon={<ArrowRightIcon color="#fff" />}
-                >
-                    Записаться на приём
-                </Button>
+            </Hidden>
+            <div className={classes.doctorInner}>
+                <div className={classes.doctorImage}>
+                    <img src={doctor.image} alt="" />
+                </div>
+                <div className={classes.doctorInfo}>
+                    <Hidden xsDown>
+                        <Typography variant="body2" color="textPrimary">
+                            {doctor.category}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                            {doctor.time}
+                        </Typography>
+                    </Hidden>
+                    <Typography variant="h3">{doctor.fullName}</Typography>
+                    <div>
+                        <Rating value={doctor.rating} size="small" readOnly />
+                    </div>
+                    <Typography
+                        className={classes.doctorAbout}
+                        color="textSecondary"
+                    >
+                        {doctor.description}
+                    </Typography>
+                    <Typography
+                        className={classes.doctorJobTime}
+                        variant="h5"
+                        color="textSecondary"
+                    >
+                        Стаж работы: {doctor.jobTime}
+                    </Typography>
+                    <Hidden xsDown>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            to={`/doctor/${doctor.id}`}
+                            icon={<ArrowRightIcon color="#fff" />}
+                        >
+                            Записаться на приём
+                        </Button>
+                    </Hidden>
+                </div>
             </div>
+            <Hidden smUp>
+                <div>
+                    <Button
+                        variant="contained"
+                        size="large"
+                        to={`/doctor/${doctor.id}`}
+                        icon={<ArrowRightIcon color="#fff" />}
+                    >
+                        Записаться на приём
+                    </Button>
+                </div>
+            </Hidden>
         </section>
     );
 };

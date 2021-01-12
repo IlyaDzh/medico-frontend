@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     chipActive: {
         borderColor: theme.palette.primary.dark
     },
+    chipLabel: {
+        [theme.breakpoints.down("xs")]: {
+            fontSize: 12
+        }
+    },
     chipLabelActive: {
         color: theme.palette.text.primary,
         transition: "0.2s color ease"
@@ -50,7 +55,10 @@ export const CategoryChip: React.FC<ICategoryChip> = ({
             onClick={onClick}
         >
             <Typography
-                className={isActive ? classes.chipLabelActive : ""}
+                className={clsx(
+                    classes.chipLabel,
+                    isActive && classes.chipLabelActive
+                )}
                 variant="h6"
             >
                 {label}

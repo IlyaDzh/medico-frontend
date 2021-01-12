@@ -80,10 +80,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 500,
             lineHeight: "36px",
             [breakpoints.down("sm")]: {
-                fontSize: 24
+                fontSize: 24,
+                lineHeight: "32px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 20
+                fontSize: 20,
+                lineHeight: "28px"
             }
         },
         h4: {
@@ -104,10 +106,12 @@ const globalTheme = createMuiTheme({
             fontWeight: 500,
             lineHeight: "28px",
             [breakpoints.down("sm")]: {
-                fontSize: 16
+                fontSize: 16,
+                lineHeight: "24px"
             },
             [breakpoints.down("xs")]: {
-                fontSize: 14
+                fontSize: 14,
+                lineHeight: "20px"
             }
         },
         h6: {
