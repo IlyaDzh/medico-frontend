@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         [theme.breakpoints.down("xs")]: {
             margin: "8px 0 24px"
+        },
+        [theme.breakpoints.down(375)]: {
+            display: "block"
         }
     },
     doctorImage: {
@@ -47,6 +50,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginRight: 18,
             minWidth: 106
+        },
+        [theme.breakpoints.down(375)]: {
+            marginRight: 0,
+            marginBottom: 12
         }
     },
     doctorInfo: {

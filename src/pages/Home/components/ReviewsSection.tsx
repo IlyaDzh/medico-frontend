@@ -15,6 +15,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     reviewsSection: {
+        overflow: "hidden",
         padding: "120px 0",
         background: `linear-gradient(0, transparent 50%, ${theme.palette.primary.main} 50%)`,
         [theme.breakpoints.down("sm")]: {
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     slider: {
         "& .slick-list": {
+            overflow: "visible",
             margin: "0 -6px",
             [theme.breakpoints.down("xs")]: {
                 margin: "0 -3px"
@@ -63,10 +65,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             [theme.breakpoints.down("xs")]: {
                 margin: "0 -3px"
             }
-        },
-        [theme.breakpoints.down("xs")]: {
-            marginRight: "-14px",
-            marginLeft: "-14px"
         }
     }
 }));
@@ -78,7 +76,7 @@ const settings: Settings = {
     infinite: false,
     arrows: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3.15,
     slidesToScroll: 1,
     swipe: false,
     swipeToSlide: true,
@@ -119,7 +117,7 @@ export const ReviewsSection: React.FC = () => {
     const sliderRef = useRef<Slider>(null);
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down(850));
 
-    const slidesToShow: number = matches ? 2 : 3;
+    const slidesToShow: number = matches ? 2 : 3.15;
 
     const handleClickNextSlide = useCallback((): void => {
         sliderRef?.current?.slickNext();

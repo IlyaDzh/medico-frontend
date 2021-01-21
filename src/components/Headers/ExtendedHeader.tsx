@@ -1,14 +1,7 @@
 import React from "react";
-import {
-    Container,
-    Typography,
-    TextField,
-    Hidden,
-    makeStyles,
-    Theme
-} from "@material-ui/core";
+import { Container, Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 
-import { Breadcrumbs, Button } from "components";
+import { Breadcrumbs, Button, SearchInput } from "components";
 import { Header } from "./Header";
 
 import headerBackground from "images/header/header-background.jpg";
@@ -44,6 +37,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down(370)]: {
             marginBottom: 8
         }
+    },
+    headerSearchWrapper: {
+        maxWidth: 396,
+        width: "100%"
     }
 }));
 
@@ -65,10 +62,9 @@ export const ExtendedHeader: React.FC = () => {
                         Специалисты
                     </Typography>
                     <Hidden smDown>
-                        <TextField
-                            variant="outlined"
-                            placeholder="Поиск специалиста"
-                        />
+                        <div className={classes.headerSearchWrapper}>
+                            <SearchInput placeholder="Поиск специалиста" fullWidth />
+                        </div>
                     </Hidden>
                     <Hidden mdUp>
                         <Button variant="outlined" color="default" size="small">
