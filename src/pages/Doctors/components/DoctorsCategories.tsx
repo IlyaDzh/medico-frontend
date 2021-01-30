@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 import { CategoryChip } from "./CategoryChip";
 import { categories } from "utils/constants";
@@ -28,18 +28,16 @@ export const DoctorsCategories: React.FC = () => {
     const [currentCategory, setCurrentCategory] = useState<string>("all");
 
     return (
-        <Container>
-            <ul className={classes.categories}>
-                {categories.map(category => (
-                    <li key={category.code} className={classes.category}>
-                        <CategoryChip
-                            label={category.label}
-                            isActive={category.code === currentCategory}
-                            onClick={() => setCurrentCategory(category.code)}
-                        />
-                    </li>
-                ))}
-            </ul>
-        </Container>
+        <ul className={classes.categories}>
+            {categories.map(category => (
+                <li key={category.code} className={classes.category}>
+                    <CategoryChip
+                        label={category.label}
+                        isActive={category.code === currentCategory}
+                        onClick={() => setCurrentCategory(category.code)}
+                    />
+                </li>
+            ))}
+        </ul>
     );
 };

@@ -20,12 +20,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        flexWrap: "wrap",
         padding: "8px 0 24px",
         [theme.breakpoints.down("sm")]: {
             padding: "4px 0 12px"
-        },
-        [theme.breakpoints.down(370)]: {
-            display: "block"
         }
     },
     headerTitle: {
@@ -56,7 +54,9 @@ export const ExtendedHeader: React.FC = () => {
                 <Header />
             </Hidden>
             <Container>
-                <Breadcrumbs />
+                <Breadcrumbs
+                    items={[{ to: "/", title: "Главная" }, { title: "Специалисты" }]}
+                />
                 <div className={classes.headerContent}>
                     <Typography className={classes.headerTitle} variant="h1">
                         Специалисты

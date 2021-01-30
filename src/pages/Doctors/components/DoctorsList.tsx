@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 import { DoctorItem } from "./DoctorItem";
 import doctorAlla from "images/doctors/alla.jpg";
@@ -55,12 +55,10 @@ export const DoctorsList: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <Container>
-            <div className={classes.list}>
-                {doctorsList.map(doctor => (
-                    <DoctorItem key={doctor.id} doctor={doctor} />
-                ))}
-            </div>
-        </Container>
+        <div className={classes.list}>
+            {doctorsList.map(doctor => (
+                <DoctorItem key={doctor.id} doctor={doctor} />
+            ))}
+        </div>
     );
 };

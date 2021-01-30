@@ -278,14 +278,14 @@ const theme = createMuiTheme(
                 root: {
                     overflow: "hidden",
                     borderRadius: 8,
+                    backgroundColor: "#fff",
                     "&$disabled $notchedOutline": {
                         borderColor: globalTheme.palette.other?.main
                     }
                 },
                 input: {
                     padding: "12px 16px",
-                    height: "auto",
-                    backgroundColor: "#fff"
+                    height: "auto"
                 }
             },
             MuiListSubheader: {

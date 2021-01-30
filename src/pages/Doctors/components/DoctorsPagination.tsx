@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, makeStyles, useMediaQuery, Theme } from "@material-ui/core";
+import { makeStyles, useMediaQuery, Theme } from "@material-ui/core";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -21,19 +21,17 @@ export const DoctorsPagination: React.FC = () => {
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
 
     return (
-        <Container>
-            <div className={classes.pagination}>
-                <Pagination
-                    count={23}
-                    siblingCount={matches ? 0 : 3}
-                    renderItem={item => (
-                        <PaginationItem
-                            classes={{ root: classes.paginationItem }}
-                            {...item}
-                        />
-                    )}
-                />
-            </div>
-        </Container>
+        <div className={classes.pagination}>
+            <Pagination
+                count={23}
+                siblingCount={matches ? 0 : 3}
+                renderItem={item => (
+                    <PaginationItem
+                        classes={{ root: classes.paginationItem }}
+                        {...item}
+                    />
+                )}
+            />
+        </div>
     );
 };

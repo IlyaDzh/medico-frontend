@@ -12,3 +12,4 @@ export * from "./AccountEnvelopeIcon";
 export * from "./MenuIcon";
 export * from "./ExitIcon";
 export * from "./InfoIcon";
+export * from "./SearchIcon";

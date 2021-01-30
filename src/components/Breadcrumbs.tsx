@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import {
     Breadcrumbs as BaseBreadcrumbs,
@@ -6,6 +7,16 @@ import {
     makeStyles,
     Theme
 } from "@material-ui/core";
+
+interface IBreadcrumbs {
+    items: TBreadcrumb[];
+    itemClassName?: string;
+}
+
+type TBreadcrumb = {
+    to?: string;
+    title: string;
+};
 
 const useStyles = makeStyles((theme: Theme) => ({
     breadcrumbsItem: {
@@ -17,19 +28,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const Breadcrumbs: React.FC = () => {
+export const Breadcrumbs: React.FC<IBreadcrumbs> = ({ items, itemClassName }) => {
     const classes = useStyles();
 
     return (
         <BaseBreadcrumbs
             component="div"
-            classes={{ separator: classes.breadcrumbsItem }}
-            aria-label="breadcrumb"
+            classes={{ separator: clsx(classes.breadcrumbsItem, itemClassName) }}
+            aria-label="breadcrumbs"
         >
-            <Link className={classes.breadcrumbsItem} to="/">
-                Главная
-            </Link>
-            <Typography className={classes.breadcrumbsItem}>Специалисты</Typography>
+            {items.map(item =>
+                item.to ? (
+                    <Link
+                        key={item.to}
+                        className={clsx(classes.breadcrumbsItem, itemClassName)}
+                        to={item.to}
+                    >
+                        {item.title}
+                    </Link>
+                ) : (
+                    <Typography
+                        key={item.title}
+                        className={clsx(classes.breadcrumbsItem, itemClassName)}
+                    >
+                        {item.title}
+                    </Typography>
+                )
+            )}
         </BaseBreadcrumbs>
     );
 };
