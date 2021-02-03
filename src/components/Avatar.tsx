@@ -7,22 +7,26 @@ import {
 } from "@material-ui/core";
 
 interface IAvatarProps {
-    size?: "sm" | "lg";
+    size?: "sm" | "lg" | "elg";
     componentTag?: string;
 }
 
 const useStyles = makeStyles(() => ({
     avatar: {
-        width: "44px",
-        height: "44px"
+        width: 44,
+        height: 44
     },
     small: {
-        width: "36px",
-        height: "36px"
+        width: 36,
+        height: 36
     },
     large: {
-        width: "48px",
-        height: "48px"
+        width: 48,
+        height: 48
+    },
+    extraLarge: {
+        width: 58,
+        height: 58
     }
 }));
 
@@ -41,7 +45,8 @@ export const Avatar: React.FC<IAvatarProps & AvatarProps> = ({
             className={clsx(
                 classes.avatar,
                 size === "sm" && classes.small,
-                size === "lg" && classes.large
+                size === "lg" && classes.large,
+                size === "elg" && classes.extraLarge
             )}
             {...props}
         />

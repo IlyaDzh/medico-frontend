@@ -1,8 +1,8 @@
 import React from "react";
-import { Typography, Tabs, Tab, Hidden, makeStyles, Theme } from "@material-ui/core";
+import { Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
-import { Breadcrumbs, Button } from "components";
+import { Breadcrumbs, Button, ProfileTabs } from "components";
 import { ArrowRightIcon } from "icons";
 
 import doctorAlla from "images/doctors/alla.jpg";
@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingTop: 48
         },
         [theme.breakpoints.down("xs")]: {
-            paddingTop: 24
+            paddingTop: 24,
+            paddingBottom: 48
         }
     },
     breadcrumbs: {
@@ -92,28 +93,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginBottom: 12
         }
-    },
-    profileTabs: {
-        "& .MuiTabScrollButton-root.Mui-disabled": {
-            display: "none"
-        }
-    },
-    tabItem: {
-        textTransform: "unset",
-        minWidth: "unset",
-        fontSize: 18,
-        padding: "6px 28px",
-        whiteSpace: "nowrap"
     }
 }));
 
 export const DoctorProfile: React.FC = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
 
     return (
         <div className={classes.profile}>
@@ -188,27 +172,7 @@ export const DoctorProfile: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className={classes.profileTabs}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        variant="scrollable"
-                        scrollButtons="on"
-                    >
-                        <Tab className={classes.tabItem} label="Отзывы" />
-                        <Tab className={classes.tabItem} label="Образование" />
-                        <Tab className={classes.tabItem} label="Опыт работы" />
-                        <Tab
-                            className={classes.tabItem}
-                            label="Основные направления"
-                        />
-                    </Tabs>
-                    <div hidden={value !== 0}>Отзывы</div>
-                    <div hidden={value !== 1}>Образование</div>
-                    <div hidden={value !== 2}>Опыт работы</div>
-                    <div hidden={value !== 3}>Основные направления</div>
-                </div>
+                <ProfileTabs />
             </div>
         </div>
     );

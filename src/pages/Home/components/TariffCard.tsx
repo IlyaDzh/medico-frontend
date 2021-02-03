@@ -6,8 +6,12 @@ import { Button } from "components";
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
         position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         maxWidth: 445,
         width: "100%",
+        height: "100%",
         padding: "48px 36px",
         margin: "0 auto",
         backgroundColor: theme.palette.other?.main,
