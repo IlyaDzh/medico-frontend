@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
 import { UiKitPage, HomePage, DoctorsPage, DoctorPage } from "./pages";
+import { DialogSignIn, DialogReset } from "components";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
@@ -26,6 +27,8 @@ export const App: React.FC = () => {
                     <Route component={() => <div>Error</div>} />
                 </Switch>
             </Suspense>
+            {/* <DialogSignIn /> */}
+            <DialogReset />
         </React.Fragment>
     );
 };

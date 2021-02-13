@@ -13,3 +13,4 @@ export * from "./MenuIcon";
 export * from "./ExitIcon";
 export * from "./InfoIcon";
 export * from "./SearchIcon";
+export * from "./ResetIcon";
