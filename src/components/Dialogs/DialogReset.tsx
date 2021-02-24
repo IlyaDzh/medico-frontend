@@ -5,15 +5,14 @@ import {
     Checkbox,
     Link,
     Typography,
-    makeStyles,
-    Theme
+    makeStyles
 } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
 import { Button } from "components";
 import { ResetIcon } from "icons";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     formInput: {
         marginBottom: 36,
         "& .MuiOutlinedInput-notchedOutline": {
@@ -43,6 +42,7 @@ export const DialogReset: React.FC = () => {
         >
             <form onSubmit={handleSubmit}>
                 <TextField
+                    type="email"
                     className={classes.formInput}
                     variant="outlined"
                     color="secondary"

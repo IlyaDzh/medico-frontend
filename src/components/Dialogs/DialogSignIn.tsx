@@ -67,6 +67,7 @@ export const DialogSignIn: React.FC = () => {
         >
             <form className={classes.dialogForm} onSubmit={handleSubmit}>
                 <TextField
+                    type="email"
                     className={classes.formInput}
                     variant="outlined"
                     color="secondary"
@@ -74,6 +75,7 @@ export const DialogSignIn: React.FC = () => {
                     fullWidth
                 />
                 <TextField
+                    type="password"
                     className={classes.formInput}
                     variant="outlined"
                     color="secondary"

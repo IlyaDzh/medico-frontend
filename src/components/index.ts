@@ -6,3 +6,4 @@ export * from "./Breadcrumbs";
 export * from "./SearchInput";
 export * from "./ProfileTabs";
 export * from "./Dialogs";
+export * from "./PaddingLine";

@@ -1,5 +1,4 @@
 import React from "react";
-import clsx from "clsx";
 import {
     Dialog,
     DialogTitle,
@@ -15,14 +14,15 @@ import { CrossIcon } from "icons";
 interface IDialogBase {
     title: string;
     icon: React.ReactNode;
+    paperWidth?: number;
     onClose: () => any;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-    dialogPaper: {
+    dialogPaper: paperWidth => ({
         width: "100%",
-        maxWidth: 481
-    },
+        maxWidth: Number(paperWidth) ? Number(paperWidth) : 481
+    }),
     dialogTitle: {
         display: "flex",
         justifyContent: "space-between",
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: "22px 44px 22px 32px"
         },
         [theme.breakpoints.down("xs")]: {
-            padding: "12px 30px 12px 16px"
+            padding: "12px 18px 12px 14px"
         }
     },
     dialogTitleText: {
@@ -62,15 +62,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DialogBase: React.FC<IDialogBase> = ({
     title,
     icon,
+    paperWidth,
     onClose,
     children
 }) => {
-    const classes = useStyles();
+    const classes = useStyles(paperWidth);
 
     return (
         <Dialog
             scroll="body"
-            PaperProps={{ className: clsx(classes.dialogPaper) }}
+            PaperProps={{
+                className: classes.dialogPaper
+            }}
             open={true}
             onClose={onClose}
             aria-labelledby="alert-dialog-title"
