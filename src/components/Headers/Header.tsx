@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { observer } from "mobx-react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import {
@@ -12,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 import { Button, Avatar } from "components";
+import { useStores } from "stores/useStore";
 import {
     LogoIcon,
     UserIcon,
@@ -130,178 +132,193 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const Header: React.FC<IHeader> = ({
-    isAuthorized = false,
-    isAbsolute,
-    leftBarIsLight,
-    rightBarIsLight,
-    isHeader
-}) => {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+export const Header: React.FC<IHeader> = observer(
+    ({
+        isAuthorized = false,
+        isAbsolute,
+        leftBarIsLight,
+        rightBarIsLight,
+        isHeader
+    }) => {
+        const classes = useStyles();
+        const { modalsStore } = useStores();
+        const { setModalIsOpen } = modalsStore;
+        const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        setAnchorEl(event.currentTarget);
-    };
+        const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+            setAnchorEl(event.currentTarget);
+        };
 
-    const handleClose = (): void => {
-        setAnchorEl(null);
-    };
+        const handleClose = (): void => {
+            setAnchorEl(null);
+        };
 
-    const navigation = (
-        <nav className={clsx(classes.appBar, isAbsolute && classes.appBarAbsolute)}>
-            <Container
+        const navigation = (
+            <nav
                 className={clsx(
-                    classes.appBarContainer,
-                    isAuthorized && classes.appBarContainerAuth
+                    classes.appBar,
+                    isAbsolute && classes.appBarAbsolute
                 )}
             >
-                <div className={classes.leftBar}>
-                    <Link
-                        to="/"
-                        className={classes.logo}
-                        aria-label="Перейти на главную"
-                    >
-                        <Hidden xsDown>
-                            <LogoIcon isLight={leftBarIsLight} />
-                        </Hidden>
-                        <Hidden smUp>
-                            <LogoIcon width={64} isLight={leftBarIsLight} />
-                        </Hidden>
-                    </Link>
-                    <Hidden smDown>
+                <Container
+                    className={clsx(
+                        classes.appBarContainer,
+                        isAuthorized && classes.appBarContainerAuth
+                    )}
+                >
+                    <div className={classes.leftBar}>
                         <Link
-                            to="/doctors"
-                            className={clsx(
-                                classes.animatedLink,
-                                leftBarIsLight && classes.animatedLinkIsLight
-                            )}
+                            to="/"
+                            className={classes.logo}
+                            aria-label="Перейти на главную"
                         >
-                            Специалисты
+                            <Hidden xsDown>
+                                <LogoIcon isLight={leftBarIsLight} />
+                            </Hidden>
+                            <Hidden smUp>
+                                <LogoIcon width={64} isLight={leftBarIsLight} />
+                            </Hidden>
                         </Link>
-                    </Hidden>
-                </div>
-                {!isAuthorized ? (
-                    <div>
-                        <Button
-                            variant="text"
-                            color={rightBarIsLight ? "default" : "primary"}
-                            to="/sign-in"
-                            className={classes.signInLink}
-                            startIcon={<UserIcon />}
-                        >
-                            Вход
-                        </Button>
-                        <Hidden smDown>
-                            <Button
-                                variant="outlined"
-                                color={rightBarIsLight ? "default" : "primary"}
-                                size="small"
-                                className={classes.conslutationBtn}
-                            >
-                                Бесплатная консультация
-                            </Button>
-                        </Hidden>
-                    </div>
-                ) : (
-                    <div className={classes.rightBar}>
                         <Hidden smDown>
                             <Link
                                 to="/doctors"
                                 className={clsx(
                                     classes.animatedLink,
-                                    rightBarIsLight && classes.animatedLinkIsLight
+                                    leftBarIsLight && classes.animatedLinkIsLight
                                 )}
                             >
-                                Записаться на приём
+                                Специалисты
                             </Link>
-                            <div className={classes.iconButtons}>
-                                <IconButton aria-label="Открыть уведомления">
-                                    <AccountNotificationIcon
-                                        isLight={rightBarIsLight}
-                                        isNew
-                                    />
-                                </IconButton>
-                                <IconButton aria-label="Открыть сообщения">
-                                    <AccountEnvelopeIcon
-                                        isLight={rightBarIsLight}
-                                        isNew
-                                    />
-                                </IconButton>
-                            </div>
-                            <div>
-                                <Button
-                                    className={clsx(
-                                        classes.accountMenuBtn,
-                                        rightBarIsLight &&
-                                            classes.accountMenuBtnLight
-                                    )}
-                                    variant="text"
-                                    color="default"
-                                    startIcon={
-                                        <Avatar
-                                            componentTag="span"
-                                            alt="Евгений К."
-                                            src={undefined}
-                                        />
-                                    }
-                                    onClick={handleClick}
-                                    aria-label="Аккаунт пользователя"
-                                    aria-controls="account-menu"
-                                    aria-haspopup="true"
-                                    disableTouchRipple
-                                >
-                                    Евгений К.
-                                </Button>
-                                <Menu
-                                    id="account-menu"
-                                    anchorEl={anchorEl}
-                                    getContentAnchorEl={null}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "center"
-                                    }}
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "center"
-                                    }}
-                                >
-                                    <MenuItem
-                                        onClick={handleClose}
-                                        className={classes.accountMenuItem}
-                                    >
-                                        <span className={classes.accountMenuIcon}>
-                                            <UserIcon color="#5a5f6f" />
-                                        </span>{" "}
-                                        Мой кабинет
-                                    </MenuItem>
-                                    <MenuItem
-                                        onClick={handleClose}
-                                        className={clsx(
-                                            classes.accountMenuItem,
-                                            classes.accountMenuItemExit
-                                        )}
-                                    >
-                                        <span className={classes.accountMenuIcon}>
-                                            <ExitIcon />
-                                        </span>{" "}
-                                        Выйти
-                                    </MenuItem>
-                                </Menu>
-                            </div>
-                        </Hidden>
-                        <Hidden mdUp>
-                            <IconButton aria-label="Открыть меню">
-                                <MenuIcon isLight={rightBarIsLight} isNew />
-                            </IconButton>
                         </Hidden>
                     </div>
-                )}
-            </Container>
-        </nav>
-    );
+                    {!isAuthorized ? (
+                        <div>
+                            <Button
+                                variant="text"
+                                color={rightBarIsLight ? "default" : "primary"}
+                                className={classes.signInLink}
+                                startIcon={<UserIcon />}
+                                onClick={() => setModalIsOpen("sign-in", true)}
+                            >
+                                Вход
+                            </Button>
+                            <Hidden smDown>
+                                <Button
+                                    variant="outlined"
+                                    color={rightBarIsLight ? "default" : "primary"}
+                                    size="small"
+                                    to="/sign-up"
+                                    className={classes.conslutationBtn}
+                                >
+                                    Бесплатная консультация
+                                </Button>
+                            </Hidden>
+                        </div>
+                    ) : (
+                        <div className={classes.rightBar}>
+                            <Hidden smDown>
+                                <Link
+                                    to="/doctors"
+                                    className={clsx(
+                                        classes.animatedLink,
+                                        rightBarIsLight &&
+                                            classes.animatedLinkIsLight
+                                    )}
+                                >
+                                    Записаться на приём
+                                </Link>
+                                <div className={classes.iconButtons}>
+                                    <IconButton aria-label="Открыть уведомления">
+                                        <AccountNotificationIcon
+                                            isLight={rightBarIsLight}
+                                            isNew
+                                        />
+                                    </IconButton>
+                                    <IconButton aria-label="Открыть сообщения">
+                                        <AccountEnvelopeIcon
+                                            isLight={rightBarIsLight}
+                                            isNew
+                                        />
+                                    </IconButton>
+                                </div>
+                                <div>
+                                    <Button
+                                        className={clsx(
+                                            classes.accountMenuBtn,
+                                            rightBarIsLight &&
+                                                classes.accountMenuBtnLight
+                                        )}
+                                        variant="text"
+                                        color="default"
+                                        startIcon={
+                                            <Avatar
+                                                componentTag="span"
+                                                alt="Евгений К."
+                                                src={undefined}
+                                            />
+                                        }
+                                        onClick={handleClick}
+                                        aria-label="Аккаунт пользователя"
+                                        aria-controls="account-menu"
+                                        aria-haspopup="true"
+                                        disableTouchRipple
+                                    >
+                                        Евгений К.
+                                    </Button>
+                                    <Menu
+                                        id="account-menu"
+                                        anchorEl={anchorEl}
+                                        getContentAnchorEl={null}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: "bottom",
+                                            horizontal: "center"
+                                        }}
+                                        transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "center"
+                                        }}
+                                    >
+                                        <MenuItem
+                                            onClick={handleClose}
+                                            className={classes.accountMenuItem}
+                                        >
+                                            <span
+                                                className={classes.accountMenuIcon}
+                                            >
+                                                <UserIcon color="#5a5f6f" />
+                                            </span>{" "}
+                                            Мой кабинет
+                                        </MenuItem>
+                                        <MenuItem
+                                            onClick={handleClose}
+                                            className={clsx(
+                                                classes.accountMenuItem,
+                                                classes.accountMenuItemExit
+                                            )}
+                                        >
+                                            <span
+                                                className={classes.accountMenuIcon}
+                                            >
+                                                <ExitIcon />
+                                            </span>{" "}
+                                            Выйти
+                                        </MenuItem>
+                                    </Menu>
+                                </div>
+                            </Hidden>
+                            <Hidden mdUp>
+                                <IconButton aria-label="Открыть меню">
+                                    <MenuIcon isLight={rightBarIsLight} isNew />
+                                </IconButton>
+                            </Hidden>
+                        </div>
+                    )}
+                </Container>
+            </nav>
+        );
 
-    return isHeader ? <header>{navigation}</header> : navigation;
-};
+        return isHeader ? <header>{navigation}</header> : navigation;
+    }
+);

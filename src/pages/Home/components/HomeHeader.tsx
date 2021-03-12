@@ -264,7 +264,7 @@ export const HomeHeader: React.FC = () => {
                     <Button
                         variant="contained"
                         size="large"
-                        to="/home"
+                        to="/doctors"
                         icon={<ArrowRightIcon color="#fff" />}
                     >
                         Записаться на приём

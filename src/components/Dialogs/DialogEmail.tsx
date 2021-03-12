@@ -1,8 +1,10 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { Typography, makeStyles } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 import { UserPlusIcon, MailIcon } from "icons";
 
 const useStyles = makeStyles(() => ({
@@ -16,14 +18,21 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const DialogEmail: React.FC = () => {
+export const DialogEmail: React.FC = observer(() => {
     const classes = useStyles();
+    const { modalsStore } = useStores();
+    const { getModalIsOpen, setModalIsOpen } = modalsStore;
+
+    const handleClose = (): void => {
+        setModalIsOpen("email", false);
+    };
 
     return (
         <DialogBase
+            isOpen={getModalIsOpen("email")}
             title="Регистрация"
             icon={<UserPlusIcon />}
-            onClose={() => console.log("close")}
+            onClose={handleClose}
             paperWidth={544}
         >
             <div className={classes.content}>
@@ -39,4 +48,4 @@ export const DialogEmail: React.FC = () => {
             </Button>
         </DialogBase>
     );
-};
+});

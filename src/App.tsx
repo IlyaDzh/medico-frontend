@@ -28,10 +28,10 @@ export const App: React.FC = () => {
                     <Route component={() => <div>Error</div>} />
                 </Switch>
             </Suspense>
-            {/* <DialogSignIn /> */}
-            {/* <DialogReset /> */}
-            {/* <DialogEmail /> */}
-            {/* <DialogConfirmation /> */}
+            <DialogSignIn />
+            <DialogReset />
+            <DialogEmail />
+            <DialogConfirmation />
         </React.Fragment>
     );
 };

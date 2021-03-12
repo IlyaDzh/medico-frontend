@@ -1,8 +1,10 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { Typography, TextField, makeStyles } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 import { ConfirmationIcon } from "icons";
 
 const useStyles = makeStyles(() => ({
@@ -19,19 +21,26 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const DialogConfirmation: React.FC = () => {
+export const DialogConfirmation: React.FC = observer(() => {
     const classes = useStyles();
+    const { modalsStore } = useStores();
+    const { getModalIsOpen, setModalIsOpen } = modalsStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         console.log("submit");
     };
 
+    const handleClose = (): void => {
+        setModalIsOpen("confirmation", false);
+    };
+
     return (
         <DialogBase
+            isOpen={getModalIsOpen("confirmation")}
             title="Подтверждение"
             icon={<ConfirmationIcon />}
-            onClose={() => console.log("close")}
+            onClose={handleClose}
             paperWidth={544}
         >
             <div className={classes.confirmationText}>
@@ -55,4 +64,4 @@ export const DialogConfirmation: React.FC = () => {
             </form>
         </DialogBase>
     );
-};
+});

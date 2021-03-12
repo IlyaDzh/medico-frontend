@@ -12,6 +12,7 @@ import {
 import { CrossIcon } from "icons";
 
 interface IDialogBase {
+    isOpen: boolean;
     title: string;
     icon: React.ReactNode;
     paperWidth?: number;
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const DialogBase: React.FC<IDialogBase> = ({
+    isOpen,
     title,
     icon,
     paperWidth,
@@ -74,7 +76,7 @@ export const DialogBase: React.FC<IDialogBase> = ({
             PaperProps={{
                 className: classes.dialogPaper
             }}
-            open={true}
+            open={isOpen}
             onClose={onClose}
             aria-labelledby="alert-dialog-title"
         >

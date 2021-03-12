@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react";
 import {
     TextField,
     FormControlLabel,
     Checkbox,
-    Link,
+    Link as MaterialLink,
     Typography,
     makeStyles,
     Theme
@@ -11,6 +13,7 @@ import {
 
 import { DialogBase } from "./DialogBase";
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 import { UserIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -45,25 +48,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     dialogLink: {
         textDecoration: "underline",
         fontSize: 14,
+        color: theme.palette.text.secondary,
         "&:hover": {
             textDecoration: "none"
         }
     }
 }));
 
-export const DialogSignIn: React.FC = () => {
+export const DialogSignIn: React.FC = observer(() => {
     const classes = useStyles();
+    const { modalsStore } = useStores();
+    const { getModalIsOpen, setModalIsOpen } = modalsStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         console.log("submit");
     };
 
+    const handleClose = (): void => {
+        setModalIsOpen("sign-in", false);
+    };
+
     return (
         <DialogBase
+            isOpen={getModalIsOpen("sign-in")}
             title="Вход"
             icon={<UserIcon color="#fff" width={32} height={32} />}
-            onClose={() => console.log("close")}
+            onClose={handleClose}
         >
             <form className={classes.dialogForm} onSubmit={handleSubmit}>
                 <TextField
@@ -95,18 +106,17 @@ export const DialogSignIn: React.FC = () => {
                             </Typography>
                         }
                     />
-                    <Link
+                    <MaterialLink
                         className={classes.dialogLink}
                         type="button"
                         component="button"
                         variant="h6"
-                        color="textSecondary"
                         onClick={() => {
                             console.info("open forget-password dialog");
                         }}
                     >
                         Забыли пароль?
-                    </Link>
+                    </MaterialLink>
                 </div>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                     Войти
@@ -115,17 +125,12 @@ export const DialogSignIn: React.FC = () => {
             <div className={classes.dialogFooter}>
                 <Link
                     className={classes.dialogLink}
-                    type="button"
-                    component="button"
-                    variant="h6"
-                    color="textSecondary"
-                    onClick={() => {
-                        console.info("open sign-up dialog");
-                    }}
+                    onClick={handleClose}
+                    to="sign-up"
                 >
                     Зарегистрироваться
                 </Link>
             </div>
         </DialogBase>
     );
-};
+});

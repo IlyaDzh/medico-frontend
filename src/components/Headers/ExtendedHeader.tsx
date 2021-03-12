@@ -67,7 +67,12 @@ export const ExtendedHeader: React.FC = () => {
                         </div>
                     </Hidden>
                     <Hidden mdUp>
-                        <Button variant="outlined" color="default" size="small">
+                        <Button
+                            variant="outlined"
+                            color="default"
+                            size="small"
+                            to="/sign-up"
+                        >
                             Бесплатная консультация
                         </Button>
                     </Hidden>

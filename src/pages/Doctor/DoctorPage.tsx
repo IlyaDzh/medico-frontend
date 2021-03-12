@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Hidden } from "@material-ui/core";
 
-import { ExtendedHeader, Header } from "components";
+import { ExtendedHeader, Header, Footer } from "components";
 import { DoctorProfile } from "./components";
 
 export const DoctorPage: React.FC = () => {
@@ -18,6 +18,7 @@ export const DoctorPage: React.FC = () => {
                     <DoctorProfile />
                 </Container>
             </main>
+            <Footer />
         </React.Fragment>
     );
 };

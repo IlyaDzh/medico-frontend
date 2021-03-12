@@ -4,17 +4,22 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core";
 
 import { App } from "./App";
-import reportWebVitals from "./reportWebVitals";
+import { rootStore } from "./stores";
+import { StoreProvider } from "./stores/useStore";
 
 import { main } from "./styles/material";
 import "./styles/index.scss";
 
+import reportWebVitals from "./reportWebVitals";
+
 ReactDOM.render(
-    <MuiThemeProvider theme={main}>
-        <Router>
-            <App />
-        </Router>
-    </MuiThemeProvider>,
+    <StoreProvider store={rootStore}>
+        <MuiThemeProvider theme={main}>
+            <Router>
+                <App />
+            </Router>
+        </MuiThemeProvider>
+    </StoreProvider>,
     document.getElementById("root")
 );
 

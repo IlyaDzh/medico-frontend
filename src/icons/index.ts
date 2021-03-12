@@ -17,3 +17,5 @@ export * from "./SearchIcon";
 export * from "./ResetIcon";
 export * from "./MailIcon";
 export * from "./ConfirmationIcon";
+export * from "./ValidationGreenIcon";
+export * from "./ValidationRedIcon";
