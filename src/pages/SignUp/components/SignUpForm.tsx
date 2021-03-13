@@ -14,6 +14,7 @@ import {
     makeStyles,
     Theme
 } from "@material-ui/core";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { Button } from "components";
 import { useStores } from "stores/useStore";
@@ -145,8 +146,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const SignUpForm: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, signUpStore } = useStores();
     const { setModalIsOpen } = modalsStore;
+    const { signUpForm, doSignUp, setFormValue } = signUpStore;
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        doSignUp();
+    };
+
+    const handleDateChange = (date: any): void => {
+        setFormValue("birthDate", date);
+    };
 
     const handleOpenSignInModal = (): void => {
         setModalIsOpen("sign-in", true);
@@ -176,11 +187,13 @@ export const SignUpForm: React.FC = observer(() => {
                     </MaterialLink>
                 </div>
             </div>
-            <form className={classes.form} onSubmit={() => console.log("sign-up")}>
+            <form className={classes.form} onSubmit={handleSubmit}>
                 <RadioGroup
                     className={classes.typeGroup}
-                    aria-label="user type"
+                    value={signUpForm.userType}
+                    onChange={event => setFormValue("userType", event.target.value)}
                     name="user_type"
+                    aria-label="user type"
                 >
                     <FormControlLabel
                         value="patient"
@@ -194,7 +207,6 @@ export const SignUpForm: React.FC = observer(() => {
                                 Я пациент
                             </Typography>
                         }
-                        defaultChecked
                     />
                     <FormControlLabel
                         value="doctor"
@@ -223,17 +235,29 @@ export const SignUpForm: React.FC = observer(() => {
                         variant="outlined"
                         color="secondary"
                         placeholder="Фамилия*"
+                        value={signUpForm.lastName}
+                        onChange={event =>
+                            setFormValue("lastName", event.target.value)
+                        }
                     />
                     <TextField
                         className={classes.nameGroupField}
                         variant="outlined"
                         color="secondary"
                         placeholder="Имя*"
+                        value={signUpForm.firstName}
+                        onChange={event =>
+                            setFormValue("firstName", event.target.value)
+                        }
                     />
                     <TextField
                         variant="outlined"
                         color="secondary"
                         placeholder="Отчество"
+                        value={signUpForm.middleName}
+                        onChange={event =>
+                            setFormValue("middleName", event.target.value)
+                        }
                     />
                 </FormControl>
                 <div className={classes.formRow}>
@@ -245,10 +269,18 @@ export const SignUpForm: React.FC = observer(() => {
                         <FormLabel className={classes.groupLabel} component="legend">
                             Дата рождения*
                         </FormLabel>
-                        <TextField
-                            variant="outlined"
+                        <KeyboardDatePicker
+                            inputVariant="outlined"
                             color="secondary"
                             placeholder="ДД/ММ/ГГ"
+                            format="dd/MM/yyyy"
+                            value={signUpForm.birthDate || new Date()}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                "aria-label": "change date"
+                            }}
+                            cancelLabel="Отмена"
+                            okLabel="Ок"
                         />
                     </FormControl>
                     <FormControl
@@ -261,8 +293,12 @@ export const SignUpForm: React.FC = observer(() => {
                         </FormLabel>
                         <RadioGroup
                             className={classes.genderGroup}
-                            aria-label="user gender"
+                            value={signUpForm.gender}
+                            onChange={event =>
+                                setFormValue("gender", event.target.value)
+                            }
                             name="user_gender"
+                            aria-label="user gender"
                             row
                         >
                             <FormControlLabel
@@ -277,7 +313,6 @@ export const SignUpForm: React.FC = observer(() => {
                                         Мужской
                                     </Typography>
                                 }
-                                defaultChecked
                             />
                             <FormControlLabel
                                 value="female"
@@ -307,6 +342,10 @@ export const SignUpForm: React.FC = observer(() => {
                         variant="outlined"
                         color="secondary"
                         placeholder="+7 (XXX) XXX-XX-XX"
+                        value={signUpForm.phoneNumber}
+                        onChange={event =>
+                            setFormValue("phoneNumber", event.target.value)
+                        }
                     />
                 </FormControl>
                 <FormControl
@@ -321,6 +360,8 @@ export const SignUpForm: React.FC = observer(() => {
                         variant="outlined"
                         color="secondary"
                         placeholder="example@gmail.com"
+                        value={signUpForm.email}
+                        onChange={event => setFormValue("email", event.target.value)}
                     />
                 </FormControl>
                 <FormControl
@@ -336,6 +377,10 @@ export const SignUpForm: React.FC = observer(() => {
                         variant="outlined"
                         color="secondary"
                         placeholder="Пароль"
+                        value={signUpForm.password}
+                        onChange={event =>
+                            setFormValue("password", event.target.value)
+                        }
                     />
                 </FormControl>
                 <FormControl
@@ -387,7 +432,15 @@ export const SignUpForm: React.FC = observer(() => {
                 </FormControl>
                 <FormControlLabel
                     className={classes.agreement}
-                    control={<Checkbox color="secondary" />}
+                    control={
+                        <Checkbox
+                            color="secondary"
+                            value={signUpForm.acceptedUserAgreement}
+                            onChange={(_, checked) =>
+                                setFormValue("acceptedUserAgreement", checked)
+                            }
+                        />
+                    }
                     label={
                         <Typography
                             className={classes.agreementLabel}
@@ -401,7 +454,13 @@ export const SignUpForm: React.FC = observer(() => {
                         </Typography>
                     }
                 />
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!signUpForm.acceptedUserAgreement}
+                    fullWidth
+                >
                     Зарегистрироваться
                 </Button>
             </form>
