@@ -123,6 +123,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.text.secondary,
         fontWeight: 400
     },
+    accountMenuItemLink: {
+        textDecoration: "none"
+    },
     accountMenuItemExit: {
         color: theme.palette.error.main
     },
@@ -134,7 +137,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Header: React.FC<IHeader> = observer(
     ({
-        isAuthorized = false,
+        isAuthorized = true,
         isAbsolute,
         leftBarIsLight,
         rightBarIsLight,
@@ -280,17 +283,24 @@ export const Header: React.FC<IHeader> = observer(
                                             horizontal: "center"
                                         }}
                                     >
-                                        <MenuItem
-                                            onClick={handleClose}
-                                            className={classes.accountMenuItem}
+                                        <Link
+                                            to="/questionnaire"
+                                            className={classes.accountMenuItemLink}
                                         >
-                                            <span
-                                                className={classes.accountMenuIcon}
+                                            <MenuItem
+                                                onClick={handleClose}
+                                                className={classes.accountMenuItem}
                                             >
-                                                <UserIcon color="#5a5f6f" />
-                                            </span>{" "}
-                                            Мой кабинет
-                                        </MenuItem>
+                                                <span
+                                                    className={
+                                                        classes.accountMenuIcon
+                                                    }
+                                                >
+                                                    <UserIcon color="#5a5f6f" />
+                                                </span>{" "}
+                                                Мой кабинет
+                                            </MenuItem>
+                                        </Link>
                                         <MenuItem
                                             onClick={handleClose}
                                             className={clsx(

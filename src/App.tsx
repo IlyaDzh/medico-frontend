@@ -2,7 +2,14 @@ import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
-import { UiKitPage, HomePage, DoctorsPage, DoctorPage, SignUpPage } from "./pages";
+import {
+    UiKitPage,
+    HomePage,
+    DoctorsPage,
+    DoctorPage,
+    SignUpPage,
+    QuestionnairePage
+} from "./pages";
 import {
     DialogSignIn,
     DialogReset,
@@ -22,8 +29,12 @@ export const App: React.FC = () => {
                     <Route exact path={["/", "/home"]} component={HomePage} />
                     <Route exact path="/doctors" component={DoctorsPage} />
                     <Route exact path="/doctor/:id" component={DoctorPage} />
-                    <Route exact path="/tariffs" component={HomePage} />
                     <Route exact path="/sign-up" component={SignUpPage} />
+                    <Route
+                        exact
+                        path="/questionnaire"
+                        component={QuestionnairePage}
+                    />
                     <Route path="/dashboard" component={DashboardPage} />
                     <Route component={() => <div>Error</div>} />
                 </Switch>
