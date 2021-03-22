@@ -200,51 +200,58 @@ export const AboutSection: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <Container>
-            {aboutItems.map((section, index) => (
-                <section
-                    key={index}
-                    className={clsx(
-                        classes.aboutSection,
-                        section.reverse && classes.sectionReverse
-                    )}
-                >
-                    <div className={classes.sectionContent}>
-                        <Typography variant="h2" className={classes.sectionTitle}>
-                            {section.title}
-                        </Typography>
-                        <ul className={classes.list}>
-                            {section.list.map((item, index) => (
-                                <li key={index} className={classes.listItem}>
-                                    <Typography variant="body1">{item}</Typography>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className={classes.sectionImage}>
-                        <picture>
-                            <source
-                                srcSet={`${section.images.aboutWebp} 1x, ${section.images.aboutWebp2x} 2x`}
-                                type="image/webp"
-                                media="(min-width: 600px)"
-                            />
-                            <source
-                                srcSet={`${section.images.aboutPng} 1x, ${section.images.aboutPng2x} 2x`}
-                                media="(min-width: 600px)"
-                            />
-                            <source
-                                srcSet={`${section.images.aboutMobileWebp} 1x, ${section.images.aboutMobileWebp2x} 2x`}
-                                type="image/webp"
-                            />
-                            <img
-                                src={section.images.aboutMobilePng}
-                                srcSet={`${section.images.aboutMobilePng2x} 2x`}
-                                alt={section.imageAlt}
-                            />
-                        </picture>
-                    </div>
-                </section>
-            ))}
-        </Container>
+        <section id="about">
+            <Container>
+                {aboutItems.map((section, index) => (
+                    <article
+                        key={index}
+                        className={clsx(
+                            classes.aboutSection,
+                            section.reverse && classes.sectionReverse
+                        )}
+                    >
+                        <div className={classes.sectionContent}>
+                            <Typography
+                                variant="h2"
+                                className={classes.sectionTitle}
+                            >
+                                {section.title}
+                            </Typography>
+                            <ul className={classes.list}>
+                                {section.list.map((item, index) => (
+                                    <li key={index} className={classes.listItem}>
+                                        <Typography variant="body1">
+                                            {item}
+                                        </Typography>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className={classes.sectionImage}>
+                            <picture>
+                                <source
+                                    srcSet={`${section.images.aboutWebp} 1x, ${section.images.aboutWebp2x} 2x`}
+                                    type="image/webp"
+                                    media="(min-width: 600px)"
+                                />
+                                <source
+                                    srcSet={`${section.images.aboutPng} 1x, ${section.images.aboutPng2x} 2x`}
+                                    media="(min-width: 600px)"
+                                />
+                                <source
+                                    srcSet={`${section.images.aboutMobileWebp} 1x, ${section.images.aboutMobileWebp2x} 2x`}
+                                    type="image/webp"
+                                />
+                                <img
+                                    src={section.images.aboutMobilePng}
+                                    srcSet={`${section.images.aboutMobilePng2x} 2x`}
+                                    alt={section.imageAlt}
+                                />
+                            </picture>
+                        </div>
+                    </article>
+                ))}
+            </Container>
+        </section>
     );
 };

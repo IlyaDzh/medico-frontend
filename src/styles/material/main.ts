@@ -276,7 +276,6 @@ const theme = createMuiTheme(
             },
             MuiOutlinedInput: {
                 root: {
-                    overflow: "hidden",
                     borderRadius: 8,
                     backgroundColor: "#fff",
                     "&$disabled $notchedOutline": {

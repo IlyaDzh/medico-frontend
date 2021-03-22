@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     leftBar: {
-        display: "flex"
+        display: "flex",
+        alignItems: "center"
     },
     rightBar: {
         display: "flex",
@@ -220,16 +221,6 @@ export const Header: React.FC<IHeader> = observer(
                     ) : (
                         <div className={classes.rightBar}>
                             <Hidden smDown>
-                                <Link
-                                    to="/doctors"
-                                    className={clsx(
-                                        classes.animatedLink,
-                                        rightBarIsLight &&
-                                            classes.animatedLinkIsLight
-                                    )}
-                                >
-                                    Записаться на приём
-                                </Link>
                                 <div className={classes.iconButtons}>
                                     <IconButton aria-label="Открыть уведомления">
                                         <AccountNotificationIcon

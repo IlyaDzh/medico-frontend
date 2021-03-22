@@ -132,7 +132,7 @@ export const ReviewsSection: React.FC = () => {
     };
 
     return (
-        <section className={classes.reviewsSection}>
+        <section id="reviews" className={classes.reviewsSection}>
             <Container>
                 <div className={classes.sectionHeader}>
                     <Typography className={classes.sectionTitle} variant="h2">

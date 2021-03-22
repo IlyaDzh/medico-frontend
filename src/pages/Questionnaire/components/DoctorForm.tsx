@@ -186,6 +186,32 @@ export const DoctorForm: React.FC = () => {
                     </Typography>
                 </FormControl>
             </div>
+            <div className={classes.uploadFile}>
+                <div className={classes.uploadFileImage}>
+                    <FormResumeIcon />
+                </div>
+                <FormControl
+                    className={clsx(
+                        formClasses.formGroup,
+                        classes.uploadFileContent
+                    )}
+                    component="fieldset"
+                >
+                    <FormLabel className={formClasses.groupLabel} component="legend">
+                        Загрузить диплом
+                    </FormLabel>
+                    <Button
+                        className={classes.uploadFileButton}
+                        variant="outlined"
+                        color="primary"
+                    >
+                        Выбрать файл
+                    </Button>
+                    <Typography variant="body1" color="textSecondary">
+                        Допустимые форматы: jpeg, png, pdf
+                    </Typography>
+                </FormControl>
+            </div>
             <Button type="submit" variant="contained" color="primary">
                 Отправить модератору
             </Button>

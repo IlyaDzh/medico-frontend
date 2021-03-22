@@ -48,7 +48,7 @@ export const TariffsSection: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <section className={classes.tariffsSection}>
+        <section id="tarifs" className={classes.tariffsSection}>
             <Container>
                 <div className={classes.sectionTitle}>
                     <Typography className={classes.sectionTitleText} variant="h2">

@@ -11,6 +11,7 @@ import {
     QuestionnairePage
 } from "./pages";
 import {
+    ScrollHandler,
     DialogSignIn,
     DialogReset,
     DialogEmail,
@@ -23,6 +24,7 @@ export const App: React.FC = () => {
     return (
         <React.Fragment>
             <CssBaseline />
+            <ScrollHandler />
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                     <Route exact path="/ui-kit" component={UiKitPage} />

@@ -209,14 +209,6 @@ export const Footer: React.FC = () => {
                                             Тарифы
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link
-                                            to="/#news"
-                                            className={classes.topListLink}
-                                        >
-                                            Новости
-                                        </Link>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>

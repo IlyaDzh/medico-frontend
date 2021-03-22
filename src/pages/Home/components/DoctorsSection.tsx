@@ -157,7 +157,7 @@ export const DoctorsSection: React.FC = () => {
     };
 
     return (
-        <section className={classes.doctorsSection}>
+        <section id="doctors" className={classes.doctorsSection}>
             <Container>
                 <div className={classes.sectionTitle}>
                     <Typography className={classes.sectionTitleText} variant="h2">

@@ -78,7 +78,7 @@ export const HowItWorksSection: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <section className={classes.howItWorksSection}>
+        <section id="how-it-works" className={classes.howItWorksSection}>
             <Container>
                 <h2 className="visually-hidden">Как это работает</h2>
                 <ol className={classes.stagesList}>
