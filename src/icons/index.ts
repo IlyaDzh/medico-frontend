@@ -19,3 +19,5 @@ export * from "./MailIcon";
 export * from "./ConfirmationIcon";
 export * from "./ValidationGreenIcon";
 export * from "./ValidationRedIcon";
+export * from "./FormPhotoIcon";
+export * from "./FormResumeIcon";

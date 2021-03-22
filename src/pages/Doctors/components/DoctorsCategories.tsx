@@ -29,6 +29,13 @@ export const DoctorsCategories: React.FC = () => {
 
     return (
         <ul className={classes.categories}>
+            <li className={classes.category}>
+                <CategoryChip
+                    label="Все"
+                    isActive={currentCategory === "all"}
+                    onClick={() => setCurrentCategory("all")}
+                />
+            </li>
             {categories.map(category => (
                 <li key={category.code} className={classes.category}>
                     <CategoryChip

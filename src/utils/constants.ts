@@ -1,9 +1,5 @@
 export const categories = [
     {
-        code: "all",
-        label: "Все"
-    },
-    {
         code: "therapist",
         label: "Терапевт"
     },
