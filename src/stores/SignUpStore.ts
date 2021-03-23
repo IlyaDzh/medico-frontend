@@ -1,4 +1,4 @@
-import { makeAutoObservable, action } from "mobx";
+import { makeObservable, action, observable } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { UserApi, ISignUpPostData } from "api";
@@ -7,13 +7,14 @@ import {
     ISignUpForm,
     KeysOfSignUpForm
 } from "./interfaces/ISignUpStore";
+import IStores from "./interfaces";
 
 const INITIAL_SIGN_UP_FORM: ISignUpForm = {
     userType: "patient",
     firstName: "",
     lastName: "",
     middleName: "",
-    birthDate: "",
+    birthDate: new Date(),
     gender: "male",
     phoneNumber: "",
     email: "",
@@ -28,8 +29,19 @@ export class SignUpStore implements ISignUpStore {
 
     pending: boolean = false;
 
-    constructor() {
-        makeAutoObservable(this);
+    private rootStore: IStores;
+
+    constructor(rootStore: IStores) {
+        this.rootStore = rootStore;
+
+        makeObservable(this, {
+            signUpForm: observable,
+            submissionError: observable,
+            pending: observable,
+            doSignUp: action,
+            setFormValue: action,
+            resetForm: action
+        });
     }
 
     doSignUp = () => {
@@ -42,7 +54,7 @@ export class SignUpStore implements ISignUpStore {
             surname: this.signUpForm.lastName,
             middleName: this.signUpForm.middleName,
             birthDate: this.signUpForm.birthDate,
-            gender: this.signUpForm.gender,
+            sex: this.signUpForm.gender,
             phone: this.signUpForm.phoneNumber,
             email: this.signUpForm.email,
             password: this.signUpForm.password,
@@ -54,6 +66,7 @@ export class SignUpStore implements ISignUpStore {
                 action(({ data }: AxiosResponse<any>) => {
                     console.log(data);
                     this.resetForm();
+                    this.rootStore.modalsStore.setModalIsOpen("email", true);
                 })
             )
             .catch(

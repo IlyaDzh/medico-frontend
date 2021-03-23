@@ -9,12 +9,7 @@ import { ResetIcon } from "icons";
 
 const useStyles = makeStyles(() => ({
     formInput: {
-        marginBottom: 36,
-        "& .MuiOutlinedInput-notchedOutline": {
-            "& legend": {
-                lineHeight: "12px"
-            }
-        }
+        marginBottom: 36
     },
     buttonMargin: {
         marginBottom: 16

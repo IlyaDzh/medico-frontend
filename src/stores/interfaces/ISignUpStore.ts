@@ -15,7 +15,7 @@ export interface ISignUpForm {
     firstName: string;
     lastName: string;
     middleName: string;
-    birthDate: string;
+    birthDate: Date;
     gender: string;
     phoneNumber: string;
     email: string;

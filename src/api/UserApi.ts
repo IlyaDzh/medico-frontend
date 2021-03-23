@@ -10,8 +10,8 @@ export interface ISignUpPostData {
     name: string;
     surname: string;
     middleName: string;
-    birthDate: string;
-    gender: string;
+    birthDate: Date;
+    sex: string;
     phone: string;
     email: string;
     password: string;
@@ -19,7 +19,7 @@ export interface ISignUpPostData {
 }
 
 export class UserApi {
-    static login(postData: ISignInPostData) {
+    static signIn(postData: ISignInPostData) {
         return axiosInstance.post("/api/v1/auth/sign-in", postData);
     }
 

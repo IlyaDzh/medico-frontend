@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
-import { Button } from "components";
+import { Button, Loader } from "components";
 import { useStores } from "stores/useStore";
 import { UserPlusIcon, ValidationGreenIcon, ValidationRedIcon } from "icons";
 
@@ -165,6 +165,7 @@ export const SignUpForm: React.FC = observer(() => {
 
     return (
         <React.Fragment>
+            <Loader level={5} />
             <div className={classes.header}>
                 <div className={classes.headerLeft}>
                     <div>
@@ -274,7 +275,7 @@ export const SignUpForm: React.FC = observer(() => {
                             color="secondary"
                             placeholder="ДД/ММ/ГГ"
                             format="dd/MM/yyyy"
-                            value={signUpForm.birthDate || new Date()}
+                            value={signUpForm.birthDate}
                             onChange={handleDateChange}
                             KeyboardButtonProps={{
                                 "aria-label": "change date"
@@ -435,7 +436,7 @@ export const SignUpForm: React.FC = observer(() => {
                     control={
                         <Checkbox
                             color="secondary"
-                            value={signUpForm.acceptedUserAgreement}
+                            checked={signUpForm.acceptedUserAgreement}
                             onChange={(_, checked) =>
                                 setFormValue("acceptedUserAgreement", checked)
                             }

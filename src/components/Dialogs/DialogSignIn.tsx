@@ -21,12 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 28
     },
     formInput: {
-        marginBottom: 12,
-        "& .MuiOutlinedInput-notchedOutline": {
-            "& legend": {
-                lineHeight: "12px"
-            }
-        }
+        marginBottom: 12
     },
     formFlex: {
         display: "flex",
@@ -57,12 +52,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DialogSignIn: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, signInStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
+    const { signInForm, setFormValue, doSignIn } = signInStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        console.log("submit");
+        doSignIn();
     };
 
     const handleClose = (): void => {
@@ -83,6 +79,8 @@ export const DialogSignIn: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="E-mail"
+                    value={signInForm.email}
+                    onChange={event => setFormValue("email", event.target.value)}
                     fullWidth
                 />
                 <TextField
@@ -91,6 +89,8 @@ export const DialogSignIn: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="Пароль"
+                    value={signInForm.password}
+                    onChange={event => setFormValue("password", event.target.value)}
                     fullWidth
                 />
                 <div className={classes.formFlex}>

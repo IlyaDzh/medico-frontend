@@ -28,7 +28,11 @@ export const App: React.FC = () => {
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                     <Route exact path="/ui-kit" component={UiKitPage} />
-                    <Route exact path={["/", "/home"]} component={HomePage} />
+                    <Route
+                        exact
+                        path={["/", "/home", "/sign-up-confirmation"]}
+                        component={HomePage}
+                    />
                     <Route exact path="/doctors" component={DoctorsPage} />
                     <Route exact path="/doctor/:id" component={DoctorPage} />
                     <Route exact path="/sign-up" component={SignUpPage} />
@@ -44,7 +48,6 @@ export const App: React.FC = () => {
             <DialogSignIn />
             <DialogReset />
             <DialogEmail />
-            <DialogConfirmation />
         </React.Fragment>
     );
 };

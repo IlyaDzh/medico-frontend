@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { Typography, TextField, makeStyles } from "@material-ui/core";
 
@@ -7,61 +7,65 @@ import { Button } from "components";
 import { useStores } from "stores/useStore";
 import { ConfirmationIcon } from "icons";
 
+interface IDialogConfirmation {
+    isOpen?: boolean;
+}
+
 const useStyles = makeStyles(() => ({
     confirmationText: {
         marginBottom: 24
     },
     formInput: {
-        marginBottom: 24,
-        "& .MuiOutlinedInput-notchedOutline": {
-            "& legend": {
-                lineHeight: "12px"
-            }
-        }
+        marginBottom: 24
     }
 }));
 
-export const DialogConfirmation: React.FC = observer(() => {
-    const classes = useStyles();
-    const { modalsStore } = useStores();
-    const { getModalIsOpen, setModalIsOpen } = modalsStore;
+export const DialogConfirmation: React.FC<IDialogConfirmation> = observer(
+    ({ isOpen }) => {
+        const classes = useStyles();
+        const { modalsStore } = useStores();
+        const { getModalIsOpen, setModalIsOpen } = modalsStore;
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        console.log("submit");
-    };
+        useEffect(() => {
+            if (isOpen) {
+                setModalIsOpen("confirmation", true);
+            }
+        }, []);
 
-    const handleClose = (): void => {
-        setModalIsOpen("confirmation", false);
-    };
+        const handleSignIn = (): void => {
+            setModalIsOpen("confirmation", false);
+            setModalIsOpen("sign-in", true);
+        };
 
-    return (
-        <DialogBase
-            isOpen={getModalIsOpen("confirmation")}
-            title="Подтверждение"
-            icon={<ConfirmationIcon />}
-            onClose={handleClose}
-            paperWidth={544}
-        >
-            <div className={classes.confirmationText}>
-                <Typography variant="h5">Вы успешно зарегистрировались!</Typography>
-                <Typography color="textSecondary">
-                    Введите пароль, чтобы войти в систему
-                </Typography>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    type="password"
-                    className={classes.formInput}
-                    variant="outlined"
-                    color="secondary"
-                    placeholder="Пароль"
+        const handleClose = (): void => {
+            setModalIsOpen("confirmation", false);
+        };
+
+        return (
+            <DialogBase
+                isOpen={getModalIsOpen("confirmation")}
+                title="Подтверждение"
+                icon={<ConfirmationIcon />}
+                onClose={handleClose}
+                paperWidth={544}
+            >
+                <div className={classes.confirmationText}>
+                    <Typography variant="h5">
+                        Вы успешно зарегистрировались!
+                    </Typography>
+                    <Typography color="textSecondary">
+                        Нажмите на кнопку, чтобы войти в систему
+                    </Typography>
+                </div>
+                <Button
+                    onClick={handleSignIn}
+                    variant="contained"
+                    color="primary"
                     fullWidth
-                />
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                >
                     Войти
                 </Button>
-            </form>
-        </DialogBase>
-    );
-});
+            </DialogBase>
+        );
+    }
+);

@@ -8,3 +8,4 @@ export * from "./ProfileTabs";
 export * from "./Dialogs";
 export * from "./PaddingLine";
 export * from "./ScrollHandler";
+export * from "./Loader";
