@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
-import { Typography, TextField, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
 import { Button } from "components";
@@ -30,7 +30,7 @@ export const DialogConfirmation: React.FC<IDialogConfirmation> = observer(
             if (isOpen) {
                 setModalIsOpen("confirmation", true);
             }
-        }, []);
+        }, []); // eslint-disable-line
 
         const handleSignIn = (): void => {
             setModalIsOpen("confirmation", false);

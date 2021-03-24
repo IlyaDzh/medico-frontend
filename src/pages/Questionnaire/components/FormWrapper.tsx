@@ -6,6 +6,7 @@ import { InfoIcon } from "icons";
 interface IFormWrapper {
     title: string;
     subtitle: string;
+    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -51,14 +52,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const FormWrapper: React.FC<IFormWrapper> = ({
     title,
     subtitle,
+    onSubmit,
     children
 }) => {
     const classes = useStyles();
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        console.log("send form");
-    };
 
     return (
         <div className={classes.container}>
@@ -74,7 +71,7 @@ export const FormWrapper: React.FC<IFormWrapper> = ({
                         </Typography>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit}>{children}</form>
+                <form onSubmit={onSubmit}>{children}</form>
             </div>
         </div>
     );

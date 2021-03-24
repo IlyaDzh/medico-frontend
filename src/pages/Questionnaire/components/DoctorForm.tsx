@@ -44,10 +44,16 @@ export const DoctorForm: React.FC = () => {
     const classes = useStyles();
     const formClasses = useFormStyles();
 
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        // sendForm();
+    };
+
     return (
         <FormWrapper
             title="Заявка на врача"
             subtitle="Данные из анкеты будут использоваться в качестве отображения ваших персональных данных"
+            onSubmit={handleSubmit}
         >
             <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">

@@ -10,13 +10,7 @@ import {
     SignUpPage,
     QuestionnairePage
 } from "./pages";
-import {
-    ScrollHandler,
-    DialogSignIn,
-    DialogReset,
-    DialogEmail,
-    DialogConfirmation
-} from "components";
+import { ScrollHandler, DialogSignIn, DialogReset, DialogEmail } from "components";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
