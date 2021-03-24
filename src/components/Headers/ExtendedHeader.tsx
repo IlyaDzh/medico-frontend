@@ -73,7 +73,7 @@ export const ExtendedHeader: React.FC = () => {
                             size="small"
                             to="/sign-up"
                         >
-                            Бесплатная консультация
+                            Регистрация
                         </Button>
                     </Hidden>
                 </div>

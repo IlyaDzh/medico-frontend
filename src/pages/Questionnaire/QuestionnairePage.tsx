@@ -4,7 +4,7 @@ import { PatientForm, DoctorForm } from "./components";
 import { Header, Footer, PaddingLine } from "components";
 
 export const QuestionnairePage: React.FC = () => {
-    const isDoctor: boolean = true;
+    const isDoctor: boolean = false;
 
     return (
         <React.Fragment>

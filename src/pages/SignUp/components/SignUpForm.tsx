@@ -165,7 +165,7 @@ export const SignUpForm: React.FC = observer(() => {
 
     return (
         <React.Fragment>
-            <Loader level={5} />
+            {/* <Loader level={5} /> */}
             <div className={classes.header}>
                 <div className={classes.headerLeft}>
                     <div>

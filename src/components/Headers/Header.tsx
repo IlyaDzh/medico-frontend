@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Header: React.FC<IHeader> = observer(
     ({
-        isAuthorized = false,
+        isAuthorized = true,
         isAbsolute,
         leftBarIsLight,
         rightBarIsLight,
@@ -214,7 +214,7 @@ export const Header: React.FC<IHeader> = observer(
                                     to="/sign-up"
                                     className={classes.conslutationBtn}
                                 >
-                                    Бесплатная консультация
+                                    Регистрация
                                 </Button>
                             </Hidden>
                         </div>
