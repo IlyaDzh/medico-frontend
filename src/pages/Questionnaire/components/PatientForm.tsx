@@ -67,11 +67,7 @@ export const PatientForm: React.FC = observer(() => {
                     helperText={questionnaireFormErrors.height}
                 />
             </FormControl>
-            <FormControl
-                className={formClasses.formGroup}
-                component="fieldset"
-                error={Boolean(questionnaireFormErrors.bloodType)}
-            >
+            <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     3. Группа крови:
                 </FormLabel>
@@ -117,14 +113,12 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText>{questionnaireFormErrors.bloodType}</FormHelperText>
+                <FormHelperText error={Boolean(questionnaireFormErrors.bloodType)}>
+                    {questionnaireFormErrors.bloodType}
+                </FormHelperText>
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
-                <FormLabel
-                    className={formClasses.groupLabel}
-                    component="legend"
-                    error={Boolean(questionnaireFormErrors.RHFactor)}
-                >
+                <FormLabel className={formClasses.groupLabel} component="legend">
                     4. Резус фактор:
                 </FormLabel>
                 <RadioGroup
@@ -151,7 +145,9 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText>{questionnaireFormErrors.RHFactor}</FormHelperText>
+                <FormHelperText error={Boolean(questionnaireFormErrors.RHFactor)}>
+                    {questionnaireFormErrors.RHFactor}
+                </FormHelperText>
             </FormControl>
             <FormControl
                 className={formClasses.formGroup}
@@ -214,11 +210,7 @@ export const PatientForm: React.FC = observer(() => {
                     fullWidth
                 />
             </FormControl>
-            <FormControl
-                className={formClasses.formGroup}
-                component="fieldset"
-                error={Boolean(questionnaireFormErrors.isSmoker)}
-            >
+            <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     8. Курение:
                 </FormLabel>
@@ -255,13 +247,11 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText>{questionnaireFormErrors.isSmoker}</FormHelperText>
+                <FormHelperText error={Boolean(questionnaireFormErrors.isSmoker)}>
+                    {questionnaireFormErrors.isSmoker}
+                </FormHelperText>
             </FormControl>
-            <FormControl
-                className={formClasses.formGroup}
-                component="fieldset"
-                error={Boolean(questionnaireFormErrors.isAlcoholic)}
-            >
+            <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     9. Алкоголь:
                 </FormLabel>
@@ -309,7 +299,7 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText>
+                <FormHelperText error={Boolean(questionnaireFormErrors.isAlcoholic)}>
                     {questionnaireFormErrors.isAlcoholic}
                 </FormHelperText>
             </FormControl>
@@ -332,11 +322,7 @@ export const PatientForm: React.FC = observer(() => {
                     fullWidth
                 />
             </FormControl>
-            <FormControl
-                className={formClasses.formGroup}
-                component="fieldset"
-                error={Boolean(questionnaireFormErrors.bloodTransfusion)}
-            >
+            <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     11. Была ли процедура по переливанию крови? (Гемотрансфузия)
                 </FormLabel>
@@ -366,7 +352,9 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText>
+                <FormHelperText
+                    error={Boolean(questionnaireFormErrors.bloodTransfusion)}
+                >
                     {questionnaireFormErrors.bloodTransfusion}
                 </FormHelperText>
             </FormControl>

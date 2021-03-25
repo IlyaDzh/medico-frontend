@@ -1,4 +1,4 @@
-import { makeAutoObservable, action } from "mobx";
+import { makeAutoObservable, action, reaction } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { QuestionnaireApi, IQuestionnairePostData } from "api";
@@ -8,6 +8,7 @@ import {
     IQuestionnaireFormErrors,
     KeysOfQuestionnaireForm
 } from "./interfaces/IQuestionnaireStore";
+import { isNumber, isNotEmpty } from "utils/validation";
 
 const INITIAL_QUESTIONNAIRE_FORM: IQuestionnaireForm = {
     weight: "",
@@ -48,9 +49,92 @@ export class QuestionnaireStore implements IQuestionnaireStore {
 
     constructor() {
         makeAutoObservable(this);
+
+        reaction(
+            () => this.questionnaireForm.weight,
+            weight =>
+                weight && (this.questionnaireFormErrors.weight = isNumber(weight))
+        );
+
+        reaction(
+            () => this.questionnaireForm.height,
+            height =>
+                height && (this.questionnaireFormErrors.height = isNumber(height))
+        );
+
+        reaction(
+            () => this.questionnaireForm.bloodType,
+            bloodType =>
+                bloodType &&
+                (this.questionnaireFormErrors.bloodType = isNotEmpty(bloodType))
+        );
+
+        reaction(
+            () => this.questionnaireForm.RHFactor,
+            RHFactor =>
+                RHFactor &&
+                (this.questionnaireFormErrors.RHFactor = isNotEmpty(RHFactor))
+        );
+
+        reaction(
+            () => this.questionnaireForm.allergies,
+            allergies =>
+                allergies &&
+                (this.questionnaireFormErrors.allergies = isNotEmpty(allergies))
+        );
+
+        reaction(
+            () => this.questionnaireForm.chronicDiseases,
+            chronicDiseases =>
+                chronicDiseases &&
+                (this.questionnaireFormErrors.chronicDiseases = isNotEmpty(
+                    chronicDiseases
+                ))
+        );
+
+        reaction(
+            () => this.questionnaireForm.operations,
+            operations =>
+                operations &&
+                (this.questionnaireFormErrors.operations = isNotEmpty(operations))
+        );
+
+        reaction(
+            () => this.questionnaireForm.isSmoker,
+            isSmoker =>
+                isSmoker &&
+                (this.questionnaireFormErrors.isSmoker = isNotEmpty(isSmoker))
+        );
+
+        reaction(
+            () => this.questionnaireForm.isAlcoholic,
+            isAlcoholic =>
+                isAlcoholic &&
+                (this.questionnaireFormErrors.isAlcoholic = isNotEmpty(isAlcoholic))
+        );
+
+        reaction(
+            () => this.questionnaireForm.badHabits,
+            badHabits =>
+                badHabits &&
+                (this.questionnaireFormErrors.badHabits = isNotEmpty(badHabits))
+        );
+
+        reaction(
+            () => this.questionnaireForm.bloodTransfusion,
+            bloodTransfusion =>
+                bloodTransfusion &&
+                (this.questionnaireFormErrors.bloodTransfusion = isNotEmpty(
+                    bloodTransfusion
+                ))
+        );
     }
 
     sendForm = () => {
+        if (!this.validateForm()) {
+            return;
+        }
+
         this.pending = true;
         this.submissionError = undefined;
 
@@ -68,7 +152,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             bloodTransfusion: this.questionnaireForm.bloodTransfusion
         };
 
-        console.log(postData)
+        console.log(postData);
 
         QuestionnaireApi.send(postData)
             .then(
@@ -87,6 +171,27 @@ export class QuestionnaireStore implements IQuestionnaireStore {
                     this.pending = false;
                 })
             );
+    };
+
+    validateForm = () => {
+        this.questionnaireFormErrors = {
+            ...this.questionnaireFormErrors,
+            weight: isNumber(this.questionnaireForm.weight),
+            height: isNumber(this.questionnaireForm.height),
+            bloodType: isNotEmpty(this.questionnaireForm.bloodType),
+            RHFactor: isNotEmpty(this.questionnaireForm.RHFactor),
+            allergies: isNotEmpty(this.questionnaireForm.allergies),
+            chronicDiseases: isNotEmpty(this.questionnaireForm.chronicDiseases),
+            operations: isNotEmpty(this.questionnaireForm.operations),
+            isSmoker: isNotEmpty(this.questionnaireForm.isSmoker),
+            isAlcoholic: isNotEmpty(this.questionnaireForm.isAlcoholic),
+            badHabits: isNotEmpty(this.questionnaireForm.badHabits),
+            bloodTransfusion: isNotEmpty(this.questionnaireForm.bloodTransfusion)
+        };
+
+        const { weight, height } = this.questionnaireFormErrors;
+
+        return Boolean(!(weight || height));
     };
 
     setFormValue = <K extends KeysOfQuestionnaireForm>(

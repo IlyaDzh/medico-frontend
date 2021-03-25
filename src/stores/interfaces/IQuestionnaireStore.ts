@@ -4,6 +4,7 @@ export interface IQuestionnaireStore {
     submissionError: string | undefined;
     pending: boolean;
     sendForm: () => void;
+    validateForm: () => void;
     setFormValue: <K extends KeysOfQuestionnaireForm>(
         key: K,
         value: IQuestionnaireForm[K]
