@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
-import { Button, Loader } from "components";
+import { Button } from "components";
 import { useStores } from "stores/useStore";
 import { UserPlusIcon, ValidationGreenIcon, ValidationRedIcon } from "icons";
 
@@ -92,13 +92,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     formRow: {
         display: "flex",
         "& > fieldset:first-child": {
-            width: "45%",
+            width: "55%",
             [theme.breakpoints.down("xs")]: {
                 width: "100%"
             }
         },
         "& > fieldset:last-child": {
-            width: "55%",
+            width: "45%",
             paddingLeft: 24,
             [theme.breakpoints.down("xs")]: {
                 width: "100%",
@@ -148,7 +148,7 @@ export const SignUpForm: React.FC = observer(() => {
     const classes = useStyles();
     const { modalsStore, signUpStore } = useStores();
     const { setModalIsOpen } = modalsStore;
-    const { signUpForm, doSignUp, setFormValue } = signUpStore;
+    const { signUpForm, signUpFormErrors, doSignUp, setFormValue } = signUpStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -165,7 +165,6 @@ export const SignUpForm: React.FC = observer(() => {
 
     return (
         <React.Fragment>
-            {/* <Loader level={5} /> */}
             <div className={classes.header}>
                 <div className={classes.headerLeft}>
                     <div>
@@ -240,6 +239,8 @@ export const SignUpForm: React.FC = observer(() => {
                         onChange={event =>
                             setFormValue("lastName", event.target.value)
                         }
+                        error={Boolean(signUpFormErrors.lastName)}
+                        helperText={signUpFormErrors.lastName}
                     />
                     <TextField
                         className={classes.nameGroupField}
@@ -250,6 +251,8 @@ export const SignUpForm: React.FC = observer(() => {
                         onChange={event =>
                             setFormValue("firstName", event.target.value)
                         }
+                        error={Boolean(signUpFormErrors.firstName)}
+                        helperText={signUpFormErrors.firstName}
                     />
                     <TextField
                         variant="outlined"
@@ -277,6 +280,8 @@ export const SignUpForm: React.FC = observer(() => {
                             format="dd/MM/yyyy"
                             value={signUpForm.birthDate}
                             onChange={handleDateChange}
+                            error={Boolean(signUpFormErrors.birthDate)}
+                            helperText={signUpFormErrors.birthDate}
                             KeyboardButtonProps={{
                                 "aria-label": "change date"
                             }}
@@ -347,6 +352,8 @@ export const SignUpForm: React.FC = observer(() => {
                         onChange={event =>
                             setFormValue("phoneNumber", event.target.value)
                         }
+                        error={Boolean(signUpFormErrors.phoneNumber)}
+                        helperText={signUpFormErrors.phoneNumber}
                     />
                 </FormControl>
                 <FormControl
@@ -363,6 +370,8 @@ export const SignUpForm: React.FC = observer(() => {
                         placeholder="example@gmail.com"
                         value={signUpForm.email}
                         onChange={event => setFormValue("email", event.target.value)}
+                        error={Boolean(signUpFormErrors.email)}
+                        helperText={signUpFormErrors.email}
                     />
                 </FormControl>
                 <FormControl
@@ -382,6 +391,15 @@ export const SignUpForm: React.FC = observer(() => {
                         onChange={event =>
                             setFormValue("password", event.target.value)
                         }
+                        error={
+                            signUpForm.password !== "" &&
+                            !Boolean(
+                                signUpFormErrors.password.isLength ||
+                                    signUpFormErrors.password.isUppercase ||
+                                    signUpFormErrors.password.isLowercase ||
+                                    signUpFormErrors.password.isNumber
+                            )
+                        }
                     />
                 </FormControl>
                 <FormControl
@@ -394,7 +412,11 @@ export const SignUpForm: React.FC = observer(() => {
                     </FormLabel>
                     <div className={classes.passwordValidation}>
                         <div className={classes.passwordValidationItem}>
-                            <ValidationGreenIcon />
+                            {signUpFormErrors.password.isLength ? (
+                                <ValidationGreenIcon />
+                            ) : (
+                                <ValidationRedIcon />
+                            )}
                             <Typography
                                 className={classes.passwordValidationItemLabel}
                                 variant="h6"
@@ -403,7 +425,11 @@ export const SignUpForm: React.FC = observer(() => {
                             </Typography>
                         </div>
                         <div className={classes.passwordValidationItem}>
-                            <ValidationRedIcon />
+                            {signUpFormErrors.password.isUppercase ? (
+                                <ValidationGreenIcon />
+                            ) : (
+                                <ValidationRedIcon />
+                            )}
                             <Typography
                                 className={classes.passwordValidationItemLabel}
                                 variant="h6"
@@ -412,7 +438,11 @@ export const SignUpForm: React.FC = observer(() => {
                             </Typography>
                         </div>
                         <div className={classes.passwordValidationItem}>
-                            <ValidationRedIcon />
+                            {signUpFormErrors.password.isLowercase ? (
+                                <ValidationGreenIcon />
+                            ) : (
+                                <ValidationRedIcon />
+                            )}
                             <Typography
                                 className={classes.passwordValidationItemLabel}
                                 variant="h6"
@@ -421,7 +451,11 @@ export const SignUpForm: React.FC = observer(() => {
                             </Typography>
                         </div>
                         <div className={classes.passwordValidationItem}>
-                            <ValidationRedIcon />
+                            {signUpFormErrors.password.isNumber ? (
+                                <ValidationGreenIcon />
+                            ) : (
+                                <ValidationRedIcon />
+                            )}
                             <Typography
                                 className={classes.passwordValidationItemLabel}
                                 variant="h6"

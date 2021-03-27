@@ -29,12 +29,8 @@ const INITIAL_QUESTIONNAIRE_FORM_ERRORS: IQuestionnaireFormErrors = {
     height: undefined,
     bloodType: undefined,
     RHFactor: undefined,
-    allergies: undefined,
-    chronicDiseases: undefined,
-    operations: undefined,
     isSmoker: undefined,
     isAlcoholic: undefined,
-    badHabits: undefined,
     bloodTransfusion: undefined
 };
 
@@ -77,29 +73,6 @@ export class QuestionnaireStore implements IQuestionnaireStore {
         );
 
         reaction(
-            () => this.questionnaireForm.allergies,
-            allergies =>
-                allergies &&
-                (this.questionnaireFormErrors.allergies = isNotEmpty(allergies))
-        );
-
-        reaction(
-            () => this.questionnaireForm.chronicDiseases,
-            chronicDiseases =>
-                chronicDiseases &&
-                (this.questionnaireFormErrors.chronicDiseases = isNotEmpty(
-                    chronicDiseases
-                ))
-        );
-
-        reaction(
-            () => this.questionnaireForm.operations,
-            operations =>
-                operations &&
-                (this.questionnaireFormErrors.operations = isNotEmpty(operations))
-        );
-
-        reaction(
             () => this.questionnaireForm.isSmoker,
             isSmoker =>
                 isSmoker &&
@@ -111,13 +84,6 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             isAlcoholic =>
                 isAlcoholic &&
                 (this.questionnaireFormErrors.isAlcoholic = isNotEmpty(isAlcoholic))
-        );
-
-        reaction(
-            () => this.questionnaireForm.badHabits,
-            badHabits =>
-                badHabits &&
-                (this.questionnaireFormErrors.badHabits = isNotEmpty(badHabits))
         );
 
         reaction(
@@ -180,18 +146,32 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             height: isNumber(this.questionnaireForm.height),
             bloodType: isNotEmpty(this.questionnaireForm.bloodType),
             RHFactor: isNotEmpty(this.questionnaireForm.RHFactor),
-            allergies: isNotEmpty(this.questionnaireForm.allergies),
-            chronicDiseases: isNotEmpty(this.questionnaireForm.chronicDiseases),
-            operations: isNotEmpty(this.questionnaireForm.operations),
             isSmoker: isNotEmpty(this.questionnaireForm.isSmoker),
             isAlcoholic: isNotEmpty(this.questionnaireForm.isAlcoholic),
-            badHabits: isNotEmpty(this.questionnaireForm.badHabits),
             bloodTransfusion: isNotEmpty(this.questionnaireForm.bloodTransfusion)
         };
 
-        const { weight, height } = this.questionnaireFormErrors;
+        const {
+            weight,
+            height,
+            bloodType,
+            RHFactor,
+            isSmoker,
+            isAlcoholic,
+            bloodTransfusion
+        } = this.questionnaireFormErrors;
 
-        return Boolean(!(weight || height));
+        return Boolean(
+            !(
+                weight ||
+                height ||
+                bloodType ||
+                RHFactor ||
+                isSmoker ||
+                isAlcoholic ||
+                bloodTransfusion
+            )
+        );
     };
 
     setFormValue = <K extends KeysOfQuestionnaireForm>(

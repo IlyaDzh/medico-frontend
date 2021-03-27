@@ -31,12 +31,8 @@ export interface IQuestionnaireFormErrors {
     height: undefined | string;
     bloodType: undefined | string;
     RHFactor: undefined | string;
-    allergies: undefined | string;
-    chronicDiseases: undefined | string;
-    operations: undefined | string;
     isSmoker: undefined | string;
     isAlcoholic: undefined | string;
-    badHabits: undefined | string;
     bloodTransfusion: undefined | string;
 }
 

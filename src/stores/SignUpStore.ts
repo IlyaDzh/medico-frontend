@@ -1,13 +1,21 @@
-import { makeObservable, action, observable } from "mobx";
+import { makeObservable, action, observable, reaction } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { UserApi, ISignUpPostData } from "api";
 import {
     ISignUpStore,
     ISignUpForm,
+    ISignUpFormErrors,
     KeysOfSignUpForm
 } from "./interfaces/ISignUpStore";
 import IStores from "./interfaces";
+import {
+    isOnlyLetters,
+    isAdult,
+    isPhoneNumber,
+    isEmail,
+    isPassword
+} from "utils/validation";
 
 const INITIAL_SIGN_UP_FORM: ISignUpForm = {
     userType: "patient",
@@ -22,8 +30,24 @@ const INITIAL_SIGN_UP_FORM: ISignUpForm = {
     acceptedUserAgreement: false
 };
 
+const INITIAL_SIGN_UP_FORM_ERRORS: ISignUpFormErrors = {
+    firstName: undefined,
+    lastName: undefined,
+    birthDate: undefined,
+    phoneNumber: undefined,
+    email: undefined,
+    password: {
+        isLength: false,
+        isUppercase: false,
+        isLowercase: false,
+        isNumber: false
+    }
+};
+
 export class SignUpStore implements ISignUpStore {
     signUpForm = INITIAL_SIGN_UP_FORM;
+
+    signUpFormErrors = INITIAL_SIGN_UP_FORM_ERRORS;
 
     submissionError: string | undefined = undefined;
 
@@ -36,15 +60,52 @@ export class SignUpStore implements ISignUpStore {
 
         makeObservable(this, {
             signUpForm: observable,
+            signUpFormErrors: observable,
             submissionError: observable,
             pending: observable,
             doSignUp: action,
             setFormValue: action,
+            validateForm: action,
             resetForm: action
         });
+
+        reaction(
+            () => this.signUpForm.lastName,
+            lastName => (this.signUpFormErrors.lastName = isOnlyLetters(lastName))
+        );
+
+        reaction(
+            () => this.signUpForm.firstName,
+            firstName => (this.signUpFormErrors.firstName = isOnlyLetters(firstName))
+        );
+
+        reaction(
+            () => this.signUpForm.birthDate,
+            birthDate => (this.signUpFormErrors.birthDate = isAdult(birthDate))
+        );
+
+        reaction(
+            () => this.signUpForm.phoneNumber,
+            phoneNumber =>
+                (this.signUpFormErrors.phoneNumber = isPhoneNumber(phoneNumber))
+        );
+
+        reaction(
+            () => this.signUpForm.email,
+            email => (this.signUpFormErrors.email = isEmail(email))
+        );
+
+        reaction(
+            () => this.signUpForm.password,
+            password => (this.signUpFormErrors.password = isPassword(password))
+        );
     }
 
     doSignUp = () => {
+        if (!this.validateForm()) {
+            return;
+        }
+
         this.pending = true;
         this.submissionError = undefined;
 
@@ -81,12 +142,48 @@ export class SignUpStore implements ISignUpStore {
             );
     };
 
+    validateForm = () => {
+        this.signUpFormErrors = {
+            ...this.signUpFormErrors,
+            firstName: isOnlyLetters(this.signUpForm.firstName),
+            lastName: isOnlyLetters(this.signUpForm.lastName),
+            birthDate: isAdult(this.signUpForm.birthDate),
+            phoneNumber: isPhoneNumber(this.signUpForm.phoneNumber),
+            email: isEmail(this.signUpForm.email),
+            password: isPassword(this.signUpForm.password)
+        };
+
+        const {
+            firstName,
+            lastName,
+            birthDate,
+            phoneNumber,
+            email,
+            password
+        } = this.signUpFormErrors;
+
+        return Boolean(
+            !(
+                firstName ||
+                lastName ||
+                birthDate ||
+                phoneNumber ||
+                email ||
+                password.isLength ||
+                password.isUppercase ||
+                password.isLowercase ||
+                password.isNumber
+            )
+        );
+    };
+
     setFormValue = <K extends KeysOfSignUpForm>(key: K, value: ISignUpForm[K]) => {
         this.signUpForm[key] = value;
     };
 
     resetForm = () => {
         this.signUpForm = INITIAL_SIGN_UP_FORM;
+        this.signUpFormErrors = INITIAL_SIGN_UP_FORM_ERRORS;
         this.submissionError = undefined;
     };
 }

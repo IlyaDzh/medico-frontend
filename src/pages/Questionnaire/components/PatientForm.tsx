@@ -155,16 +155,14 @@ export const PatientForm: React.FC = observer(() => {
                 fullWidth
             >
                 <FormLabel className={formClasses.groupLabel} component="legend">
-                    5. Есть ли у вас аллергия? Если да, то на что?
+                    5. Аллергия
                 </FormLabel>
                 <TextField
                     variant="outlined"
                     color="secondary"
-                    placeholder="Да, есть аллергия сезонная на полынь"
+                    placeholder="Есть аллергия сезонная на полынь"
                     value={questionnaireForm.allergies}
                     onChange={event => setFormValue("allergies", event.target.value)}
-                    error={Boolean(questionnaireFormErrors.allergies)}
-                    helperText={questionnaireFormErrors.allergies}
                     fullWidth
                 />
             </FormControl>
@@ -184,8 +182,6 @@ export const PatientForm: React.FC = observer(() => {
                     onChange={event =>
                         setFormValue("chronicDiseases", event.target.value)
                     }
-                    error={Boolean(questionnaireFormErrors.chronicDiseases)}
-                    helperText={questionnaireFormErrors.chronicDiseases}
                     fullWidth
                 />
             </FormControl>
@@ -205,8 +201,6 @@ export const PatientForm: React.FC = observer(() => {
                     onChange={event =>
                         setFormValue("operations", event.target.value)
                     }
-                    error={Boolean(questionnaireFormErrors.operations)}
-                    helperText={questionnaireFormErrors.operations}
                     fullWidth
                 />
             </FormControl>
@@ -317,8 +311,6 @@ export const PatientForm: React.FC = observer(() => {
                     placeholder="Заполните поле, если таковые имеются"
                     value={questionnaireForm.badHabits}
                     onChange={event => setFormValue("badHabits", event.target.value)}
-                    error={Boolean(questionnaireFormErrors.badHabits)}
-                    helperText={questionnaireFormErrors.badHabits}
                     fullWidth
                 />
             </FormControl>
