@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { action, makeAutoObservable } from "mobx";
 
-import { UserApi } from "../api";
+import { UserApi, IGetUserSuccessResponse } from "../api";
 import { IUserStore, IUser } from "./interfaces/IUserStore";
 
 export class UserStore implements IUserStore {
@@ -18,8 +18,9 @@ export class UserStore implements IUserStore {
 
         UserApi.getUser()
             .then(
-                action(({ data }: AxiosResponse<IUser>) => {
-                    this.currentUser = data;
+                action(({ data }: AxiosResponse<IGetUserSuccessResponse>) => {
+                    console.log(data);
+                    this.currentUser = data.data;
                 })
             )
             .catch(() => {

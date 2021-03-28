@@ -1,7 +1,12 @@
 import { makeObservable, action, observable, reaction } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
-import { UserApi, ISignUpPostData } from "api";
+import {
+    SignUpApi,
+    ISignUpPostData,
+    ISignUpSuccessResponse,
+    ISignUpErrorResponse
+} from "api";
 import {
     ISignUpStore,
     ISignUpForm,
@@ -122,16 +127,16 @@ export class SignUpStore implements ISignUpStore {
             acceptedUserAgreement: this.signUpForm.acceptedUserAgreement
         };
 
-        UserApi.signUp(postData)
+        SignUpApi.signUp(postData)
             .then(
-                action(({ data }: AxiosResponse<any>) => {
+                action(({ data }: AxiosResponse<ISignUpSuccessResponse>) => {
                     console.log(data);
                     this.resetForm();
                     this.rootStore.modalsStore.setModalIsOpen("email", true);
                 })
             )
             .catch(
-                action((error: AxiosError) => {
+                action((error: AxiosError<ISignUpErrorResponse>) => {
                     this.submissionError = error.response?.data.message;
                 })
             )
@@ -153,26 +158,17 @@ export class SignUpStore implements ISignUpStore {
             password: isPassword(this.signUpForm.password)
         };
 
-        const {
-            firstName,
-            lastName,
-            birthDate,
-            phoneNumber,
-            email,
-            password
-        } = this.signUpFormErrors;
-
         return Boolean(
             !(
-                firstName ||
-                lastName ||
-                birthDate ||
-                phoneNumber ||
-                email ||
-                password.isLength ||
-                password.isUppercase ||
-                password.isLowercase ||
-                password.isNumber
+                this.signUpFormErrors.firstName ||
+                this.signUpFormErrors.lastName ||
+                this.signUpFormErrors.birthDate ||
+                this.signUpFormErrors.phoneNumber ||
+                this.signUpFormErrors.email ||
+                !this.signUpFormErrors.password.isLength ||
+                !this.signUpFormErrors.password.isUppercase ||
+                !this.signUpFormErrors.password.isLowercase ||
+                !this.signUpFormErrors.password.isNumber
             )
         );
     };

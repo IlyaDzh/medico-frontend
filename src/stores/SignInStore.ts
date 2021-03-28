@@ -1,7 +1,12 @@
 import { makeObservable, action, observable } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
-import { UserApi, ISignInPostData } from "api";
+import {
+    SignInApi,
+    ISignInPostData,
+    ISignInSuccessResponse,
+    ISignInErrorResponse
+} from "api";
 import {
     ISignInStore,
     ISignInForm,
@@ -45,17 +50,17 @@ export class SignInStore implements ISignInStore {
             password: this.signInForm.password
         };
 
-        UserApi.signIn(postData)
+        SignInApi.signIn(postData)
             .then(
-                action(({ data: { data } }: AxiosResponse<any>) => {
-                    localStorage.setItem("accessToken", data.token);
+                action(({ data }: AxiosResponse<ISignInSuccessResponse>) => {
+                    localStorage.setItem("accessToken", data.data.accessToken);
                     this.rootStore.userStore.fetchUser();
                     this.resetForm();
-                    this.rootStore.modalsStore.setModalIsOpen("sign-in", true);
+                    this.rootStore.modalsStore.setModalIsOpen("sign-in", false);
                 })
             )
             .catch(
-                action((error: AxiosError) => {
+                action((error: AxiosError<ISignInErrorResponse>) => {
                     this.submissionError = error.response?.data.message;
                 })
             )

@@ -16,9 +16,10 @@ import {
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
-import { Button } from "components";
+import { PasswordRequirement } from "./PasswordRequirement";
+import { Button, Loader } from "components";
 import { useStores } from "stores/useStore";
-import { UserPlusIcon, ValidationGreenIcon, ValidationRedIcon } from "icons";
+import { UserPlusIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
@@ -129,18 +130,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         flexWrap: "wrap"
     },
-    passwordValidationItem: {
-        display: "flex",
-        alignItems: "center",
-        padding: "8px 4px",
-        marginRight: 22,
-        "&:last-child": {
-            marginRight: 0
-        }
-    },
-    passwordValidationItemLabel: {
-        marginLeft: 4,
-        fontSize: 14
+    submitLoader: {
+        position: "absolute"
     }
 }));
 
@@ -148,7 +139,13 @@ export const SignUpForm: React.FC = observer(() => {
     const classes = useStyles();
     const { modalsStore, signUpStore } = useStores();
     const { setModalIsOpen } = modalsStore;
-    const { signUpForm, signUpFormErrors, doSignUp, setFormValue } = signUpStore;
+    const {
+        signUpForm,
+        signUpFormErrors,
+        pending,
+        doSignUp,
+        setFormValue
+    } = signUpStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -391,15 +388,6 @@ export const SignUpForm: React.FC = observer(() => {
                         onChange={event =>
                             setFormValue("password", event.target.value)
                         }
-                        error={
-                            signUpForm.password !== "" &&
-                            !Boolean(
-                                signUpFormErrors.password.isLength ||
-                                    signUpFormErrors.password.isUppercase ||
-                                    signUpFormErrors.password.isLowercase ||
-                                    signUpFormErrors.password.isNumber
-                            )
-                        }
                     />
                 </FormControl>
                 <FormControl
@@ -411,58 +399,22 @@ export const SignUpForm: React.FC = observer(() => {
                         Пароль должен содержать как минимум:
                     </FormLabel>
                     <div className={classes.passwordValidation}>
-                        <div className={classes.passwordValidationItem}>
-                            {signUpFormErrors.password.isLength ? (
-                                <ValidationGreenIcon />
-                            ) : (
-                                <ValidationRedIcon />
-                            )}
-                            <Typography
-                                className={classes.passwordValidationItemLabel}
-                                variant="h6"
-                            >
-                                8 символов
-                            </Typography>
-                        </div>
-                        <div className={classes.passwordValidationItem}>
-                            {signUpFormErrors.password.isUppercase ? (
-                                <ValidationGreenIcon />
-                            ) : (
-                                <ValidationRedIcon />
-                            )}
-                            <Typography
-                                className={classes.passwordValidationItemLabel}
-                                variant="h6"
-                            >
-                                Заглавную букву
-                            </Typography>
-                        </div>
-                        <div className={classes.passwordValidationItem}>
-                            {signUpFormErrors.password.isLowercase ? (
-                                <ValidationGreenIcon />
-                            ) : (
-                                <ValidationRedIcon />
-                            )}
-                            <Typography
-                                className={classes.passwordValidationItemLabel}
-                                variant="h6"
-                            >
-                                Строчную букву
-                            </Typography>
-                        </div>
-                        <div className={classes.passwordValidationItem}>
-                            {signUpFormErrors.password.isNumber ? (
-                                <ValidationGreenIcon />
-                            ) : (
-                                <ValidationRedIcon />
-                            )}
-                            <Typography
-                                className={classes.passwordValidationItemLabel}
-                                variant="h6"
-                            >
-                                Цифру
-                            </Typography>
-                        </div>
+                        <PasswordRequirement
+                            requirement={signUpFormErrors.password.isLength}
+                            label="8 символов"
+                        />
+                        <PasswordRequirement
+                            requirement={signUpFormErrors.password.isUppercase}
+                            label="Заглавную букву"
+                        />
+                        <PasswordRequirement
+                            requirement={signUpFormErrors.password.isLowercase}
+                            label="Строчную букву"
+                        />
+                        <PasswordRequirement
+                            requirement={signUpFormErrors.password.isNumber}
+                            label="Цифру"
+                        />
                     </div>
                 </FormControl>
                 <FormControlLabel
@@ -493,9 +445,12 @@ export const SignUpForm: React.FC = observer(() => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    disabled={!signUpForm.acceptedUserAgreement}
+                    disabled={!signUpForm.acceptedUserAgreement || pending}
                     fullWidth
                 >
+                    {pending && (
+                        <Loader className={classes.submitLoader} level={2.5} />
+                    )}
                     Зарегистрироваться
                 </Button>
             </form>

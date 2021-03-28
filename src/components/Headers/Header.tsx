@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { observer } from "mobx-react";
 import clsx from "clsx";
+import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import {
     Container,
@@ -24,7 +24,6 @@ import {
 } from "icons";
 
 interface IHeader {
-    isAuthorized?: boolean;
     isAbsolute?: boolean;
     leftBarIsLight?: boolean;
     rightBarIsLight?: boolean;
@@ -137,16 +136,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const Header: React.FC<IHeader> = observer(
-    ({
-        isAuthorized = false,
-        isAbsolute,
-        leftBarIsLight,
-        rightBarIsLight,
-        isHeader
-    }) => {
+    ({ isAbsolute, leftBarIsLight, rightBarIsLight, isHeader }) => {
         const classes = useStyles();
-        const { modalsStore } = useStores();
+        const { modalsStore, userStore } = useStores();
         const { setModalIsOpen } = modalsStore;
+        const { currentUser, doLogout } = userStore;
         const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
         const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -155,6 +149,7 @@ export const Header: React.FC<IHeader> = observer(
 
         const handleClose = (): void => {
             setAnchorEl(null);
+            doLogout();
         };
 
         const navigation = (
@@ -167,7 +162,7 @@ export const Header: React.FC<IHeader> = observer(
                 <Container
                     className={clsx(
                         classes.appBarContainer,
-                        isAuthorized && classes.appBarContainerAuth
+                        currentUser && classes.appBarContainerAuth
                     )}
                 >
                     <div className={classes.leftBar}>
@@ -195,7 +190,7 @@ export const Header: React.FC<IHeader> = observer(
                             </Link>
                         </Hidden>
                     </div>
-                    {!isAuthorized ? (
+                    {!currentUser ? (
                         <div>
                             <Button
                                 variant="text"

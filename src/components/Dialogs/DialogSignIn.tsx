@@ -47,6 +47,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             textDecoration: "none"
         }
+    },
+    submissionError: {
+        textAlign: "center",
+        marginBottom: 16,
+        fontSize: 14
     }
 }));
 
@@ -54,7 +59,7 @@ export const DialogSignIn: React.FC = observer(() => {
     const classes = useStyles();
     const { modalsStore, signInStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const { signInForm, setFormValue, doSignIn } = signInStore;
+    const { signInForm, submissionError, setFormValue, doSignIn } = signInStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -74,7 +79,6 @@ export const DialogSignIn: React.FC = observer(() => {
         >
             <form className={classes.dialogForm} onSubmit={handleSubmit}>
                 <TextField
-                    type="email"
                     className={classes.formInput}
                     variant="outlined"
                     color="secondary"
@@ -118,6 +122,13 @@ export const DialogSignIn: React.FC = observer(() => {
                         Забыли пароль?
                     </MaterialLink>
                 </div>
+                <Typography
+                    className={classes.submissionError}
+                    variant="h6"
+                    color="error"
+                >
+                    {submissionError}
+                </Typography>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                     Войти
                 </Button>

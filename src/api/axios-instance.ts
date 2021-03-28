@@ -8,7 +8,7 @@ _axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
     const accessToken: string | null = localStorage.getItem("accessToken");
 
     if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers.accessToken = accessToken;
     }
 
     return config;

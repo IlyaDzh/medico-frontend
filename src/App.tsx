@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
@@ -11,10 +11,20 @@ import {
     QuestionnairePage
 } from "./pages";
 import { ScrollHandler, DialogSignIn, DialogReset, DialogEmail } from "components";
+import { useStores } from "stores/useStore";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
 export const App: React.FC = () => {
+    const { userStore } = useStores();
+    const { currentUser, pending, fetchUser } = userStore;
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+            fetchUser();
+        }
+    }, [fetchUser]);
+
     return (
         <React.Fragment>
             <CssBaseline />

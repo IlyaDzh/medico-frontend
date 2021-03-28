@@ -1,10 +1,12 @@
 import React from "react";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core";
 
 import "./Loader.scss";
 
 interface ILoader {
     level?: number;
+    className?: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -21,11 +23,11 @@ const useStyles = makeStyles(() => ({
     })
 }));
 
-export const Loader: React.FC<ILoader> = ({ level = 1 }) => {
+export const Loader: React.FC<ILoader> = ({ level = 1, className }) => {
     const classes = useStyles(level);
 
     return (
-        <div className={classes.loader}>
+        <div className={clsx(classes.loader, className)}>
             <div className={`loader-inner ${classes.loaderInner}`}>
                 <div className="loader-dots">
                     <div>
