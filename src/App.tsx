@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
+import { observer } from "mobx-react";
 import { CssBaseline } from "@material-ui/core";
 
 import {
@@ -10,12 +11,18 @@ import {
     SignUpPage,
     QuestionnairePage
 } from "./pages";
-import { ScrollHandler, DialogSignIn, DialogReset, DialogEmail } from "components";
+import {
+    Backdrop,
+    ScrollHandler,
+    DialogSignIn,
+    DialogReset,
+    DialogEmail
+} from "components";
 import { useStores } from "stores/useStore";
 
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
-export const App: React.FC = () => {
+export const App: React.FC = observer(() => {
     const { userStore } = useStores();
     const { currentUser, pending, fetchUser } = userStore;
 
@@ -24,6 +31,10 @@ export const App: React.FC = () => {
             fetchUser();
         }
     }, [fetchUser]);
+
+    if (pending) {
+        return <Backdrop />;
+    }
 
     return (
         <React.Fragment>
@@ -54,4 +65,4 @@ export const App: React.FC = () => {
             <DialogEmail />
         </React.Fragment>
     );
-};
+});

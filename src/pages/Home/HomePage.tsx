@@ -6,8 +6,7 @@ import {
     DoctorsSection,
     AboutSection,
     HowItWorksSection,
-    ReviewsSection,
-    TariffsSection
+    ReviewsSection
 } from "./components";
 import { Footer, DialogConfirmation } from "components";
 
@@ -22,7 +21,6 @@ export const HomePage: React.FC = () => {
                 <AboutSection />
                 <HowItWorksSection />
                 <ReviewsSection />
-                <TariffsSection />
             </main>
             <Footer />
 

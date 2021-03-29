@@ -59,7 +59,13 @@ export const DialogSignIn: React.FC = observer(() => {
     const classes = useStyles();
     const { modalsStore, signInStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const { signInForm, submissionError, setFormValue, doSignIn } = signInStore;
+    const {
+        signInForm,
+        pending,
+        submissionError,
+        setFormValue,
+        doSignIn
+    } = signInStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -129,7 +135,14 @@ export const DialogSignIn: React.FC = observer(() => {
                 >
                     {submissionError}
                 </Typography>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={pending}
+                    isLoaded={pending}
+                    fullWidth
+                >
                     Войти
                 </Button>
             </form>

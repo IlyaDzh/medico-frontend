@@ -149,7 +149,6 @@ export const Header: React.FC<IHeader> = observer(
 
         const handleClose = (): void => {
             setAnchorEl(null);
-            doLogout();
         };
 
         const navigation = (
@@ -242,7 +241,7 @@ export const Header: React.FC<IHeader> = observer(
                                         startIcon={
                                             <Avatar
                                                 componentTag="span"
-                                                alt="Евгений К."
+                                                alt={`${currentUser.name} avatar`}
                                                 src={undefined}
                                             />
                                         }
@@ -252,7 +251,7 @@ export const Header: React.FC<IHeader> = observer(
                                         aria-haspopup="true"
                                         disableTouchRipple
                                     >
-                                        Евгений К.
+                                        {`${currentUser.name} ${currentUser.surname[0]}.`}
                                     </Button>
                                     <Menu
                                         id="account-menu"
@@ -288,7 +287,10 @@ export const Header: React.FC<IHeader> = observer(
                                             </MenuItem>
                                         </Link>
                                         <MenuItem
-                                            onClick={handleClose}
+                                            onClick={() => {
+                                                handleClose();
+                                                doLogout();
+                                            }}
                                             className={clsx(
                                                 classes.accountMenuItem,
                                                 classes.accountMenuItemExit

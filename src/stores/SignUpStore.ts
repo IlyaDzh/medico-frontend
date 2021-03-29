@@ -76,33 +76,41 @@ export class SignUpStore implements ISignUpStore {
 
         reaction(
             () => this.signUpForm.lastName,
-            lastName => (this.signUpFormErrors.lastName = isOnlyLetters(lastName))
+            lastName =>
+                lastName &&
+                (this.signUpFormErrors.lastName = isOnlyLetters(lastName))
         );
 
         reaction(
             () => this.signUpForm.firstName,
-            firstName => (this.signUpFormErrors.firstName = isOnlyLetters(firstName))
+            firstName =>
+                firstName &&
+                (this.signUpFormErrors.firstName = isOnlyLetters(firstName))
         );
 
         reaction(
             () => this.signUpForm.birthDate,
-            birthDate => (this.signUpFormErrors.birthDate = isAdult(birthDate))
+            birthDate =>
+                birthDate.toLocaleDateString() !== new Date().toLocaleDateString() &&
+                (this.signUpFormErrors.birthDate = isAdult(birthDate))
         );
 
         reaction(
             () => this.signUpForm.phoneNumber,
             phoneNumber =>
+                phoneNumber &&
                 (this.signUpFormErrors.phoneNumber = isPhoneNumber(phoneNumber))
         );
 
         reaction(
             () => this.signUpForm.email,
-            email => (this.signUpFormErrors.email = isEmail(email))
+            email => email && (this.signUpFormErrors.email = isEmail(email))
         );
 
         reaction(
             () => this.signUpForm.password,
-            password => (this.signUpFormErrors.password = isPassword(password))
+            password =>
+                password && (this.signUpFormErrors.password = isPassword(password))
         );
     }
 

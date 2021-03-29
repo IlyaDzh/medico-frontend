@@ -7,11 +7,30 @@ export interface IUserStore {
 
 export interface IUser {
     id: number;
-    avatar: string;
-    fullname: string;
+    additionalData: AdditionalData | null;
+    userType: "patient" | "doctor";
+    email: string;
+    surname: string;
+    name: string;
+    middleName: string;
+    birthDate: Date;
+    phone: string;
+    sex: "male" | "female";
+    isActivated: boolean;
+    acceptedUserAgreement: boolean;
 }
 
-export interface ILoginForm {
-    name: string;
-    password: string;
-}
+export type AdditionalData = {
+    weight: number;
+    height: number;
+    bloodType: string;
+    RHFactor: string;
+    allergies: string;
+    chronicDiseases: string;
+    operations: string;
+    isSmoker: string;
+    isAlcoholic: string;
+    badHabits: string;
+    bloodTransfusion: string;
+    isFullData: boolean;
+};

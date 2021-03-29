@@ -1,7 +1,12 @@
 import { makeAutoObservable, action, reaction } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
-import { QuestionnaireApi, IQuestionnairePostData } from "api";
+import {
+    QuestionnaireApi,
+    IPatientQuestionnairePostData,
+    IQuestionnaireSuccessResponse,
+    IQuestionnaireErrorResponse
+} from "api";
 import {
     IQuestionnaireStore,
     IQuestionnaireForm,
@@ -104,7 +109,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
         this.pending = true;
         this.submissionError = undefined;
 
-        const postData: IQuestionnairePostData = {
+        const postData: IPatientQuestionnairePostData = {
             weight: Number(this.questionnaireForm.weight),
             height: Number(this.questionnaireForm.height),
             bloodType: this.questionnaireForm.bloodType,
@@ -118,17 +123,15 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             bloodTransfusion: this.questionnaireForm.bloodTransfusion
         };
 
-        console.log(postData);
-
-        QuestionnaireApi.send(postData)
+        QuestionnaireApi.sendPatient(postData)
             .then(
-                action(({ data }: AxiosResponse<any>) => {
+                action(({ data }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
                     console.log(data);
                     this.resetForm();
                 })
             )
             .catch(
-                action((error: AxiosError) => {
+                action((error: AxiosError<IQuestionnaireErrorResponse>) => {
                     this.submissionError = error.response?.data.message;
                 })
             )
@@ -151,25 +154,15 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             bloodTransfusion: isNotEmpty(this.questionnaireForm.bloodTransfusion)
         };
 
-        const {
-            weight,
-            height,
-            bloodType,
-            RHFactor,
-            isSmoker,
-            isAlcoholic,
-            bloodTransfusion
-        } = this.questionnaireFormErrors;
-
         return Boolean(
             !(
-                weight ||
-                height ||
-                bloodType ||
-                RHFactor ||
-                isSmoker ||
-                isAlcoholic ||
-                bloodTransfusion
+                this.questionnaireFormErrors.weight ||
+                this.questionnaireFormErrors.height ||
+                this.questionnaireFormErrors.bloodType ||
+                this.questionnaireFormErrors.RHFactor ||
+                this.questionnaireFormErrors.isSmoker ||
+                this.questionnaireFormErrors.isAlcoholic ||
+                this.questionnaireFormErrors.bloodTransfusion
             )
         );
     };

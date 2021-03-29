@@ -17,7 +17,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { PasswordRequirement } from "./PasswordRequirement";
-import { Button, Loader } from "components";
+import { Button } from "components";
 import { useStores } from "stores/useStore";
 import { UserPlusIcon } from "icons";
 
@@ -130,8 +130,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         flexWrap: "wrap"
     },
-    submitLoader: {
-        position: "absolute"
+    submissionError: {
+        textAlign: "center",
+        marginBottom: 16,
+        fontSize: 14
     }
 }));
 
@@ -142,6 +144,7 @@ export const SignUpForm: React.FC = observer(() => {
     const {
         signUpForm,
         signUpFormErrors,
+        submissionError,
         pending,
         doSignUp,
         setFormValue
@@ -441,16 +444,21 @@ export const SignUpForm: React.FC = observer(() => {
                         </Typography>
                     }
                 />
+                <Typography
+                    className={classes.submissionError}
+                    variant="h6"
+                    color="error"
+                >
+                    {submissionError}
+                </Typography>
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     disabled={!signUpForm.acceptedUserAgreement || pending}
+                    isLoaded={pending}
                     fullWidth
                 >
-                    {pending && (
-                        <Loader className={classes.submitLoader} level={2.5} />
-                    )}
                     Зарегистрироваться
                 </Button>
             </form>

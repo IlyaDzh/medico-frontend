@@ -46,6 +46,7 @@ export const PatientForm: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="60"
+                    InputProps={{ inputProps: { min: 0 } }}
                     value={questionnaireForm.weight}
                     onChange={event => setFormValue("weight", event.target.value)}
                     error={Boolean(questionnaireFormErrors.weight)}
@@ -61,6 +62,7 @@ export const PatientForm: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="180"
+                    InputProps={{ inputProps: { min: 0 } }}
                     value={questionnaireForm.height}
                     onChange={event => setFormValue("height", event.target.value)}
                     error={Boolean(questionnaireFormErrors.height)}
@@ -77,7 +79,7 @@ export const PatientForm: React.FC = observer(() => {
                     aria-label="blood type"
                 >
                     <FormControlLabel
-                        value="1"
+                        value="I"
                         control={<Radio color="secondary" />}
                         label={
                             <Typography variant="body1" color="textSecondary">
@@ -86,7 +88,7 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                     <FormControlLabel
-                        value="2"
+                        value="II"
                         control={<Radio color="secondary" />}
                         label={
                             <Typography variant="body1" color="textSecondary">
@@ -95,7 +97,7 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                     <FormControlLabel
-                        value="3"
+                        value="III"
                         control={<Radio color="secondary" />}
                         label={
                             <Typography variant="body1" color="textSecondary">
@@ -104,7 +106,7 @@ export const PatientForm: React.FC = observer(() => {
                         }
                     />
                     <FormControlLabel
-                        value="4"
+                        value="IV"
                         control={<Radio color="secondary" />}
                         label={
                             <Typography variant="body1" color="textSecondary">

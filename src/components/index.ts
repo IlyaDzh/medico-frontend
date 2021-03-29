@@ -9,3 +9,4 @@ export * from "./Dialogs";
 export * from "./PaddingLine";
 export * from "./ScrollHandler";
 export * from "./Loader";
+export * from "./Backdrop";

@@ -8,9 +8,12 @@ import {
     Theme
 } from "@material-ui/core";
 
+import { Loader } from "components";
+
 interface IButton {
     to?: string;
     icon?: React.ReactNode;
+    isLoaded?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -38,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         "& svg path": {
             fill: theme.palette.text.disabled
         }
+    },
+    loader: {
+        position: "absolute"
     }
 }));
 
@@ -78,14 +84,24 @@ const CustomButton: React.FC<IButton & ButtonProps> = ({
     );
 };
 
-const DefaultButton: React.FC<IButton & ButtonProps> = ({ variant, ...props }) => {
+const DefaultButton: React.FC<IButton & ButtonProps> = ({
+    variant,
+    isLoaded,
+    children,
+    ...props
+}) => {
+    const classes = useStyles();
+
     return (
         <BaseButton
             color="primary"
             variant={variant}
             disableElevation={variant === "contained"}
             {...props}
-        />
+        >
+            {isLoaded && <Loader className={classes.loader} level={2.5} />}
+            {children}
+        </BaseButton>
     );
 };
 
