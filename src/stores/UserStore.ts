@@ -7,6 +7,8 @@ import { IUserStore, IUser } from "./interfaces/IUserStore";
 export class UserStore implements IUserStore {
     currentUser: IUser | undefined = undefined;
 
+    isAuthorized: boolean = !!localStorage.getItem("accessToken");
+
     pending: boolean = false;
 
     constructor() {
@@ -21,11 +23,15 @@ export class UserStore implements IUserStore {
                 action(({ data }: AxiosResponse<IGetUserSuccessResponse>) => {
                     console.log(data);
                     this.currentUser = data.data;
+                    this.isAuthorized = true;
                 })
             )
-            .catch(() => {
-                localStorage.removeItem("accessToken");
-            })
+            .catch(
+                action(() => {
+                    localStorage.removeItem("accessToken");
+                    this.isAuthorized = false;
+                })
+            )
             .finally(
                 action(() => {
                     this.pending = false;
@@ -35,6 +41,7 @@ export class UserStore implements IUserStore {
 
     doLogout = () => {
         this.currentUser = undefined;
+        this.isAuthorized = false;
         localStorage.removeItem("accessToken");
     };
 }

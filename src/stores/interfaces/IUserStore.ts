@@ -1,5 +1,6 @@
 export interface IUserStore {
     currentUser: IUser | undefined;
+    isAuthorized: boolean;
     pending: boolean;
     fetchUser: () => void;
     doLogout: () => void;
@@ -32,5 +33,5 @@ export type AdditionalData = {
     isAlcoholic: string;
     badHabits: string;
     bloodTransfusion: string;
-    isFullData: boolean;
+    isVerified?: boolean;
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { observer } from "mobx-react";
 import {
     FormControl,
     FormLabel,
@@ -7,7 +8,8 @@ import {
     Select,
     MenuItem,
     Typography,
-    makeStyles
+    makeStyles,
+    Theme
 } from "@material-ui/core";
 
 import { Button } from "components";
@@ -15,8 +17,9 @@ import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "./useFormStyles";
 import { FormPhotoIcon, FormResumeIcon } from "icons";
 import { categories } from "utils/constants";
+import { useStores } from "stores/useStore";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     experienceField: {
         marginRight: 12,
         maxWidth: 75
@@ -24,13 +27,25 @@ const useStyles = makeStyles(() => ({
     uploadFile: {
         display: "flex",
         alignItems: "center",
-        marginBottom: 36
+        marginBottom: 36,
+        [theme.breakpoints.down(360)]: {
+            display: "block"
+        }
     },
     uploadFileImage: {
         display: "flex",
         justifyContent: "center",
         marginRight: 36,
-        width: 131
+        width: 131,
+        [theme.breakpoints.down("xs")]: {
+            width: 72,
+            marginRight: 20
+        },
+        [theme.breakpoints.down(360)]: {
+            width: 92,
+            marginRight: 0,
+            marginBottom: 16
+        }
     },
     uploadFileContent: {
         marginBottom: 0
@@ -40,9 +55,17 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const DoctorForm: React.FC = () => {
+export const DoctorForm: React.FC = observer(() => {
     const classes = useStyles();
     const formClasses = useFormStyles();
+    const { questionnaireStore, userStore } = useStores();
+    const {
+        questionnaireForm,
+        questionnaireFormErrors,
+        sendForm,
+        setFormValue
+    } = questionnaireStore;
+    const { currentUser } = userStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -63,7 +86,13 @@ export const DoctorForm: React.FC = () => {
                     variant="outlined"
                     color="secondary"
                     placeholder="Фамилия Имя Отчество"
+                    value={
+                        currentUser
+                            ? `${currentUser.surname} ${currentUser.name} ${currentUser.middleName}`
+                            : ""
+                    }
                     fullWidth
+                    disabled
                 />
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
@@ -80,7 +109,12 @@ export const DoctorForm: React.FC = () => {
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Пол
                 </FormLabel>
-                <Select variant="outlined" color="secondary" value="male">
+                <Select
+                    variant="outlined"
+                    color="secondary"
+                    value={currentUser ? currentUser.sex : "male"}
+                    disabled
+                >
                     <MenuItem value="male">Мужской</MenuItem>
                     <MenuItem value="female">Женский</MenuItem>
                 </Select>
@@ -93,7 +127,9 @@ export const DoctorForm: React.FC = () => {
                     variant="outlined"
                     color="secondary"
                     placeholder="doctor_agyn@gmail.com"
+                    value={currentUser?.email}
                     fullWidth
+                    disabled
                 />
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
@@ -104,7 +140,9 @@ export const DoctorForm: React.FC = () => {
                     variant="outlined"
                     color="secondary"
                     placeholder="+7 (XXX) XXX XX XX"
+                    value={currentUser?.phone}
                     fullWidth
+                    disabled
                 />
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
@@ -223,4 +261,4 @@ export const DoctorForm: React.FC = () => {
             </Button>
         </FormWrapper>
     );
-};
+});

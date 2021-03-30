@@ -1,3 +1,4 @@
+export * from "./PrivateRoute";
 export * from "./Button";
 export * from "./Headers";
 export * from "./Footer";

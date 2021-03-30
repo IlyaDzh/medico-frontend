@@ -16,7 +16,8 @@ import {
     ScrollHandler,
     DialogSignIn,
     DialogReset,
-    DialogEmail
+    DialogEmail,
+    PrivateRoute
 } from "components";
 import { useStores } from "stores/useStore";
 
@@ -24,7 +25,7 @@ const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
 export const App: React.FC = observer(() => {
     const { userStore } = useStores();
-    const { currentUser, pending, fetchUser } = userStore;
+    const { isAuthorized, pending, fetchUser } = userStore;
 
     useEffect(() => {
         if (localStorage.getItem("accessToken")) {
@@ -50,13 +51,23 @@ export const App: React.FC = observer(() => {
                     />
                     <Route exact path="/doctors" component={DoctorsPage} />
                     <Route exact path="/doctor/:id" component={DoctorPage} />
-                    <Route exact path="/sign-up" component={SignUpPage} />
-                    <Route
+                    <PrivateRoute
+                        exact
+                        path="/sign-up"
+                        component={SignUpPage}
+                        isAuthorized={!isAuthorized}
+                    />
+                    <PrivateRoute
                         exact
                         path="/questionnaire"
                         component={QuestionnairePage}
+                        isAuthorized={isAuthorized}
                     />
-                    <Route path="/dashboard" component={DashboardPage} />
+                    <PrivateRoute
+                        path="/dashboard"
+                        component={DashboardPage}
+                        isAuthorized={isAuthorized}
+                    />
                     <Route component={() => <div>Error</div>} />
                 </Switch>
             </Suspense>
