@@ -201,14 +201,6 @@ export const Footer: React.FC = () => {
                                             Отзывы
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link
-                                            to="/#tarifs"
-                                            className={classes.topListLink}
-                                        >
-                                            Тарифы
-                                        </Link>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>

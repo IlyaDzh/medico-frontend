@@ -5,7 +5,8 @@ import {
     SignUpApi,
     ISignUpPostData,
     ISignUpSuccessResponse,
-    ISignUpErrorResponse
+    ISignUpErrorResponse,
+    ISendMailPostData
 } from "api";
 import {
     ISignUpStore,
@@ -58,6 +59,8 @@ export class SignUpStore implements ISignUpStore {
 
     pending: boolean = false;
 
+    sentEmail: boolean = false;
+
     private rootStore: IStores;
 
     constructor(rootStore: IStores) {
@@ -68,6 +71,7 @@ export class SignUpStore implements ISignUpStore {
             signUpFormErrors: observable,
             submissionError: observable,
             pending: observable,
+            sentEmail: observable,
             doSignUp: action,
             setFormValue: action,
             validateForm: action,
@@ -139,7 +143,6 @@ export class SignUpStore implements ISignUpStore {
             .then(
                 action(({ data }: AxiosResponse<ISignUpSuccessResponse>) => {
                     console.log(data);
-                    this.resetForm();
                     this.rootStore.modalsStore.setModalIsOpen("email", true);
                 })
             )
@@ -153,6 +156,18 @@ export class SignUpStore implements ISignUpStore {
                     this.pending = false;
                 })
             );
+    };
+
+    sendMail = () => {
+        const postData: ISendMailPostData = {
+            email: this.signUpForm.email
+        };
+
+        SignUpApi.sendMail(postData).then(
+            action(() => {
+                this.sentEmail = true;
+            })
+        );
     };
 
     validateForm = () => {

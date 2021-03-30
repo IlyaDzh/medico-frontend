@@ -20,11 +20,13 @@ const useStyles = makeStyles(() => ({
 
 export const DialogEmail: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, signUpStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
+    const { sentEmail, sendMail, resetForm } = signUpStore;
 
     const handleClose = (): void => {
         setModalIsOpen("email", false);
+        resetForm();
     };
 
     return (
@@ -43,7 +45,13 @@ export const DialogEmail: React.FC = observer(() => {
                     На вашу почту отправлено письмо с подтверждением регистрации
                 </Typography>
             </div>
-            <Button variant="outlined" color="primary" fullWidth>
+            <Button
+                variant="outlined"
+                color="primary"
+                onClick={sendMail}
+                disabled={sentEmail}
+                fullWidth
+            >
                 Отправить письмо повторно
             </Button>
         </DialogBase>

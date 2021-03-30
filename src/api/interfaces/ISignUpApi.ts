@@ -13,6 +13,10 @@ export interface ISignUpPostData {
     acceptedUserAgreement: boolean;
 }
 
+export interface ISendMailPostData {
+    email: string;
+}
+
 export interface ISignUpSuccessResponse extends BaseResponse {
     error: 0;
     data: null;

@@ -3,7 +3,9 @@ export interface ISignUpStore {
     signUpFormErrors: ISignUpFormErrors;
     submissionError: string | undefined;
     pending: boolean;
+    sentEmail: boolean;
     doSignUp: () => void;
+    sendMail: () => void;
     validateForm: () => void;
     setFormValue: <K extends KeysOfSignUpForm>(
         key: K,
