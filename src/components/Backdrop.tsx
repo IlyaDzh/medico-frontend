@@ -14,7 +14,7 @@ export const Backdrop: React.FC = () => {
 
     return (
         <BaseBackdrop className={classes.backdrop} transitionDuration={500} open>
-            <Loader level={5} />
+            <Loader level={3} />
         </BaseBackdrop>
     );
 };

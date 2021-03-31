@@ -7,6 +7,6 @@ export class SignUpApi {
     }
 
     static sendMail(postData: ISendMailPostData) {
-        return axiosInstance.post("/api/v1/auth//auth/send-email-with-token", postData);
+        return axiosInstance.post("/api/v1/auth/send-email-with-token", postData);
     }
 }

@@ -2,6 +2,7 @@ export * from "./ISignUpApi";
 export * from "./ISignInApi";
 export * from "./IUserApi";
 export * from "./IQuestionnaireApi";
+export * from "./ISpecialtiesApi";
 
 export interface BaseResponse {
     data?: any;

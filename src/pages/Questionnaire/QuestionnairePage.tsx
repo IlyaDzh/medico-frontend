@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { observer } from "mobx-react";
 
 import { PatientForm, DoctorForm } from "./components";
@@ -11,11 +12,23 @@ export const QuestionnairePage: React.FC = observer(() => {
 
     const isPatient: boolean = currentUser?.userType === "patient";
 
+    const patientComponent = currentUser?.additionalData ? (
+        <Redirect to="/dashboard" />
+    ) : (
+        <PatientForm />
+    );
+
+    const doctorComponent = currentUser?.additionalData?.isVerified ? (
+        <Redirect to="/dashboard" />
+    ) : (
+        <DoctorForm />
+    );
+
     return (
         <React.Fragment>
             <PaddingLine />
             <Header />
-            <main>{isPatient ? <PatientForm /> : <DoctorForm />}</main>
+            <main>{isPatient ? patientComponent : doctorComponent}</main>
             <Footer />
         </React.Fragment>
     );

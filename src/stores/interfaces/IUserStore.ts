@@ -17,11 +17,11 @@ export interface IUser {
     birthDate: Date;
     phone: string;
     sex: "male" | "female";
-    isActivated: boolean;
-    acceptedUserAgreement: boolean;
 }
 
-export type AdditionalData = {
+export type AdditionalData = PatientAdditionalData & DoctorAdditionalData;
+
+export type PatientAdditionalData = {
     weight: number;
     height: number;
     bloodType: string;
@@ -33,5 +33,14 @@ export type AdditionalData = {
     isAlcoholic: string;
     badHabits: string;
     bloodTransfusion: string;
-    isVerified?: boolean;
+};
+
+export type DoctorAdditionalData = {
+    IIN: string;
+    experience: string;
+    photo: string;
+    summary: string;
+    diploma: string;
+    // specialties: ISpecialty[];
+    isVerified: boolean;
 };

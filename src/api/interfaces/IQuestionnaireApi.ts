@@ -1,4 +1,5 @@
 import { BaseResponse } from "./";
+import { AdditionalData } from "stores/interfaces/IUserStore";
 
 export interface IPatientQuestionnairePostData {
     weight: number;
@@ -25,7 +26,7 @@ export interface IDoctorQuestionnairePostData {
 
 export interface IQuestionnaireSuccessResponse extends BaseResponse {
     error: 0;
-    data: null;
+    data: AdditionalData;
 }
 
 export interface IQuestionnaireErrorResponse extends BaseResponse {

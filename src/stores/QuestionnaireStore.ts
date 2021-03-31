@@ -1,4 +1,4 @@
-import { makeAutoObservable, action, reaction } from "mobx";
+import { makeObservable, action, observable, reaction } from "mobx";
 import { AxiosError, AxiosResponse } from "axios";
 
 import {
@@ -14,6 +14,7 @@ import {
     KeysOfQuestionnaireForm
 } from "./interfaces/IQuestionnaireStore";
 import { isNumber, isNotEmpty } from "utils/validation";
+import IStores from "./interfaces";
 
 const INITIAL_QUESTIONNAIRE_FORM: IQuestionnaireForm = {
     weight: "",
@@ -48,8 +49,21 @@ export class QuestionnaireStore implements IQuestionnaireStore {
 
     pending: boolean = false;
 
-    constructor() {
-        makeAutoObservable(this);
+    private rootStore: IStores;
+
+    constructor(rootStore: IStores) {
+        this.rootStore = rootStore;
+
+        makeObservable(this, {
+            questionnaireForm: observable,
+            questionnaireFormErrors: observable,
+            submissionError: observable,
+            pending: observable,
+            sendForm: action,
+            validateForm: action,
+            setFormValue: action,
+            resetForm: action
+        });
 
         reaction(
             () => this.questionnaireForm.weight,
@@ -127,6 +141,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             .then(
                 action(({ data }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
                     console.log(data);
+                    this.rootStore.userStore.currentUser!.additionalData = data.data;
                     this.resetForm();
                 })
             )
