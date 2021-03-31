@@ -31,14 +31,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorsCategories: React.FC = observer(() => {
     const classes = useStyles();
     const { specialtiesStore } = useStores();
-    const { specialties, getSpecialties } = specialtiesStore;
+    const { specialties, pending, getSpecialties } = specialtiesStore;
     const [currentCategory, setCurrentCategory] = useState<string>("all");
 
     useEffect(() => {
-        if (specialties.length === 0) {
+        if (specialties.length === 0 && !pending) {
             getSpecialties();
         }
-    }, [specialties, getSpecialties]);
+    }, [specialties, pending, getSpecialties]);
 
     return (
         <ul className={classes.categories}>

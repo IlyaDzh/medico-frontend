@@ -7,15 +7,23 @@ import { SpecialtiesApi, IGetSpecialtiesSuccessResponse } from "api";
 export class SpecialtiesStore implements ISpecialtiesStore {
     specialties: Specialty[] = [] as Specialty[];
 
+    pending: boolean = false;
+
     constructor() {
         makeAutoObservable(this);
     }
 
     getSpecialties = () => {
-        SpecialtiesApi.getSpecialties().then(
-            action(({ data }: AxiosResponse<IGetSpecialtiesSuccessResponse>) => {
-                this.specialties = data.data;
-            })
-        );
+        this.pending = true;
+
+        SpecialtiesApi.getSpecialties()
+            .then(
+                action(({ data }: AxiosResponse<IGetSpecialtiesSuccessResponse>) => {
+                    this.specialties = data.data;
+                })
+            )
+            .finally(() => {
+                this.pending = false;
+            });
     };
 }
