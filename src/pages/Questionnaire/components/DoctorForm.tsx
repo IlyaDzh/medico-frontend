@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import {
+    Button as MaterialButton,
     FormControl,
     FormLabel,
     TextField,
@@ -18,11 +19,12 @@ import { useFormStyles } from "./useFormStyles";
 import { FormPhotoIcon, FormResumeIcon } from "icons";
 import { categories } from "utils/constants";
 import { useStores } from "stores/useStore";
+import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     experienceField: {
         marginRight: 12,
-        maxWidth: 75
+        maxWidth: 130
     },
     uploadFile: {
         display: "flex",
@@ -37,14 +39,22 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: "center",
         marginRight: 36,
         width: 131,
+        height: 131,
         [theme.breakpoints.down("xs")]: {
             width: 72,
+            height: 72,
             marginRight: 20
         },
         [theme.breakpoints.down(360)]: {
             width: 92,
+            height: 92,
             marginRight: 0,
             marginBottom: 16
+        },
+        "& img": {
+            width: "100%",
+            objectFit: "cover",
+            borderRadius: "50%"
         }
     },
     uploadFileContent: {
@@ -62,14 +72,21 @@ export const DoctorForm: React.FC = observer(() => {
     const {
         questionnaireForm,
         questionnaireFormErrors,
-        sendForm,
-        setFormValue
+        sendDoctorForm,
+        setFormValue,
+        setFile
     } = questionnaireStore;
     const { currentUser } = userStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // sendForm();
+        sendDoctorForm();
+    };
+
+    const handleFileAttachment = (property: KeysOfFile, files: any): void => {
+        if (files && files.length !== 0) {
+            setFile(property, files[0]);
+        }
     };
 
     return (
@@ -103,6 +120,10 @@ export const DoctorForm: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="XXX XXX XXX XXX"
+                    value={questionnaireForm.IIN}
+                    onChange={event => setFormValue("IIN", event.target.value)}
+                    error={Boolean(questionnaireFormErrors.IIN)}
+                    helperText={questionnaireFormErrors.IIN}
                 />
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
@@ -167,12 +188,30 @@ export const DoctorForm: React.FC = observer(() => {
                 </FormLabel>
                 <div>
                     <TextField
+                        type="number"
                         className={classes.experienceField}
                         variant="outlined"
                         color="secondary"
                         placeholder="1"
+                        InputProps={{ inputProps: { min: 1 } }}
+                        value={questionnaireForm.experienceNumber}
+                        onChange={event =>
+                            setFormValue("experienceNumber", event.target.value)
+                        }
+                        error={Boolean(questionnaireFormErrors.experienceNumber)}
+                        helperText={questionnaireFormErrors.experienceNumber}
                     />
-                    <Select variant="outlined" color="secondary" value="month">
+                    <Select
+                        variant="outlined"
+                        color="secondary"
+                        value={questionnaireForm.experienceType}
+                        onChange={event =>
+                            setFormValue(
+                                "experienceType",
+                                event.target.value as string
+                            )
+                        }
+                    >
                         <MenuItem value="month">Месяцев</MenuItem>
                         <MenuItem value="years">Лет</MenuItem>
                     </Select>
@@ -180,7 +219,14 @@ export const DoctorForm: React.FC = observer(() => {
             </FormControl>
             <div className={classes.uploadFile}>
                 <div className={classes.uploadFileImage}>
-                    <FormPhotoIcon />
+                    {questionnaireForm.photo ? (
+                        <img
+                            src={URL.createObjectURL(questionnaireForm.photo)}
+                            alt="Загруженное фото"
+                        />
+                    ) : (
+                        <FormPhotoIcon />
+                    )}
                 </div>
                 <FormControl
                     className={clsx(
@@ -192,13 +238,22 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить фото
                     </FormLabel>
-                    <Button
+                    <MaterialButton
+                        component="label"
                         className={classes.uploadFileButton}
                         variant="outlined"
                         color="primary"
                     >
                         Выбрать файл
-                    </Button>
+                        <input
+                            type="file"
+                            accept="image/png, image/jpg, image/jpeg"
+                            onChange={event =>
+                                handleFileAttachment("photo", event.target.files)
+                            }
+                            hidden
+                        />
+                    </MaterialButton>
                     <Typography variant="body1" color="textSecondary">
                         Допустимые форматы: jpeg, png
                     </Typography>
@@ -206,7 +261,14 @@ export const DoctorForm: React.FC = observer(() => {
             </div>
             <div className={classes.uploadFile}>
                 <div className={classes.uploadFileImage}>
-                    <FormResumeIcon />
+                    {questionnaireForm.summary ? (
+                        <img
+                            src={URL.createObjectURL(questionnaireForm.summary)}
+                            alt="Загруженное резюме"
+                        />
+                    ) : (
+                        <FormResumeIcon />
+                    )}
                 </div>
                 <FormControl
                     className={clsx(
@@ -218,13 +280,22 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить резюме
                     </FormLabel>
-                    <Button
+                    <MaterialButton
+                        component="label"
                         className={classes.uploadFileButton}
                         variant="outlined"
                         color="primary"
                     >
                         Выбрать файл
-                    </Button>
+                        <input
+                            type="file"
+                            accept="image/png, image/jpg, image/jpeg"
+                            onChange={event =>
+                                handleFileAttachment("summary", event.target.files)
+                            }
+                            hidden
+                        />
+                    </MaterialButton>
                     <Typography variant="body1" color="textSecondary">
                         Допустимые форматы: jpeg, png, txt, pdf
                     </Typography>
@@ -232,7 +303,14 @@ export const DoctorForm: React.FC = observer(() => {
             </div>
             <div className={classes.uploadFile}>
                 <div className={classes.uploadFileImage}>
-                    <FormResumeIcon />
+                    {questionnaireForm.diploma ? (
+                        <img
+                            src={URL.createObjectURL(questionnaireForm.diploma)}
+                            alt="Загруженный диплом"
+                        />
+                    ) : (
+                        <FormResumeIcon />
+                    )}
                 </div>
                 <FormControl
                     className={clsx(
@@ -244,13 +322,22 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить диплом
                     </FormLabel>
-                    <Button
+                    <MaterialButton
+                        component="label"
                         className={classes.uploadFileButton}
                         variant="outlined"
                         color="primary"
                     >
                         Выбрать файл
-                    </Button>
+                        <input
+                            type="file"
+                            accept="image/png, image/jpg, image/jpeg"
+                            onChange={event =>
+                                handleFileAttachment("diploma", event.target.files)
+                            }
+                            hidden
+                        />
+                    </MaterialButton>
                     <Typography variant="body1" color="textSecondary">
                         Допустимые форматы: jpeg, png, pdf
                     </Typography>

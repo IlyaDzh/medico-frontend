@@ -22,13 +22,13 @@ export const PatientForm: React.FC = observer(() => {
     const {
         questionnaireForm,
         questionnaireFormErrors,
-        sendForm,
+        sendPatientForm,
         setFormValue
     } = questionnaireStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        sendForm();
+        sendPatientForm();
     };
 
     return (

@@ -11,7 +11,8 @@ import {
     IQuestionnaireStore,
     IQuestionnaireForm,
     IQuestionnaireFormErrors,
-    KeysOfQuestionnaireForm
+    KeysOfQuestionnaireForm,
+    KeysOfFile
 } from "./interfaces/IQuestionnaireStore";
 import { isNumber, isNotEmpty } from "utils/validation";
 import IStores from "./interfaces";
@@ -27,7 +28,13 @@ const INITIAL_QUESTIONNAIRE_FORM: IQuestionnaireForm = {
     isSmoker: "",
     isAlcoholic: "",
     badHabits: "",
-    bloodTransfusion: ""
+    bloodTransfusion: "",
+    IIN: "",
+    experienceNumber: "",
+    experienceType: "month",
+    photo: null,
+    summary: null,
+    diploma: null
 };
 
 const INITIAL_QUESTIONNAIRE_FORM_ERRORS: IQuestionnaireFormErrors = {
@@ -37,7 +44,12 @@ const INITIAL_QUESTIONNAIRE_FORM_ERRORS: IQuestionnaireFormErrors = {
     RHFactor: undefined,
     isSmoker: undefined,
     isAlcoholic: undefined,
-    bloodTransfusion: undefined
+    bloodTransfusion: undefined,
+    IIN: undefined,
+    experienceNumber: undefined,
+    photo: undefined,
+    summary: undefined,
+    diploma: undefined
 };
 
 export class QuestionnaireStore implements IQuestionnaireStore {
@@ -59,9 +71,12 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             questionnaireFormErrors: observable,
             submissionError: observable,
             pending: observable,
-            sendForm: action,
-            validateForm: action,
+            sendPatientForm: action,
+            sendDoctorForm: action,
+            validatePatientForm: action,
+            validateDoctorForm: action,
             setFormValue: action,
+            setFile: action,
             resetForm: action
         });
 
@@ -113,10 +128,24 @@ export class QuestionnaireStore implements IQuestionnaireStore {
                     bloodTransfusion
                 ))
         );
+
+        reaction(
+            () => this.questionnaireForm.IIN,
+            IIN => IIN && (this.questionnaireFormErrors.IIN = isNotEmpty(IIN))
+        );
+
+        reaction(
+            () => this.questionnaireForm.experienceNumber,
+            experienceNumber =>
+                experienceNumber &&
+                (this.questionnaireFormErrors.experienceNumber = isNotEmpty(
+                    experienceNumber
+                ))
+        );
     }
 
-    sendForm = () => {
-        if (!this.validateForm()) {
+    sendPatientForm = () => {
+        if (!this.validatePatientForm()) {
             return;
         }
 
@@ -157,7 +186,44 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             );
     };
 
-    validateForm = () => {
+    sendDoctorForm = () => {
+        if (!this.validateDoctorForm()) {
+            return;
+        }
+
+        this.pending = true;
+        this.submissionError = undefined;
+
+        const postData = new FormData();
+        postData.append("IIN", this.questionnaireForm.IIN);
+        postData.append("experience", this.questionnaireForm.experienceNumber);
+        postData.append("photo", this.questionnaireForm.photo as File);
+        postData.append("diploma", this.questionnaireForm.diploma as File);
+        postData.append("summary", this.questionnaireForm.summary as File);
+
+        console.log(this.questionnaireForm);
+
+        QuestionnaireApi.sendDoctor(postData)
+            .then(
+                action(({ data }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
+                    console.log(data);
+                    this.rootStore.userStore.currentUser!.additionalData = data.data;
+                    this.resetForm();
+                })
+            )
+            .catch(
+                action((error: AxiosError<IQuestionnaireErrorResponse>) => {
+                    this.submissionError = error.response?.data.message;
+                })
+            )
+            .finally(
+                action(() => {
+                    this.pending = false;
+                })
+            );
+    };
+
+    validatePatientForm = () => {
         this.questionnaireFormErrors = {
             ...this.questionnaireFormErrors,
             weight: isNumber(this.questionnaireForm.weight),
@@ -182,11 +248,30 @@ export class QuestionnaireStore implements IQuestionnaireStore {
         );
     };
 
+    validateDoctorForm = () => {
+        this.questionnaireFormErrors = {
+            ...this.questionnaireFormErrors,
+            IIN: isNotEmpty(this.questionnaireForm.experienceNumber),
+            experienceNumber: isNotEmpty(this.questionnaireForm.experienceNumber)
+        };
+
+        return Boolean(
+            !(
+                this.questionnaireFormErrors.IIN ||
+                this.questionnaireFormErrors.experienceNumber
+            )
+        );
+    };
+
     setFormValue = <K extends KeysOfQuestionnaireForm>(
         key: K,
         value: IQuestionnaireForm[K]
     ) => {
         this.questionnaireForm[key] = value;
+    };
+
+    setFile = (property: KeysOfFile, file: File) => {
+        this.questionnaireForm[property] = file;
     };
 
     resetForm = () => {
