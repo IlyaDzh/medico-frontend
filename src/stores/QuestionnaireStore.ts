@@ -212,12 +212,19 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             return;
         }
 
+        console.log("send");
+
         this.pending = true;
         this.submissionError = undefined;
 
+        const userExperience =
+            this.questionnaireForm.experienceType === "years"
+                ? Number(this.questionnaireForm.experienceNumber) * 12
+                : this.questionnaireForm.experienceNumber;
+
         const postData = new FormData();
         postData.append("IIN", this.questionnaireForm.IIN);
-        postData.append("experience", this.questionnaireForm.experienceNumber);
+        postData.append("experience", userExperience.toString());
         postData.append(
             "specialties",
             JSON.stringify(this.questionnaireForm.specialties)
@@ -284,7 +291,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             !(
                 this.questionnaireFormErrors.IIN ||
                 this.questionnaireFormErrors.experienceNumber ||
-                this.questionnaireForm.photo ||
+                this.questionnaireFormErrors.photo ||
                 this.questionnaireFormErrors.summary ||
                 this.questionnaireFormErrors.diploma
             )
