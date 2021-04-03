@@ -1,10 +1,12 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { Container, Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 
 import { Breadcrumbs, Button, SearchInput } from "components";
 import { Header } from "./Header";
 
 import headerBackground from "images/header/header-background.jpg";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
@@ -42,8 +44,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const ExtendedHeader: React.FC = () => {
+export const ExtendedHeader: React.FC = observer(() => {
     const classes = useStyles();
+    const { userStore } = useStores();
+    const { isAuthorized } = userStore;
 
     return (
         <header className={classes.header}>
@@ -66,18 +70,20 @@ export const ExtendedHeader: React.FC = () => {
                             <SearchInput placeholder="Поиск специалиста" fullWidth />
                         </div>
                     </Hidden>
-                    <Hidden mdUp>
-                        <Button
-                            variant="outlined"
-                            color="default"
-                            size="small"
-                            to="/sign-up"
-                        >
-                            Регистрация
-                        </Button>
-                    </Hidden>
+                    {!isAuthorized && (
+                        <Hidden mdUp>
+                            <Button
+                                variant="outlined"
+                                color="default"
+                                size="small"
+                                to="/sign-up"
+                            >
+                                Регистрация
+                            </Button>
+                        </Hidden>
+                    )}
                 </div>
             </Container>
         </header>
     );
-};
+});

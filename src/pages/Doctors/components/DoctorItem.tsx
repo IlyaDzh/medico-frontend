@@ -15,6 +15,7 @@ interface IDoctorItem {
         rating: number;
         description: string;
         jobTime: string;
+        cost: number;
     };
 }
 
@@ -66,6 +67,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 12
     },
     doctorJobTime: {
+        marginBottom: 12,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 4
+        }
+    },
+    doctorCost: {
         marginBottom: 20,
         [theme.breakpoints.down("xs")]: {
             marginBottom: 0
@@ -121,6 +128,13 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                         color="textSecondary"
                     >
                         Стаж работы: {doctor.jobTime}
+                    </Typography>
+                    <Typography
+                        className={classes.doctorCost}
+                        variant="h3"
+                        color="textSecondary"
+                    >
+                        {doctor.cost} руб.
                     </Typography>
                     <Hidden xsDown>
                         <Button

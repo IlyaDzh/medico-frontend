@@ -89,9 +89,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 12
     },
     profileJobTime: {
-        marginBottom: 48,
-        [theme.breakpoints.down("xs")]: {
+        marginBottom: 18,
+        [theme.breakpoints.down("sm")]: {
             marginBottom: 12
+        }
+    },
+    profileCost: {
+        marginBottom: 32,
+        [theme.breakpoints.down("sm")]: {
+            marginBottom: 18
         }
     }
 }));
@@ -160,6 +166,13 @@ export const DoctorProfile: React.FC = () => {
                                 color="textSecondary"
                             >
                                 Стаж работы: 12 лет
+                            </Typography>
+                            <Typography
+                                className={classes.profileCost}
+                                variant="h3"
+                                color="textSecondary"
+                            >
+                                1200 руб.
                             </Typography>
                             <Button
                                 variant="contained"
