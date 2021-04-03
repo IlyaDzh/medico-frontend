@@ -225,7 +225,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
 
         const postData = new FormData();
         postData.append("IIN", this.questionnaireForm.IIN);
-        postData.append("experience", experienceDate.toLocaleDateString());
+        postData.append("experience", experienceDate.toISOString());
         postData.append(
             "specialties",
             JSON.stringify(this.questionnaireForm.specialties)
