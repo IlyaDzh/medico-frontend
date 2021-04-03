@@ -1,10 +1,9 @@
 import { makeObservable, action, observable, reaction } from "mobx";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 
 import {
     SignUpApi,
     ISignUpPostData,
-    ISignUpSuccessResponse,
     ISignUpErrorResponse,
     ISendMailPostData
 } from "api";

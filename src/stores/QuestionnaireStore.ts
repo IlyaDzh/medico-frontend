@@ -212,19 +212,20 @@ export class QuestionnaireStore implements IQuestionnaireStore {
             return;
         }
 
-        console.log("send");
-
         this.pending = true;
         this.submissionError = undefined;
 
-        const userExperience =
+        const experienceMonth =
             this.questionnaireForm.experienceType === "years"
                 ? Number(this.questionnaireForm.experienceNumber) * 12
-                : this.questionnaireForm.experienceNumber;
+                : Number(this.questionnaireForm.experienceNumber);
+
+        const experienceDate = new Date();
+        experienceDate.setMonth(experienceDate.getMonth() - experienceMonth);
 
         const postData = new FormData();
         postData.append("IIN", this.questionnaireForm.IIN);
-        postData.append("experience", userExperience.toString());
+        postData.append("experience", experienceDate.toLocaleDateString());
         postData.append(
             "specialties",
             JSON.stringify(this.questionnaireForm.specialties)
