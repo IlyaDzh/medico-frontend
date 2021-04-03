@@ -99,7 +99,7 @@ const DefaultButton: React.FC<IButton & ButtonProps> = ({
             disableElevation={variant === "contained"}
             {...props}
         >
-            {isLoaded && <Loader className={classes.loader} level={2.5} />}
+            {isLoaded && <Loader className={classes.loader} level={2.5} isCenter />}
             {children}
         </BaseButton>
     );

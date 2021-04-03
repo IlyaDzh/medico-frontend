@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
-import { Button } from "components";
+import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 import { UserIcon } from "icons";
 
@@ -47,11 +47,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             textDecoration: "none"
         }
-    },
-    submissionError: {
-        textAlign: "center",
-        marginBottom: 16,
-        fontSize: 14
     }
 }));
 
@@ -128,13 +123,7 @@ export const DialogSignIn: React.FC = observer(() => {
                         Забыли пароль?
                     </MaterialLink>
                 </div>
-                <Typography
-                    className={classes.submissionError}
-                    variant="h6"
-                    color="error"
-                >
-                    {submissionError}
-                </Typography>
+                <SubmissionError align="center">{submissionError}</SubmissionError>
                 <Button
                     type="submit"
                     variant="contained"

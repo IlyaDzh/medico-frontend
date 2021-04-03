@@ -1,10 +1,10 @@
 import { differenceInYears } from "date-fns";
 
-const IS_EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const IS_PHONE_NUMBER_REGEXP = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
+const PHONE_NUMBER_REGEXP = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
 
-const IS_ONLY_LETTERS_REGEXP = /^[a-zA-Zа-яА-ЯЁё]+$/;
+const ONLY_LETTERS_REGEXP = /^[a-zA-Zа-яА-ЯЁё]+$/;
 
 export const isNumber = (value: string) => {
     if (Number(value) === 0) {
@@ -16,8 +16,8 @@ export const isNumber = (value: string) => {
     }
 };
 
-export const isNotEmpty = (value: string) => {
-    if (value === "") {
+export const isNotEmpty = (value: any) => {
+    if (value === "" || value === null) {
         return "Заполните поле";
     }
 };
@@ -27,7 +27,7 @@ export const isOnlyLetters = (value: string) => {
         return "Заполните поле";
     }
 
-    if (!IS_ONLY_LETTERS_REGEXP.test(value.trim())) {
+    if (!ONLY_LETTERS_REGEXP.test(value.trim())) {
         return "Поле содержит недопустимые символы";
     }
 };
@@ -37,7 +37,7 @@ export const isEmail = (value: string) => {
         return "Заполните поле";
     }
 
-    if (!IS_EMAIL_REGEXP.test(value)) {
+    if (!EMAIL_REGEXP.test(value)) {
         return "Неверный E-mail";
     }
 };
@@ -47,7 +47,7 @@ export const isPhoneNumber = (value: string) => {
         return "Заполните поле";
     }
 
-    if (!IS_PHONE_NUMBER_REGEXP.test(value)) {
+    if (!PHONE_NUMBER_REGEXP.test(value)) {
         return "Неверный формат номера телефона";
     }
 };

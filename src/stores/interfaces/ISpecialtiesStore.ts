@@ -1,5 +1,5 @@
 export interface ISpecialtiesStore {
-    specialties: Specialty[];
+    specialties: Specialty[] | null;
     pending: boolean;
     getSpecialties: () => void;
 }

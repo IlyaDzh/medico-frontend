@@ -30,6 +30,7 @@ export interface IQuestionnaireForm {
     IIN: string;
     experienceNumber: string;
     experienceType: string;
+    specialties: number[];
     photo: File | null;
     summary: File | null;
     diploma: File | null;

@@ -141,8 +141,7 @@ export class SignUpStore implements ISignUpStore {
 
         SignUpApi.signUp(postData)
             .then(
-                action(({ data }: AxiosResponse<ISignUpSuccessResponse>) => {
-                    console.log(data);
+                action(() => {
                     this.rootStore.modalsStore.setModalIsOpen("email", true);
                 })
             )

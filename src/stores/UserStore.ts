@@ -21,7 +21,6 @@ export class UserStore implements IUserStore {
         UserApi.getUser()
             .then(
                 action(({ data }: AxiosResponse<IGetUserSuccessResponse>) => {
-                    console.log(data);
                     this.currentUser = data.data;
                     this.isAuthorized = true;
                 })

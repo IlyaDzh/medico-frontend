@@ -20,6 +20,8 @@ export const QuestionnairePage: React.FC = observer(() => {
 
     const doctorComponent = currentUser?.additionalData?.isVerified ? (
         <Redirect to="/dashboard" />
+    ) : currentUser?.additionalData ? (
+        <div>На досмотре</div>
     ) : (
         <DoctorForm />
     );

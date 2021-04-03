@@ -32,6 +32,7 @@ const INITIAL_QUESTIONNAIRE_FORM: IQuestionnaireForm = {
     IIN: "",
     experienceNumber: "",
     experienceType: "month",
+    specialties: [],
     photo: null,
     summary: null,
     diploma: null
@@ -142,6 +143,26 @@ export class QuestionnaireStore implements IQuestionnaireStore {
                     experienceNumber
                 ))
         );
+
+        reaction(
+            () => this.questionnaireForm.photo,
+            photo =>
+                photo && (this.questionnaireFormErrors.photo = isNotEmpty(photo))
+        );
+
+        reaction(
+            () => this.questionnaireForm.summary,
+            summary =>
+                summary &&
+                (this.questionnaireFormErrors.summary = isNotEmpty(summary))
+        );
+
+        reaction(
+            () => this.questionnaireForm.diploma,
+            diploma =>
+                diploma &&
+                (this.questionnaireFormErrors.diploma = isNotEmpty(diploma))
+        );
     }
 
     sendPatientForm = () => {
@@ -197,16 +218,17 @@ export class QuestionnaireStore implements IQuestionnaireStore {
         const postData = new FormData();
         postData.append("IIN", this.questionnaireForm.IIN);
         postData.append("experience", this.questionnaireForm.experienceNumber);
+        postData.append(
+            "specialties",
+            JSON.stringify(this.questionnaireForm.specialties)
+        );
         postData.append("photo", this.questionnaireForm.photo as File);
         postData.append("diploma", this.questionnaireForm.diploma as File);
         postData.append("summary", this.questionnaireForm.summary as File);
 
-        console.log(this.questionnaireForm);
-
         QuestionnaireApi.sendDoctor(postData)
             .then(
                 action(({ data }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
-                    console.log(data);
                     this.rootStore.userStore.currentUser!.additionalData = data.data;
                     this.resetForm();
                 })
@@ -252,13 +274,19 @@ export class QuestionnaireStore implements IQuestionnaireStore {
         this.questionnaireFormErrors = {
             ...this.questionnaireFormErrors,
             IIN: isNotEmpty(this.questionnaireForm.experienceNumber),
-            experienceNumber: isNotEmpty(this.questionnaireForm.experienceNumber)
+            experienceNumber: isNotEmpty(this.questionnaireForm.experienceNumber),
+            photo: isNotEmpty(this.questionnaireForm.photo),
+            summary: isNotEmpty(this.questionnaireForm.summary),
+            diploma: isNotEmpty(this.questionnaireForm.diploma)
         };
 
         return Boolean(
             !(
                 this.questionnaireFormErrors.IIN ||
-                this.questionnaireFormErrors.experienceNumber
+                this.questionnaireFormErrors.experienceNumber ||
+                this.questionnaireForm.photo ||
+                this.questionnaireFormErrors.summary ||
+                this.questionnaireFormErrors.diploma
             )
         );
     };

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import {
     Button as MaterialButton,
     FormControl,
     FormLabel,
+    FormHelperText,
     TextField,
     Select,
     MenuItem,
@@ -12,16 +13,41 @@ import {
     makeStyles,
     Theme
 } from "@material-ui/core";
+import { Remove as RemoveIcon } from "@material-ui/icons";
 
-import { Button } from "components";
 import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "./useFormStyles";
+import { Button, Loader, SubmissionError } from "components";
 import { FormPhotoIcon, FormResumeIcon } from "icons";
-import { categories } from "utils/constants";
 import { useStores } from "stores/useStore";
 import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
+import truncateText from "utils/truncateText";
 
 const useStyles = makeStyles((theme: Theme) => ({
+    formGroup: {
+        display: "block",
+        border: 0,
+        margin: "0 0 36px 0",
+        padding: 0
+    },
+    categoriesRow: {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 12,
+        "&:last-child": {
+            marginBottom: 0
+        }
+    },
+    categoriesRemoveBtn: {
+        marginLeft: 24,
+        borderRadius: "50%",
+        minWidth: 32,
+        height: 32,
+        padding: 0
+    },
+    categoriesAddBtn: {
+        marginBottom: 36
+    },
     experienceField: {
         marginRight: 12,
         maxWidth: 130
@@ -30,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         marginBottom: 36,
-        [theme.breakpoints.down(360)]: {
+        [theme.breakpoints.down(400)]: {
             display: "block"
         }
     },
@@ -43,9 +69,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             width: 72,
             height: 72,
-            marginRight: 20
+            marginRight: 20,
+            "& svg": {
+                height: "100%"
+            }
         },
-        [theme.breakpoints.down(360)]: {
+        [theme.breakpoints.down(400)]: {
             width: 92,
             height: 92,
             marginRight: 0,
@@ -68,18 +97,32 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorForm: React.FC = observer(() => {
     const classes = useStyles();
     const formClasses = useFormStyles();
-    const { questionnaireStore, userStore } = useStores();
+    const [categoriesList, setCategoriesList] = useState<undefined[]>([undefined]);
+    const [questionnaireSpecialties, setQuestionnaireSpecialties] = useState<
+        number[]
+    >([1]);
+    const { questionnaireStore, userStore, specialtiesStore } = useStores();
     const {
         questionnaireForm,
         questionnaireFormErrors,
+        submissionError,
+        pending,
         sendDoctorForm,
         setFormValue,
         setFile
     } = questionnaireStore;
     const { currentUser } = userStore;
+    const { specialties, getSpecialties } = specialtiesStore;
+
+    useEffect(() => {
+        if (!specialties) {
+            getSpecialties();
+        }
+    }, [specialties, getSpecialties]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
+        setFormValue("specialties", questionnaireSpecialties);
         sendDoctorForm();
     };
 
@@ -87,6 +130,26 @@ export const DoctorForm: React.FC = observer(() => {
         if (files && files.length !== 0) {
             setFile(property, files[0]);
         }
+    };
+
+    const increaseCategories = (): void => {
+        setCategoriesList(prevState => [...prevState, undefined]);
+        setQuestionnaireSpecialties(prevState => [...prevState, 1]);
+    };
+
+    const decreaseCategories = (index: number): void => {
+        const tempSpecialtiesArray = [...questionnaireSpecialties];
+        tempSpecialtiesArray.splice(index, 1);
+        const tempCategoriesArray = [...categoriesList];
+        tempCategoriesArray.splice(index, 1);
+        setCategoriesList(tempCategoriesArray);
+        setQuestionnaireSpecialties(tempSpecialtiesArray);
+    };
+
+    const handleSelectChange = (index: number, value: number): void => {
+        const tempArray = [...questionnaireSpecialties];
+        tempArray[index] = value;
+        setQuestionnaireSpecialties(tempArray);
     };
 
     return (
@@ -166,22 +229,59 @@ export const DoctorForm: React.FC = observer(() => {
                     disabled
                 />
             </FormControl>
-            <FormControl className={formClasses.formGroup} component="fieldset">
+            <fieldset className={classes.formGroup}>
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Специальность
                 </FormLabel>
-                <Select
-                    variant="outlined"
-                    color="secondary"
-                    value={categories[0].code}
-                >
-                    {categories.map(category => (
-                        <MenuItem key={category.code} value={category.code}>
-                            {category.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                {specialties ? (
+                    categoriesList.map((_, index) => (
+                        <div key={index} className={classes.categoriesRow}>
+                            <Select
+                                variant="outlined"
+                                color="secondary"
+                                value={questionnaireSpecialties[index]}
+                                onChange={event =>
+                                    handleSelectChange(
+                                        index,
+                                        event.target.value as number
+                                    )
+                                }
+                            >
+                                {specialties.map(specialty => (
+                                    <MenuItem
+                                        key={specialty.id}
+                                        value={specialty.id}
+                                    >
+                                        {specialty.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {categoriesList.length > 1 ? (
+                                <Button
+                                    className={classes.categoriesRemoveBtn}
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => decreaseCategories(index)}
+                                    aria-label="Удалить специальность"
+                                >
+                                    <RemoveIcon />
+                                </Button>
+                            ) : null}
+                        </div>
+                    ))
+                ) : (
+                    <Loader level={3} />
+                )}
+            </fieldset>
+            <Button
+                className={classes.categoriesAddBtn}
+                variant="contained"
+                color="primary"
+                onClick={increaseCategories}
+                disabled={!specialties}
+            >
+                Добавить специальность
+            </Button>
             <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Стаж
@@ -222,7 +322,7 @@ export const DoctorForm: React.FC = observer(() => {
                     {questionnaireForm.photo ? (
                         <img
                             src={URL.createObjectURL(questionnaireForm.photo)}
-                            alt="Загруженное фото"
+                            alt="Ваше фото"
                         />
                     ) : (
                         <FormPhotoIcon />
@@ -238,33 +338,43 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить фото
                     </FormLabel>
-                    <MaterialButton
-                        component="label"
-                        className={classes.uploadFileButton}
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Выбрать файл
-                        <input
-                            type="file"
-                            accept="image/png, image/jpg, image/jpeg"
-                            onChange={event =>
-                                handleFileAttachment("photo", event.target.files)
-                            }
-                            hidden
-                        />
-                    </MaterialButton>
+                    <label htmlFor="photo-file">
+                        <MaterialButton
+                            className={classes.uploadFileButton}
+                            variant="outlined"
+                            color="primary"
+                            component="span"
+                        >
+                            {questionnaireForm.photo
+                                ? truncateText(questionnaireForm.photo.name)
+                                : "Выбрать файл"}
+                        </MaterialButton>
+                    </label>
+                    <input
+                        id="photo-file"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg"
+                        onChange={event =>
+                            handleFileAttachment("photo", event.target.files)
+                        }
+                        hidden
+                    />
                     <Typography variant="body1" color="textSecondary">
                         Допустимые форматы: jpeg, png
                     </Typography>
+                    <FormHelperText error={Boolean(questionnaireFormErrors.photo)}>
+                        {questionnaireFormErrors.photo}
+                    </FormHelperText>
                 </FormControl>
             </div>
             <div className={classes.uploadFile}>
                 <div className={classes.uploadFileImage}>
-                    {questionnaireForm.summary ? (
+                    {questionnaireForm.summary &&
+                    questionnaireForm.summary.type !== "application/pdf" &&
+                    questionnaireForm.summary.type !== "application/docx" ? (
                         <img
                             src={URL.createObjectURL(questionnaireForm.summary)}
-                            alt="Загруженное резюме"
+                            alt="Ваше резюме"
                         />
                     ) : (
                         <FormResumeIcon />
@@ -280,33 +390,42 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить резюме
                     </FormLabel>
-                    <MaterialButton
-                        component="label"
-                        className={classes.uploadFileButton}
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Выбрать файл
-                        <input
-                            type="file"
-                            accept="image/png, image/jpg, image/jpeg"
-                            onChange={event =>
-                                handleFileAttachment("summary", event.target.files)
-                            }
-                            hidden
-                        />
-                    </MaterialButton>
+                    <label htmlFor="summary-file">
+                        <MaterialButton
+                            className={classes.uploadFileButton}
+                            variant="outlined"
+                            color="primary"
+                            component="span"
+                        >
+                            {questionnaireForm.summary
+                                ? truncateText(questionnaireForm.summary.name)
+                                : "Выбрать файл"}
+                        </MaterialButton>
+                    </label>
+                    <input
+                        id="summary-file"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg, application/pdf"
+                        onChange={event =>
+                            handleFileAttachment("summary", event.target.files)
+                        }
+                        hidden
+                    />
                     <Typography variant="body1" color="textSecondary">
-                        Допустимые форматы: jpeg, png, txt, pdf
+                        Допустимые форматы: jpeg, png, txt, pdf, docx
                     </Typography>
+                    <FormHelperText error={Boolean(questionnaireFormErrors.summary)}>
+                        {questionnaireFormErrors.summary}
+                    </FormHelperText>
                 </FormControl>
             </div>
             <div className={classes.uploadFile}>
                 <div className={classes.uploadFileImage}>
-                    {questionnaireForm.diploma ? (
+                    {questionnaireForm.diploma &&
+                    questionnaireForm.diploma.type !== "application/pdf" ? (
                         <img
                             src={URL.createObjectURL(questionnaireForm.diploma)}
-                            alt="Загруженный диплом"
+                            alt="Ваш диплом"
                         />
                     ) : (
                         <FormResumeIcon />
@@ -322,28 +441,43 @@ export const DoctorForm: React.FC = observer(() => {
                     <FormLabel className={formClasses.groupLabel} component="legend">
                         Загрузить диплом
                     </FormLabel>
-                    <MaterialButton
-                        component="label"
-                        className={classes.uploadFileButton}
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Выбрать файл
-                        <input
-                            type="file"
-                            accept="image/png, image/jpg, image/jpeg"
-                            onChange={event =>
-                                handleFileAttachment("diploma", event.target.files)
-                            }
-                            hidden
-                        />
-                    </MaterialButton>
+                    <label htmlFor="diploma-file">
+                        <MaterialButton
+                            className={classes.uploadFileButton}
+                            variant="outlined"
+                            color="primary"
+                            component="span"
+                        >
+                            {questionnaireForm.diploma
+                                ? truncateText(questionnaireForm.diploma.name)
+                                : "Выбрать файл"}
+                        </MaterialButton>
+                    </label>
+                    <input
+                        id="diploma-file"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg, application/pdf"
+                        onChange={event =>
+                            handleFileAttachment("diploma", event.target.files)
+                        }
+                        hidden
+                    />
                     <Typography variant="body1" color="textSecondary">
                         Допустимые форматы: jpeg, png, pdf
                     </Typography>
+                    <FormHelperText error={Boolean(questionnaireFormErrors.diploma)}>
+                        {questionnaireFormErrors.diploma}
+                    </FormHelperText>
                 </FormControl>
             </div>
-            <Button type="submit" variant="contained" color="primary">
+            <SubmissionError>{submissionError}</SubmissionError>
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={pending}
+                isLoaded={pending}
+            >
                 Отправить модератору
             </Button>
         </FormWrapper>

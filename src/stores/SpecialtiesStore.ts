@@ -5,7 +5,7 @@ import { ISpecialtiesStore, Specialty } from "./interfaces/ISpecialtiesStore";
 import { SpecialtiesApi, IGetSpecialtiesSuccessResponse } from "api";
 
 export class SpecialtiesStore implements ISpecialtiesStore {
-    specialties: Specialty[] = [] as Specialty[];
+    specialties: Specialty[] | null = null;
 
     pending: boolean = false;
 
@@ -22,8 +22,10 @@ export class SpecialtiesStore implements ISpecialtiesStore {
                     this.specialties = data.data;
                 })
             )
-            .finally(() => {
-                this.pending = false;
-            });
+            .finally(
+                action(() => {
+                    this.pending = false;
+                })
+            );
     };
 }

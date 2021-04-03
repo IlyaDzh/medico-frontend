@@ -17,7 +17,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { PasswordRequirement } from "./PasswordRequirement";
-import { Button } from "components";
+import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 import { UserPlusIcon } from "icons";
 
@@ -129,11 +129,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     passwordValidation: {
         display: "flex",
         flexWrap: "wrap"
-    },
-    submissionError: {
-        textAlign: "center",
-        marginBottom: 16,
-        fontSize: 14
     }
 }));
 
@@ -444,13 +439,7 @@ export const SignUpForm: React.FC = observer(() => {
                         </Typography>
                     }
                 />
-                <Typography
-                    className={classes.submissionError}
-                    variant="h6"
-                    color="error"
-                >
-                    {submissionError}
-                </Typography>
+                <SubmissionError>{submissionError}</SubmissionError>
                 <Button
                     type="submit"
                     variant="contained"

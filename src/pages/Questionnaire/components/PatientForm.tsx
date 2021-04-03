@@ -11,9 +11,9 @@ import {
     Typography
 } from "@material-ui/core";
 
-import { Button } from "components";
 import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "./useFormStyles";
+import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 
 export const PatientForm: React.FC = observer(() => {
@@ -22,6 +22,8 @@ export const PatientForm: React.FC = observer(() => {
     const {
         questionnaireForm,
         questionnaireFormErrors,
+        submissionError,
+        pending,
         sendPatientForm,
         setFormValue
     } = questionnaireStore;
@@ -352,7 +354,14 @@ export const PatientForm: React.FC = observer(() => {
                     {questionnaireFormErrors.bloodTransfusion}
                 </FormHelperText>
             </FormControl>
-            <Button type="submit" variant="contained" color="primary">
+            <SubmissionError>{submissionError}</SubmissionError>
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={pending}
+                isLoaded={pending}
+            >
                 Сохранить анкету
             </Button>
         </FormWrapper>

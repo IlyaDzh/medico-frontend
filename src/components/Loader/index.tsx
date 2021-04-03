@@ -6,6 +6,7 @@ import "./Loader.scss";
 
 interface ILoader {
     level?: number;
+    isCenter?: boolean;
     className?: string;
 }
 
@@ -14,20 +15,28 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        margin: "0 auto",
         width: Number(level) * 22,
         height: Number(level) * 22
     }),
     loaderInner: level => ({
         transform: `scale(${level})`
-    })
+    }),
+    loaderIsCenter: {
+        margin: "0 auto"
+    }
 }));
 
-export const Loader: React.FC<ILoader> = ({ level = 1, className }) => {
+export const Loader: React.FC<ILoader> = ({ level = 1, isCenter, className }) => {
     const classes = useStyles(level);
 
     return (
-        <div className={clsx(classes.loader, className)}>
+        <div
+            className={clsx(
+                classes.loader,
+                isCenter && classes.loaderIsCenter,
+                className
+            )}
+        >
             <div className={`loader-inner ${classes.loaderInner}`}>
                 <div className="loader-dots">
                     <div>
