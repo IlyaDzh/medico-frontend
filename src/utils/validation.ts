@@ -94,3 +94,13 @@ export const isPassword = (value: string) => {
 
     return result;
 };
+
+export const isIIN = (value: string) => {
+    if (value === "") {
+        return "Заполните поле";
+    }
+
+    if (value.length !== 12) {
+        return "Неверный формат ввода";
+    }
+};

@@ -6,7 +6,7 @@ import { InfoIcon } from "icons";
 interface IFormWrapper {
     title: string;
     subtitle: string;
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

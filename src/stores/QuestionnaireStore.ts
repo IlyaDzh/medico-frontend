@@ -14,7 +14,7 @@ import {
     KeysOfQuestionnaireForm,
     KeysOfFile
 } from "./interfaces/IQuestionnaireStore";
-import { isNumber, isNotEmpty } from "utils/validation";
+import { isNumber, isNotEmpty, isIIN } from "utils/validation";
 import IStores from "./interfaces";
 
 const INITIAL_QUESTIONNAIRE_FORM: IQuestionnaireForm = {
@@ -132,7 +132,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
 
         reaction(
             () => this.questionnaireForm.IIN,
-            IIN => IIN && (this.questionnaireFormErrors.IIN = isNotEmpty(IIN))
+            IIN => IIN && (this.questionnaireFormErrors.IIN = isIIN(IIN))
         );
 
         reaction(
@@ -281,7 +281,7 @@ export class QuestionnaireStore implements IQuestionnaireStore {
     validateDoctorForm = () => {
         this.questionnaireFormErrors = {
             ...this.questionnaireFormErrors,
-            IIN: isNotEmpty(this.questionnaireForm.experienceNumber),
+            IIN: isIIN(this.questionnaireForm.IIN),
             experienceNumber: isNotEmpty(this.questionnaireForm.experienceNumber),
             photo: isNotEmpty(this.questionnaireForm.photo),
             summary: isNotEmpty(this.questionnaireForm.summary),

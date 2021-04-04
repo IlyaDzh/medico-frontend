@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { observer } from "mobx-react";
 
-import { PatientForm, DoctorForm } from "./components";
+import { PatientForm, DoctorForm, VerifiedForm } from "./components";
 import { Header, Footer, PaddingLine } from "components";
 import { useStores } from "stores/useStore";
 
@@ -21,7 +21,7 @@ export const QuestionnairePage: React.FC = observer(() => {
     const doctorComponent = currentUser?.additionalData?.isVerified ? (
         <Redirect to="/dashboard" />
     ) : currentUser?.additionalData ? (
-        <div>На досмотре</div>
+        <VerifiedForm />
     ) : (
         <DoctorForm />
     );
