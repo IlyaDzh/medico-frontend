@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 
 import { DoctorItem } from "./DoctorItem";
-import doctorAlla from "images/doctors/alla.jpg";
-import doctorOleg from "images/doctors/oleg.jpg";
-import doctorTalgat from "images/doctors/talgat.jpg";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     list: {
@@ -15,53 +14,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const doctorsList = [
-    {
-        id: "1",
-        category: "Терапевт",
-        time: "с 10:00 до 18:00",
-        fullName: "Алла Викторовна Иванова",
-        image: doctorAlla,
-        rating: 4.7,
-        description:
-            "Врач высшей категории таким образом реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов).",
-        jobTime: "12 лет",
-        cost: 1200
-    },
-    {
-        id: "2",
-        category: "Эндокринолог",
-        time: "с 10:00 до 18:00",
-        fullName: "Олег Аркадьевич Петров",
-        image: doctorOleg,
-        rating: 4.5,
-        description:
-            "Врач высшей категории таким образом реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов).",
-        jobTime: "10 лет",
-        cost: 1200
-    },
-    {
-        id: "3",
-        category: "Иммунолог",
-        time: "с 10:00 до 18:00",
-        fullName: "Талгат Максатович Турганов",
-        image: doctorTalgat,
-        rating: 4.2,
-        description:
-            "Врач высшей категории таким образом реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов).",
-        jobTime: "6 лет",
-        cost: 1200
-    }
-];
-
-export const DoctorsList: React.FC = () => {
+export const DoctorsList: React.FC = observer(() => {
     const classes = useStyles();
+    const { doctorStore } = useStores();
+    const { doctors, pending, getDoctors } = doctorStore;
+
+    useEffect(() => {
+        if (doctors.length === 0) {
+            getDoctors();
+        }
+    }, [doctors, getDoctors]);
 
     return (
         <div className={classes.list}>
-            {doctorsList.map(doctor => (
-                <DoctorItem key={doctor.id} doctor={doctor} />
-            ))}
+            {!pending ? (
+                doctors.map(doctor => <DoctorItem key={doctor.id} doctor={doctor} />)
+            ) : (
+                <div>loader</div>
+            )}
         </div>
     );
-};
+});

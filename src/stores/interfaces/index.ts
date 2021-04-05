@@ -4,6 +4,7 @@ import { IUserStore } from "./IUserStore";
 import { IModalsStore } from "./IModalsStore";
 import { IQuestionnaireStore } from "./IQuestionnaireStore";
 import { ISpecialtiesStore } from "./ISpecialtiesStore";
+import { IDoctorStore } from "./IDoctorStore";
 
 export default interface IStores {
     signUpStore: ISignUpStore;
@@ -12,4 +13,5 @@ export default interface IStores {
     modalsStore: IModalsStore;
     questionnaireStore: IQuestionnaireStore;
     specialtiesStore: ISpecialtiesStore;
+    doctorStore: IDoctorStore;
 }

@@ -4,3 +4,4 @@ export * from "./SignInApi";
 export * from "./UserApi";
 export * from "./QuestionnaireApi";
 export * from "./SpecialtiesApi";
+export * from "./DoctorApi";

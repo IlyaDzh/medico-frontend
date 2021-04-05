@@ -41,6 +41,12 @@ export type DoctorAdditionalData = {
     photo: string;
     summary: string;
     diploma: string;
-    // specialties: ISpecialty[];
+    specialties: ISpecialty[];
     isVerified: boolean;
+};
+
+type ISpecialty = {
+    id: number;
+    name: string;
+    slug: string;
 };

@@ -4,19 +4,10 @@ import { Rating } from "@material-ui/lab";
 
 import { Button } from "components";
 import { ArrowRightIcon } from "icons";
+import { IDoctor } from "stores/interfaces/IDoctorStore";
 
 interface IDoctorItem {
-    doctor: {
-        id: string;
-        category: string;
-        time: string;
-        fullName: string;
-        image: string;
-        rating: number;
-        description: string;
-        jobTime: string;
-        cost: number;
-    };
+    doctor: IDoctor;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -46,7 +37,11 @@ const useStyles = makeStyles((theme: Theme) => ({
             objectFit: "cover",
             maxHeight: 346,
             height: "100%",
-            width: "100%"
+            maxWidth: 279,
+            width: "100%",
+            [theme.breakpoints.down(375)]: {
+                maxWidth: "unset"
+            }
         },
         [theme.breakpoints.down("xs")]: {
             marginRight: 18,
@@ -58,7 +53,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     doctorInfo: {
-        maxWidth: 624
+        maxWidth: 624,
+        [theme.breakpoints.down("xs")]: {
+            width: "100%"
+        }
     },
     doctorCategory: {
         marginBottom: 6
@@ -66,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     doctorAbout: {
         marginBottom: 12
     },
-    doctorJobTime: {
+    doctorExperience: {
         marginBottom: 12,
         [theme.breakpoints.down("xs")]: {
             marginBottom: 4
@@ -92,27 +90,32 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                         variant="body2"
                         color="textPrimary"
                     >
-                        {doctor.category}
+                        {doctor.specialties[0].name}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {doctor.time}
+                        {doctor.workTime}
                     </Typography>
                 </div>
             </Hidden>
             <div className={classes.doctorInner}>
                 <div className={classes.doctorImage}>
-                    <img src={doctor.image} alt="" />
+                    <img
+                        src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
+                        alt={`Фото ${doctor.surname} ${doctor.name}`}
+                    />
                 </div>
                 <div className={classes.doctorInfo}>
                     <Hidden xsDown>
                         <Typography variant="body2" color="textPrimary">
-                            {doctor.category}
+                            {doctor.specialties[0].name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                            {doctor.time}
+                            {doctor.workTime}
                         </Typography>
                     </Hidden>
-                    <Typography variant="h3">{doctor.fullName}</Typography>
+                    <Typography variant="h3">
+                        {doctor.surname} {doctor.name} {doctor.middleName}
+                    </Typography>
                     <div>
                         <Rating value={doctor.rating} size="small" readOnly />
                     </div>
@@ -120,21 +123,21 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                         className={classes.doctorAbout}
                         color="textSecondary"
                     >
-                        {doctor.description}
+                        {doctor.about}
                     </Typography>
                     <Typography
-                        className={classes.doctorJobTime}
+                        className={classes.doctorExperience}
                         variant="h5"
                         color="textSecondary"
                     >
-                        Стаж работы: {doctor.jobTime}
+                        Стаж работы: {doctor.experience}
                     </Typography>
                     <Typography
                         className={classes.doctorCost}
                         variant="h3"
                         color="textSecondary"
                     >
-                        {doctor.cost} руб.
+                        {doctor.costOfConsultation} руб.
                     </Typography>
                     <Hidden xsDown>
                         <Button

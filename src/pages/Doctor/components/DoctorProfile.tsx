@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { observer } from "mobx-react";
 import { Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
-import { Breadcrumbs, Button, ProfileTabs } from "components";
+import { Breadcrumbs, Button, ProfileTabs, Loader } from "components";
 import { ArrowRightIcon } from "icons";
-
-import doctorAlla from "images/doctors/alla.jpg";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     profile: {
@@ -54,24 +55,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: 48,
         borderRadius: 8,
         overflow: "hidden",
+        maxWidth: 420,
+        width: "100%",
         "& img": {
             display: "block",
             objectFit: "cover",
-            width: 420,
-            [theme.breakpoints.down("md")]: {
-                width: 360
-            },
-            [theme.breakpoints.down("sm")]: {
-                width: "100%"
-            }
+            width: "100%"
         },
         [theme.breakpoints.down("md")]: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            maxWidth: 360
         },
         [theme.breakpoints.down("sm")]: {
-            display: "block",
             marginRight: 24
         },
         [theme.breakpoints.down("xs")]: {
@@ -80,7 +74,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     profileInfo: {
-        maxWidth: 624
+        maxWidth: 624,
+        width: "100%"
     },
     profileCategory: {
         marginBottom: 6
@@ -99,11 +94,47 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("sm")]: {
             marginBottom: 18
         }
+    },
+    loader: {
+        padding: "100px 0"
     }
 }));
 
-export const DoctorProfile: React.FC = () => {
+export const DoctorProfile: React.FC = observer(() => {
     const classes = useStyles();
+    const { id } = useParams<{ id: string }>();
+    const { userStore, modalsStore, doctorStore } = useStores();
+    const { isAuthorized } = userStore;
+    const { setModalIsOpen } = modalsStore;
+    const {
+        currentDoctor,
+        pendingProfile,
+        getDoctorProfile,
+        resetProfile
+    } = doctorStore;
+
+    useEffect(() => {
+        if (pendingProfile || (currentDoctor && currentDoctor.id === Number(id))) {
+            return;
+        }
+        getDoctorProfile(Number(id));
+
+        return () => resetProfile();
+    }, [id, pendingProfile, currentDoctor, getDoctorProfile, resetProfile]);
+
+    const handleButtonClick = (): void => {
+        if (!isAuthorized) {
+            setModalIsOpen("sign-in", true);
+        }
+    };
+
+    if (pendingProfile || !currentDoctor) {
+        return (
+            <div className={classes.loader}>
+                <Loader level={3} isCenter />
+            </div>
+        );
+    }
 
     return (
         <div className={classes.profile}>
@@ -113,7 +144,9 @@ export const DoctorProfile: React.FC = () => {
                         items={[
                             { to: "/", title: "Главная" },
                             { to: "/doctors", title: "Специалисты" },
-                            { title: "Имя Отчество Фамилия" }
+                            {
+                                title: `${currentDoctor.surname} ${currentDoctor.name} ${currentDoctor.middleName}`
+                            }
                         ]}
                         itemClassName={classes.breadcrumbsItem}
                     />
@@ -127,27 +160,34 @@ export const DoctorProfile: React.FC = () => {
                             variant="body2"
                             color="textPrimary"
                         >
-                            Терапевт
+                            {currentDoctor.specialties[0].name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                            с 10:00 до 18:00
+                            {currentDoctor.workTime}
                         </Typography>
                     </Hidden>
                     <div className={classes.profileInner}>
                         <div className={classes.profileImage}>
-                            <img src={doctorAlla} alt="" />
+                            <img
+                                src={
+                                    process.env.REACT_APP_API_BASE_URL +
+                                    currentDoctor.photo
+                                }
+                                alt={`Фото ${currentDoctor.surname} ${currentDoctor.name}`}
+                            />
                         </div>
                         <div className={classes.profileInfo}>
                             <Hidden xsDown>
                                 <Typography variant="body2" color="textPrimary">
-                                    Терапевт
+                                    {currentDoctor.specialties[0].name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    с 10:00 до 18:00
+                                    {currentDoctor.workTime}
                                 </Typography>
                             </Hidden>
                             <Typography variant="h2">
-                                Алла Викторовна Иванова
+                                {currentDoctor.surname} {currentDoctor.name}{" "}
+                                {currentDoctor.middleName}
                             </Typography>
                             <div>
                                 <Rating value={5} size="small" readOnly />
@@ -156,29 +196,27 @@ export const DoctorProfile: React.FC = () => {
                                 className={classes.profileAbout}
                                 color="textSecondary"
                             >
-                                Врач высшей категории таким образом реализация
-                                намеченных плановых заданий обеспечивает широкому
-                                кругу (специалистов).
+                                {currentDoctor.about}
                             </Typography>
                             <Typography
                                 className={classes.profileJobTime}
                                 variant="h5"
                                 color="textSecondary"
                             >
-                                Стаж работы: 12 лет
+                                Стаж работы: {currentDoctor.experience}
                             </Typography>
                             <Typography
                                 className={classes.profileCost}
                                 variant="h3"
                                 color="textSecondary"
                             >
-                                1200 руб.
+                                {currentDoctor.costOfConsultation} руб.
                             </Typography>
                             <Button
                                 variant="contained"
                                 size="large"
-                                to="/doctor/1"
                                 icon={<ArrowRightIcon color="#fff" />}
+                                onClick={handleButtonClick}
                             >
                                 Записаться на приём
                             </Button>
@@ -189,4 +227,4 @@ export const DoctorProfile: React.FC = () => {
             </div>
         </div>
     );
-};
+});

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { action, makeAutoObservable } from "mobx";
 
-import { UserApi, IGetUserSuccessResponse } from "../api";
+import { UserApi, IGetUserSuccessResponse } from "api";
 import { IUserStore, IUser } from "./interfaces/IUserStore";
 
 export class UserStore implements IUserStore {
