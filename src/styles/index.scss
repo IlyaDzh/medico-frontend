@@ -11,6 +11,23 @@ body {
     margin: 0;
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 0 0 auto;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex: 0 0 auto;
+}
+
 ul,
 ol {
     list-style: none;
