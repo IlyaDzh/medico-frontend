@@ -1,3 +1,4 @@
+import { IRouterStore } from "./IRouterStore";
 import { ISignUpStore } from "./ISignUpStore";
 import { ISignInStore } from "./ISignInStore";
 import { IUserStore } from "./IUserStore";
@@ -7,6 +8,7 @@ import { ISpecialtiesStore } from "./ISpecialtiesStore";
 import { IDoctorStore } from "./IDoctorStore";
 
 export default interface IStores {
+    routerStore: IRouterStore;
     signUpStore: ISignUpStore;
     signInStore: ISignInStore;
     userStore: IUserStore;

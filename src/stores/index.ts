@@ -1,3 +1,6 @@
+import { History } from "history";
+
+import { RouterStore } from "./RouterStore";
 import { SignUpStore } from "./SignUpStore";
 import { SignInStore } from "./SignInStore";
 import { UserStore } from "./UserStore";
@@ -7,6 +10,7 @@ import { SpecialtiesStore } from "./SpecialtiesStore";
 import { DoctorStore } from "./DoctorStore";
 
 import IStores from "./interfaces";
+import { IRouterStore } from "./interfaces/IRouterStore";
 import { ISignUpStore } from "./interfaces/ISignUpStore";
 import { ISignInStore } from "./interfaces/ISignInStore";
 import { IUserStore } from "./interfaces/IUserStore";
@@ -15,7 +19,8 @@ import { IQuestionnaireStore } from "./interfaces/IQuestionnaireStore";
 import { ISpecialtiesStore } from "./interfaces/ISpecialtiesStore";
 import { IDoctorStore } from "./interfaces/IDoctorStore";
 
-class RootStore implements IStores {
+export class RootStore implements IStores {
+    routerStore: IRouterStore;
     signUpStore: ISignUpStore;
     signInStore: ISignInStore;
     userStore: IUserStore;
@@ -24,7 +29,8 @@ class RootStore implements IStores {
     specialtiesStore: ISpecialtiesStore;
     doctorStore: IDoctorStore;
 
-    constructor() {
+    constructor(history: History) {
+        this.routerStore = new RouterStore(history);
         this.signUpStore = new SignUpStore(this);
         this.signInStore = new SignInStore(this);
         this.userStore = new UserStore();
@@ -34,5 +40,3 @@ class RootStore implements IStores {
         this.doctorStore = new DoctorStore();
     }
 }
-
-export const rootStore = new RootStore();

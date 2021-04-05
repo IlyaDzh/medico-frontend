@@ -32,16 +32,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: 48,
         borderRadius: 8,
         overflow: "hidden",
+        maxHeight: 346,
+        maxWidth: 279,
         "& img": {
             display: "block",
             objectFit: "cover",
-            maxHeight: 346,
-            height: "100%",
-            maxWidth: 279,
             width: "100%",
-            [theme.breakpoints.down(375)]: {
-                maxWidth: "unset"
-            }
+            height: "100%"
         },
         [theme.breakpoints.down("xs")]: {
             marginRight: 18,
@@ -49,7 +46,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         [theme.breakpoints.down(375)]: {
             marginRight: 0,
-            marginBottom: 12
+            marginBottom: 12,
+            maxWidth: "unset"
         }
     },
     doctorInfo: {
@@ -81,6 +79,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
     const classes = useStyles();
 
+    const specialty =
+        doctor &&
+        doctor.specialties
+            .map((item, index) =>
+                index < doctor.specialties.length - 1 ? `${item.name}, ` : item.name
+            )
+            .join("");
+
     return (
         <section className={classes.doctor}>
             <Hidden smUp>
@@ -90,7 +96,7 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                         variant="body2"
                         color="textPrimary"
                     >
-                        {doctor.specialties[0].name}
+                        {specialty}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                         {doctor.workTime}
@@ -107,7 +113,7 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                 <div className={classes.doctorInfo}>
                     <Hidden xsDown>
                         <Typography variant="body2" color="textPrimary">
-                            {doctor.specialties[0].name}
+                            {specialty}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
                             {doctor.workTime}

@@ -87,13 +87,10 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                         <Hidden smDown>
                             <div className={classes.iconButtons}>
                                 <IconButton aria-label="Открыть уведомления">
-                                    <AccountNotificationIcon
-                                        isLight={isLight}
-                                        isNew
-                                    />
+                                    <AccountNotificationIcon isLight={isLight} />
                                 </IconButton>
                                 <IconButton aria-label="Открыть сообщения">
-                                    <AccountEnvelopeIcon isLight={isLight} isNew />
+                                    <AccountEnvelopeIcon isLight={isLight} />
                                 </IconButton>
                             </div>
                             <div>

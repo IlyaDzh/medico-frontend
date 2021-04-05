@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 export const DialogConfirmation: React.FC<IDialogConfirmation> = observer(
     ({ isOpen }) => {
         const classes = useStyles();
-        const { modalsStore } = useStores();
+        const { modalsStore, routerStore } = useStores();
         const { getModalIsOpen, setModalIsOpen } = modalsStore;
 
         useEffect(() => {
@@ -39,6 +39,7 @@ export const DialogConfirmation: React.FC<IDialogConfirmation> = observer(
 
         const handleClose = (): void => {
             setModalIsOpen("confirmation", false);
+            routerStore.push("/");
         };
 
         return (
@@ -58,6 +59,7 @@ export const DialogConfirmation: React.FC<IDialogConfirmation> = observer(
                     </Typography>
                 </div>
                 <Button
+                    to="/"
                     onClick={handleSignIn}
                     variant="contained"
                     color="primary"

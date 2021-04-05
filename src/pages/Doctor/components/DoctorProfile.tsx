@@ -113,6 +113,16 @@ export const DoctorProfile: React.FC = observer(() => {
         resetProfile
     } = doctorStore;
 
+    const specialty =
+        currentDoctor &&
+        currentDoctor.specialties
+            .map((item, index) =>
+                index < currentDoctor.specialties.length - 1
+                    ? `${item.name}, `
+                    : item.name
+            )
+            .join("");
+
     useEffect(() => {
         if (pendingProfile || (currentDoctor && currentDoctor.id === Number(id))) {
             return;
@@ -160,7 +170,7 @@ export const DoctorProfile: React.FC = observer(() => {
                             variant="body2"
                             color="textPrimary"
                         >
-                            {currentDoctor.specialties[0].name}
+                            {specialty}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
                             {currentDoctor.workTime}
@@ -179,7 +189,7 @@ export const DoctorProfile: React.FC = observer(() => {
                         <div className={classes.profileInfo}>
                             <Hidden xsDown>
                                 <Typography variant="body2" color="textPrimary">
-                                    {currentDoctor.specialties[0].name}
+                                    {specialty}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     {currentDoctor.workTime}
