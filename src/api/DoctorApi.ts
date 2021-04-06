@@ -3,7 +3,7 @@ import { axiosInstance } from "./axios-instance";
 
 export class DoctorApi {
     static getDoctor(id: number) {
-        return axiosInstance.get(`/api/v1/doctor?id=${id}`);
+        return axiosInstance.get(`/api/v1/doctor/info?id=${id}`);
     }
 
     static getDoctors(page: number, count: number = 3) {
