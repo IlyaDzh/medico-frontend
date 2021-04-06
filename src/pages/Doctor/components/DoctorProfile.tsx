@@ -4,7 +4,13 @@ import { observer } from "mobx-react";
 import { Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
-import { Breadcrumbs, Button, ProfileTabs, Loader } from "components";
+import {
+    Breadcrumbs,
+    Button,
+    ProfileTabs,
+    Loader,
+    ErrorAnimation
+} from "components";
 import { ArrowRightIcon } from "icons";
 import { useStores } from "stores/useStore";
 
@@ -97,6 +103,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     loader: {
         padding: "100px 0"
+    },
+    error: {
+        marginTop: 80,
+        marginBottom: 80
     }
 }));
 
@@ -109,6 +119,7 @@ export const DoctorProfile: React.FC = observer(() => {
     const {
         currentDoctor,
         pendingProfile,
+        fetchingDoctorProfileError,
         getDoctorProfile,
         resetProfile
     } = doctorStore;
@@ -138,6 +149,14 @@ export const DoctorProfile: React.FC = observer(() => {
             setModalIsOpen("sign-in", true);
         }
     };
+
+    if (fetchingDoctorProfileError) {
+        return (
+            <div className={classes.error}>
+                <ErrorAnimation path="/doctors" title="Найти другого доктора" />
+            </div>
+        );
+    }
 
     if (pendingProfile || !currentDoctor) {
         return (

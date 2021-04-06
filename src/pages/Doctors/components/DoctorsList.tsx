@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 
 import { DoctorItem } from "./DoctorItem";
-import { Loader } from "components";
+import { Loader, Button, ErrorAnimation } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     loader: {
         marginBottom: 80
+    },
+    error: {
+        marginBottom: 80
     }
 }));
 
@@ -23,7 +26,7 @@ export const DoctorsList: React.FC = observer(() => {
     const classes = useStyles();
     const { page } = useParams<{ page: string }>();
     const { doctorStore } = useStores();
-    const { doctors, pending, getDoctors } = doctorStore;
+    const { doctors, pending, fetchingDoctorsError, getDoctors } = doctorStore;
 
     useEffect(() => {
         if (page) {
@@ -32,6 +35,14 @@ export const DoctorsList: React.FC = observer(() => {
             getDoctors(1);
         }
     }, [page, getDoctors]);
+
+    if (fetchingDoctorsError) {
+        return (
+            <div className={classes.error}>
+                <ErrorAnimation path="/doctors" title="Перейти к списку врачей" />
+            </div>
+        );
+    }
 
     return !pending ? (
         <div className={classes.list}>

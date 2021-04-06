@@ -21,6 +21,10 @@ export class DoctorStore implements IDoctorStore {
 
     pendingProfile: boolean = false;
 
+    fetchingDoctorsError: boolean = false;
+
+    fetchingDoctorProfileError: boolean = false;
+
     private rootStore: IStores;
 
     constructor(rootStore: IStores) {
@@ -32,6 +36,8 @@ export class DoctorStore implements IDoctorStore {
             pagination: observable,
             pending: observable,
             pendingProfile: observable,
+            fetchingDoctorsError: observable,
+            fetchingDoctorProfileError: observable,
             getDoctors: action,
             getDoctorProfile: action,
             resetProfile: action
@@ -40,6 +46,7 @@ export class DoctorStore implements IDoctorStore {
 
     getDoctors = (page: number) => {
         this.pending = true;
+        this.fetchingDoctorsError = false;
 
         DoctorApi.getDoctors(page)
             .then(
@@ -54,6 +61,8 @@ export class DoctorStore implements IDoctorStore {
                         this.rootStore.routerStore.push(
                             `/doctors/${response.data.data.meta.pageCount}`
                         );
+                    } else {
+                        this.fetchingDoctorsError = true;
                     }
                 })
             )
@@ -66,11 +75,17 @@ export class DoctorStore implements IDoctorStore {
 
     getDoctorProfile = (id: number) => {
         this.pendingProfile = true;
+        this.fetchingDoctorProfileError = false;
 
         DoctorApi.getDoctor(id)
             .then(
                 action(({ data }: AxiosResponse<IGetDoctorSuccessResponse>) => {
                     this.currentDoctor = data.data;
+                })
+            )
+            .catch(
+                action(() => {
+                    this.fetchingDoctorProfileError = true;
                 })
             )
             .finally(
