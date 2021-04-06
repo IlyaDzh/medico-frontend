@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 import { makeObservable, observable, action } from "mobx";
 
 import {
@@ -49,10 +49,12 @@ export class DoctorStore implements IDoctorStore {
                 })
             )
             .catch(
-                action(({ data }: AxiosResponse<IGetDoctorsErrorResponse>) => {
-                    this.rootStore.routerStore.push(
-                        `/doctors/${data.data.meta.totalCount}`
-                    );
+                action(({ response }: AxiosError<IGetDoctorsErrorResponse>) => {
+                    if (response?.status === 404) {
+                        this.rootStore.routerStore.push(
+                            `/doctors/${response.data.data.meta.pageCount}`
+                        );
+                    }
                 })
             )
             .finally(
