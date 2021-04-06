@@ -1,22 +1,20 @@
 import React from "react";
 import Lottie from "react-lottie";
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import { Button } from "components";
-import animationData from "images/404-1.json";
+import animationData from "images/404.json";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     content: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
     },
     animation: {
-        width: 600,
-        margin: "0 auto 20px",
-        [theme.breakpoints.down("xs")]: {
-            width: "100%"
-        }
+        maxWidth: 450,
+        width: "100%",
+        margin: "0 auto 40px"
     },
     button: {
         textAlign: "center"
