@@ -124,13 +124,14 @@ export const DoctorProfile: React.FC = observer(() => {
             .join("");
 
     useEffect(() => {
-        if (pendingProfile || (currentDoctor && currentDoctor.id === Number(id))) {
+        if (currentDoctor && currentDoctor.id === Number(id)) {
             return;
         }
+
         getDoctorProfile(Number(id));
 
         return () => resetProfile();
-    }, [id, pendingProfile, currentDoctor, getDoctorProfile, resetProfile]);
+    }, [id, getDoctorProfile, resetProfile]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleButtonClick = (): void => {
         if (!isAuthorized) {
