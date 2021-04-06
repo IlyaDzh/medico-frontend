@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     card: {
         position: "relative",
         padding: "36px 32px",
+        minHeight: 350,
         userSelect: "text",
         [theme.breakpoints.down("xs")]: {
-            padding: "32px 24px"
+            padding: "32px 24px",
+            minHeight: 280,
         }
     },
     cardHeader: {
