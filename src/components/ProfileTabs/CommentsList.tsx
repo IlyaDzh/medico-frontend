@@ -1,11 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 
-import { Comment, IComment } from "./Comment";
-import { Button } from "components";
+import { Comment } from "./Comment";
+// import { Button } from "components";
+import { Review } from "stores/interfaces/IDoctorStore";
 
 interface ICommentsList {
-    comments: IComment[];
+    reviews: Review[];
 }
 
 const useStyles = makeStyles(() => ({
@@ -14,17 +15,17 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const CommentsList: React.FC<ICommentsList> = ({ comments }) => {
+export const CommentsList: React.FC<ICommentsList> = ({ reviews }) => {
     const classes = useStyles();
 
     return (
         <React.Fragment>
             <div className={classes.commentsList}>
-                {comments.map(comment => (
-                    <Comment key={comment.id} {...comment} />
+                {reviews.map((review, index) => (
+                    <Comment key={index} review={review} />
                 ))}
             </div>
-            <Button variant="outlined">Показать ещё</Button>
+            {/* <Button variant="outlined">Показать ещё</Button> */}
         </React.Fragment>
     );
 };

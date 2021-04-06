@@ -3,13 +3,11 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
 import { Avatar } from "components";
+import { formatDate } from "utils/formatDate";
+import { Review } from "stores/interfaces/IDoctorStore";
 
-export interface IComment {
-    id: string;
-    fullname: string;
-    rating: number;
-    text: string;
-    date: string;
+interface IComment {
+    review: Review;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -50,29 +48,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const Comment: React.FC<IComment> = ({ fullname, rating, text, date }) => {
+export const Comment: React.FC<IComment> = ({ review }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.comment}>
             <div className={classes.commentHeader}>
                 <div className={classes.commentOwner}>
-                    <Avatar size="elg" alt={fullname} src={undefined} />
+                    <Avatar
+                        size="elg"
+                        alt={`Фото ${review.name} ${review.surname}`}
+                        src={review.avatar || undefined}
+                    />
                     <div className={classes.ownerInfo}>
                         <Typography
                             className={classes.ownerInfoFullname}
                             variant="h4"
                         >
-                            {fullname}
+                            {review.name} {review.surname}
                         </Typography>
-                        <Rating value={rating} size="small" readOnly />
+                        <Rating value={review.rating} size="small" readOnly />
                     </div>
                 </div>
                 <Typography color="textSecondary" variant="h6">
-                    {date}
+                    {formatDate(review.createdAt, "dd MMMM yyyy")}
                 </Typography>
             </div>
-            <Typography variant="body1">{text}</Typography>
+            <Typography variant="body1">{review.text}</Typography>
         </div>
     );
 };

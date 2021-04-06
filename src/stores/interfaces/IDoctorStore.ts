@@ -27,6 +27,7 @@ export interface IDoctor {
     specialties: Specialty[];
     education: string[];
     workplaces: string[];
+    reviews: Review[];
 }
 
 export interface IPagination {
@@ -35,3 +36,13 @@ export interface IPagination {
     perPage: number;
     totalCount: number;
 }
+
+export type Review = {
+    // id: string;
+    name: string;
+    surname: string;
+    rating: number;
+    text: string;
+    avatar: string | null;
+    createdAt: string;
+};

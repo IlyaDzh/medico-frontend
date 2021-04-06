@@ -2,8 +2,6 @@ import React from "react";
 import { Paper, Typography, makeStyles, Theme } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
-import doctorImage from "images/home/doctor/doctor.jpg";
-
 interface IReviewCard {
     fullname: string;
     image: string;
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         userSelect: "text",
         [theme.breakpoints.down("xs")]: {
             padding: "32px 24px",
-            minHeight: 280,
+            minHeight: 280
         }
     },
     cardHeader: {
@@ -53,7 +51,7 @@ export const ReviewCard: React.FC<IReviewCard> = ({
         <Paper component="article" className={classes.card} variant="outlined">
             <div className={classes.cardHeader}>
                 <div className={classes.reviewerImage}>
-                    <img src={doctorImage} alt={`Фото ${fullname}`} />
+                    <img src={image} alt={`Фото ${fullname}`} />
                 </div>
                 <div>
                     <Typography variant="h4">{fullname}</Typography>

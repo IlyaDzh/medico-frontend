@@ -36,62 +36,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const profileData = {
-    comments: [
-        {
-            id: "1",
-            fullname: "Имя Фамилия",
-            rating: 5,
-            text:
-                "Таким образом реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов) участие в формировании существенных финансовых и административных условий.",
-            date: "Ноябрь 2020"
-        },
-        {
-            id: "2",
-            fullname: "Имя Фамилия",
-            rating: 4,
-            text: "Таким образом реализация намеченных плановых заданий",
-            date: "Ноябрь 2020"
-        },
-        {
-            id: "3",
-            fullname: "Имя Фамилия",
-            rating: 3,
-            text: "Таким образом реализация намеченных плановых заданий",
-            date: "Ноябрь 2020"
-        }
-    ],
-    education: [
-        {
-            id: "1",
-            date: "2012",
-            text: "Повышение квалификации там-то"
-        },
-        {
-            id: "2",
-            date: "2001",
-            text: "Такой-то университет, г. Алматы"
-        },
-        {
-            id: "3",
-            date: "1999",
-            text: "Такой-то колледж, г. Алматы"
-        }
-    ],
-    experience: [
-        {
-            id: "1",
-            date: "2012",
-            text: "Частная практика ИП"
-        },
-        {
-            id: "2",
-            date: "2001-2012",
-            text: "Поликлиника №1 г. Алматы"
-        }
-    ]
-};
-
 export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = useState(0);
@@ -117,13 +61,13 @@ export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
                 <Tab className={classes.tabItem} label="Основные направления" />
             </Tabs>
             <div hidden={currentTab !== 0}>
-                <CommentsList comments={profileData.comments} />
+                <CommentsList reviews={currentDoctor.reviews} />
             </div>
             <div hidden={currentTab !== 1}>
-                <ExperienceList list={profileData.education} />
+                <ExperienceList list={currentDoctor.education} />
             </div>
             <div hidden={currentTab !== 2}>
-                <ExperienceList list={profileData.experience} />
+                <ExperienceList list={currentDoctor.workplaces} />
             </div>
             <div hidden={currentTab !== 3}>
                 <SpecialtiesList specialties={currentDoctor.specialties} />

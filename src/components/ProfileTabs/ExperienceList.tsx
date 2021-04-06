@@ -31,11 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IExperienceList {
-    list: {
-        id: string;
-        date: string;
-        text: string;
-    }[];
+    list: string[];
 }
 
 export const ExperienceList: React.FC<IExperienceList> = ({ list }) => {
@@ -43,11 +39,11 @@ export const ExperienceList: React.FC<IExperienceList> = ({ list }) => {
 
     return (
         <ul className={classes.list}>
-            {list.map(item => (
-                <li key={item.id} className={classes.listItem}>
-                    <Typography variant="h5">{item.date}</Typography>
+            {list.map((item, index) => (
+                <li key={index} className={classes.listItem}>
+                    <Typography variant="h5">1996</Typography>
                     <Typography className={classes.listItemText} variant="body1">
-                        {item.text}
+                        {item}
                     </Typography>
                 </li>
             ))}

@@ -12,7 +12,15 @@ import {
 
 import { ReviewCard } from "./ReviewCard";
 import { ArrowLeftIcon, ArrowRightIcon } from "icons";
-import { reviews } from "utils/constants";
+
+import person1 from "images/home/reviews/person1.jpg";
+import person2 from "images/home/reviews/person2.jpg";
+import person3 from "images/home/reviews/person3.jpg";
+import person4 from "images/home/reviews/person4.jpg";
+import person5 from "images/home/reviews/person5.jpg";
+import person6 from "images/home/reviews/person6.jpg";
+import person7 from "images/home/reviews/person7.jpg";
+import person8 from "images/home/reviews/person8.jpg";
 
 const useStyles = makeStyles((theme: Theme) => ({
     reviewsSection: {
@@ -109,6 +117,64 @@ const settings: Settings = {
         }
     ]
 };
+
+const reviews = [
+    {
+        fullname: "Илья Долженко",
+        image: person1,
+        rating: 5,
+        text: "Отличный сервис! Помог защитить дипломную работу. Ставлю 5 звезд."
+    },
+    {
+        fullname: "Елена Левченко",
+        image: person2,
+        rating: 5,
+        text:
+            "Мне все понравилось. Все было хорошо. Анастасия Андреевна очень хорошо выслушивает пациента, все спокойно и гладко."
+    },
+    {
+        fullname: "Ангелина Соколова",
+        image: person3,
+        rating: 5,
+        text:
+            "Всё прошло хорошо. Пока сдала только анализы, но доктор мне всё по полочкам расписал, рассказал."
+    },
+    {
+        fullname: "Роман Иванов",
+        image: person4,
+        rating: 5,
+        text:
+            "Мне понравился прием. Очень интересный, харизматичный доктор. Все рассказали с примерами из практики. В целом я доволен."
+    },
+    {
+        fullname: "Юлия Смирнова",
+        image: person5,
+        rating: 5,
+        text:
+            "Доктор готов выслушать и ответить на вопросы. Доброжелательный врач, все по стандартам, негативных эмоций у меня не возникло."
+    },
+    {
+        fullname: "Никита Кисилев",
+        image: person6,
+        rating: 4,
+        text:
+            "В цело прием прошел хорошо, претензий нет, все понравилось. Мне кажется, что набор исследований должен быть немного шире, а то получается поверхностно. Доктор прокомментировала все мои показания."
+    },
+    {
+        fullname: "Игорь Поляков",
+        image: person7,
+        rating: 5,
+        text:
+            "В целом мне очень понравилось. Доктора работают профессионально. Рекомендую всем данный сервис."
+    },
+    {
+        fullname: "Александр Шевцов",
+        image: person8,
+        rating: 5,
+        text:
+            "Все хорошо. Врач мне все расписал, описал подробные шаги и последовательность моих действий. Я доволен, никаких негативных моментов не было."
+    }
+];
 
 export const ReviewsSection: React.FC = () => {
     const classes = useStyles();
