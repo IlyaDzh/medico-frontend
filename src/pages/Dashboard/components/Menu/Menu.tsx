@@ -18,66 +18,68 @@ interface IMenu {
 
 const useStyles = makeStyles((theme: Theme) => ({
     menu: {
-        position: "absolute",
-        left: 0,
-        height: "100%",
-        width: 158,
+        minWidth: 158,
         borderRight: `1px solid ${theme.palette.other!.main}`,
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
     }
 }));
 
 const doctorMenu = [
     {
         icon: <AppsIcon />,
-        label: "Главная"
+        label: "Главная",
+        to: "/dashboard/main"
     },
     {
         icon: <CalendarIcon />,
-        label: "График работы"
+        label: "График работы",
+        to: "/dashboard/calendar"
     },
     {
         icon: <HistoryIcon />,
-        label: "Журнал записей"
+        label: "Журнал записей",
+        to: "/dashboard/logbook"
     },
     {
         icon: <CaseIcon />,
-        label: "Пациенты"
+        label: "Пациенты",
+        to: "/dashboard/patients"
     },
     {
         icon: <MessagesIcon />,
-        label: "Сообщения"
-    },
-    {
-        icon: <SettingsIcon />,
-        label: "Настройки"
+        label: "Сообщения",
+        to: "/dashboard/messages"
     }
 ];
 
 const patientMenu = [
     {
         icon: <HistoryIcon />,
-        label: "Мои записи"
+        label: "Мои записи",
+        to: "/dashboard/alerts"
     },
     {
         icon: <CaseIcon />,
-        label: "Назначения"
+        label: "Назначения",
+        to: "/dashboard/results"
     },
     {
         icon: <AnalyzesIcon />,
-        label: "Мои анализы"
+        label: "Мои анализы",
+        to: "/dashboard/analyzes"
     },
     {
         icon: <AppsIcon />,
-        label: "Мед карта"
+        label: "Мед карта",
+        to: "/dashboard/medical-card"
     },
     {
         icon: <MessagesIcon />,
-        label: "Сообщения"
-    },
-    {
-        icon: <SettingsIcon />,
-        label: "Настройки"
+        label: "Сообщения",
+        to: "/dashboard/messages"
     }
 ];
 
@@ -86,13 +88,16 @@ export const Menu: React.FC<IMenu> = ({ isDoctor }) => {
 
     return (
         <aside className={classes.menu}>
-            {isDoctor
-                ? doctorMenu.map(item => (
-                      <MenuItem icon={item.icon} label={item.label} />
-                  ))
-                : patientMenu.map(item => (
-                      <MenuItem icon={item.icon} label={item.label} />
-                  ))}
+            <div>
+                {(isDoctor ? doctorMenu : patientMenu).map(item => (
+                    <MenuItem key={item.label} {...item} />
+                ))}
+            </div>
+            <MenuItem
+                to="/dashboard/settings"
+                icon={<SettingsIcon />}
+                label="Настройки"
+            />
         </aside>
     );
 };
