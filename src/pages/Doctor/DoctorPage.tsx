@@ -11,7 +11,7 @@ export const DoctorPage: React.FC = () => {
                 <Header isHeader />
             </Hidden>
             <Hidden mdUp>
-                <ExtendedHeader />
+                <ExtendedHeader title="Специалисты" />
             </Hidden>
             <main>
                 <Container>

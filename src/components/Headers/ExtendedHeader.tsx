@@ -2,11 +2,16 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Container, Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 
-import { Breadcrumbs, Button, SearchInput } from "components";
+import { Breadcrumbs, Button } from "components";
 import { Header } from "./Header";
 
 import headerBackground from "images/header/header-background.jpg";
 import { useStores } from "stores/useStore";
+
+interface IExtendedHeader {
+    title: string;
+    action?: React.ReactNode;
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
@@ -37,53 +42,47 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down(370)]: {
             marginBottom: 8
         }
-    },
-    headerSearchWrapper: {
-        maxWidth: 396,
-        width: "100%"
     }
 }));
 
-export const ExtendedHeader: React.FC = observer(() => {
-    const classes = useStyles();
-    const { userStore } = useStores();
-    const { isAuthorized } = userStore;
+export const ExtendedHeader: React.FC<IExtendedHeader> = observer(
+    ({ title, action }) => {
+        const classes = useStyles();
+        const { userStore } = useStores();
+        const { isAuthorized } = userStore;
 
-    return (
-        <header className={classes.header}>
-            <Hidden smDown>
-                <Header isAbsolute leftBarIsLight rightBarIsLight />
-            </Hidden>
-            <Hidden mdUp>
-                <Header />
-            </Hidden>
-            <Container>
-                <Breadcrumbs
-                    items={[{ to: "/", title: "Главная" }, { title: "Специалисты" }]}
-                />
-                <div className={classes.headerContent}>
-                    <Typography className={classes.headerTitle} variant="h1">
-                        Специалисты
-                    </Typography>
-                    <Hidden smDown>
-                        <div className={classes.headerSearchWrapper}>
-                            <SearchInput placeholder="Поиск специалиста" fullWidth />
-                        </div>
-                    </Hidden>
-                    {!isAuthorized && (
-                        <Hidden mdUp>
-                            <Button
-                                variant="outlined"
-                                color="default"
-                                size="small"
-                                to="/sign-up"
-                            >
-                                Регистрация
-                            </Button>
-                        </Hidden>
-                    )}
-                </div>
-            </Container>
-        </header>
-    );
-});
+        return (
+            <header className={classes.header}>
+                <Hidden smDown>
+                    <Header isAbsolute leftBarIsLight rightBarIsLight />
+                </Hidden>
+                <Hidden mdUp>
+                    <Header />
+                </Hidden>
+                <Container>
+                    <Breadcrumbs
+                        items={[{ to: "/", title: "Главная" }, { title: title }]}
+                    />
+                    <div className={classes.headerContent}>
+                        <Typography className={classes.headerTitle} variant="h1">
+                            {title}
+                        </Typography>
+                        {action}
+                        {!isAuthorized && (
+                            <Hidden mdUp>
+                                <Button
+                                    variant="outlined"
+                                    color="default"
+                                    size="small"
+                                    to="/sign-up"
+                                >
+                                    Регистрация
+                                </Button>
+                            </Hidden>
+                        )}
+                    </div>
+                </Container>
+            </header>
+        );
+    }
+);

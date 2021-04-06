@@ -1,13 +1,19 @@
 import React from "react";
+import { Container } from "@material-ui/core";
 
-import { Header, Footer, PaddingLine } from "components";
+import { AppointmentHeader, StepsNavigation, AppointmentSteps } from "./components";
+import { Footer } from "components";
 
 export const AppointmentPage: React.FC = () => {
     return (
         <React.Fragment>
-            <PaddingLine />
-            <Header />
-            <main>AppointmentPage</main>
+            <AppointmentHeader />
+            <main>
+                <Container>
+                    <StepsNavigation />
+                    <AppointmentSteps />
+                </Container>
+            </main>
             <Footer />
         </React.Fragment>
     );

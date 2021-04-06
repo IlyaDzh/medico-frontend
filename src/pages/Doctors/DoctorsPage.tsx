@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, Hidden } from "@material-ui/core";
 
-import { ExtendedHeader, Footer } from "components";
+import { Footer } from "components";
 import {
+    DoctorsHeader,
     DoctorsSearch,
     DoctorsCategories,
     DoctorsList,
@@ -12,7 +13,7 @@ import {
 export const DoctorsPage: React.FC = () => {
     return (
         <React.Fragment>
-            <ExtendedHeader />
+            <DoctorsHeader />
             <main>
                 <Container>
                     <Hidden mdUp>
