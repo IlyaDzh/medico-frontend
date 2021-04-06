@@ -41,7 +41,7 @@ export const App: React.FC = observer(() => {
         <React.Fragment>
             <CssBaseline />
             <ScrollHandler />
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Backdrop />}>
                 <Switch>
                     <Route exact path="/ui-kit" component={UiKitPage} />
                     <Route

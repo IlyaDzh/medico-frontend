@@ -233,7 +233,7 @@ export const DoctorProfile: React.FC = observer(() => {
                         </div>
                     </div>
                 </div>
-                <ProfileTabs />
+                <ProfileTabs currentDoctor={currentDoctor} />
             </div>
         </div>
     );

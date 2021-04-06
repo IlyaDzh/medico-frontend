@@ -1,6 +1,8 @@
 import React from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { Specialty } from "stores/interfaces/ISpecialtiesStore";
+
 const useStyles = makeStyles((theme: Theme) => ({
     list: {
         paddingLeft: 24
@@ -26,18 +28,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-interface IDirectionsList {
-    directions: string[];
+interface ISpecialtiesList {
+    specialties: Specialty[];
 }
 
-export const DirectionsList: React.FC<IDirectionsList> = ({ directions }) => {
+export const SpecialtiesList: React.FC<ISpecialtiesList> = ({ specialties }) => {
     const classes = useStyles();
 
     return (
         <ul className={classes.list}>
-            {directions.map((direction, index) => (
-                <li key={index} className={classes.listItem}>
-                    <Typography variant="body1">{direction}</Typography>
+            {specialties.map(specialty => (
+                <li key={specialty.id} className={classes.listItem}>
+                    <Typography variant="body1">{specialty.name}</Typography>
                 </li>
             ))}
         </ul>

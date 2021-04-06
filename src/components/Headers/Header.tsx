@@ -12,6 +12,7 @@ interface IHeader {
     leftBarIsLight?: boolean;
     rightBarIsLight?: boolean;
     isHeader?: boolean;
+    isDashboard?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -43,12 +44,17 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingBottom: 8
         }
     },
+    appBarFromDashboard: {
+        paddingLeft: 24,
+        paddingRight: 24,
+        borderBottom: `1px solid ${theme.palette.other!.main}`
+    },
     appBarContainerAuth: {
         paddingTop: 13,
         paddingBottom: 13,
         [theme.breakpoints.down("sm")]: {
-            paddingTop: 10,
-            paddingBottom: 10
+            paddingTop: 7,
+            paddingBottom: 7
         }
     },
     leftBar: {
@@ -120,10 +126,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const Header: React.FC<IHeader> = observer(
-    ({ isAbsolute, leftBarIsLight, rightBarIsLight, isHeader }) => {
+    ({ isAbsolute, leftBarIsLight, rightBarIsLight, isHeader, isDashboard }) => {
         const classes = useStyles();
         const { userStore } = useStores();
         const { isAuthorized } = userStore;
+
+        const content = {
+            className: clsx(
+                classes.appBarContainer,
+                isAuthorized && classes.appBarContainerAuth,
+                isDashboard && classes.appBarFromDashboard
+            ),
+            children: (
+                <React.Fragment>
+                    <HeaderLeft isLight={leftBarIsLight} classes={classes} />
+                    <HeaderRight
+                        isLight={rightBarIsLight}
+                        classes={classes}
+                        isAuthorized={isAuthorized}
+                    />
+                </React.Fragment>
+            )
+        };
 
         const navigation = (
             <nav
@@ -132,19 +156,7 @@ export const Header: React.FC<IHeader> = observer(
                     isAbsolute && classes.appBarAbsolute
                 )}
             >
-                <Container
-                    className={clsx(
-                        classes.appBarContainer,
-                        isAuthorized && classes.appBarContainerAuth
-                    )}
-                >
-                    <HeaderLeft isLight={leftBarIsLight} classes={classes} />
-                    <HeaderRight
-                        isLight={rightBarIsLight}
-                        classes={classes}
-                        isAuthorized={isAuthorized}
-                    />
-                </Container>
+                {isDashboard ? <div {...content} /> : <Container {...content} />}
             </nav>
         );
 

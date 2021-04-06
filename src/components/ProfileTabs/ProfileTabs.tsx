@@ -3,7 +3,12 @@ import { Tabs, Tab, makeStyles, Theme } from "@material-ui/core";
 
 import { CommentsList } from "./CommentsList";
 import { ExperienceList } from "./ExperienceList";
-import { DirectionsList } from "./DirectionsList";
+import { SpecialtiesList } from "./SpecialtiesList";
+import { IDoctor } from "stores/interfaces/IDoctorStore";
+
+interface IProfileTabs {
+    currentDoctor: IDoctor;
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     profileTabs: {
@@ -84,22 +89,14 @@ const profileData = {
             date: "2001-2012",
             text: "Поликлиника №1 г. Алматы"
         }
-    ],
-    directions: [
-        "Острые респираторные вирусные инфекции",
-        "Вегето-сосудистая дистония",
-        "Хронический бронхит",
-        "Язвенная болезнь желудка и двенадцатиперстной кишки",
-        "Хронический колит и энтероколит",
-        "Хроническая болезнь почек"
     ]
 };
 
-export const ProfileTabs: React.FC = () => {
+export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = useState(0);
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (_: any, newValue: number) => {
         setCurrentTab(newValue);
     };
 
@@ -129,7 +126,7 @@ export const ProfileTabs: React.FC = () => {
                 <ExperienceList list={profileData.experience} />
             </div>
             <div hidden={currentTab !== 3}>
-                <DirectionsList directions={profileData.directions} />
+                <SpecialtiesList specialties={currentDoctor.specialties} />
             </div>
         </div>
     );

@@ -23,6 +23,8 @@ export interface IDoctor {
     costOfConsultation: number;
     workTime: string;
     specialties: Specialty[];
+    education: string[];
+    workplaces: string[];
 }
 
 export interface IPagination {
