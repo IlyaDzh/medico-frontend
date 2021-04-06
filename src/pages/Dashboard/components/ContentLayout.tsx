@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     layout: {
-        marginLeft: 158,
         padding: "56px 80px"
     }
 }));
