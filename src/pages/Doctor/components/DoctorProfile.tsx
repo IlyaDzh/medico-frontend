@@ -223,7 +223,7 @@ export const DoctorProfile: React.FC = observer(() => {
                                 {currentDoctor.costOfConsultation} руб.
                             </Typography>
                             <Button
-                                to="/appointment"
+                                to={isAuthorized ? "/appointment" : undefined}
                                 variant="contained"
                                 size="large"
                                 icon={<ArrowRightIcon color="#fff" />}
