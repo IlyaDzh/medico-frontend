@@ -12,6 +12,7 @@ import {
 
 import { ReviewCard } from "./ReviewCard";
 import { ArrowLeftIcon, ArrowRightIcon } from "icons";
+import { reviews } from "utils/constants";
 
 const useStyles = makeStyles((theme: Theme) => ({
     reviewsSection: {
@@ -69,8 +70,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const LENGTH_OF_ARRAY = 7;
-
 const settings: Settings = {
     dots: false,
     infinite: false,
@@ -118,6 +117,8 @@ export const ReviewsSection: React.FC = () => {
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down(850));
 
     const slidesToShow: number = matches ? 2 : 3.15;
+
+    const LENGTH_OF_ARRAY = reviews.length;
 
     const handleClickNextSlide = useCallback((): void => {
         sliderRef?.current?.slickNext();
@@ -168,8 +169,8 @@ export const ReviewsSection: React.FC = () => {
                     {...settings}
                     className={classes.slider}
                 >
-                    {new Array(LENGTH_OF_ARRAY).fill(undefined).map((_, index) => (
-                        <ReviewCard key={index} />
+                    {reviews.map((review, index) => (
+                        <ReviewCard key={index} {...review} />
                     ))}
                 </Slider>
             </Container>

@@ -4,6 +4,13 @@ import { Rating } from "@material-ui/lab";
 
 import doctorImage from "images/home/doctor/doctor.jpg";
 
+interface IReviewCard {
+    fullname: string;
+    image: string;
+    rating: number;
+    text: string;
+}
+
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
         position: "relative",
@@ -15,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardHeader: {
         display: "flex",
+        alignItems: "center",
         marginBottom: 8
     },
     reviewerImage: {
@@ -28,48 +36,31 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginRight: 12
         }
-    },
-    reviewerSocial: {
-        display: "block",
-        fontSize: 14,
-        lineHeight: "18px",
-        color: theme.palette.text.primary,
-        marginBottom: 2,
-        "&:hover": {
-            textDecoration: "none"
-        }
     }
 }));
 
-export const ReviewCard: React.FC = () => {
+export const ReviewCard: React.FC<IReviewCard> = ({
+    fullname,
+    image,
+    rating,
+    text
+}) => {
     const classes = useStyles();
 
     return (
         <Paper component="article" className={classes.card} variant="outlined">
             <div className={classes.cardHeader}>
                 <div className={classes.reviewerImage}>
-                    <img src={doctorImage} alt="Фото Имя Фамилия" />
+                    <img src={doctorImage} alt={`Фото ${fullname}`} />
                 </div>
                 <div>
-                    <Typography variant="h4">Имя Фамилия</Typography>
-                    <a
-                        className={classes.reviewerSocial}
-                        href="https://vk.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        ВКонтакте
-                    </a>
+                    <Typography variant="h4">{fullname}</Typography>
                     <div>
-                        <Rating value={4} size="small" readOnly />
+                        <Rating value={rating} size="small" readOnly />
                     </div>
                 </div>
             </div>
-            <Typography variant="body1">
-                Таким образом реализация намеченных плановых заданий обеспечивает
-                широкому кругу (специалистов) участие в формировании существенных
-                финансовых и административных условий.
-            </Typography>
+            <Typography variant="body1">{text}</Typography>
         </Paper>
     );
 };
