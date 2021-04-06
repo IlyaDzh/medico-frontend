@@ -37,6 +37,6 @@ export class RootStore implements IStores {
         this.modalsStore = new ModalsStore();
         this.questionnaireStore = new QuestionnaireStore(this);
         this.specialtiesStore = new SpecialtiesStore();
-        this.doctorStore = new DoctorStore();
+        this.doctorStore = new DoctorStore(this);
     }
 }

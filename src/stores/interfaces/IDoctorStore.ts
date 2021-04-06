@@ -6,7 +6,7 @@ export interface IDoctorStore {
     pagination: IPagination | null;
     pending: boolean;
     pendingProfile: boolean;
-    getDoctors: () => void;
+    getDoctors: (page: number) => void;
     getDoctorProfile: (id: number) => void;
     resetProfile: () => void;
 }

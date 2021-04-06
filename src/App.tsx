@@ -50,7 +50,11 @@ export const App: React.FC = observer(() => {
                     path={["/", "/home", "/sign-up-confirmation"]}
                     component={HomePage}
                 />
-                <Route exact path="/doctors" component={DoctorsPage} />
+                <Route
+                    exact
+                    path={["/doctors", "/doctors/:page"]}
+                    component={DoctorsPage}
+                />
                 <Route exact path="/doctor/:id" component={DoctorPage} />
                 <PrivateRoute
                     exact
