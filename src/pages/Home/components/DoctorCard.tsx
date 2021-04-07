@@ -46,7 +46,7 @@ export const DoctorCard: React.FC<IDoctorCard> = ({ doctor }) => {
 
     const specialty = doctor.specialties
         .map((item, index) =>
-            index < doctor.specialties.length - 1 ? `${item}, ` : item
+            index < doctor.specialties.length - 1 ? `${item.name}, ` : item.name
         )
         .join("");
 
