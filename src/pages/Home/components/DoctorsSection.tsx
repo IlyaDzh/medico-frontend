@@ -149,7 +149,7 @@ export const DoctorsSection: React.FC = observer(() => {
         if (!doctors) {
             getDoctors();
         }
-    }, [doctors, getDoctors]);
+    }, [getDoctors]);
 
     const LENGTH_OF_ARRAY = doctors?.length || 0;
 
@@ -184,7 +184,7 @@ export const DoctorsSection: React.FC = observer(() => {
                         </Typography>
                     </div>
                 </div>
-                {pending || !doctors ? (
+                {pending || !doctors || doctors.length === 0 ? (
                     <Loader level={2.5} isCenter />
                 ) : (
                     <Slider
