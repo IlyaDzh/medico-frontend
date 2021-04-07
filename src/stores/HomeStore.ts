@@ -16,7 +16,7 @@ export class HomeStore implements IHomeStore {
     getDoctors = () => {
         this.pending = true;
 
-        DoctorApi.getDoctorsByCount(7)
+        DoctorApi.getDoctorsByCount(10)
             .then(
                 action(
                     ({
