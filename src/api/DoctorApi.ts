@@ -11,4 +11,8 @@ export class DoctorApi {
             `/api/v1/doctor/paginate?page=${page}&count=${count}`
         );
     }
+
+    static getDoctorsByCount(count: number = 7) {
+        return axiosInstance.get(`/api/v1/doctor/most-experienced?count=${count}`);
+    }
 }

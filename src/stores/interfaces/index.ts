@@ -6,6 +6,7 @@ import { IModalsStore } from "./IModalsStore";
 import { IQuestionnaireStore } from "./IQuestionnaireStore";
 import { ISpecialtiesStore } from "./ISpecialtiesStore";
 import { IDoctorStore } from "./IDoctorStore";
+import { IHomeStore } from "./IHomeStore";
 
 export default interface IStores {
     routerStore: IRouterStore;
@@ -16,4 +17,5 @@ export default interface IStores {
     questionnaireStore: IQuestionnaireStore;
     specialtiesStore: ISpecialtiesStore;
     doctorStore: IDoctorStore;
+    homeStore: IHomeStore;
 }

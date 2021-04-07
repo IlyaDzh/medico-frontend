@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Paper, Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { HomeDoctor } from "stores/interfaces/IHomeStore";
 import doctorImage from "images/home/doctor/doctor.jpg";
+
+interface IDoctorCard {
+    doctor: HomeDoctor;
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     card: {
@@ -36,24 +41,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const DoctorCard: React.FC = () => {
+export const DoctorCard: React.FC<IDoctorCard> = ({ doctor }) => {
     const classes = useStyles();
+
+    const specialty = doctor.specialties
+        .map((item, index) =>
+            index < doctor.specialties.length - 1 ? `${item}, ` : item
+        )
+        .join("");
 
     return (
         <Paper component="article" className={classes.card} variant="outlined">
-            <Link to="/doctor/123" className={classes.cardInner}>
+            <Link to={`/doctor/${doctor.id}`} className={classes.cardInner}>
                 <div className={classes.cardImage}>
-                    <img src={doctorImage} alt="Фото Елена Леонидовна Докторова" />
+                    <img
+                        src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
+                        alt="Фото Елена Леонидовна Докторова"
+                    />
                 </div>
                 <div className={classes.cardContent}>
                     <Typography variant="h6" color="textPrimary">
-                        Терапевт
+                        {specialty}
                     </Typography>
                     <Typography className={classes.doctorName} variant="h4">
-                        Елена Леонидовна Докторова
+                        {doctor.surname} {doctor.name} {doctor.middleName}
                     </Typography>
                     <Typography variant="h6" color="textSecondary">
-                        Опыт работы: 12 лет
+                        Опыт работы: {doctor.experience}
                     </Typography>
                 </div>
             </Link>

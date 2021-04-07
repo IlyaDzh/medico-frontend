@@ -1,4 +1,5 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { observer } from "mobx-react";
 import Slider, { Settings } from "react-slick";
 import {
     Container,
@@ -11,8 +12,9 @@ import {
 } from "@material-ui/core";
 
 import { DoctorCard } from "./DoctorCard";
-import { Button } from "components";
+import { Button, Loader } from "components";
 import { InfoIcon, ArrowLeftIcon, ArrowRightIcon } from "icons";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     doctorsSection: {
@@ -94,8 +96,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const LENGTH_OF_ARRAY = 7;
-
 const settings: Settings = {
     dots: false,
     infinite: false,
@@ -136,11 +136,22 @@ const settings: Settings = {
     ]
 };
 
-export const DoctorsSection: React.FC = () => {
+export const DoctorsSection: React.FC = observer(() => {
     const classes = useStyles();
     const [nextSlideNumber, setNextSlideNumber] = useState<number>(0);
     const sliderRef = useRef<Slider>(null);
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+
+    const { homeStore } = useStores();
+    const { doctors, pending, getDoctors } = homeStore;
+
+    useEffect(() => {
+        if (!doctors) {
+            getDoctors();
+        }
+    }, [doctors, getDoctors]);
+
+    const LENGTH_OF_ARRAY = doctors?.length || 0;
 
     const slidesToShow: number = matches ? 4 : 5;
 
@@ -173,16 +184,20 @@ export const DoctorsSection: React.FC = () => {
                         </Typography>
                     </div>
                 </div>
-                <Slider
-                    ref={sliderRef}
-                    beforeChange={beforeChangeHandler}
-                    {...settings}
-                    className={classes.slider}
-                >
-                    {new Array(LENGTH_OF_ARRAY).fill(undefined).map((_, index) => (
-                        <DoctorCard key={index} />
-                    ))}
-                </Slider>
+                {pending || !doctors ? (
+                    <Loader level={2.5} isCenter />
+                ) : (
+                    <Slider
+                        ref={sliderRef}
+                        beforeChange={beforeChangeHandler}
+                        {...settings}
+                        className={classes.slider}
+                    >
+                        {doctors.map(doctor => (
+                            <DoctorCard key={doctor.id} doctor={doctor} />
+                        ))}
+                    </Slider>
+                )}
                 <div className={classes.actions}>
                     <Button
                         className={classes.allDoctorsBtn}
@@ -221,4 +236,4 @@ export const DoctorsSection: React.FC = () => {
             </Container>
         </section>
     );
-};
+});

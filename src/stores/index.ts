@@ -8,6 +8,7 @@ import { ModalsStore } from "./ModalsStore";
 import { QuestionnaireStore } from "./QuestionnaireStore";
 import { SpecialtiesStore } from "./SpecialtiesStore";
 import { DoctorStore } from "./DoctorStore";
+import { HomeStore } from "./HomeStore";
 
 import IStores from "./interfaces";
 import { IRouterStore } from "./interfaces/IRouterStore";
@@ -18,6 +19,7 @@ import { IModalsStore } from "./interfaces/IModalsStore";
 import { IQuestionnaireStore } from "./interfaces/IQuestionnaireStore";
 import { ISpecialtiesStore } from "./interfaces/ISpecialtiesStore";
 import { IDoctorStore } from "./interfaces/IDoctorStore";
+import { IHomeStore } from "./interfaces/IHomeStore";
 
 export class RootStore implements IStores {
     routerStore: IRouterStore;
@@ -28,6 +30,7 @@ export class RootStore implements IStores {
     questionnaireStore: IQuestionnaireStore;
     specialtiesStore: ISpecialtiesStore;
     doctorStore: IDoctorStore;
+    homeStore: IHomeStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -38,5 +41,6 @@ export class RootStore implements IStores {
         this.questionnaireStore = new QuestionnaireStore(this);
         this.specialtiesStore = new SpecialtiesStore();
         this.doctorStore = new DoctorStore(this);
+        this.homeStore = new HomeStore();
     }
 }
