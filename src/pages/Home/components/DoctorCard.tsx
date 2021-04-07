@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardContent: {
         padding: "18px 24px 24px"
     },
+    doctorSpecialties: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden"
+    },
     doctorName: {
         marginTop: 4,
         marginBottom: 12,
@@ -59,7 +64,11 @@ export const DoctorCard: React.FC<IDoctorCard> = ({ doctor }) => {
                     />
                 </div>
                 <div className={classes.cardContent}>
-                    <Typography variant="h6" color="textPrimary">
+                    <Typography
+                        className={classes.doctorSpecialties}
+                        variant="h6"
+                        color="textPrimary"
+                    >
                         {specialty}
                     </Typography>
                     <Typography className={classes.doctorName} variant="h4">
