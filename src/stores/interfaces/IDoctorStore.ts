@@ -38,7 +38,7 @@ export interface IPagination {
 }
 
 export type Review = {
-    // id: string;
+    id: string;
     name: string;
     surname: string;
     rating: number;

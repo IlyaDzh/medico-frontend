@@ -21,8 +21,8 @@ export const CommentsList: React.FC<ICommentsList> = ({ reviews }) => {
     return (
         <React.Fragment>
             <div className={classes.commentsList}>
-                {reviews.map((review, index) => (
-                    <Comment key={index} review={review} />
+                {reviews.map(review => (
+                    <Comment key={review.id} review={review} />
                 ))}
             </div>
             {/* <Button variant="outlined">Показать ещё</Button> */}
