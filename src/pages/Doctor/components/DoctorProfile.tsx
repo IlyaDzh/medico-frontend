@@ -220,7 +220,7 @@ export const DoctorProfile: React.FC = observer(() => {
                                 {currentDoctor.middleName}
                             </Typography>
                             <div>
-                                <Rating value={5} size="small" readOnly />
+                                <Rating value={currentDoctor.rating} size="small" readOnly />
                             </div>
                             <Typography
                                 className={classes.profileAbout}
