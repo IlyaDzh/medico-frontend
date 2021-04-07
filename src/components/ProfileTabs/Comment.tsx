@@ -67,7 +67,7 @@ export const Comment: React.FC<IComment> = ({ review }) => {
                         >
                             {review.name} {review.surname}
                         </Typography>
-                        <Rating value={review.rating} size="small" readOnly />
+                        <Rating value={review.estimation} size="small" readOnly />
                     </div>
                 </div>
                 <Typography color="textSecondary" variant="h6">

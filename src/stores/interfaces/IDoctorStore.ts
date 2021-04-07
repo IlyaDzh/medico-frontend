@@ -41,7 +41,7 @@ export type Review = {
     id: string;
     name: string;
     surname: string;
-    rating: number;
+    estimation: number;
     text: string;
     avatar: string | null;
     createdAt: string;
