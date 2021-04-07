@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Paper, Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { HomeDoctor } from "stores/interfaces/IHomeStore";
-import doctorImage from "images/home/doctor/doctor.jpg";
 
 interface IDoctorCard {
     doctor: HomeDoctor;
