@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardImage: {
         "& img": {
             objectFit: "cover",
+            objectPosition: "top",
             width: "100%",
             height: 235,
             [theme.breakpoints.down("xs")]: {
