@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const StepTime: React.FC = () => {
+export const StepSymptoms: React.FC = () => {
     const classes = useStyles();
     const { onNextStep } = useContext(StepsContext);
 

@@ -1,6 +1,9 @@
 import React, { useState, createContext } from "react";
+import { makeStyles } from "@material-ui/core";
 
-import { StepTime } from "./Steps";
+import { StepTime, StepSymptoms } from "./Steps";
+import { StepsNavigation } from "./StepsNavigation";
+import { BackButton } from "./BackButton";
 
 type StepsContextProps = {
     step: number;
@@ -11,7 +14,14 @@ export const StepsContext = createContext<StepsContextProps>(
     {} as StepsContextProps
 );
 
+const useStyles = makeStyles(() => ({
+    step: {
+        marginBottom: 120
+    }
+}));
+
 export const AppointmentSteps: React.FC = () => {
+    const classes = useStyles();
     const [step, setStep] = useState<number>(0);
 
     const onNextStep = (): void => {
@@ -20,13 +30,21 @@ export const AppointmentSteps: React.FC = () => {
 
     return (
         <StepsContext.Provider value={{ step, onNextStep }}>
+            <StepsNavigation />
+            {step !== 0 && <BackButton />}
             <section>
-                <div hidden={step !== 0}>
+                <div className={classes.step} hidden={step !== 0}>
                     <StepTime />
                 </div>
-                <div hidden={step !== 1}>step 2</div>
-                <div hidden={step !== 2}>step 3</div>
-                <div hidden={step !== 3}>step 4</div>
+                <div className={classes.step} hidden={step !== 1}>
+                    <StepSymptoms />
+                </div>
+                <div className={classes.step} hidden={step !== 2}>
+                    step 3
+                </div>
+                <div className={classes.step} hidden={step !== 3}>
+                    step 4
+                </div>
             </section>
         </StepsContext.Provider>
     );

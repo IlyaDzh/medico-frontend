@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@material-ui/core";
 
-import { AppointmentHeader, StepsNavigation, AppointmentSteps } from "./components";
+import { AppointmentHeader, AppointmentSteps } from "./components";
 import { Footer } from "components";
 
 export const AppointmentPage: React.FC = () => {
@@ -10,7 +10,6 @@ export const AppointmentPage: React.FC = () => {
             <AppointmentHeader />
             <main>
                 <Container>
-                    <StepsNavigation />
                     <AppointmentSteps />
                 </Container>
             </main>
