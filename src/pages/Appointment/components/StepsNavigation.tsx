@@ -7,7 +7,7 @@ const useStyles = makeStyles(() => ({
     stepper: {
         backgroundColor: "transparent",
         padding: "24px 0",
-        marginBottom: 40
+        marginBottom: 32
     },
     stepLabel: {
         "& text": {

@@ -1,5 +1,6 @@
 export * from "./PrivateRoute";
 export * from "./Button";
+export * from "./Select";
 export * from "./Headers";
 export * from "./Footer";
 export * from "./Avatar";

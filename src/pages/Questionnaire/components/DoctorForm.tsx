@@ -7,7 +7,6 @@ import {
     FormLabel,
     FormHelperText,
     TextField,
-    Select,
     MenuItem,
     Typography,
     makeStyles,
@@ -17,7 +16,7 @@ import { Remove as RemoveIcon } from "@material-ui/icons";
 
 import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "./useFormStyles";
-import { Button, Loader, SubmissionError } from "components";
+import { Button, Select, Loader, SubmissionError } from "components";
 import { FormPhotoIcon, FormResumeIcon } from "icons";
 import { useStores } from "stores/useStore";
 import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
@@ -193,12 +192,7 @@ export const DoctorForm: React.FC = observer(() => {
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Пол
                 </FormLabel>
-                <Select
-                    variant="outlined"
-                    color="secondary"
-                    value={currentUser ? currentUser.sex : "male"}
-                    disabled
-                >
+                <Select value={currentUser ? currentUser.sex : "male"} disabled>
                     <MenuItem value="male">Мужской</MenuItem>
                     <MenuItem value="female">Женский</MenuItem>
                 </Select>
@@ -237,8 +231,6 @@ export const DoctorForm: React.FC = observer(() => {
                     categoriesList.map((_, index) => (
                         <div key={index} className={classes.categoriesRow}>
                             <Select
-                                variant="outlined"
-                                color="secondary"
                                 value={questionnaireSpecialties[index]}
                                 onChange={event =>
                                     handleSelectChange(
@@ -302,8 +294,6 @@ export const DoctorForm: React.FC = observer(() => {
                         helperText={questionnaireFormErrors.experienceNumber}
                     />
                     <Select
-                        variant="outlined"
-                        color="secondary"
                         value={questionnaireForm.experienceType}
                         onChange={event =>
                             setFormValue(
