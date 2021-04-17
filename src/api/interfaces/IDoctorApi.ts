@@ -1,5 +1,5 @@
 import { BaseResponse } from "./";
-import { IDoctor, IPagination } from "stores/interfaces/IDoctorStore";
+import { IDoctor, IPagination, Review } from "stores/interfaces/IDoctorStore";
 import { HomeDoctor } from "stores/interfaces/IHomeStore";
 
 export interface IGetDoctorsSuccessResponse extends BaseResponse {
@@ -25,4 +25,9 @@ export interface IGetDoctorSuccessResponse extends BaseResponse {
 export interface IGetMostExperienceDoctorSuccessResponse extends BaseResponse {
     error: 0;
     data: HomeDoctor[];
+}
+
+export interface IGetReviewsSuccessResponse extends BaseResponse {
+    error: 0;
+    data: Review[];
 }

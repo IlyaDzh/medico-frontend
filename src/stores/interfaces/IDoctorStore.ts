@@ -6,10 +6,12 @@ export interface IDoctorStore {
     pagination: IPagination | null;
     pending: boolean;
     pendingProfile: boolean;
+    pendingProfileReviews: boolean;
     fetchingDoctorsError: boolean;
     fetchingDoctorProfileError: boolean;
     getDoctors: (page: number) => void;
     getDoctorProfile: (id: number) => void;
+    fetchReviews: () => void;
     resetProfile: () => void;
 }
 
@@ -28,6 +30,7 @@ export interface IDoctor {
     education: string[];
     workplaces: string[];
     reviews: Review[];
+    countOfReviews: number;
 }
 
 export interface IPagination {
@@ -38,7 +41,7 @@ export interface IPagination {
 }
 
 export type Review = {
-    id: string;
+    id: number;
     name: string;
     surname: string;
     estimation: number;

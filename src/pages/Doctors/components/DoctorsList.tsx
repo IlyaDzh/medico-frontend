@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 
 import { DoctorItem } from "./DoctorItem";
-import { Loader, Button, ErrorAnimation } from "components";
+import { Loader, ErrorAnimation } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({

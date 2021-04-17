@@ -1,9 +1,11 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core";
 
 import { Comment } from "./Comment";
-// import { Button } from "components";
+import { Button } from "components";
 import { Review } from "stores/interfaces/IDoctorStore";
+import { useStores } from "stores/useStore";
 
 interface ICommentsList {
     reviews: Review[];
@@ -15,8 +17,14 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const CommentsList: React.FC<ICommentsList> = ({ reviews }) => {
+export const CommentsList: React.FC<ICommentsList> = observer(({ reviews }) => {
     const classes = useStyles();
+    const { doctorStore } = useStores();
+    const { currentDoctor, pendingProfileReviews, fetchReviews } = doctorStore;
+
+    const handleReviewsMoreClick = (): void => {
+        fetchReviews();
+    };
 
     return (
         <React.Fragment>
@@ -25,7 +33,16 @@ export const CommentsList: React.FC<ICommentsList> = ({ reviews }) => {
                     <Comment key={review.id} review={review} />
                 ))}
             </div>
-            {/* <Button variant="outlined">Показать ещё</Button> */}
+            {reviews.length < currentDoctor!.countOfReviews && (
+                <Button
+                    variant="outlined"
+                    onClick={handleReviewsMoreClick}
+                    isLoaded={pendingProfileReviews}
+                    disabled={pendingProfileReviews}
+                >
+                    Показать ещё
+                </Button>
+            )}
         </React.Fragment>
     );
-};
+});

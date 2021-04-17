@@ -4,14 +4,13 @@ import {
     TextField,
     FormControl,
     FormLabel,
-    makeStyles,
-    Theme
+    makeStyles
 } from "@material-ui/core";
 
 import { StepsContext } from "../AppointmentSteps";
 import { Button } from "components";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     symptomsForm: {},
     symptomsTitle: {
         marginBottom: 36

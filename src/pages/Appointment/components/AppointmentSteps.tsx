@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
-import { StepTime, StepSymptoms } from "./Steps";
+import { StepTime, StepSymptoms, StepPayment, StepResult } from "./Steps";
 import { StepsNavigation } from "./StepsNavigation";
 import { BackButton } from "./BackButton";
 
@@ -15,12 +15,34 @@ export const StepsContext = createContext<StepsContextProps>(
     {} as StepsContextProps
 );
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     step: {
         marginBottom: 120,
-        paddingTop: 20
+        paddingTop: 20,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 60
+        }
     }
 }));
+
+const steps = [
+    {
+        step: 0,
+        component: <StepTime />
+    },
+    {
+        step: 1,
+        component: <StepSymptoms />
+    },
+    {
+        step: 2,
+        component: <StepPayment />
+    },
+    {
+        step: 3,
+        component: <StepResult />
+    }
+];
 
 export const AppointmentSteps: React.FC = () => {
     const classes = useStyles();
@@ -37,16 +59,16 @@ export const AppointmentSteps: React.FC = () => {
     return (
         <StepsContext.Provider value={{ step, onNextStep, onPrevStep }}>
             <StepsNavigation />
-            {step !== 0 && <BackButton />}
+            {step !== 0 && step !== 3 && <BackButton />}
             <section className={classes.step}>
-                <div hidden={step !== 0}>
-                    <StepTime />
-                </div>
-                <div hidden={step !== 1}>
-                    <StepSymptoms />
-                </div>
-                <div hidden={step !== 2}>step 3</div>
-                <div hidden={step !== 3}>step 4</div>
+                {steps.map(
+                    item =>
+                        item.step === step && (
+                            <React.Fragment key={item.step}>
+                                {item.component}
+                            </React.Fragment>
+                        )
+                )}
             </section>
         </StepsContext.Provider>
     );

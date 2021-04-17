@@ -5,7 +5,8 @@ import {
     DoctorApi,
     IGetDoctorsErrorResponse,
     IGetDoctorsSuccessResponse,
-    IGetDoctorSuccessResponse
+    IGetDoctorSuccessResponse,
+    IGetReviewsSuccessResponse
 } from "api";
 import IStores from "./interfaces";
 import { IDoctorStore, IDoctor, IPagination } from "./interfaces/IDoctorStore";
@@ -20,6 +21,8 @@ export class DoctorStore implements IDoctorStore {
     pending: boolean = false;
 
     pendingProfile: boolean = false;
+
+    pendingProfileReviews: boolean = false;
 
     fetchingDoctorsError: boolean = false;
 
@@ -36,10 +39,12 @@ export class DoctorStore implements IDoctorStore {
             pagination: observable,
             pending: observable,
             pendingProfile: observable,
+            pendingProfileReviews: observable,
             fetchingDoctorsError: observable,
             fetchingDoctorProfileError: observable,
             getDoctors: action,
             getDoctorProfile: action,
+            fetchReviews: action,
             resetProfile: action
         });
     }
@@ -91,6 +96,31 @@ export class DoctorStore implements IDoctorStore {
             .finally(
                 action(() => {
                     this.pendingProfile = false;
+                })
+            );
+    };
+
+    fetchReviews = () => {
+        if (!this.currentDoctor) {
+            return;
+        }
+
+        this.pendingProfileReviews = true;
+
+        const lastReviewId = this.currentDoctor.reviews[
+            this.currentDoctor.reviews.length - 1
+        ].id;
+        const doctorId = this.currentDoctor.id;
+
+        DoctorApi.getReviews(lastReviewId, doctorId)
+            .then(
+                action(({ data }: AxiosResponse<IGetReviewsSuccessResponse>) => {
+                    this.currentDoctor!.reviews.push(...data.data);
+                })
+            )
+            .finally(
+                action(() => {
+                    this.pendingProfileReviews = false;
                 })
             );
     };
