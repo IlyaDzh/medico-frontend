@@ -282,6 +282,8 @@ export const SignUpForm: React.FC = observer(() => {
                             }}
                             cancelLabel="Отмена"
                             okLabel="Ок"
+                            disableFuture
+                            autoOk
                         />
                     </FormControl>
                     <FormControl

@@ -303,6 +303,21 @@ const theme = createMuiTheme(
                         height: 26
                     }
                 }
+            },
+            MuiPickersDay: {
+                daySelected: {
+                    color: "#fff"
+                }
+            },
+            MuiPickersToolbarButton: {
+                toolbarBtn: {
+                    "& .MuiPickersToolbarText-toolbarTxt": {
+                        color: "rgba(255, 255, 255, 0.75)"
+                    },
+                    "& .MuiPickersToolbarText-toolbarBtnSelected": {
+                        color: "#fff"
+                    }
+                }
             }
         }
     },

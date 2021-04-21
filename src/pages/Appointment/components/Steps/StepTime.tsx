@@ -69,6 +69,7 @@ export const StepTime: React.FC = () => {
                                 Дата приёма:
                             </FormLabel>
                             <KeyboardDatePicker
+                                variant="inline"
                                 inputVariant="outlined"
                                 color="secondary"
                                 placeholder="Не выбрана"
@@ -78,8 +79,12 @@ export const StepTime: React.FC = () => {
                                 KeyboardButtonProps={{
                                     "aria-label": "change date"
                                 }}
-                                cancelLabel="Отмена"
-                                okLabel="Ок"
+                                invalidDateMessage="Неверный формат даты"
+                                minDateMessage="Неверный формат даты"
+                                maxDateMessage="Неверный формат даты"
+                                disableToolbar
+                                disablePast
+                                autoOk
                             />
                         </FormControl>
                         <FormControl component="fieldset" fullWidth>
