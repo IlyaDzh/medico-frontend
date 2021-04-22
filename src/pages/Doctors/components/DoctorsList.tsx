@@ -29,10 +29,12 @@ export const DoctorsList: React.FC = observer(() => {
     const { doctors, pending, fetchingDoctorsError, getDoctors } = searchDoctorStore;
 
     useEffect(() => {
+        const slug = specialty === "all" || !specialty ? "" : specialty;
+
         if (page) {
-            getDoctors(Number(page), specialty || "all");
+            getDoctors(Number(page), slug);
         } else {
-            getDoctors(1, specialty || "all");
+            getDoctors(1, slug);
         }
     }, [specialty, page, getDoctors]);
 

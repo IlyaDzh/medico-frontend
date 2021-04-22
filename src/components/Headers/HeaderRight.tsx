@@ -22,9 +22,10 @@ interface IHeaderRight {
 
 export const HeaderRight: React.FC<IHeaderRight> = observer(
     ({ isAuthorized, isLight, classes }) => {
-        const { modalsStore, userStore } = useStores();
+        const { modalsStore, userStore, drawerStore } = useStores();
         const { setModalIsOpen } = modalsStore;
         const { currentUser, doLogout } = userStore;
+        const { setDrawerExpanded } = drawerStore;
         const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
         const patientPath = currentUser?.additionalData
@@ -60,7 +61,7 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
         return (
             <div className={classes.rightBar}>
                 {!isAuthorized ? (
-                    <>
+                    <Hidden smDown>
                         <Button
                             variant="text"
                             color={isLight ? "default" : "primary"}
@@ -70,105 +71,102 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                         >
                             Вход
                         </Button>
-                        <Hidden smDown>
-                            <Button
-                                variant="outlined"
-                                color={isLight ? "default" : "primary"}
-                                size="small"
-                                to="/sign-up"
-                                className={classes.conslutationBtn}
-                            >
-                                Регистрация
-                            </Button>
-                        </Hidden>
-                    </>
+                        <Button
+                            variant="outlined"
+                            color={isLight ? "default" : "primary"}
+                            size="small"
+                            to="/sign-up"
+                            className={classes.conslutationBtn}
+                        >
+                            Регистрация
+                        </Button>
+                    </Hidden>
                 ) : (
-                    <>
-                        <Hidden smDown>
-                            <div className={classes.iconButtons}>
-                                <IconButton aria-label="Открыть уведомления">
-                                    <AccountNotificationIcon isLight={isLight} />
-                                </IconButton>
-                                <IconButton aria-label="Открыть сообщения">
-                                    <AccountEnvelopeIcon isLight={isLight} />
-                                </IconButton>
-                            </div>
-                            <div>
-                                <Button
-                                    className={clsx(
-                                        classes.accountMenuBtn,
-                                        isLight && classes.accountMenuBtnLight
-                                    )}
-                                    variant="text"
-                                    color="default"
-                                    startIcon={
-                                        <Avatar
-                                            componentTag="span"
-                                            alt={`${currentUser?.name} avatar`}
-                                            src={undefined}
-                                        />
-                                    }
-                                    onClick={handleMenuClick}
-                                    aria-label="Аккаунт пользователя"
-                                    aria-controls="account-menu"
-                                    aria-haspopup="true"
-                                    disableTouchRipple
+                    <Hidden smDown>
+                        <div className={classes.iconButtons}>
+                            <IconButton aria-label="Открыть уведомления">
+                                <AccountNotificationIcon isLight={isLight} />
+                            </IconButton>
+                            <IconButton aria-label="Открыть сообщения">
+                                <AccountEnvelopeIcon isLight={isLight} />
+                            </IconButton>
+                        </div>
+                        <div>
+                            <Button
+                                className={clsx(
+                                    classes.accountMenuBtn,
+                                    isLight && classes.accountMenuBtnLight
+                                )}
+                                variant="text"
+                                color="default"
+                                startIcon={
+                                    <Avatar
+                                        componentTag="span"
+                                        alt={`${currentUser?.name} avatar`}
+                                        src={undefined}
+                                    />
+                                }
+                                onClick={handleMenuClick}
+                                aria-label="Аккаунт пользователя"
+                                aria-controls="account-menu"
+                                aria-haspopup="true"
+                                disableTouchRipple
+                            >
+                                {`${currentUser?.name} ${currentUser?.surname[0]}.`}
+                            </Button>
+                            <Menu
+                                id="account-menu"
+                                anchorEl={anchorEl}
+                                getContentAnchorEl={null}
+                                open={Boolean(anchorEl)}
+                                onClose={handleMenuClose}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center"
+                                }}
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "center"
+                                }}
+                            >
+                                <Link
+                                    to={accountRedirectPath}
+                                    className={classes.accountMenuItemLink}
                                 >
-                                    {`${currentUser?.name} ${currentUser?.surname[0]}.`}
-                                </Button>
-                                <Menu
-                                    id="account-menu"
-                                    anchorEl={anchorEl}
-                                    getContentAnchorEl={null}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleMenuClose}
-                                    anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "center"
-                                    }}
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "center"
-                                    }}
-                                >
-                                    <Link
-                                        to={accountRedirectPath}
-                                        className={classes.accountMenuItemLink}
-                                    >
-                                        <MenuItem
-                                            onClick={handleMenuClose}
-                                            className={classes.accountMenuItem}
-                                        >
-                                            <span
-                                                className={classes.accountMenuIcon}
-                                            >
-                                                <UserIcon color="#5a5f6f" />
-                                            </span>{" "}
-                                            Мой кабинет
-                                        </MenuItem>
-                                    </Link>
                                     <MenuItem
-                                        onClick={handleLogoutClick}
-                                        className={clsx(
-                                            classes.accountMenuItem,
-                                            classes.accountMenuItemExit
-                                        )}
+                                        onClick={handleMenuClose}
+                                        className={classes.accountMenuItem}
                                     >
                                         <span className={classes.accountMenuIcon}>
-                                            <ExitIcon />
+                                            <UserIcon color="#5a5f6f" />
                                         </span>{" "}
-                                        Выйти
+                                        Мой кабинет
                                     </MenuItem>
-                                </Menu>
-                            </div>
-                        </Hidden>
-                        <Hidden mdUp>
-                            <IconButton aria-label="Открыть меню">
-                                <MenuIcon isLight={isLight} isNew />
-                            </IconButton>
-                        </Hidden>
-                    </>
+                                </Link>
+                                <MenuItem
+                                    onClick={handleLogoutClick}
+                                    className={clsx(
+                                        classes.accountMenuItem,
+                                        classes.accountMenuItemExit
+                                    )}
+                                >
+                                    <span className={classes.accountMenuIcon}>
+                                        <ExitIcon />
+                                    </span>{" "}
+                                    Выйти
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                    </Hidden>
                 )}
+                <Hidden mdUp>
+                    <IconButton
+                        onClick={() => setDrawerExpanded(true)}
+                        aria-label="Открыть меню"
+                    >
+                        <MenuIcon isLight={isLight} />
+                    </IconButton>
+                </Hidden>
             </div>
         );
     }

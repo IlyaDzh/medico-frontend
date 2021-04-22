@@ -4,7 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) => ({
     paddingLine: {
         [theme.breakpoints.down("sm")]: {
-            paddingTop: 58
+            paddingTop: 60
         }
     }
 }));

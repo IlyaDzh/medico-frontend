@@ -8,6 +8,7 @@ import { ISpecialtiesStore } from "./ISpecialtiesStore";
 import { IDoctorStore } from "./IDoctorStore";
 import { ISearchDoctorStore } from "./ISearchDoctorStore";
 import { IHomeStore } from "./IHomeStore";
+import { IDrawerStore } from "./IDrawerStore";
 
 export default interface IStores {
     routerStore: IRouterStore;
@@ -20,4 +21,5 @@ export default interface IStores {
     doctorStore: IDoctorStore;
     searchDoctorStore: ISearchDoctorStore;
     homeStore: IHomeStore;
+    drawerStore: IDrawerStore;
 }

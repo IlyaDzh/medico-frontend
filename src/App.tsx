@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { CssBaseline } from "@material-ui/core";
 
 import {
-    UiKitPage,
     HomePage,
     DoctorsPage,
     DoctorPage,
@@ -17,6 +16,7 @@ import {
 import {
     Backdrop,
     ScrollHandler,
+    Drawer,
     DialogSignIn,
     DialogReset,
     DialogEmail,
@@ -42,9 +42,9 @@ export const App: React.FC = observer(() => {
         <React.Fragment>
             <CssBaseline />
             <ScrollHandler />
+            <Drawer />
 
             <Switch>
-                <Route exact path="/ui-kit" component={UiKitPage} />
                 <Route
                     exact
                     path={["/", "/home", "/sign-up-confirmation"]}

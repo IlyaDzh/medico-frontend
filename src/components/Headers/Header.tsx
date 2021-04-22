@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: 13,
         paddingBottom: 13,
         [theme.breakpoints.down("sm")]: {
-            paddingTop: 7,
-            paddingBottom: 7
+            paddingTop: 8,
+            paddingBottom: 8
         }
     },
     leftBar: {

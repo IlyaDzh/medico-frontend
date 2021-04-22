@@ -10,6 +10,7 @@ import { SpecialtiesStore } from "./SpecialtiesStore";
 import { DoctorStore } from "./DoctorStore";
 import { SearchDoctorStore } from "./SearchDoctorStore";
 import { HomeStore } from "./HomeStore";
+import { DrawerStore } from "./DrawerStore";
 
 import IStores from "./interfaces";
 import { IRouterStore } from "./interfaces/IRouterStore";
@@ -22,6 +23,7 @@ import { ISpecialtiesStore } from "./interfaces/ISpecialtiesStore";
 import { IDoctorStore } from "./interfaces/IDoctorStore";
 import { ISearchDoctorStore } from "./interfaces/ISearchDoctorStore";
 import { IHomeStore } from "./interfaces/IHomeStore";
+import { IDrawerStore } from "./interfaces/IDrawerStore";
 
 export class RootStore implements IStores {
     routerStore: IRouterStore;
@@ -34,6 +36,7 @@ export class RootStore implements IStores {
     doctorStore: IDoctorStore;
     searchDoctorStore: ISearchDoctorStore;
     homeStore: IHomeStore;
+    drawerStore: IDrawerStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -46,5 +49,6 @@ export class RootStore implements IStores {
         this.doctorStore = new DoctorStore();
         this.searchDoctorStore = new SearchDoctorStore(this);
         this.homeStore = new HomeStore();
+        this.drawerStore = new DrawerStore();
     }
 }
