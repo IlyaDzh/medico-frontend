@@ -1,7 +1,8 @@
 import React from "react";
 import { Hidden, makeStyles } from "@material-ui/core";
 
-import { ExtendedHeader, SearchInput } from "components";
+import { SearchInput } from "./";
+import { ExtendedHeader } from "components";
 
 const useStyles = makeStyles(() => ({
     headerSearchWrapper: {
@@ -19,7 +20,7 @@ export const DoctorsHeader: React.FC = () => {
             action={
                 <Hidden smDown>
                     <div className={classes.headerSearchWrapper}>
-                        <SearchInput placeholder="Поиск специалиста" fullWidth />
+                        <SearchInput />
                     </div>
                 </Hidden>
             }

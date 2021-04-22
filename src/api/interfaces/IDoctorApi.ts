@@ -1,5 +1,6 @@
 import { BaseResponse } from "./";
-import { IDoctor, IPagination, Review } from "stores/interfaces/IDoctorStore";
+import { IDoctor, Review } from "stores/interfaces/IDoctorStore";
+import { IPagination } from "stores/interfaces/ISearchDoctorStore";
 import { HomeDoctor } from "stores/interfaces/IHomeStore";
 
 export interface IGetDoctorsSuccessResponse extends BaseResponse {

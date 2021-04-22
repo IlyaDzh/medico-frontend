@@ -1,9 +1,9 @@
 import React from "react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-import { SearchInput } from "components";
+import { SearchInput } from "./";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     doctorsSearch: {
         padding: "20px 0 0"
     }
@@ -14,7 +14,7 @@ export const DoctorsSearch: React.FC = () => {
 
     return (
         <div className={classes.doctorsSearch}>
-            <SearchInput placeholder="Поиск специалиста" fullWidth />
+            <SearchInput />
         </div>
     );
 };

@@ -1,5 +1,4 @@
 import { axiosInstance } from "./axios-instance";
-// import {} from "./interfaces/IDoctorApi";
 
 export class DoctorApi {
     static getDoctor(id: number) {
@@ -9,6 +8,12 @@ export class DoctorApi {
     static getDoctors(page: number, count: number = 3) {
         return axiosInstance.get(
             `/api/v1/doctor/paginate?page=${page}&count=${count}`
+        );
+    }
+
+    static searchDoctors(fullName: string) {
+        return axiosInstance.get(
+            `/api/v1/doctor/paginate?page=1&count=4&fio=${fullName}`
         );
     }
 

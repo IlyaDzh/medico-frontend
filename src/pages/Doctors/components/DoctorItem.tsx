@@ -4,6 +4,7 @@ import { Rating } from "@material-ui/lab";
 
 import { Button } from "components";
 import { ArrowRightIcon } from "icons";
+import { formatSpecialties } from "utils/formatSpecialties";
 import { IDoctor } from "stores/interfaces/IDoctorStore";
 
 interface IDoctorItem {
@@ -79,13 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
     const classes = useStyles();
 
-    const specialty =
-        doctor &&
-        doctor.specialties
-            .map((item, index) =>
-                index < doctor.specialties.length - 1 ? `${item.name}, ` : item.name
-            )
-            .join("");
+    const specialty = doctor && formatSpecialties(doctor.specialties);
 
     return (
         <section className={classes.doctor}>

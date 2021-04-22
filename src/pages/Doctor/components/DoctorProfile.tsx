@@ -13,6 +13,7 @@ import {
 } from "components";
 import { ArrowRightIcon } from "icons";
 import { useStores } from "stores/useStore";
+import { formatSpecialties } from "utils/formatSpecialties";
 
 const useStyles = makeStyles((theme: Theme) => ({
     profile: {
@@ -124,15 +125,7 @@ export const DoctorProfile: React.FC = observer(() => {
         resetProfile
     } = doctorStore;
 
-    const specialty =
-        currentDoctor &&
-        currentDoctor.specialties
-            .map((item, index) =>
-                index < currentDoctor.specialties.length - 1
-                    ? `${item.name}, `
-                    : item.name
-            )
-            .join("");
+    const specialty = currentDoctor && formatSpecialties(currentDoctor.specialties);
 
     useEffect(() => {
         if (currentDoctor && currentDoctor.id === Number(id)) {
@@ -220,7 +213,11 @@ export const DoctorProfile: React.FC = observer(() => {
                                 {currentDoctor.middleName}
                             </Typography>
                             <div>
-                                <Rating value={currentDoctor.rating} size="small" readOnly />
+                                <Rating
+                                    value={currentDoctor.rating}
+                                    size="small"
+                                    readOnly
+                                />
                             </div>
                             <Typography
                                 className={classes.profileAbout}
@@ -243,7 +240,11 @@ export const DoctorProfile: React.FC = observer(() => {
                                 {currentDoctor.costOfConsultation} руб.
                             </Typography>
                             <Button
-                                to={isAuthorized ? "/appointment" : undefined}
+                                to={
+                                    isAuthorized
+                                        ? `/appointment/${currentDoctor.id}`
+                                        : undefined
+                                }
                                 variant="contained"
                                 size="large"
                                 icon={<ArrowRightIcon color="#fff" />}

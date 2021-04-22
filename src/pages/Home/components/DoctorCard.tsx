@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Paper, Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { formatSpecialties } from "utils/formatSpecialties";
 import { HomeDoctor } from "stores/interfaces/IHomeStore";
 
 interface IDoctorCard {
@@ -49,11 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorCard: React.FC<IDoctorCard> = ({ doctor }) => {
     const classes = useStyles();
 
-    const specialty = doctor.specialties
-        .map((item, index) =>
-            index < doctor.specialties.length - 1 ? `${item.name}, ` : item.name
-        )
-        .join("");
+    const specialty = formatSpecialties(doctor.specialties);
 
     return (
         <Paper component="article" className={classes.card} variant="outlined">

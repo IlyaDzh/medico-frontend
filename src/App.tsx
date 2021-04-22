@@ -64,7 +64,7 @@ export const App: React.FC = observer(() => {
                 />
                 <PrivateRoute
                     exact
-                    path="/appointment"
+                    path="/appointment/:id"
                     component={AppointmentPage}
                     isAuthorized={isAuthorized}
                 />

@@ -24,8 +24,8 @@ export const DoctorsPagination: React.FC = observer(() => {
     const classes = useStyles();
     const { page } = useParams<{ page: string }>();
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
-    const { doctorStore } = useStores();
-    const { pagination } = doctorStore;
+    const { searchDoctorStore } = useStores();
+    const { pagination } = searchDoctorStore;
 
     if (!pagination) {
         return null;

@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const DoctorsList: React.FC = observer(() => {
     const classes = useStyles();
     const { page } = useParams<{ page: string }>();
-    const { doctorStore } = useStores();
-    const { doctors, pending, fetchingDoctorsError, getDoctors } = doctorStore;
+    const { searchDoctorStore } = useStores();
+    const { doctors, pending, fetchingDoctorsError, getDoctors } = searchDoctorStore;
 
     useEffect(() => {
         if (page) {
