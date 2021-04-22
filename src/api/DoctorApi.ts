@@ -5,9 +5,9 @@ export class DoctorApi {
         return axiosInstance.get(`/api/v1/doctor/info?id=${id}`);
     }
 
-    static getDoctors(page: number, count: number = 3) {
+    static getDoctors(page: number, count: number = 3, specialty?: string) {
         return axiosInstance.get(
-            `/api/v1/doctor/paginate?page=${page}&count=${count}`
+            `/api/v1/doctor/paginate?page=${page}&count=${count}&specialty=${specialty}`
         );
     }
 

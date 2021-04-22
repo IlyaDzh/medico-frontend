@@ -1,12 +1,8 @@
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosResponse } from "axios";
 import { makeObservable, reaction, observable, action } from "mobx";
 import { debounce } from "@material-ui/core";
 
-import {
-    DoctorApi,
-    IGetDoctorsErrorResponse,
-    IGetDoctorsSuccessResponse
-} from "api";
+import { DoctorApi, IGetDoctorsSuccessResponse } from "api";
 import IStores from "./interfaces";
 import { ISearchDoctorStore, IPagination } from "./interfaces/ISearchDoctorStore";
 import { IDoctor } from "./interfaces/IDoctorStore";
@@ -52,11 +48,11 @@ export class SearchDoctorStore implements ISearchDoctorStore {
         );
     }
 
-    getDoctors = (page: number) => {
+    getDoctors = (page: number, specialty: string) => {
         this.pending = true;
         this.fetchingDoctorsError = false;
 
-        DoctorApi.getDoctors(page)
+        DoctorApi.getDoctors(page, 3, specialty)
             .then(
                 action(({ data }: AxiosResponse<IGetDoctorsSuccessResponse>) => {
                     this.doctors = data.data.items;
@@ -64,14 +60,8 @@ export class SearchDoctorStore implements ISearchDoctorStore {
                 })
             )
             .catch(
-                action(({ response }: AxiosError<IGetDoctorsErrorResponse>) => {
-                    if (response?.status === 404) {
-                        this.rootStore.routerStore.push(
-                            `/doctors/${response.data.data.meta.pageCount}`
-                        );
-                    } else {
-                        this.fetchingDoctorsError = true;
-                    }
+                action(() => {
+                    this.fetchingDoctorsError = true;
                 })
             )
             .finally(

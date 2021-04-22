@@ -24,17 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorsList: React.FC = observer(() => {
     const classes = useStyles();
-    const { page } = useParams<{ page: string }>();
+    const { specialty, page } = useParams<{ specialty: string; page: string }>();
     const { searchDoctorStore } = useStores();
     const { doctors, pending, fetchingDoctorsError, getDoctors } = searchDoctorStore;
 
     useEffect(() => {
         if (page) {
-            getDoctors(Number(page));
+            getDoctors(Number(page), specialty || "all");
         } else {
-            getDoctors(1);
+            getDoctors(1, specialty || "all");
         }
-    }, [page, getDoctors]);
+    }, [specialty, page, getDoctors]);
 
     if (fetchingDoctorsError) {
         return (

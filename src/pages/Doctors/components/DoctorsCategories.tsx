@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
@@ -32,7 +33,9 @@ export const DoctorsCategories: React.FC = observer(() => {
     const classes = useStyles();
     const { specialtiesStore } = useStores();
     const { specialties, getSpecialties } = specialtiesStore;
-    const [currentCategory, setCurrentCategory] = useState<string>("all");
+    const { specialty } = useParams<{ specialty: string }>();
+
+    const currentCategory = specialty || "all";
 
     useEffect(() => {
         if (!specialties) {
@@ -47,16 +50,16 @@ export const DoctorsCategories: React.FC = observer(() => {
                     <li className={classes.category}>
                         <CategoryChip
                             label="Все"
+                            slug="all"
                             isActive={currentCategory === "all"}
-                            onClick={() => setCurrentCategory("all")}
                         />
                     </li>
                     {specialties.map(specialty => (
                         <li key={specialty.id} className={classes.category}>
                             <CategoryChip
                                 label={specialty.name}
+                                slug={specialty.slug}
                                 isActive={specialty.slug === currentCategory}
-                                onClick={() => setCurrentCategory(specialty.slug)}
                             />
                         </li>
                     ))}

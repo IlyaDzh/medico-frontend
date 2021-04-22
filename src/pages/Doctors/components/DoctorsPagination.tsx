@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorsPagination: React.FC = observer(() => {
     const classes = useStyles();
-    const { page } = useParams<{ page: string }>();
+    const { specialty, page } = useParams<{ specialty: string; page: string }>();
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
     const { searchDoctorStore } = useStores();
     const { pagination } = searchDoctorStore;
@@ -41,7 +41,7 @@ export const DoctorsPagination: React.FC = observer(() => {
                     <PaginationItem
                         component={Link}
                         classes={{ root: classes.paginationItem }}
-                        to={`/doctors/${item.page}`}
+                        to={`/doctors/${specialty || "all"}/${item.page}`}
                         {...item}
                     />
                 )}

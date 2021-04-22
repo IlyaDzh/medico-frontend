@@ -8,7 +8,7 @@ export interface ISearchDoctorStore {
     pending: boolean;
     pendingSearchDoctors: boolean;
     fetchingDoctorsError: boolean;
-    getDoctors: (page: number) => void;
+    getDoctors: (page: number, specialty: string) => void;
     searchDoctors: (searchValue: string) => void;
     setSearchText: (searchText: string) => void;
 }
