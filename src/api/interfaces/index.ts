@@ -4,6 +4,7 @@ export * from "./IUserApi";
 export * from "./IQuestionnaireApi";
 export * from "./ISpecialtiesApi";
 export * from "./IDoctorApi";
+export * from "./IAppointmentApi";
 
 export interface BaseResponse {
     data?: any;
