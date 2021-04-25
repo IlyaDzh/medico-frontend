@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { action, makeAutoObservable } from "mobx";
 
-import { UserApi, IGetUserSuccessResponse } from "api";
+import { UserApi, IGetUserSuccessResponse, ISignInSuccessResponse } from "api";
 import { IUserStore, IUser } from "./interfaces/IUserStore";
 
 export class UserStore implements IUserStore {
@@ -17,6 +17,12 @@ export class UserStore implements IUserStore {
 
     fetchUser = () => {
         this.pending = true;
+
+        UserApi.refreshToken().then(
+            action(({ data }: AxiosResponse<ISignInSuccessResponse>) => {
+                localStorage.setItem("accessToken", data.data.accessToken);
+            })
+        );
 
         UserApi.getUser()
             .then(

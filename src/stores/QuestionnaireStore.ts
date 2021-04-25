@@ -5,7 +5,9 @@ import {
     QuestionnaireApi,
     IPatientQuestionnairePostData,
     IQuestionnaireSuccessResponse,
-    IQuestionnaireErrorResponse
+    IQuestionnaireErrorResponse,
+    UserApi,
+    ISignInSuccessResponse
 } from "api";
 import {
     IQuestionnaireStore,
@@ -189,11 +191,28 @@ export class QuestionnaireStore implements IQuestionnaireStore {
 
         QuestionnaireApi.sendPatient(postData)
             .then(
-                action(({ data }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
-                    console.log(data);
-                    this.rootStore.userStore.currentUser!.additionalData = data.data;
-                    this.resetForm();
-                })
+                action(
+                    async ({
+                        data
+                    }: AxiosResponse<IQuestionnaireSuccessResponse>) => {
+                        await UserApi.refreshToken().then(
+                            action(
+                                ({
+                                    data
+                                }: AxiosResponse<ISignInSuccessResponse>) => {
+                                    localStorage.setItem(
+                                        "accessToken",
+                                        data.data.accessToken
+                                    );
+                                }
+                            )
+                        );
+
+                        this.rootStore.userStore.currentUser!.additionalData =
+                            data.data;
+                        this.resetForm();
+                    }
+                )
             )
             .catch(
                 action((error: AxiosError<IQuestionnaireErrorResponse>) => {
