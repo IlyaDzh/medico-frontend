@@ -27,7 +27,7 @@ export const DoctorsPagination: React.FC = observer(() => {
     const { searchDoctorStore } = useStores();
     const { pagination } = searchDoctorStore;
 
-    if (!pagination) {
+    if (!pagination || pagination.pageCount === 1) {
         return null;
     }
 

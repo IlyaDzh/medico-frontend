@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { observer } from "mobx-react";
 import {
     Typography,
     TextField,
@@ -9,6 +10,7 @@ import {
 
 import { StepsContext } from "../AppointmentSteps";
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles(() => ({
     symptomsForm: {},
@@ -23,9 +25,11 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const StepSymptoms: React.FC = () => {
+export const StepSymptoms: React.FC = observer(() => {
     const classes = useStyles();
     const { onNextStep } = useContext(StepsContext);
+    const { appointmentStore } = useStores();
+    const { appointmentForm, setFormValue } = appointmentStore;
 
     return (
         <form className={classes.symptomsForm}>
@@ -41,6 +45,8 @@ export const StepSymptoms: React.FC = () => {
                     variant="outlined"
                     color="secondary"
                     placeholder="Дополнительная информация"
+                    value={appointmentForm.symptoms}
+                    onChange={event => setFormValue("symptoms", event.target.value)}
                     rows={4}
                     multiline
                     fullWidth
@@ -51,4 +57,4 @@ export const StepSymptoms: React.FC = () => {
             </Button>
         </form>
     );
-};
+});

@@ -1,7 +1,9 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     resultWrapper: {
@@ -43,8 +45,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const StepResult: React.FC = () => {
+export const StepResult: React.FC = observer(() => {
     const classes = useStyles();
+    const { appointmentStore } = useStores();
+    const { chosenDoctor, appointmentForm } = appointmentStore;
 
     return (
         <div className={classes.resultWrapper}>
@@ -55,7 +59,10 @@ export const StepResult: React.FC = () => {
                 <Typography variant="h6" color="textSecondary">
                     Специалист:
                 </Typography>
-                <Typography variant="body1">Имя Отчество Фамилия</Typography>
+                <Typography variant="body1">
+                    {chosenDoctor &&
+                        `${chosenDoctor.surname} ${chosenDoctor.name} ${chosenDoctor.middleName}`}
+                </Typography>
             </div>
             <div className={classes.resultInfo}>
                 <Typography variant="h6" color="textSecondary">
@@ -104,7 +111,9 @@ export const StepResult: React.FC = () => {
                             fill="#5a5f6f"
                         />
                     </svg>
-                    <Typography variant="body1">Сообщения в чате</Typography>
+                    <Typography variant="body1">
+                        {appointmentForm.communicationMethod}
+                    </Typography>
                 </div>
             </div>
             <div className={classes.resultButtons}>
@@ -121,4 +130,4 @@ export const StepResult: React.FC = () => {
             </div>
         </div>
     );
-};
+});

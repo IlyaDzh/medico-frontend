@@ -1,10 +1,14 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { makeAutoObservable, action } from "mobx";
+import { makeAutoObservable, action, autorun } from "mobx";
 
-import { AppointmentApi, IGetDoctorSuccessResponse } from "api";
+import { AppointmentApi } from "api";
 import {
+    AvailableTime,
+    CommunicationMethod,
     IAppointmentPostData,
-    ICreateAppointmentErrorResponse
+    ICreateAppointmentErrorResponse,
+    IGetFreeDoctorTimeSuccessResponse,
+    IGetMetaInfoSuccessResponse
 } from "api/interfaces";
 import {
     IAppointmentStore,
@@ -15,13 +19,18 @@ import { IDoctor } from "./interfaces/IDoctorStore";
 
 const INITIAL_APPOINTMENT_FORM: IAppointmentForm = {
     date: new Date(),
-    time: "",
-    communicationMethod: 1,
+    time: undefined,
+    communicationMethod: undefined,
+    doctorSpecialty: undefined,
     symptoms: ""
 };
 
 export class AppointmentStore implements IAppointmentStore {
     chosenDoctor: IDoctor | null = null;
+
+    communicationMethods: CommunicationMethod[] | null = null;
+
+    availableTime: AvailableTime[] | null = null;
 
     pendingMetaInfo: boolean = false;
 
@@ -35,6 +44,10 @@ export class AppointmentStore implements IAppointmentStore {
 
     constructor() {
         makeAutoObservable(this);
+
+        autorun(() => {
+            this.getFreeDoctorTime(new Date());
+        });
     }
 
     getMetaInfo = (id: number) => {
@@ -43,8 +56,18 @@ export class AppointmentStore implements IAppointmentStore {
 
         AppointmentApi.getMetaInfo(id)
             .then(
-                action(({ data }: AxiosResponse<IGetDoctorSuccessResponse>) => {
-                    this.chosenDoctor = data.data;
+                action(({ data }: AxiosResponse<IGetMetaInfoSuccessResponse>) => {
+                    this.chosenDoctor = data.data.doctor;
+                    this.communicationMethods = data.data.communicationMethods;
+                    this.setFormValue(
+                        "communicationMethod",
+                        data.data.communicationMethods[0].id
+                    );
+                    this.setFormValue(
+                        "doctorSpecialty",
+                        data.data.doctor.specialties[0].id
+                    );
+                    this.setFormValue("time", "9");
                 })
             )
             .catch(
@@ -59,6 +82,30 @@ export class AppointmentStore implements IAppointmentStore {
             );
     };
 
+    getFreeDoctorTime = (date: Date) => {
+        if (!this.chosenDoctor) {
+            return;
+        }
+
+        const correctDate = new Date(date);
+        correctDate.setHours(date.getHours() + 3);
+
+        AppointmentApi.getFreeDoctorTime(
+            this.chosenDoctor.id,
+            correctDate.toISOString()
+        ).then(
+            action(({ data }: AxiosResponse<IGetFreeDoctorTimeSuccessResponse>) => {
+                this.availableTime = data.data;
+
+                const availableFirstTime = data.data.find(time => !time.isClosed);
+                this.setFormValue(
+                    "time",
+                    availableFirstTime ? availableFirstTime.time : ""
+                );
+            })
+        );
+    };
+
     createAppointment = () => {
         this.pendingAppointment = true;
         this.submissionError = undefined;
@@ -68,7 +115,8 @@ export class AppointmentStore implements IAppointmentStore {
             receptionDate: new Date(),
             // date: this.appointmentForm.date,
             // time: this.appointmentForm.time,
-            communicationMethodId: this.appointmentForm.communicationMethod,
+            communicationMethodId: this.appointmentForm.communicationMethod!,
+            doctorSpecialtyId: this.appointmentForm.doctorSpecialty!,
             symptoms: this.appointmentForm.symptoms
         };
 
@@ -95,6 +143,7 @@ export class AppointmentStore implements IAppointmentStore {
 
     resetAppointment = () => {
         this.chosenDoctor = null;
+        this.communicationMethods = null;
         this.appointmentForm = INITIAL_APPOINTMENT_FORM;
     };
 }

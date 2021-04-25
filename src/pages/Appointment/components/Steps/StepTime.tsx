@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { observer } from "mobx-react";
 import {
     FormControl,
     FormLabel,
@@ -10,7 +11,8 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { StepsContext } from "../AppointmentSteps";
 import { AppointmentDoctorCard } from "../AppointmentDoctorCard";
-import { Button, Select } from "components";
+import { Button, Select, Loader } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     stepContent: {
@@ -32,10 +34,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     formRow: {
         display: "flex",
-        marginBottom: 20,
         "& > fieldset:first-child": {
             marginRight: 20
+        },
+        [theme.breakpoints.down(1200)]: {
+            display: "block"
+        },
+        [theme.breakpoints.down("sm")]: {
+            display: "flex"
+        },
+        [theme.breakpoints.down("xs")]: {
+            display: "block"
         }
+    },
+    formControl: {
+        marginBottom: 20
     },
     groupLabel: {
         color: theme.palette.text.secondary,
@@ -45,80 +58,172 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const StepTime: React.FC = () => {
+export const StepTime: React.FC = observer(() => {
     const classes = useStyles();
     const { onNextStep } = useContext(StepsContext);
+    const { appointmentStore } = useStores();
+    const {
+        appointmentForm,
+        chosenDoctor,
+        availableTime,
+        communicationMethods,
+        pendingMetaInfo,
+        setFormValue,
+        getFreeDoctorTime
+    } = appointmentStore;
 
-    const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
-
-    const handleDateChange = (date: Date | null) => {
-        setSelectedDate(date);
+    const handleDateChange = (date: any): void => {
+        setFormValue("date", date);
+        getFreeDoctorTime(date);
     };
 
     return (
         <div className={classes.stepContent}>
-            <AppointmentDoctorCard />
-            <form className={classes.timeForm}>
-                <div className={classes.timeFormFields}>
-                    <div className={classes.formRow}>
-                        <FormControl component="fieldset" fullWidth>
-                            <FormLabel
-                                className={classes.groupLabel}
-                                component="legend"
-                            >
-                                Дата приёма:
-                            </FormLabel>
-                            <KeyboardDatePicker
-                                variant="inline"
-                                inputVariant="outlined"
-                                color="secondary"
-                                placeholder="Не выбрана"
-                                format="dd/MM/yyyy"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    "aria-label": "change date"
-                                }}
-                                invalidDateMessage="Неверный формат даты"
-                                minDateMessage="Неверный формат даты"
-                                maxDateMessage="Неверный формат даты"
-                                disableToolbar
-                                disablePast
-                                autoOk
-                            />
-                        </FormControl>
-                        <FormControl component="fieldset" fullWidth>
-                            <FormLabel
-                                className={classes.groupLabel}
-                                component="legend"
-                            >
-                                Время приёма:
-                            </FormLabel>
-                            <Select defaultValue="9">
-                                <MenuItem value="9">9:00</MenuItem>
-                                <MenuItem value="10">10:00</MenuItem>
-                                <MenuItem value="11">11:00</MenuItem>
-                                <MenuItem value="12">12:00</MenuItem>
-                                <MenuItem value="13">13:00</MenuItem>
-                                <MenuItem value="14">14:00</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-                    <FormControl component="fieldset" fullWidth>
-                        <FormLabel className={classes.groupLabel} component="legend">
-                            Способ связи:
-                        </FormLabel>
-                        <Select defaultValue="messages">
-                            <MenuItem value="messages">Сообщения в чате</MenuItem>
-                            <MenuItem value="audio">Аудиозвонок</MenuItem>
-                            <MenuItem value="video">Видеозвонок</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-                <Button variant="contained" onClick={onNextStep}>
-                    Выбрать и продолжить
-                </Button>
-            </form>
+            {pendingMetaInfo ? (
+                <Loader level={2.5} isCenter />
+            ) : (
+                <React.Fragment>
+                    <AppointmentDoctorCard />
+                    <form className={classes.timeForm}>
+                        <div className={classes.timeFormFields}>
+                            <div className={classes.formRow}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    component="fieldset"
+                                    fullWidth
+                                >
+                                    <FormLabel
+                                        className={classes.groupLabel}
+                                        component="legend"
+                                    >
+                                        Дата приёма:
+                                    </FormLabel>
+                                    <KeyboardDatePicker
+                                        variant="inline"
+                                        inputVariant="outlined"
+                                        color="secondary"
+                                        placeholder="Не выбрана"
+                                        format="dd/MM/yyyy"
+                                        value={appointmentForm.date}
+                                        onChange={handleDateChange}
+                                        KeyboardButtonProps={{
+                                            "aria-label": "change date"
+                                        }}
+                                        invalidDateMessage="Неверный формат даты"
+                                        minDateMessage="Неверный формат даты"
+                                        maxDateMessage="Неверный формат даты"
+                                        disableToolbar
+                                        disablePast
+                                        autoOk
+                                    />
+                                </FormControl>
+                                <FormControl
+                                    className={classes.formControl}
+                                    component="fieldset"
+                                    fullWidth
+                                >
+                                    <FormLabel
+                                        className={classes.groupLabel}
+                                        component="legend"
+                                    >
+                                        Время приёма:
+                                    </FormLabel>
+                                    <Select
+                                        value={appointmentForm.time || ""}
+                                        onChange={event =>
+                                            setFormValue(
+                                                "time",
+                                                event.target.value as string
+                                            )
+                                        }
+                                        disabled={
+                                            !availableTime ||
+                                            availableTime.length === 0
+                                        }
+                                    >
+                                        {availableTime?.map(time => (
+                                            <MenuItem
+                                                key={time.time}
+                                                value={time.time}
+                                                disabled={time.isClosed}
+                                            >
+                                                {time.time}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <div className={classes.formRow}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    component="fieldset"
+                                    fullWidth
+                                >
+                                    <FormLabel
+                                        className={classes.groupLabel}
+                                        component="legend"
+                                    >
+                                        Способ связи:
+                                    </FormLabel>
+                                    <Select
+                                        value={
+                                            appointmentForm.communicationMethod || ""
+                                        }
+                                        onChange={(event, child) => {
+                                            setFormValue(
+                                                "communicationMethod",
+                                                event.target.value as number
+                                            );
+                                        }}
+                                    >
+                                        {communicationMethods?.map(method => (
+                                            <MenuItem
+                                                key={method.id}
+                                                value={method.id}
+                                            >
+                                                {method.method}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl
+                                    className={classes.formControl}
+                                    component="fieldset"
+                                    fullWidth
+                                >
+                                    <FormLabel
+                                        className={classes.groupLabel}
+                                        component="legend"
+                                    >
+                                        Специальность:
+                                    </FormLabel>
+                                    <Select
+                                        value={appointmentForm.doctorSpecialty || ""}
+                                        onChange={event =>
+                                            setFormValue(
+                                                "doctorSpecialty",
+                                                event.target.value as number
+                                            )
+                                        }
+                                    >
+                                        {chosenDoctor?.specialties.map(specialty => (
+                                            <MenuItem
+                                                key={specialty.id}
+                                                value={specialty.id}
+                                            >
+                                                {specialty.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                        </div>
+                        <Button variant="contained" onClick={onNextStep}>
+                            Выбрать и продолжить
+                        </Button>
+                    </form>
+                </React.Fragment>
+            )}
         </div>
     );
-};
+});

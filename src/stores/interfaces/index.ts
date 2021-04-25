@@ -9,6 +9,7 @@ import { IDoctorStore } from "./IDoctorStore";
 import { ISearchDoctorStore } from "./ISearchDoctorStore";
 import { IHomeStore } from "./IHomeStore";
 import { IDrawerStore } from "./IDrawerStore";
+import { IAppointmentStore } from "./IAppointmentStore";
 
 export default interface IStores {
     routerStore: IRouterStore;
@@ -22,4 +23,5 @@ export default interface IStores {
     searchDoctorStore: ISearchDoctorStore;
     homeStore: IHomeStore;
     drawerStore: IDrawerStore;
+    appointmentStore: IAppointmentStore;
 }
