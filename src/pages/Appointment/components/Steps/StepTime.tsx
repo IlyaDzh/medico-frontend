@@ -169,17 +169,17 @@ export const StepTime: React.FC = observer(() => {
                                         value={
                                             appointmentForm.communicationMethod || ""
                                         }
-                                        onChange={(event, child) => {
+                                        onChange={event => {
                                             setFormValue(
                                                 "communicationMethod",
-                                                event.target.value as number
+                                                event.target.value as string
                                             );
                                         }}
                                     >
                                         {communicationMethods?.map(method => (
                                             <MenuItem
                                                 key={method.id}
-                                                value={method.id}
+                                                value={JSON.stringify(method)}
                                             >
                                                 {method.method}
                                             </MenuItem>

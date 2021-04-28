@@ -8,11 +8,13 @@ export interface IAppointmentStore {
     pendingMetaInfo: boolean;
     fetchingMetaInfoError: boolean;
     appointmentForm: IAppointmentForm;
+    appointmentFormErrors: IAppointmentFormErrors;
     pendingAppointment: boolean;
     submissionError: string | undefined;
     getMetaInfo: (id: number) => void;
     getFreeDoctorTime: (date: Date) => void;
     createAppointment: () => void;
+    validateForm: () => boolean;
     setFormValue: <K extends KeysOfAppointmentForm>(
         key: K,
         value: IAppointmentForm[K]
@@ -23,9 +25,13 @@ export interface IAppointmentStore {
 export interface IAppointmentForm {
     date: Date;
     time: string | undefined;
-    communicationMethod: number | undefined;
+    communicationMethod: string | undefined;
     doctorSpecialty: number | undefined;
     symptoms: string;
+}
+
+export interface IAppointmentFormErrors {
+    symptoms: undefined | string;
 }
 
 export type KeysOfAppointmentForm = keyof IAppointmentForm;

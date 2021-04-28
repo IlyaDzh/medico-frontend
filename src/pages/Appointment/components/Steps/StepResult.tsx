@@ -4,6 +4,7 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Button } from "components";
 import { useStores } from "stores/useStore";
+import { formatDate } from "utils/formatDate";
 
 const useStyles = makeStyles((theme: Theme) => ({
     resultWrapper: {
@@ -81,7 +82,9 @@ export const StepResult: React.FC = observer(() => {
                             fill="#5a5f6f"
                         />
                     </svg>
-                    <Typography variant="body1">12 августа, Среда</Typography>
+                    <Typography variant="body1">
+                        {formatDate(appointmentForm.date.toString(), "d MMMM, EEEE")}
+                    </Typography>
                 </div>
                 <div className={classes.resultInfoItem}>
                     <svg
@@ -96,7 +99,7 @@ export const StepResult: React.FC = observer(() => {
                             fill="#5a5f6f"
                         />
                     </svg>
-                    <Typography variant="body1">9:00</Typography>
+                    <Typography variant="body1">{appointmentForm.time}</Typography>
                 </div>
                 <div className={classes.resultInfoItem}>
                     <svg
@@ -112,7 +115,9 @@ export const StepResult: React.FC = observer(() => {
                         />
                     </svg>
                     <Typography variant="body1">
-                        {appointmentForm.communicationMethod}
+                        {appointmentForm.communicationMethod
+                            ? JSON.parse(appointmentForm.communicationMethod).method
+                            : ""}
                     </Typography>
                 </div>
             </div>

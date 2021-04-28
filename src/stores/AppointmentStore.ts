@@ -13,9 +13,12 @@ import {
 import {
     IAppointmentStore,
     IAppointmentForm,
+    IAppointmentFormErrors,
     KeysOfAppointmentForm
 } from "./interfaces/IAppointmentStore";
 import { IDoctor } from "./interfaces/IDoctorStore";
+import { formatDate } from "utils/formatDate";
+import { isLength } from "utils/validation";
 
 const INITIAL_APPOINTMENT_FORM: IAppointmentForm = {
     date: new Date(),
@@ -23,6 +26,10 @@ const INITIAL_APPOINTMENT_FORM: IAppointmentForm = {
     communicationMethod: undefined,
     doctorSpecialty: undefined,
     symptoms: ""
+};
+
+const INITIAL_APPOINTMENT_FORM_ERRORS: IAppointmentFormErrors = {
+    symptoms: undefined
 };
 
 export class AppointmentStore implements IAppointmentStore {
@@ -37,6 +44,8 @@ export class AppointmentStore implements IAppointmentStore {
     fetchingMetaInfoError: boolean = false;
 
     appointmentForm = INITIAL_APPOINTMENT_FORM;
+
+    appointmentFormErrors = INITIAL_APPOINTMENT_FORM_ERRORS;
 
     pendingAppointment: boolean = false;
 
@@ -61,7 +70,7 @@ export class AppointmentStore implements IAppointmentStore {
                     this.communicationMethods = data.data.communicationMethods;
                     this.setFormValue(
                         "communicationMethod",
-                        data.data.communicationMethods[0].id
+                        JSON.stringify(data.data.communicationMethods[0])
                     );
                     this.setFormValue(
                         "doctorSpecialty",
@@ -110,12 +119,22 @@ export class AppointmentStore implements IAppointmentStore {
         this.pendingAppointment = true;
         this.submissionError = undefined;
 
+        const year = this.appointmentForm.date.getFullYear();
+        const month = this.appointmentForm.date.getMonth() + 1;
+        const day = this.appointmentForm.date.getDate();
+        const dateString = "" + year + "-" + month + "-" + day;
+
+        const formatedDate = formatDate(
+            `${dateString} ${this.appointmentForm.time}`,
+            "yyyy-MM-dd HH:mm:ss"
+        );
+
         const postData: IAppointmentPostData = {
             doctorId: this.chosenDoctor!.id,
-            receptionDate: new Date(),
-            // date: this.appointmentForm.date,
-            // time: this.appointmentForm.time,
-            communicationMethodId: this.appointmentForm.communicationMethod!,
+            receptionDate: new Date(formatedDate),
+            communicationMethodId: JSON.parse(
+                this.appointmentForm.communicationMethod!
+            ).id,
             doctorSpecialtyId: this.appointmentForm.doctorSpecialty!,
             symptoms: this.appointmentForm.symptoms
         };
@@ -134,6 +153,15 @@ export class AppointmentStore implements IAppointmentStore {
             );
     };
 
+    validateForm = () => {
+        this.appointmentFormErrors = {
+            ...this.appointmentFormErrors,
+            symptoms: isLength(this.appointmentForm.symptoms, 10)
+        };
+
+        return Boolean(!this.appointmentFormErrors.symptoms);
+    };
+
     setFormValue = <K extends KeysOfAppointmentForm>(
         key: K,
         value: IAppointmentForm[K]
@@ -145,5 +173,6 @@ export class AppointmentStore implements IAppointmentStore {
         this.chosenDoctor = null;
         this.communicationMethods = null;
         this.appointmentForm = INITIAL_APPOINTMENT_FORM;
+        this.appointmentFormErrors = INITIAL_APPOINTMENT_FORM_ERRORS;
     };
 }

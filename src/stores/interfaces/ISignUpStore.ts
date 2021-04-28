@@ -6,7 +6,7 @@ export interface ISignUpStore {
     sentEmail: boolean;
     doSignUp: () => void;
     sendMail: () => void;
-    validateForm: () => void;
+    validateForm: () => boolean;
     setFormValue: <K extends KeysOfSignUpForm>(
         key: K,
         value: ISignUpForm[K]

@@ -22,6 +22,16 @@ export const isNotEmpty = (value: any) => {
     }
 };
 
+export const isLength = (value: string, length: number) => {
+    if (value === "") {
+        return "Заполните поле";
+    }
+
+    if (value.length < length) {
+        return `Поле должно содержать не менее ${length} символов`;
+    }
+};
+
 export const isOnlyLetters = (value: string) => {
     if (value === "") {
         return "Заполните поле";

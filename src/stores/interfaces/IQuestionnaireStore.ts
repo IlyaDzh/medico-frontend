@@ -5,8 +5,8 @@ export interface IQuestionnaireStore {
     pending: boolean;
     sendPatientForm: () => void;
     sendDoctorForm: () => void;
-    validatePatientForm: () => void;
-    validateDoctorForm: () => void;
+    validatePatientForm: () => boolean;
+    validateDoctorForm: () => boolean;
     setFormValue: <K extends KeysOfQuestionnaireForm>(
         key: K,
         value: IQuestionnaireForm[K]

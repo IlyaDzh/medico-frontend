@@ -11,6 +11,7 @@ import {
 import { StepsContext } from "../AppointmentSteps";
 import { AppointmentDoctorCard } from "../AppointmentDoctorCard";
 import { Button } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     stepContent: {
@@ -47,9 +48,12 @@ export const StepPayment: React.FC = () => {
     const [checked, setChecked] = useState<boolean>(false);
     const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const { appointmentStore } = useStores();
+    const { createAppointment } = appointmentStore;
 
     const handlePaymentClick = () => {
         setPaymentSuccess(true);
+        createAppointment();
     };
 
     const handleCheckPaymentClick = () => {

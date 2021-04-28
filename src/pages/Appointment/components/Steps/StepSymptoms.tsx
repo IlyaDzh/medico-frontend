@@ -29,7 +29,20 @@ export const StepSymptoms: React.FC = observer(() => {
     const classes = useStyles();
     const { onNextStep } = useContext(StepsContext);
     const { appointmentStore } = useStores();
-    const { appointmentForm, setFormValue } = appointmentStore;
+    const {
+        appointmentForm,
+        appointmentFormErrors,
+        setFormValue,
+        validateForm
+    } = appointmentStore;
+
+    const handleNextStepClick = (): void => {
+        if (!validateForm()) {
+            return;
+        }
+
+        onNextStep();
+    };
 
     return (
         <form className={classes.symptomsForm}>
@@ -48,11 +61,13 @@ export const StepSymptoms: React.FC = observer(() => {
                     value={appointmentForm.symptoms}
                     onChange={event => setFormValue("symptoms", event.target.value)}
                     rows={4}
+                    error={Boolean(appointmentFormErrors.symptoms)}
+                    helperText={appointmentFormErrors.symptoms}
                     multiline
                     fullWidth
                 ></TextField>
             </FormControl>
-            <Button variant="contained" onClick={onNextStep}>
+            <Button variant="contained" onClick={handleNextStepClick}>
                 Продолжить
             </Button>
         </form>

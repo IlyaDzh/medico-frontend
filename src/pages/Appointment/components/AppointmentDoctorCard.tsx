@@ -224,7 +224,11 @@ export const AppointmentDoctorCard: React.FC<IAppointmentDoctorCard> = observer(
                                         />
                                     </svg>
                                     <Typography variant="body1">
-                                        {appointmentForm.communicationMethod}
+                                        {appointmentForm.communicationMethod
+                                            ? JSON.parse(
+                                                  appointmentForm.communicationMethod
+                                              ).method
+                                            : ""}
                                     </Typography>
                                 </div>
                             </div>
