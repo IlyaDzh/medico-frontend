@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import {
@@ -59,6 +59,10 @@ export const SearchInput: React.FC<TextFieldProps> = observer(({ ...props }) => 
         pendingSearchDoctors,
         setSearchText
     } = searchDoctorStore;
+
+    useEffect(() => {
+        return () => setSearchText("");
+    }, [setSearchText]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
