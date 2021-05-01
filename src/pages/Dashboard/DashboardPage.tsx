@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { makeStyles } from "@material-ui/core";
+import { Hidden, makeStyles } from "@material-ui/core";
 
 import { Header, PaddingLine } from "components";
 import { Menu, ContentLayout } from "./components";
@@ -26,7 +26,9 @@ export const DashboardPage: React.FC = observer(() => {
             <Header isHeader isDashboard />
 
             <main className={classes.main}>
-                <Menu isDoctor={isDoctor} />
+                <Hidden smDown>
+                    <Menu isDoctor={isDoctor} />
+                </Hidden>
                 <ContentLayout>
                     {isDoctor ? <DoctorRoutes /> : <PatientRoutes />}
                 </ContentLayout>

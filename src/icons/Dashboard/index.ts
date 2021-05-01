@@ -5,3 +5,6 @@ export * from "./CaseIcon";
 export * from "./HistoryIcon";
 export * from "./MessagesIcon";
 export * from "./SettingsIcon";
+export * from "./AlertMenuIcon";
+export * from "./RemoveAppointmentIcon";
+export * from "./AppointmentIcon";

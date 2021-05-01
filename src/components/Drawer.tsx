@@ -20,12 +20,8 @@ import {
 } from "@material-ui/icons";
 
 import { useStores } from "stores/useStore";
-import {
-    AccountEnvelopeIcon,
-    AccountNotificationIcon,
-    ExitIcon,
-    UserIcon
-} from "icons";
+import { ExitIcon, SettingsIcon, UserIcon } from "icons";
+import { DOCTOR_MENU, PATIENT_MENU } from "utils/constants";
 
 const useStyles = makeStyles((theme: Theme) => ({
     list: {
@@ -48,6 +44,8 @@ export const Drawer: React.FC = observer(() => {
     const { isAuthorized, currentUser, doLogout } = userStore;
     const { setModalIsOpen } = modalsStore;
 
+    const isPatient: boolean = currentUser?.userType === "patient";
+
     const patientPath = currentUser?.additionalData
         ? "/dashboard"
         : "/questionnaire";
@@ -56,8 +54,7 @@ export const Drawer: React.FC = observer(() => {
         ? "/dashboard"
         : "/questionnaire";
 
-    const accountRedirectPath =
-        currentUser?.userType === "patient" ? patientPath : doctorPath;
+    const accountRedirectPath = isPatient ? patientPath : doctorPath;
 
     const toggleDrawer = (open: boolean) => (
         event: React.KeyboardEvent | React.MouseEvent
@@ -85,7 +82,7 @@ export const Drawer: React.FC = observer(() => {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
         >
-            <div
+            <nav
                 className={classes.list}
                 role="presentation"
                 onClick={toggleDrawer(false)}
@@ -125,75 +122,83 @@ export const Drawer: React.FC = observer(() => {
                 </List>
                 <Divider />
                 {isAuthorized ? (
-                    <List component="nav">
-                        <ListItem
-                            className={classes.listItem}
-                            component={Link}
-                            to={accountRedirectPath}
-                            button
-                        >
-                            <ListItemIcon>
-                                <UserIcon color="#5a5f6f" />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={
-                                    <Typography variant="body2">
-                                        Личный кабинет
-                                    </Typography>
-                                }
-                            />
-                        </ListItem>
-                        <ListItem
-                            className={classes.listItem}
-                            component={Link}
-                            to={accountRedirectPath}
-                            button
-                        >
-                            <ListItemIcon>
-                                <AccountNotificationIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={
-                                    <Typography variant="body2">
-                                        Уведомления
-                                    </Typography>
-                                }
-                            />
-                        </ListItem>
-                        <ListItem
-                            className={classes.listItem}
-                            component={Link}
-                            to={accountRedirectPath}
-                            button
-                        >
-                            <ListItemIcon>
-                                <AccountEnvelopeIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={
-                                    <Typography variant="body2">
-                                        Сообщения
-                                    </Typography>
-                                }
-                            />
-                        </ListItem>
-                        <ListItem
-                            className={clsx(classes.listItem, classes.exitItem)}
-                            onClick={doLogout}
-                            button
-                        >
-                            <ListItemIcon>
-                                <ExitIcon width={28} height={28} />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={
-                                    <Typography variant="body2">Выйти</Typography>
-                                }
-                            />
-                        </ListItem>
-                    </List>
+                    <>
+                        <List>
+                            <ListItem
+                                className={classes.listItem}
+                                component={Link}
+                                to={accountRedirectPath}
+                                button
+                            >
+                                <ListItemIcon>
+                                    <UserIcon color="#5a5f6f" />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <Typography variant="body2">
+                                            Личный кабинет
+                                        </Typography>
+                                    }
+                                />
+                            </ListItem>
+                            {(isPatient ? PATIENT_MENU : DOCTOR_MENU).map(item => (
+                                <ListItem
+                                    key={item.label}
+                                    className={classes.listItem}
+                                    component={Link}
+                                    to={item.to}
+                                    button
+                                >
+                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                    <ListItemText
+                                        primary={
+                                            <Typography variant="body2">
+                                                {item.label}
+                                            </Typography>
+                                        }
+                                    />
+                                </ListItem>
+                            ))}
+                            <ListItem
+                                className={classes.listItem}
+                                component={Link}
+                                to="/dashboard/settings"
+                                button
+                            >
+                                <ListItemIcon>
+                                    <SettingsIcon />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <Typography variant="body2">
+                                            Настройки
+                                        </Typography>
+                                    }
+                                />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem
+                                className={clsx(classes.listItem, classes.exitItem)}
+                                onClick={doLogout}
+                                button
+                            >
+                                <ListItemIcon>
+                                    <ExitIcon width={28} height={28} />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <Typography variant="body2">
+                                            Выйти
+                                        </Typography>
+                                    }
+                                />
+                            </ListItem>
+                        </List>
+                    </>
                 ) : (
-                    <List component="nav">
+                    <List>
                         <ListItem
                             className={classes.listItem}
                             onClick={handleEntryClick}
@@ -227,7 +232,7 @@ export const Drawer: React.FC = observer(() => {
                         </ListItem>
                     </List>
                 )}
-            </div>
+            </nav>
         </SwipeableDrawer>
     );
 });

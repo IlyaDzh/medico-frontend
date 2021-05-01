@@ -9,4 +9,9 @@ export interface IModal {
     isOpen: boolean;
 }
 
-export type TModalsName = "sign-in" | "confirmation" | "email" | "reset";
+export type TModalsName =
+    | "sign-in"
+    | "confirmation"
+    | "email"
+    | "reset"
+    | "cancel-appointment";
