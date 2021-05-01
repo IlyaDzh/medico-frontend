@@ -23,6 +23,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "cancel-appointment",
             isOpen: false
+        },
+        {
+            name: "add-analysis",
+            isOpen: false
         }
     ];
 

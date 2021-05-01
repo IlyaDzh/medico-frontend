@@ -107,7 +107,7 @@ export const StepTime: React.FC = observer(() => {
                                         value={appointmentForm.date}
                                         onChange={handleDateChange}
                                         KeyboardButtonProps={{
-                                            "aria-label": "change date"
+                                            "aria-label": "Изменение даты приёма"
                                         }}
                                         invalidDateMessage="Неверный формат даты"
                                         minDateMessage="Неверный формат даты"

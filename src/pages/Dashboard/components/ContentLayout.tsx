@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: "28px 40px"
         },
         [theme.breakpoints.down("xs")]: {
-            padding: "20px 28px"
+            padding: "20px 24px"
         }
     }
 }));

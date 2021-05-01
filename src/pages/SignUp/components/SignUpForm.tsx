@@ -188,7 +188,7 @@ export const SignUpForm: React.FC = observer(() => {
                     value={signUpForm.userType}
                     onChange={event => setFormValue("userType", event.target.value)}
                     name="user_type"
-                    aria-label="user type"
+                    aria-label="Тип пользователя"
                 >
                     <FormControlLabel
                         value="patient"
@@ -278,7 +278,7 @@ export const SignUpForm: React.FC = observer(() => {
                             error={Boolean(signUpFormErrors.birthDate)}
                             helperText={signUpFormErrors.birthDate}
                             KeyboardButtonProps={{
-                                "aria-label": "change date"
+                                "aria-label": "Изменение даты рождения"
                             }}
                             cancelLabel="Отмена"
                             okLabel="Ок"
@@ -301,7 +301,7 @@ export const SignUpForm: React.FC = observer(() => {
                                 setFormValue("gender", event.target.value)
                             }
                             name="user_gender"
-                            aria-label="user gender"
+                            aria-label="Ваш пол"
                             row
                         >
                             <FormControlLabel
