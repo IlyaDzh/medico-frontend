@@ -1,12 +1,14 @@
 import React from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
-import analysisImage from "./analysis.jpg";
-
-interface IAnalysisItem {}
+interface IAnalysisItem {
+    image: string;
+    onClick: () => void;
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     analysisItem: {
+        cursor: "pointer",
         position: "relative",
         display: "flex",
         width: 175,
@@ -18,8 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: 8
     },
     analysisImage: {
-        objectFit: "cover",
-        objectPosition: "top"
+        objectFit: "contain",
+        objectPosition: "top",
+        width: "100%"
     },
     analysisCaption: {
         position: "absolute",
@@ -33,16 +36,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const AnalysisItem: React.FC<IAnalysisItem> = () => {
+export const AnalysisItem: React.FC<IAnalysisItem> = ({ image, onClick }) => {
     const classes = useStyles();
 
     return (
-        <figure className={classes.analysisItem}>
-            <img
-                className={classes.analysisImage}
-                src={analysisImage}
-                alt="Анализ"
-            />
+        <figure className={classes.analysisItem} onClick={onClick}>
+            <img className={classes.analysisImage} src={image} alt="Анализ" />
             <figcaption className={classes.analysisCaption}>
                 <Typography variant="body1">10.08.2020</Typography>
                 <Typography variant="h6">Анализ</Typography>

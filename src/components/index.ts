@@ -14,3 +14,4 @@ export * from "./Backdrop";
 export * from "./SubmissionError";
 export * from "./ErrorAnimation";
 export * from "./Drawer";
+export * from "./Lightbox";
