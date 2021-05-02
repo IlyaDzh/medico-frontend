@@ -15,8 +15,11 @@ import {
 import { Avatar } from "components";
 import { AlertMenuIcon, RemoveAppointmentIcon } from "icons";
 import { useStores } from "stores/useStore";
+import { Consultation } from "stores/interfaces/Dashboard";
+import { formatDate } from "utils/formatDate";
 
-interface IAlert {
+interface IConsultationItem {
+    consultation: Consultation;
     isHistory?: boolean;
 }
 
@@ -104,10 +107,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const Alert: React.FC<IAlert> = ({ isHistory }) => {
+export const ConsultationItem: React.FC<IConsultationItem> = ({
+    consultation,
+    isHistory
+}) => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, dashboardConsultations } = useStores();
     const { setModalIsOpen } = modalsStore;
+    const { setCancelConsultationId } = dashboardConsultations;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -118,25 +125,41 @@ export const Alert: React.FC<IAlert> = ({ isHistory }) => {
         setAnchorEl(null);
     };
 
-    const handleCancelAppointmentClick = (): void => {
+    const cancelConsultation = (id: number): void => {
         handleMenuClose();
-        setModalIsOpen("cancel-appointment", true);
+        setCancelConsultationId(id);
+        setModalIsOpen("cancel-consultation", true);
     };
 
     return (
         <div className={classes.alert}>
             <div className={classes.alertLeft}>
-                <Typography variant="body1">12 августа, Среда, 9:00</Typography>
+                <Typography variant="body1">
+                    {formatDate(
+                        consultation.receptionDate.toString(),
+                        "d MMMM, EEEE, HH:mm"
+                    )}
+                </Typography>
                 <Hidden smDown>
                     <div className={classes.separate} />
                 </Hidden>
                 <div className={classes.doctorInfo}>
-                    <Avatar />
+                    <Avatar
+                        src={
+                            process.env.REACT_APP_API_BASE_URL +
+                            consultation.doctor.photo
+                        }
+                        alt={`Фото ${consultation.doctor.surname} ${consultation.doctor.name}`}
+                        isPositionTop
+                    />
                     <div className={classes.doctorData}>
                         <Typography variant="h6" color="primary">
-                            Терапевт
+                            {consultation.doctorSpecialty.name}
                         </Typography>
-                        <Typography variant="body1">Имя Отчество Фамилия</Typography>
+                        <Typography variant="body1">
+                            {consultation.doctor.surname} {consultation.doctor.name}{" "}
+                            {consultation.doctor.middleName}
+                        </Typography>
                     </div>
                 </div>
             </div>
@@ -145,7 +168,7 @@ export const Alert: React.FC<IAlert> = ({ isHistory }) => {
                     <MaterialLink
                         className={classes.appointmentLink}
                         component={Link}
-                        to={`/appointment/3`}
+                        to={`/appointment/${consultation.doctor.id}`}
                         underline="always"
                     >
                         Записаться на прием
@@ -154,7 +177,7 @@ export const Alert: React.FC<IAlert> = ({ isHistory }) => {
             ) : (
                 <div className={classes.alertRight}>
                     <Typography className={classes.method} variant="body1">
-                        Сообщения в чате
+                        {consultation.communicationMethod.method}
                     </Typography>
                     <IconButton
                         className={classes.menuButton}
@@ -182,7 +205,7 @@ export const Alert: React.FC<IAlert> = ({ isHistory }) => {
                         }}
                     >
                         <MenuItem
-                            onClick={handleCancelAppointmentClick}
+                            onClick={() => cancelConsultation(consultation.id)}
                             className={clsx(
                                 classes.menuItem,
                                 classes.menuItemCancel

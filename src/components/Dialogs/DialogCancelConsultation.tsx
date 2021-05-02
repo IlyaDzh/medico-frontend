@@ -16,23 +16,24 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const DialogCancelAppointment: React.FC = observer(() => {
+export const DialogCancelConsultation: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, dashboardConsultations } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
+    const { cancelConsultation } = dashboardConsultations;
 
     const handleClose = (): void => {
-        setModalIsOpen("cancel-appointment", false);
+        setModalIsOpen("cancel-consultation", false);
     };
 
     const handleCancelClick = (): void => {
         handleClose();
-        // cancelAppointment();
+        cancelConsultation();
     };
 
     return (
         <DialogBase
-            isOpen={getModalIsOpen("cancel-appointment")}
+            isOpen={getModalIsOpen("cancel-consultation")}
             title="Отмена записи"
             icon={<RemoveAppointmentIcon width={32} height={32} isLight />}
             onClose={handleClose}

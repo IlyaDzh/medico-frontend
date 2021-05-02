@@ -13,10 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     menu: {
         minWidth: 158,
         borderRight: `1px solid ${theme.palette.other!.main}`,
-        backgroundColor: "#fff",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between"
+        backgroundColor: "#fff"
     }
 }));
 
@@ -25,11 +22,9 @@ export const Menu: React.FC<IMenu> = ({ isDoctor }) => {
 
     return (
         <aside className={classes.menu}>
-            <div>
-                {(isDoctor ? DOCTOR_MENU : PATIENT_MENU).map(item => (
-                    <MenuItem key={item.label} {...item} />
-                ))}
-            </div>
+            {(isDoctor ? DOCTOR_MENU : PATIENT_MENU).map(item => (
+                <MenuItem key={item.label} {...item} />
+            ))}
             <MenuItem
                 to="/dashboard/settings"
                 icon={<SettingsIcon />}

@@ -9,6 +9,7 @@ import {
 interface IAvatarProps {
     size?: "sm" | "lg" | "elg";
     componentTag?: string;
+    isPositionTop?: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -27,12 +28,18 @@ const useStyles = makeStyles(() => ({
     extraLarge: {
         width: 58,
         height: 58
+    },
+    objectPositionTop: {
+        "& img": {
+            objectPosition: "top"
+        }
     }
 }));
 
 export const Avatar: React.FC<IAvatarProps & AvatarProps> = ({
     size,
     componentTag,
+    isPositionTop,
     ...props
 }) => {
     const classes = useStyles();
@@ -46,7 +53,8 @@ export const Avatar: React.FC<IAvatarProps & AvatarProps> = ({
                 classes.avatar,
                 size === "sm" && classes.small,
                 size === "lg" && classes.large,
-                size === "elg" && classes.extraLarge
+                size === "elg" && classes.extraLarge,
+                isPositionTop && classes.objectPositionTop
             )}
             {...props}
         />

@@ -14,5 +14,5 @@ export type TModalsName =
     | "confirmation"
     | "email"
     | "reset"
-    | "cancel-appointment"
+    | "cancel-consultation"
     | "add-analysis";

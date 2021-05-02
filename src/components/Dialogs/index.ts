@@ -2,5 +2,5 @@ export * from "./DialogSignIn";
 export * from "./DialogReset";
 export * from "./DialogEmail";
 export * from "./DialogConfirmation";
-export * from "./DialogCancelAppointment";
+export * from "./DialogCancelConsultation";
 export * from "./DialogAddAnalysis";

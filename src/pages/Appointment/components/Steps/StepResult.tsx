@@ -124,10 +124,11 @@ export const StepResult: React.FC = observer(() => {
             <div className={classes.resultButtons}>
                 <Button
                     className={classes.printResultBtn}
+                    to="/dashboard/alerts"
                     variant="contained"
                     fullWidth
                 >
-                    Получить чек
+                    Личный кабинет
                 </Button>
                 <Button to="/" variant="outlined" fullWidth>
                     На главную
