@@ -40,7 +40,7 @@ export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = useState(0);
 
-    const handleChange = (_: any, newValue: number) => {
+    const handleChange = (_: any, newValue: number): void => {
         setCurrentTab(newValue);
     };
 

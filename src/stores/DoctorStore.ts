@@ -15,7 +15,7 @@ export class DoctorStore implements IDoctorStore {
 
     pendingProfileReviews: boolean = false;
 
-    fetchingDoctorProfileError: boolean = false;
+    fetchingProfileError: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -23,7 +23,7 @@ export class DoctorStore implements IDoctorStore {
 
     getDoctorProfile = (id: number) => {
         this.pendingProfile = true;
-        this.fetchingDoctorProfileError = false;
+        this.fetchingProfileError = false;
 
         DoctorApi.getDoctor(id)
             .then(
@@ -33,7 +33,7 @@ export class DoctorStore implements IDoctorStore {
             )
             .catch(
                 action(() => {
-                    this.fetchingDoctorProfileError = true;
+                    this.fetchingProfileError = true;
                 })
             )
             .finally(
@@ -69,6 +69,6 @@ export class DoctorStore implements IDoctorStore {
     };
 
     resetProfile = () => {
-        this.currentDoctor = null;
+        this.fetchingProfileError = false;
     };
 }

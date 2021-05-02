@@ -120,7 +120,7 @@ export const DoctorProfile: React.FC = observer(() => {
     const {
         currentDoctor,
         pendingProfile,
-        fetchingDoctorProfileError,
+        fetchingProfileError,
         getDoctorProfile,
         resetProfile
     } = doctorStore;
@@ -128,14 +128,20 @@ export const DoctorProfile: React.FC = observer(() => {
     const specialty = currentDoctor && formatSpecialties(currentDoctor.specialties);
 
     useEffect(() => {
-        if (currentDoctor && currentDoctor.id === Number(id)) {
+        if (
+            (currentDoctor && currentDoctor.id === Number(id)) ||
+            pendingProfile ||
+            fetchingProfileError
+        ) {
             return;
         }
 
         getDoctorProfile(Number(id));
+    }, [id, currentDoctor, pendingProfile, fetchingProfileError, getDoctorProfile]);
 
+    useEffect(() => {
         return () => resetProfile();
-    }, [id, getDoctorProfile, resetProfile]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [resetProfile]);
 
     const handleButtonClick = (): void => {
         if (!isAuthorized) {
@@ -143,7 +149,7 @@ export const DoctorProfile: React.FC = observer(() => {
         }
     };
 
-    if (fetchingDoctorProfileError) {
+    if (fetchingProfileError) {
         return (
             <div className={classes.error}>
                 <ErrorAnimation path="/doctors" title="Найти другого доктора" />

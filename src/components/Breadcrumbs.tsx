@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import {
     Breadcrumbs as BaseBreadcrumbs,
     Typography,
-    makeStyles,
-    Theme
+    makeStyles
 } from "@material-ui/core";
 
 interface IBreadcrumbs {
@@ -18,7 +17,7 @@ type TBreadcrumb = {
     title: string;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     breadcrumbsItem: {
         color: "#fff",
         fontSize: "14px",
@@ -33,9 +32,9 @@ export const Breadcrumbs: React.FC<IBreadcrumbs> = ({ items, itemClassName }) =>
 
     return (
         <BaseBreadcrumbs
-            component="div"
+            component="nav"
             classes={{ separator: clsx(classes.breadcrumbsItem, itemClassName) }}
-            aria-label="breadcrumbs"
+            aria-label="Breadcrumbs"
         >
             {items.map(item =>
                 item.to ? (

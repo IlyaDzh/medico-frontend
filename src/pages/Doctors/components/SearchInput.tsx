@@ -130,7 +130,7 @@ export const SearchInput: React.FC<TextFieldProps> = observer(({ ...props }) => 
                             <IconButton
                                 className={classes.cross}
                                 onClick={() => setSearchText("")}
-                                aria-label="remove all text"
+                                aria-label="Удалить весь текст"
                             >
                                 <CrossIcon width={18} height={18} />
                             </IconButton>

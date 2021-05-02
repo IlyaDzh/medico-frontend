@@ -174,5 +174,6 @@ export class AppointmentStore implements IAppointmentStore {
         this.communicationMethods = null;
         this.appointmentForm = INITIAL_APPOINTMENT_FORM;
         this.appointmentFormErrors = INITIAL_APPOINTMENT_FORM_ERRORS;
+        this.fetchingMetaInfoError = false;
     };
 }

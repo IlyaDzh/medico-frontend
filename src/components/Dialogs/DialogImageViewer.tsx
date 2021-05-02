@@ -92,7 +92,7 @@ export const DialogBase: React.FC<IDialogBase> = ({
                     </Typography>
                 </div>
                 <div className={classes.closeButton}>
-                    <IconButton aria-label="close dialog" onClick={onClose}>
+                    <IconButton aria-label="Закрыть диалоговое окно" onClick={onClose}>
                         <CrossIcon />
                     </IconButton>
                 </div>

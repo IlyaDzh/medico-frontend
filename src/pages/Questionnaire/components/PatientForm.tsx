@@ -78,7 +78,7 @@ export const PatientForm: React.FC = observer(() => {
                 <RadioGroup
                     value={questionnaireForm.bloodType}
                     onChange={event => setFormValue("bloodType", event.target.value)}
-                    aria-label="blood type"
+                    aria-label="Группа крови"
                 >
                     <FormControlLabel
                         value="I"
@@ -128,7 +128,7 @@ export const PatientForm: React.FC = observer(() => {
                 <RadioGroup
                     value={questionnaireForm.RHFactor}
                     onChange={event => setFormValue("RHFactor", event.target.value)}
-                    aria-label="rhesus factor"
+                    aria-label="Резус фактор"
                 >
                     <FormControlLabel
                         value="Rh+"
@@ -215,7 +215,7 @@ export const PatientForm: React.FC = observer(() => {
                 <RadioGroup
                     value={questionnaireForm.isSmoker}
                     onChange={event => setFormValue("isSmoker", event.target.value)}
-                    aria-label="smoking"
+                    aria-label="Курение"
                 >
                     <FormControlLabel
                         value="Да"
@@ -258,7 +258,7 @@ export const PatientForm: React.FC = observer(() => {
                     onChange={event =>
                         setFormValue("isAlcoholic", event.target.value)
                     }
-                    aria-label="alcohol"
+                    aria-label="Алкоголь"
                 >
                     <FormControlLabel
                         value="1 раз в год"
@@ -327,7 +327,7 @@ export const PatientForm: React.FC = observer(() => {
                     onChange={event => {
                         setFormValue("bloodTransfusion", event.target.value);
                     }}
-                    aria-label="blood transfusion"
+                    aria-label="Была ли процедура по переливанию крови?"
                 >
                     <FormControlLabel
                         value="Да"

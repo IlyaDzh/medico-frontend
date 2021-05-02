@@ -4,7 +4,7 @@ export interface IDoctorStore {
     currentDoctor: IDoctor | null;
     pendingProfile: boolean;
     pendingProfileReviews: boolean;
-    fetchingDoctorProfileError: boolean;
+    fetchingProfileError: boolean;
     getDoctorProfile: (id: number) => void;
     fetchReviews: () => void;
     resetProfile: () => void;

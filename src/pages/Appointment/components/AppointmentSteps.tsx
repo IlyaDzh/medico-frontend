@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 
+import { ErrorAnimation } from "components";
 import { StepTime, StepSymptoms, StepPayment, StepResult } from "./Steps";
 import { StepsNavigation } from "./StepsNavigation";
 import { BackButton } from "./BackButton";
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginBottom: 60
         }
+    },
+    error: {
+        marginTop: 80,
+        marginBottom: 80
     }
 }));
 
@@ -55,17 +60,18 @@ export const AppointmentSteps: React.FC = observer(() => {
     const {
         chosenDoctor,
         pendingMetaInfo,
+        fetchingMetaInfoError,
         getMetaInfo,
         resetAppointment
     } = appointmentStore;
 
     useEffect(() => {
-        if (chosenDoctor || pendingMetaInfo) {
+        if (chosenDoctor || pendingMetaInfo || fetchingMetaInfoError) {
             return;
         }
 
         getMetaInfo(Number(id));
-    }, [id, chosenDoctor, pendingMetaInfo, getMetaInfo]);
+    }, [id, chosenDoctor, pendingMetaInfo, fetchingMetaInfoError, getMetaInfo]);
 
     useEffect(() => {
         return () => resetAppointment();
@@ -78,6 +84,14 @@ export const AppointmentSteps: React.FC = observer(() => {
     const onPrevStep = (): void => {
         setStep(prev => prev - 1);
     };
+
+    if (fetchingMetaInfoError) {
+        return (
+            <div className={classes.error}>
+                <ErrorAnimation path="/doctors" title="Перейти к списку врачей" />
+            </div>
+        );
+    }
 
     return (
         <StepsContext.Provider value={{ step, onNextStep, onPrevStep }}>
