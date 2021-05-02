@@ -10,7 +10,7 @@ import { ISearchDoctorStore } from "./ISearchDoctorStore";
 import { IHomeStore } from "./IHomeStore";
 import { IDrawerStore } from "./IDrawerStore";
 import { IAppointmentStore } from "./IAppointmentStore";
-import { IDashboardConsultationsStore } from "./Dashboard";
+import { IDashboardConsultationsStore, IDashboardAnalyzesStore } from "./Dashboard";
 
 export default interface IStores {
     routerStore: IRouterStore;
@@ -26,4 +26,5 @@ export default interface IStores {
     drawerStore: IDrawerStore;
     appointmentStore: IAppointmentStore;
     dashboardConsultations: IDashboardConsultationsStore;
+    dashboardAnalyzes: IDashboardAnalyzesStore;
 }

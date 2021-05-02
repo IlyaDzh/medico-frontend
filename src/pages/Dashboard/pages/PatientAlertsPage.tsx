@@ -5,7 +5,6 @@ import { Typography, makeStyles } from "@material-ui/core";
 import { ConsultationItem } from "../components";
 import { DialogCancelConsultation, Loader } from "components";
 import { useStores } from "stores/useStore";
-import { autorun } from "mobx";
 
 const useStyles = makeStyles(() => ({
     title: {

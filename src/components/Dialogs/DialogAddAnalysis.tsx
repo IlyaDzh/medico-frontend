@@ -9,15 +9,17 @@ import {
     Radio,
     FormControl,
     FormLabel,
+    FormHelperText,
     makeStyles,
     Theme
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { DialogBase } from "./DialogBase";
-import { Button } from "components";
+import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 import { PlusIcon } from "icons";
+import { AnalysisType } from "stores/interfaces/Dashboard";
 import truncateText from "utils/truncateText";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -42,10 +44,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     formInput: {
         marginBottom: 8
     },
-    submitButton: {
-        display: "block",
-        marginLeft: "auto"
-    },
     fileInfo: {
         marginBottom: 28
     },
@@ -59,28 +57,36 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DialogAddAnalysis: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, dashboardAnalyzes } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
+    const {
+        appendForm,
+        appendFormErrors,
+        appendPending,
+        submissionError,
+        setFormValue,
+        appendAnalysis,
+        resetForm
+    } = dashboardAnalyzes;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        console.log("submit");
+        appendAnalysis();
     };
 
     const handleClose = (): void => {
         setModalIsOpen("add-analysis", false);
+        resetForm();
     };
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
-            // setFile(files[0]);
-            console.log(files[0]);
+            setFormValue("file", files[0]);
         }
     };
 
     const handleDateChange = (date: any): void => {
-        // setFormValue("date", date);
-        // getFreeDoctorTime(date);
+        setFormValue("analysisDeliveryDate", date);
     };
 
     return (
@@ -118,10 +124,13 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                         hidden
                     />
                     <Typography variant="body1" color="textSecondary">
-                        {"jdfgdfjgjdfg.txt"
-                            ? truncateText("jdfgdfjgjdfg.txt")
+                        {appendForm.file
+                            ? truncateText(appendForm.file.name)
                             : "Файл не выбран"}
                     </Typography>
+                    <FormHelperText error={Boolean(appendFormErrors.file)}>
+                        {appendFormErrors.file}
+                    </FormHelperText>
                 </div>
                 <div className={classes.fileInfo}>
                     <TextField
@@ -129,18 +138,22 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                         variant="outlined"
                         color="secondary"
                         placeholder="Название анализа / снимка"
+                        value={appendForm.name}
+                        onChange={event => setFormValue("name", event.target.value)}
+                        error={Boolean(appendFormErrors.name)}
+                        helperText={appendFormErrors.name}
                         fullWidth
                     />
                     <RadioGroup
-                        // value={signUpForm.userType}
-                        // onChange={event =>
-                        //     setFormValue("userType", event.target.value)
-                        // }
+                        value={appendForm.type}
+                        onChange={event =>
+                            setFormValue("type", event.target.value as AnalysisType)
+                        }
                         aria-label="Тип загружаемого файла"
                         row
                     >
                         <FormControlLabel
-                            value="patient"
+                            value="analysis"
                             control={<Radio color="secondary" />}
                             label={
                                 <Typography variant="body1" color="textSecondary">
@@ -149,7 +162,7 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                             }
                         />
                         <FormControlLabel
-                            value="doctor"
+                            value="snapshot"
                             control={<Radio color="secondary" />}
                             label={
                                 <Typography variant="body1" color="textSecondary">
@@ -173,7 +186,7 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                             color="secondary"
                             placeholder="Не выбрана"
                             format="dd/MM/yyyy"
-                            value={new Date()}
+                            value={appendForm.analysisDeliveryDate}
                             onChange={handleDateChange}
                             KeyboardButtonProps={{
                                 "aria-label": "Изменение даты сдачи анализа"
@@ -187,11 +200,13 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                         />
                     </FormControl>
                 </div>
+                <SubmissionError align="center">{submissionError}</SubmissionError>
                 <Button
-                    className={classes.submitButton}
                     type="submit"
                     variant="contained"
                     color="primary"
+                    disabled={appendPending}
+                    isLoaded={appendPending}
                 >
                     Загрузить
                 </Button>

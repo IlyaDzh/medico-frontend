@@ -11,4 +11,12 @@ export class DashboardPatientApi {
     static cancelConsultation(postData: ICancelConsultationPostData) {
         return axiosInstance.post("/api/v1/consultation/cancel", postData);
     }
+
+    static getAnalyzes() {
+        return axiosInstance.get("/api/v1/patient/analysis/all");
+    }
+
+    static appendAnalysis(postData: FormData) {
+        return axiosInstance.post("/api/v1/patient/analysis/append", postData);
+    }
 }

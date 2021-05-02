@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react";
 import { makeStyles, Theme } from "@material-ui/core";
 
 import { AnalyzesChip, AnalysisItem } from "./";
-import { Lightbox } from "components";
-
-import analysis1 from "./analysis1.jpg";
-import analysis2 from "./analysis2.jpg";
-import analysis3 from "./analysis3.jpg";
-import analysis4 from "./analysis4.jpg";
+import { Lightbox, Loader } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     tags: {
@@ -31,13 +28,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const AnalyzesList: React.FC = () => {
+export const AnalyzesList: React.FC = observer(() => {
     const classes = useStyles();
-    const [currentChip, setCurrentChip] = useState<"all" | "analyzes" | "snapshot">(
+    const [currentChip, setCurrentChip] = useState<"all" | "analysis" | "snapshot">(
         "all"
     );
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [photoIndex, setPhotoIndex] = useState<number>(0);
+    const { dashboardAnalyzes } = useStores();
+    const { analyzes, analyzesPending, getAnalyzes } = dashboardAnalyzes;
+
+    useEffect(() => {
+        if (!analyzes.length) {
+            getAnalyzes();
+        }
+    }, [getAnalyzes]);
 
     const setIndex = (value: number): void => {
         setPhotoIndex(value);
@@ -58,8 +63,8 @@ export const AnalyzesList: React.FC = () => {
                 />
                 <AnalyzesChip
                     label="Анализы"
-                    onClick={() => setCurrentChip("analyzes")}
-                    isActive={"analyzes" === currentChip}
+                    onClick={() => setCurrentChip("analysis")}
+                    isActive={"analysis" === currentChip}
                 />
                 <AnalyzesChip
                     label="Снимки"
@@ -68,26 +73,23 @@ export const AnalyzesList: React.FC = () => {
                 />
             </div>
             <div className={classes.analyzes}>
-                <AnalysisItem
-                    image={analysis1}
-                    onClick={() => handleAnalysisItemClick(0)}
-                />
-                <AnalysisItem
-                    image={analysis2}
-                    onClick={() => handleAnalysisItemClick(1)}
-                />
-                <AnalysisItem
-                    image={analysis3}
-                    onClick={() => handleAnalysisItemClick(2)}
-                />
-                <AnalysisItem
-                    image={analysis4}
-                    onClick={() => handleAnalysisItemClick(3)}
-                />
+                {!analyzesPending ? (
+                    analyzes.map((analysis, index) => (
+                        <AnalysisItem
+                            key={analysis.id}
+                            analysis={analysis}
+                            onClick={() => handleAnalysisItemClick(index)}
+                        />
+                    ))
+                ) : (
+                    <Loader level={2.5} isCenter />
+                )}
             </div>
-            {isOpen && (
+            {isOpen && analyzes.length > 0 && (
                 <Lightbox
-                    images={[analysis1, analysis2, analysis3, analysis4]}
+                    images={analyzes.map(
+                        item => `${process.env.REACT_APP_API_BASE_URL}${item.path}`
+                    )}
                     index={photoIndex}
                     onClose={() => setIsOpen(false)}
                     setIndex={setIndex}
@@ -95,4 +97,4 @@ export const AnalyzesList: React.FC = () => {
             )}
         </React.Fragment>
     );
-};
+});

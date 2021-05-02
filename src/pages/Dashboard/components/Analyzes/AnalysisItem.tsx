@@ -1,8 +1,11 @@
 import React from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { Analysis } from "stores/interfaces/Dashboard";
+import { formatDate } from "utils/formatDate";
+
 interface IAnalysisItem {
-    image: string;
+    analysis: Analysis;
     onClick: () => void;
 }
 
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: 8
     },
     analysisImage: {
-        objectFit: "contain",
+        objectFit: "cover",
         objectPosition: "top",
         width: "100%"
     },
@@ -36,15 +39,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const AnalysisItem: React.FC<IAnalysisItem> = ({ image, onClick }) => {
+export const AnalysisItem: React.FC<IAnalysisItem> = ({ analysis, onClick }) => {
     const classes = useStyles();
 
     return (
         <figure className={classes.analysisItem} onClick={onClick}>
-            <img className={classes.analysisImage} src={image} alt="Анализ" />
+            <img
+                className={classes.analysisImage}
+                src={process.env.REACT_APP_API_BASE_URL + analysis.path}
+                alt={analysis.name}
+            />
             <figcaption className={classes.analysisCaption}>
-                <Typography variant="body1">10.08.2020</Typography>
-                <Typography variant="h6">Анализ</Typography>
+                <Typography variant="body1">
+                    {formatDate(
+                        analysis.analysisDeliveryDate.toString(),
+                        "dd.MM.yyyy"
+                    )}
+                </Typography>
+                <Typography variant="h6">{analysis.name}</Typography>
             </figcaption>
         </figure>
     );
