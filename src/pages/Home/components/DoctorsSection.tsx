@@ -146,12 +146,8 @@ export const DoctorsSection: React.FC = observer(() => {
     const { doctors, pending, getDoctors } = homeStore;
 
     useEffect(() => {
-        if ((doctors && doctors.length > 0) || pending) {
-            return;
-        }
-
         getDoctors();
-    }, [doctors, pending, getDoctors]);
+    }, [getDoctors]);
 
     const LENGTH_OF_ARRAY = doctors?.length || 0;
 
