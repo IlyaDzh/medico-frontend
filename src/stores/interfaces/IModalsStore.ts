@@ -15,4 +15,5 @@ export type TModalsName =
     | "email"
     | "reset"
     | "cancel-consultation"
-    | "add-analysis";
+    | "add-analysis"
+    | "delete-analysis"

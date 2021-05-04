@@ -5,8 +5,12 @@ export interface IDashboardAnalyzesStore {
     appendFormErrors: IAnalysisFormErrors;
     appendPending: boolean;
     submissionError: string | undefined;
+    deleteAnalysisId: number | null;
     getAnalyzes: () => void;
+    sortAnalyzesByType: (type: AnalysisType) => Analysis[];
     appendAnalysis: () => void;
+    setDeleteAnalysisId: (id: number) => void;
+    deleteAnalysis: () => void;
     validateForm: () => boolean;
     setFormValue: <K extends KeysOfAnalysisForm>(
         key: K,

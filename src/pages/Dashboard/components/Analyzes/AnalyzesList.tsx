@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { AnalyzesChip, AnalysisItem } from "./";
 import { Lightbox, Loader } from "components";
@@ -28,15 +28,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
+type ChipTypes = "all" | "analysis" | "snapshot";
+
 export const AnalyzesList: React.FC = observer(() => {
     const classes = useStyles();
-    const [currentChip, setCurrentChip] = useState<"all" | "analysis" | "snapshot">(
-        "all"
-    );
+    const [currentChip, setCurrentChip] = useState<ChipTypes>("all");
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [photoIndex, setPhotoIndex] = useState<number>(0);
-    const { dashboardAnalyzes } = useStores();
-    const { analyzes, analyzesPending, getAnalyzes } = dashboardAnalyzes;
+    const { dashboardAnalyzes, modalsStore } = useStores();
+    const {
+        analyzes,
+        analyzesPending,
+        getAnalyzes,
+        sortAnalyzesByType,
+        setDeleteAnalysisId
+    } = dashboardAnalyzes;
+    const { setModalIsOpen } = modalsStore;
 
     useEffect(() => {
         if (!analyzes.length) {
@@ -52,6 +59,11 @@ export const AnalyzesList: React.FC = observer(() => {
         setIsOpen(true);
         setPhotoIndex(value);
     };
+
+    const handleDeleteAnalysis = (id: number): void => {
+        setDeleteAnalysisId(id);
+        setModalIsOpen("delete-analysis", true);
+    }
 
     return (
         <React.Fragment>
@@ -74,13 +86,21 @@ export const AnalyzesList: React.FC = observer(() => {
             </div>
             <div className={classes.analyzes}>
                 {!analyzesPending ? (
-                    analyzes.map((analysis, index) => (
-                        <AnalysisItem
-                            key={analysis.id}
-                            analysis={analysis}
-                            onClick={() => handleAnalysisItemClick(index)}
-                        />
-                    ))
+                    analyzes.length > 0 ? (
+                        (currentChip === "all"
+                            ? analyzes
+                            : sortAnalyzesByType(currentChip)
+                        ).map((analysis, index) => (
+                            <AnalysisItem
+                                key={analysis.id}
+                                analysis={analysis}
+                                onClick={() => handleAnalysisItemClick(index)}
+                                onDelete={() => handleDeleteAnalysis(analysis.id)}
+                            />
+                        ))
+                    ) : (
+                        <Typography variant="body1">Анализов нет</Typography>
+                    )
                 ) : (
                     <Loader level={2.5} isCenter />
                 )}

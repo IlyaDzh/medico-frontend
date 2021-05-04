@@ -17,15 +17,17 @@ const useStyles = makeStyles(() => ({
 
 export const PatientAlertsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { dashboardConsultations } = useStores();
+    const { dashboardConsultations, modalsStore } = useStores();
     const {
         waitingConsultations,
         doneConsultations,
         pendingWaitingConsultations,
         pendingDoneConsultations,
         getWaitingConsultations,
-        getDoneConsultations
+        getDoneConsultations,
+        setCancelConsultationId
     } = dashboardConsultations;
+    const { setModalIsOpen } = modalsStore;
 
     useEffect(() => {
         if (pendingWaitingConsultations || pendingDoneConsultations) {
@@ -35,6 +37,11 @@ export const PatientAlertsPage: React.FC = observer(() => {
         getWaitingConsultations();
         getDoneConsultations();
     }, [getWaitingConsultations, getDoneConsultations]); // eslint-disable-line
+
+    const handleCancelConsultation = (id: number): void => {
+        setCancelConsultationId(id);
+        setModalIsOpen("cancel-consultation", true);
+    };
 
     return (
         <React.Fragment>
@@ -48,6 +55,9 @@ export const PatientAlertsPage: React.FC = observer(() => {
                             <ConsultationItem
                                 key={index}
                                 consultation={consultation}
+                                onCancel={() =>
+                                    handleCancelConsultation(consultation.id)
+                                }
                             />
                         ))
                     ) : (
@@ -69,7 +79,6 @@ export const PatientAlertsPage: React.FC = observer(() => {
                             <ConsultationItem
                                 key={index}
                                 consultation={consultation}
-                                isHistory
                             />
                         ))
                     ) : (

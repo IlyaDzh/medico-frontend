@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, makeStyles } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 
-import { Button, DialogAddAnalysis } from "components";
+import { Button, DialogAddAnalysis, DialogDeleteAnalysis } from "components";
 import { AnalyzesList } from "../components";
 import { useStores } from "stores/useStore";
 
@@ -41,12 +41,14 @@ export const PatientAnalyzesPage: React.FC = () => {
                     className={classes.addButton}
                     variant="contained"
                     onClick={handleAddAnalysis}
+                    aria-label="Добавить новый анализ или снимок"
                 >
                     <AddIcon />
                 </Button>
             </div>
             <AnalyzesList />
             <DialogAddAnalysis />
+            <DialogDeleteAnalysis />
         </React.Fragment>
     );
 };

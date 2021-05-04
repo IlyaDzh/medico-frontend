@@ -14,13 +14,12 @@ import {
 
 import { Avatar } from "components";
 import { AlertMenuIcon, RemoveAppointmentIcon } from "icons";
-import { useStores } from "stores/useStore";
 import { Consultation } from "stores/interfaces/Dashboard";
 import { formatDate } from "utils/formatDate";
 
 interface IConsultationItem {
     consultation: Consultation;
-    isHistory?: boolean;
+    onCancel?: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -109,12 +108,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const ConsultationItem: React.FC<IConsultationItem> = ({
     consultation,
-    isHistory
+    onCancel
 }) => {
     const classes = useStyles();
-    const { modalsStore, dashboardConsultations } = useStores();
-    const { setModalIsOpen } = modalsStore;
-    const { setCancelConsultationId } = dashboardConsultations;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -125,10 +121,9 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
         setAnchorEl(null);
     };
 
-    const cancelConsultation = (id: number): void => {
+    const handleCancelConsultation = (): void => {
         handleMenuClose();
-        setCancelConsultationId(id);
-        setModalIsOpen("cancel-consultation", true);
+        if (onCancel) onCancel();
     };
 
     return (
@@ -163,18 +158,7 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                     </div>
                 </div>
             </div>
-            {isHistory ? (
-                <div className={classes.alertRight}>
-                    <MaterialLink
-                        className={classes.appointmentLink}
-                        component={Link}
-                        to={`/appointment/${consultation.doctor.id}`}
-                        underline="always"
-                    >
-                        Записаться на прием
-                    </MaterialLink>
-                </div>
-            ) : (
+            {onCancel ? (
                 <div className={classes.alertRight}>
                     <Typography className={classes.method} variant="body1">
                         {consultation.communicationMethod.method}
@@ -205,7 +189,7 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                         }}
                     >
                         <MenuItem
-                            onClick={() => cancelConsultation(consultation.id)}
+                            onClick={handleCancelConsultation}
                             className={clsx(
                                 classes.menuItem,
                                 classes.menuItemCancel
@@ -217,6 +201,17 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                             Отменить запись
                         </MenuItem>
                     </Menu>
+                </div>
+            ) : (
+                <div className={classes.alertRight}>
+                    <MaterialLink
+                        className={classes.appointmentLink}
+                        component={Link}
+                        to={`/appointment/${consultation.doctor.id}`}
+                        underline="always"
+                    >
+                        Записаться на прием
+                    </MaterialLink>
                 </div>
             )}
         </div>

@@ -9,6 +9,7 @@ import {
 } from "api";
 import {
     Analysis,
+    AnalysisType,
     IAnalysisForm,
     IAnalysisFormErrors,
     IDashboardAnalyzesStore,
@@ -42,6 +43,8 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
 
     submissionError: string | undefined = undefined;
 
+    deleteAnalysisId: number | null = null;
+
     private rootStore: IStores;
 
     constructor(rootStore: IStores) {
@@ -54,7 +57,9 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
             appendFormErrors: observable,
             appendPending: observable,
             submissionError: observable,
+            deleteAnalysisId: observable,
             getAnalyzes: action,
+            sortAnalyzesByType: action,
             appendAnalysis: action,
             validateForm: action,
             setFormValue: action,
@@ -81,6 +86,10 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
                     this.analyzesPending = false;
                 })
             );
+    };
+
+    sortAnalyzesByType = (type: AnalysisType) => {
+        return this.analyzes.filter(analysis => analysis.type === type);
     };
 
     appendAnalysis = () => {
@@ -113,6 +122,14 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
                     this.analyzesPending = false;
                 })
             );
+    };
+
+    setDeleteAnalysisId = (id: number) => {
+        this.deleteAnalysisId = id;
+    };
+
+    deleteAnalysis = () => {
+        console.log(`Файл с id ${this.deleteAnalysisId} удалён`);
     };
 
     validateForm = () => {

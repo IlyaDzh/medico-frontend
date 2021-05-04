@@ -27,6 +27,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "add-analysis",
             isOpen: false
+        },
+        {
+            name: "delete-analysis",
+            isOpen: false
         }
     ];
 
