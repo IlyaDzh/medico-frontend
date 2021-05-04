@@ -65,7 +65,7 @@ export const StepSymptoms: React.FC = observer(() => {
                     helperText={appointmentFormErrors.symptoms}
                     multiline
                     fullWidth
-                ></TextField>
+                />
             </FormControl>
             <Button variant="contained" onClick={handleNextStepClick}>
                 Продолжить
