@@ -210,7 +210,7 @@ export const Footer: React.FC = () => {
                             <a href="tel:+79781234567">+7 978 123 45 67</a>
                         </div>
                         <div className={classes.supportLink}>
-                            <Link to="/">Написать в поддержку</Link>
+                            <Link to="/#feedback">Написать в поддержку</Link>
                         </div>
                         <ul className={classes.socialList}>
                             <li>
@@ -218,7 +218,7 @@ export const Footer: React.FC = () => {
                                     href="https://twitter.com"
                                     aria-label="Twitter"
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="me noopener noreferrer"
                                 >
                                     <TwitterIcon />
                                 </a>

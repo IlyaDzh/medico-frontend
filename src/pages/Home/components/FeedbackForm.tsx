@@ -15,11 +15,11 @@ import { Button } from "components";
 const useStyles = makeStyles((theme: Theme) => ({
     feedbackSection: {
         paddingTop: 124,
-        paddingBottom: 153,
+        paddingBottom: 124,
         backgroundColor: "#fff",
         [theme.breakpoints.down("xs")]: {
-            paddingTop: 57,
-            paddingBottom: 75
+            paddingTop: 62,
+            paddingBottom: 62
         }
     },
     feedbackWrapper: {
@@ -28,13 +28,30 @@ const useStyles = makeStyles((theme: Theme) => ({
         border: `4px solid ${theme.palette.background.dark}`,
         borderRadius: 16,
         background: theme.palette.background.default,
-        padding: "60px 74px"
+        padding: "60px 74px",
+        [theme.breakpoints.down("sm")]: {
+            display: "block"
+        },
+        [theme.breakpoints.down("xs")]: {
+            border: "none",
+            background: "#fff",
+            padding: 0
+        }
     },
     leftSide: {
-        width: "40%"
+        width: "40%",
+        marginRight: 40,
+        [theme.breakpoints.down("sm")]: {
+            width: "100%",
+            marginRight: 0,
+            marginBottom: 32
+        }
     },
     rightSide: {
-        width: "60%"
+        width: "60%",
+        [theme.breakpoints.down("sm")]: {
+            width: "100%"
+        }
     },
     feedbackTitle: {
         marginBottom: 12
@@ -42,15 +59,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     formRow: {
         display: "flex",
         alignItems: "center",
-        "& input:first-child": {
-            marginRight: 12
+        "&>div:first-child": {
+            marginRight: 12,
+            [theme.breakpoints.down("xs")]: {
+                marginRight: 0
+            }
+        },
+        [theme.breakpoints.down("xs")]: {
+            display: "block"
         }
     },
     formInput: {
         marginBottom: 12
     },
     agreement: {
-        marginBottom: 12
+        marginBottom: 18
     },
     agreementLink: {
         color: theme.palette.text.secondary,
