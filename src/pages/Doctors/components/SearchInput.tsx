@@ -78,8 +78,8 @@ export const SearchInput: React.FC<TextFieldProps> = observer(({ ...props }) => 
             >
                 <ListItemAvatar className={classes.listItemAvatar}>
                     <Avatar
+                        size={48}
                         src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
-                        size="lg"
                     />
                 </ListItemAvatar>
                 <ListItemText

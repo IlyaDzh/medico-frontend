@@ -33,6 +33,7 @@ export type PatientAdditionalData = {
     isAlcoholic: string;
     badHabits: string;
     bloodTransfusion: string;
+    avatar: string;
 };
 
 export type DoctorAdditionalData = {

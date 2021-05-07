@@ -12,9 +12,13 @@ import {
 } from "stores/interfaces/Dashboard";
 
 export class DashboardConsultationsStore implements IDashboardConsultationsStore {
+    activeConsultations: Consultation[] = [] as Consultation[];
+
     waitingConsultations: Consultation[] = [] as Consultation[];
 
     doneConsultations: Consultation[] = [] as Consultation[];
+
+    pendingActiveConsultations: boolean = false;
 
     pendingWaitingConsultations: boolean = false;
 
@@ -58,6 +62,24 @@ export class DashboardConsultationsStore implements IDashboardConsultationsStore
             .finally(
                 action(() => {
                     this.pendingDoneConsultations = false;
+                })
+            );
+    };
+
+    getActiveConsultations = () => {
+        this.pendingActiveConsultations = true;
+
+        DashboardPatientApi.getConsultations("active")
+            .then(
+                action(
+                    ({ data }: AxiosResponse<IGetConsultationsSuccessResponse>) => {
+                        this.activeConsultations = data.data;
+                    }
+                )
+            )
+            .finally(
+                action(() => {
+                    this.pendingActiveConsultations = false;
                 })
             );
     };

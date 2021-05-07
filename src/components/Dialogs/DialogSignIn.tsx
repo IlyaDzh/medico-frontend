@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import {
     TextField,
-    FormControlLabel,
     Link as MaterialLink,
-    Typography,
     makeStyles,
     Theme
 } from "@material-ui/core";

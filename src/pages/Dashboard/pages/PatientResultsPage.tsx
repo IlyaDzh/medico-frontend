@@ -24,7 +24,7 @@ export const PatientResultsPage: React.FC = observer(() => {
     }, [getAppointmentResults]); // eslint-disable-line
 
     return (
-        <div>
+        <React.Fragment>
             <Typography className={classes.title} variant="h4">
                 Назначения врача
             </Typography>
@@ -41,6 +41,6 @@ export const PatientResultsPage: React.FC = observer(() => {
             ) : (
                 <Loader level={3} isCenter />
             )}
-        </div>
+        </React.Fragment>
     );
 });

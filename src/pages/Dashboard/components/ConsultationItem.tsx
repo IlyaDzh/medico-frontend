@@ -20,6 +20,7 @@ import { formatDate } from "utils/formatDate";
 interface IConsultationItem {
     consultation: Consultation;
     onCancel?: () => void;
+    isActive?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -108,7 +109,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const ConsultationItem: React.FC<IConsultationItem> = ({
     consultation,
-    onCancel
+    onCancel,
+    isActive
 }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -204,14 +206,25 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                 </div>
             ) : (
                 <div className={classes.alertRight}>
-                    <MaterialLink
-                        className={classes.appointmentLink}
-                        component={Link}
-                        to={`/appointment/${consultation.doctor.id}`}
-                        underline="always"
-                    >
-                        Записаться на прием
-                    </MaterialLink>
+                    {isActive ? (
+                        <MaterialLink
+                            className={classes.appointmentLink}
+                            component={Link}
+                            to={`/dashboard/chat/${consultation.id}`}
+                            underline="always"
+                        >
+                            Перейти к консультации
+                        </MaterialLink>
+                    ) : (
+                        <MaterialLink
+                            className={classes.appointmentLink}
+                            component={Link}
+                            to={`/appointment/${consultation.doctor.id}`}
+                            underline="always"
+                        >
+                            Записаться на прием
+                        </MaterialLink>
+                    )}
                 </div>
             )}
         </div>

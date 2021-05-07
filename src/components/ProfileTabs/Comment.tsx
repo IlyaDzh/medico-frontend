@@ -56,9 +56,13 @@ export const Comment: React.FC<IComment> = ({ review }) => {
             <div className={classes.commentHeader}>
                 <div className={classes.commentOwner}>
                     <Avatar
-                        size="elg"
+                        size={58}
                         alt={`Фото ${review.name} ${review.surname}`}
-                        src={review.avatar || undefined}
+                        src={
+                            review.avatar
+                                ? process.env.REACT_APP_API_BASE_URL + review.avatar
+                                : undefined
+                        }
                     />
                     <div className={classes.ownerInfo}>
                         <Typography

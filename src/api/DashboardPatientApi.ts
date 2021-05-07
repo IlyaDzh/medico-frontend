@@ -2,7 +2,7 @@ import { axiosInstance } from "./axios-instance";
 import { ICancelConsultationPostData, IDeleteAnalysisPostData } from "./interfaces";
 
 export class DashboardPatientApi {
-    static getConsultations(type: "waiting" | "done") {
+    static getConsultations(type: "waiting" | "done" | "active") {
         return axiosInstance.get(
             `/api/v1/consultation/doctors-for-patient?consultationState=${type}`
         );

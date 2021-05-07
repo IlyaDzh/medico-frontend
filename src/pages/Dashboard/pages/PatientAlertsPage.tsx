@@ -19,10 +19,13 @@ export const PatientAlertsPage: React.FC = observer(() => {
     const classes = useStyles();
     const { dashboardConsultations, modalsStore } = useStores();
     const {
+        activeConsultations,
         waitingConsultations,
         doneConsultations,
+        pendingActiveConsultations,
         pendingWaitingConsultations,
         pendingDoneConsultations,
+        getActiveConsultations,
         getWaitingConsultations,
         getDoneConsultations,
         setCancelConsultationId
@@ -30,13 +33,18 @@ export const PatientAlertsPage: React.FC = observer(() => {
     const { setModalIsOpen } = modalsStore;
 
     useEffect(() => {
-        if (pendingWaitingConsultations || pendingDoneConsultations) {
+        if (
+            pendingActiveConsultations ||
+            pendingWaitingConsultations ||
+            pendingDoneConsultations
+        ) {
             return;
         }
 
+        getActiveConsultations();
         getWaitingConsultations();
         getDoneConsultations();
-    }, [getWaitingConsultations, getDoneConsultations]); // eslint-disable-line
+    }, [getActiveConsultations, getWaitingConsultations, getDoneConsultations]); // eslint-disable-line
 
     const handleCancelConsultation = (id: number): void => {
         setCancelConsultationId(id);
@@ -45,6 +53,28 @@ export const PatientAlertsPage: React.FC = observer(() => {
 
     return (
         <React.Fragment>
+            <article className={classes.articleMargin}>
+                <Typography className={classes.title} variant="h4">
+                    Активные консультации
+                </Typography>
+                {!pendingActiveConsultations ? (
+                    activeConsultations.length > 0 ? (
+                        activeConsultations.map((consultation, index) => (
+                            <ConsultationItem
+                                key={index}
+                                consultation={consultation}
+                                isActive
+                            />
+                        ))
+                    ) : (
+                        <Typography variant="body1">
+                            Активных консультаций не найдено
+                        </Typography>
+                    )
+                ) : (
+                    <Loader level={3} isCenter />
+                )}
+            </article>
             <article className={classes.articleMargin}>
                 <Typography className={classes.title} variant="h4">
                     Запланированные записи

@@ -1,9 +1,12 @@
 export interface IDashboardConsultationsStore {
+    activeConsultations: Consultation[];
     waitingConsultations: Consultation[];
     doneConsultations: Consultation[];
+    pendingActiveConsultations: boolean;
     pendingWaitingConsultations: boolean;
     pendingDoneConsultations: boolean;
     cancelConsultationId: number | null;
+    getActiveConsultations: () => void;
     getWaitingConsultations: () => void;
     getDoneConsultations: () => void;
     cancelConsultation: () => void;
