@@ -1,10 +1,11 @@
 import { AxiosResponse, AxiosError } from "axios";
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, reaction } from "mobx";
 
 import {
     DashboardPatientApi,
     IAppendAnalysisErrorResponse,
     IAppendAnalysisSuccessResponse,
+    IDeleteAnalysisPostData,
     IGetAnalyzesSuccessResponse
 } from "api";
 import {
@@ -65,6 +66,16 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
             setFormValue: action,
             resetForm: action
         });
+
+        reaction(
+            () => this.appendForm.name,
+            name => name && (this.appendFormErrors.name = isNotEmpty(name))
+        );
+
+        reaction(
+            () => this.appendForm.file,
+            file => file && (this.appendFormErrors.file = isNotEmpty(file))
+        );
     }
 
     getAnalyzes = () => {
@@ -93,6 +104,10 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
     };
 
     appendAnalysis = () => {
+        if (!this.validateForm()) {
+            return;
+        }
+
         this.appendPending = true;
         this.submissionError = undefined;
 
@@ -110,6 +125,7 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
                 action(({ data }: AxiosResponse<IAppendAnalysisSuccessResponse>) => {
                     this.analyzes.push(data.data);
                     this.rootStore.modalsStore.setModalIsOpen("add-analysis", false);
+                    this.resetForm();
                 })
             )
             .catch(
@@ -119,7 +135,7 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
             )
             .finally(
                 action(() => {
-                    this.analyzesPending = false;
+                    this.appendPending = false;
                 })
             );
     };
@@ -129,7 +145,21 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
     };
 
     deleteAnalysis = () => {
-        console.log(`Файл с id ${this.deleteAnalysisId} удалён`);
+        if (!this.deleteAnalysisId) {
+            return;
+        }
+
+        const postData: IDeleteAnalysisPostData = {
+            analysisId: this.deleteAnalysisId
+        };
+
+        DashboardPatientApi.deleteAnalysis(postData).then(
+            action(() => {
+                this.analyzes = this.analyzes.filter(
+                    item => item.id !== this.deleteAnalysisId
+                );
+            })
+        );
     };
 
     validateForm = () => {

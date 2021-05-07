@@ -1,5 +1,5 @@
 import { axiosInstance } from "./axios-instance";
-import { ICancelConsultationPostData } from "./interfaces";
+import { ICancelConsultationPostData, IDeleteAnalysisPostData } from "./interfaces";
 
 export class DashboardPatientApi {
     static getConsultations(type: "waiting" | "done") {
@@ -18,5 +18,9 @@ export class DashboardPatientApi {
 
     static appendAnalysis(postData: FormData) {
         return axiosInstance.post("/api/v1/patient/analysis/append", postData);
+    }
+
+    static deleteAnalysis(postData: IDeleteAnalysisPostData) {
+        return axiosInstance.post("/api/v1/patient/analysis/delete", postData);
     }
 }

@@ -24,9 +24,11 @@ import truncateText from "utils/truncateText";
 
 const useStyles = makeStyles((theme: Theme) => ({
     uploadFile: {
+        marginBottom: 28
+    },
+    uploadFileInput: {
         display: "flex",
         alignItems: "center",
-        marginBottom: 28,
         [theme.breakpoints.down("xs")]: {
             display: "block"
         }
@@ -106,28 +108,32 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                     Допустимые форматы: jpeg, png, txt,pdf
                 </Typography>
                 <div className={classes.uploadFile}>
-                    <label htmlFor="analysis-file">
-                        <MaterialButton
-                            className={classes.uploadFileButton}
-                            variant="outlined"
-                            color="primary"
-                            component="span"
-                        >
-                            Выбрать файл
-                        </MaterialButton>
-                    </label>
-                    <input
-                        id="analysis-file"
-                        type="file"
-                        accept="image/png, image/jpg, image/jpeg, text/plain, application/pdf"
-                        onChange={event => handleFileAttachment(event.target.files)}
-                        hidden
-                    />
-                    <Typography variant="body1" color="textSecondary">
-                        {appendForm.file
-                            ? truncateText(appendForm.file.name)
-                            : "Файл не выбран"}
-                    </Typography>
+                    <div className={classes.uploadFileInput}>
+                        <label htmlFor="analysis-file">
+                            <MaterialButton
+                                className={classes.uploadFileButton}
+                                variant="outlined"
+                                color="primary"
+                                component="span"
+                            >
+                                Выбрать файл
+                            </MaterialButton>
+                        </label>
+                        <input
+                            id="analysis-file"
+                            type="file"
+                            accept="image/png, image/jpg, image/jpeg, text/plain, application/pdf"
+                            onChange={event =>
+                                handleFileAttachment(event.target.files)
+                            }
+                            hidden
+                        />
+                        <Typography variant="body1" color="textSecondary">
+                            {appendForm.file
+                                ? truncateText(appendForm.file.name)
+                                : "Файл не выбран"}
+                        </Typography>
+                    </div>
                     <FormHelperText error={Boolean(appendFormErrors.file)}>
                         {appendFormErrors.file}
                     </FormHelperText>
