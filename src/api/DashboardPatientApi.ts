@@ -23,4 +23,8 @@ export class DashboardPatientApi {
     static deleteAnalysis(postData: IDeleteAnalysisPostData) {
         return axiosInstance.post("/api/v1/patient/analysis/delete", postData);
     }
+
+    static getAppointmentResults() {
+        return axiosInstance.get("/api/v1/consultation/appointments");
+    }
 }

@@ -17,7 +17,7 @@ export class DashboardConsultationsStore implements IDashboardConsultationsStore
     doneConsultations: Consultation[] = [] as Consultation[];
 
     pendingWaitingConsultations: boolean = false;
-    
+
     pendingDoneConsultations: boolean = false;
 
     cancelConsultationId: number | null = null;
@@ -37,11 +37,6 @@ export class DashboardConsultationsStore implements IDashboardConsultationsStore
                     }
                 )
             )
-            .catch(
-                action(() => {
-                    this.waitingConsultations = [];
-                })
-            )
             .finally(
                 action(() => {
                     this.pendingWaitingConsultations = false;
@@ -59,11 +54,6 @@ export class DashboardConsultationsStore implements IDashboardConsultationsStore
                         this.doneConsultations = data.data;
                     }
                 )
-            )
-            .catch(
-                action(() => {
-                    this.doneConsultations = [];
-                })
             )
             .finally(
                 action(() => {

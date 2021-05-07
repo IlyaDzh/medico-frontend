@@ -49,7 +49,7 @@ export const AnalyzesList: React.FC = observer(() => {
         if (!analyzes.length) {
             getAnalyzes();
         }
-    }, [getAnalyzes]);
+    }, [getAnalyzes]); // eslint-disable-line
 
     const setIndex = (value: number): void => {
         setPhotoIndex(value);
@@ -63,7 +63,7 @@ export const AnalyzesList: React.FC = observer(() => {
     const handleDeleteAnalysis = (id: number): void => {
         setDeleteAnalysisId(id);
         setModalIsOpen("delete-analysis", true);
-    }
+    };
 
     return (
         <React.Fragment>
@@ -84,10 +84,11 @@ export const AnalyzesList: React.FC = observer(() => {
                     isActive={"snapshot" === currentChip}
                 />
             </div>
-            <div className={classes.analyzes}>
-                {!analyzesPending ? (
-                    analyzes.length > 0 ? (
-                        (currentChip === "all"
+
+            {!analyzesPending ? (
+                analyzes.length > 0 ? (
+                    <div className={classes.analyzes}>
+                        {(currentChip === "all"
                             ? analyzes
                             : sortAnalyzesByType(currentChip)
                         ).map((analysis, index) => (
@@ -97,14 +98,15 @@ export const AnalyzesList: React.FC = observer(() => {
                                 onClick={() => handleAnalysisItemClick(index)}
                                 onDelete={() => handleDeleteAnalysis(analysis.id)}
                             />
-                        ))
-                    ) : (
-                        <Typography variant="body1">Анализов нет</Typography>
-                    )
+                        ))}
+                    </div>
                 ) : (
-                    <Loader level={2.5} isCenter />
-                )}
-            </div>
+                    <Typography variant="body1">Анализов нет</Typography>
+                )
+            ) : (
+                <Loader level={2.5} isCenter />
+            )}
+
             {isOpen && analyzes.length > 0 && (
                 <Lightbox
                     images={analyzes.map(

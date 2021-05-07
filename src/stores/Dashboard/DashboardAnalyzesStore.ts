@@ -87,11 +87,6 @@ export class DashboardAnalyzesStore implements IDashboardAnalyzesStore {
                     this.analyzes = data.data;
                 })
             )
-            .catch(
-                action(() => {
-                    this.analyzes = [];
-                })
-            )
             .finally(
                 action(() => {
                     this.analyzesPending = false;

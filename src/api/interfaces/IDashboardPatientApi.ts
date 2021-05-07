@@ -1,5 +1,9 @@
 import { BaseResponse } from "./";
-import { Analysis, Consultation } from "stores/interfaces/Dashboard";
+import {
+    Analysis,
+    Consultation,
+    AppointmentResult
+} from "stores/interfaces/Dashboard";
 
 export interface ICancelConsultationPostData {
     consultationId: number;
@@ -37,4 +41,9 @@ export interface IAppendAnalysisSuccessResponse extends BaseResponse {
 export interface IAppendAnalysisErrorResponse extends BaseResponse {
     error: 1;
     data: null;
+}
+
+export interface IGetAppointmentResultsSuccessResponse extends BaseResponse {
+    error: 1;
+    data: AppointmentResult[];
 }

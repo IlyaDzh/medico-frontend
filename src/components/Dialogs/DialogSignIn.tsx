@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import {
     TextField,
     FormControlLabel,
-    Checkbox,
     Link as MaterialLink,
     Typography,
     makeStyles,
@@ -18,26 +17,12 @@ import { UserIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     dialogForm: {
-        marginBottom: 28
+        marginBottom: 18
     },
     formInput: {
         marginBottom: 12
     },
-    formFlex: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: 26,
-        paddingTop: 4,
-        [theme.breakpoints.down(400)]: {
-            display: "block",
-            textAlign: "center"
-        }
-    },
-    rememberMeLabel: {
-        fontSize: 14
-    },
-    dialogFooter: {
+    linkCenter: {
         textAlign: "center"
     },
     dialogLink: {
@@ -98,19 +83,7 @@ export const DialogSignIn: React.FC = observer(() => {
                     onChange={event => setFormValue("password", event.target.value)}
                     fullWidth
                 />
-                <div className={classes.formFlex}>
-                    <FormControlLabel
-                        control={<Checkbox color="secondary" />}
-                        label={
-                            <Typography
-                                className={classes.rememberMeLabel}
-                                variant="body2"
-                                color="textSecondary"
-                            >
-                                Запомнить меня
-                            </Typography>
-                        }
-                    />
+                <div className={classes.linkCenter}>
                     <MaterialLink
                         className={classes.dialogLink}
                         type="button"
@@ -135,7 +108,7 @@ export const DialogSignIn: React.FC = observer(() => {
                     Войти
                 </Button>
             </form>
-            <div className={classes.dialogFooter}>
+            <div className={classes.linkCenter}>
                 <Link
                     className={classes.dialogLink}
                     onClick={handleClose}

@@ -12,7 +12,11 @@ import { SearchDoctorStore } from "./SearchDoctorStore";
 import { HomeStore } from "./HomeStore";
 import { DrawerStore } from "./DrawerStore";
 import { AppointmentStore } from "./AppointmentStore";
-import { DashboardAnalyzesStore, DashboardConsultationsStore } from "./Dashboard";
+import {
+    DashboardAnalyzesStore,
+    DashboardConsultationsStore,
+    DashboardResultsStore
+} from "./Dashboard";
 
 import IStores from "./interfaces";
 import { IRouterStore } from "./interfaces/IRouterStore";
@@ -29,7 +33,8 @@ import { IDrawerStore } from "./interfaces/IDrawerStore";
 import { IAppointmentStore } from "./interfaces/IAppointmentStore";
 import {
     IDashboardAnalyzesStore,
-    IDashboardConsultationsStore
+    IDashboardConsultationsStore,
+    IDashboardResultsStore
 } from "./interfaces/Dashboard";
 
 export class RootStore implements IStores {
@@ -47,6 +52,7 @@ export class RootStore implements IStores {
     appointmentStore: IAppointmentStore;
     dashboardConsultations: IDashboardConsultationsStore;
     dashboardAnalyzes: IDashboardAnalyzesStore;
+    dashboardResults: IDashboardResultsStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -63,5 +69,6 @@ export class RootStore implements IStores {
         this.appointmentStore = new AppointmentStore();
         this.dashboardConsultations = new DashboardConsultationsStore();
         this.dashboardAnalyzes = new DashboardAnalyzesStore(this);
+        this.dashboardResults = new DashboardResultsStore();
     }
 }
