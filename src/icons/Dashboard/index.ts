@@ -14,3 +14,4 @@ export * from "./AllergiesIcon";
 export * from "./ChronicDiseasesIcon";
 export * from "./OperationsIcon";
 export * from "./TransfusionIcon";
+export * from "./PencilIcon";

@@ -254,7 +254,7 @@ export const Footer: React.FC = () => {
                         className={classes.footerLogo}
                         aria-label="Перейти на главную"
                     >
-                        <LogoIcon width={55} />
+                        <LogoIcon width={64} />
                     </Link>
                     <div className={classes.footerBottomNav}>
                         <ul className={classes.footerBottomList}>

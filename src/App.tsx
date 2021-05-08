@@ -34,15 +34,17 @@ export const App: React.FC = observer(() => {
         }
     }, [fetchUser]);
 
+    if (pending) {
+        return <Backdrop />;
+    }
+
     const dashboardIsActive = currentUser
         ? currentUser.userType === "patient"
             ? Boolean(currentUser.additionalData)
             : Boolean(currentUser.additionalData?.isVerified)
+        : localStorage.getItem("accessToken")
+        ? true
         : false;
-
-    if (pending) {
-        return <Backdrop />;
-    }
 
     return (
         <React.Fragment>

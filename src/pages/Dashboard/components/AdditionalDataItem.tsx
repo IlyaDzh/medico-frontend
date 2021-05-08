@@ -1,9 +1,11 @@
 import React from "react";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, IconButton, makeStyles, Theme } from "@material-ui/core";
+
+import { PencilIcon } from "icons";
 
 interface IAdditionalDataItem {
     title: string;
-    data: string | string[];
+    data: string;
     icon: React.ReactNode;
 }
 
@@ -28,7 +30,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center"
     },
-    itemContent: {}
+    itemTitle: {
+        fontSize: 16,
+        marginLeft: 12
+    },
+    editButton: {
+        width: 36,
+        height: 36,
+        padding: 0
+    }
 }));
 
 export const AdditionalDataItem: React.FC<IAdditionalDataItem> = ({
@@ -43,11 +53,20 @@ export const AdditionalDataItem: React.FC<IAdditionalDataItem> = ({
             <div className={classes.itemHeader}>
                 <div className={classes.itemHeaderLeft}>
                     {icon}
-                    <Typography variant="body2">{title}</Typography>
+                    <Typography className={classes.itemTitle} variant="body2">
+                        {title}
+                    </Typography>
                 </div>
-                <div>+</div>
+                <IconButton
+                    className={classes.editButton}
+                    aria-label={`Редактировать ${title}`}
+                >
+                    <PencilIcon />
+                </IconButton>
             </div>
-            <div className={classes.itemContent}>{data}</div>
+            <Typography variant="body1" color="textSecondary">
+                {data || <i>Не заполнено</i>}
+            </Typography>
         </div>
     );
 };

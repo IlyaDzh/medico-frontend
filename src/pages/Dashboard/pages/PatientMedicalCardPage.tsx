@@ -6,6 +6,7 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 import { AdditionalDataItem } from "../components";
 import { Avatar } from "components";
 import { useStores } from "stores/useStore";
+import { getAge } from "utils/getAge";
 import {
     BloodIcon,
     BadHabitsIcon,
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     userParams: {
         display: "flex",
         alignItems: "center",
-        margin: "0 -20px 40px",
+        margin: "0 -8px 40px",
         maxWidth: 702,
         [theme.breakpoints.down("xs")]: {
             display: "block",
@@ -52,9 +53,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     userParamsFlex: {
         display: "flex",
         width: "50%",
-        margin: "0 20px",
+        margin: "0 8px",
         "&>div:first-child": {
-            marginRight: 40,
+            marginRight: 16,
             [theme.breakpoints.down("xs")]: {
                 marginRight: 24
             }
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     paramsItemLarge: {
         width: "50%",
-        margin: "0 20px",
+        margin: "0 8px",
         [theme.breakpoints.down("xs")]: {
             width: "100%",
             margin: 0
@@ -88,14 +89,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     userAdditional: {
         display: "flex",
         maxWidth: 702,
-        margin: "0 -20px",
+        margin: "0 -8px",
         [theme.breakpoints.down("xs")]: {
             display: "block",
             margin: 0
         }
     },
     userAdditionalList: {
-        margin: "0 20px",
+        margin: "0 8px",
         width: "50%",
         [theme.breakpoints.down("xs")]: {
             margin: "0 0 12px",
@@ -141,7 +142,7 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                         {currentUser.middleName}
                     </Typography>
                     <Typography variant="h6" color="textPrimary">
-                        {currentUser.birthDate}
+                        {getAge(currentUser.birthDate)} лет
                     </Typography>
                 </div>
             </div>
