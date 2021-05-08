@@ -441,7 +441,7 @@ export const SignUpForm: React.FC = observer(() => {
                         </Typography>
                     }
                 />
-                <SubmissionError>{submissionError}</SubmissionError>
+                <SubmissionError align="center">{submissionError}</SubmissionError>
                 <Button
                     type="submit"
                     variant="contained"

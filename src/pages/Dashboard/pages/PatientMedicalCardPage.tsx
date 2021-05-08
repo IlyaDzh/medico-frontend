@@ -6,6 +6,14 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 import { AdditionalDataItem } from "../components";
 import { Avatar } from "components";
 import { useStores } from "stores/useStore";
+import {
+    BloodIcon,
+    BadHabitsIcon,
+    AllergiesIcon,
+    ChronicDiseasesIcon,
+    OperationsIcon,
+    TransfusionIcon
+} from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     title: {
@@ -14,38 +22,85 @@ const useStyles = makeStyles((theme: Theme) => ({
     userMain: {
         display: "flex",
         alignItems: "center",
-        marginBottom: 66
+        marginBottom: 66,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 42
+        }
     },
     userInfo: {
-        marginLeft: 42
+        marginLeft: 42,
+        [theme.breakpoints.down("xs")]: {
+            marginLeft: 24
+        }
     },
-    userAdditional: {
-        maxWidth: 702
+    userFullname: {
+        marginBottom: 4,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 8
+        }
     },
     userParams: {
         display: "flex",
         alignItems: "center",
-        margin: "0 -20px 40px"
+        margin: "0 -20px 40px",
+        maxWidth: 702,
+        [theme.breakpoints.down("xs")]: {
+            display: "block",
+            margin: "0 0 24px"
+        }
+    },
+    userParamsFlex: {
+        display: "flex",
+        width: "50%",
+        margin: "0 20px",
+        "&>div:first-child": {
+            marginRight: 40,
+            [theme.breakpoints.down("xs")]: {
+                marginRight: 24
+            }
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: "100%",
+            margin: "0 0 12px"
+        }
     },
     paramsItem: {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
-        width: "25%",
+        width: "50%",
         height: 64,
         borderRadius: 8,
         border: `1px solid ${theme.palette.other!.main}`,
-        background: "#fff",
-        margin: "0 20px"
+        background: "#fff"
     },
     paramsItemLarge: {
-        width: "50%"
+        width: "50%",
+        margin: "0 20px",
+        [theme.breakpoints.down("xs")]: {
+            width: "100%",
+            margin: 0
+        }
     },
     paramsItemContent: {
         textAlign: "center"
     },
+    userAdditional: {
+        display: "flex",
+        maxWidth: 702,
+        margin: "0 -20px",
+        [theme.breakpoints.down("xs")]: {
+            display: "block",
+            margin: 0
+        }
+    },
     userAdditionalList: {
-        margin: "0 -24px"
+        margin: "0 20px",
+        width: "50%",
+        [theme.breakpoints.down("xs")]: {
+            margin: "0 0 12px",
+            width: "100%"
+        }
     }
 }));
 
@@ -58,11 +113,17 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
         return null;
     }
 
+    const IMT = (
+        currentUser.additionalData.weight /
+        Math.pow(currentUser.additionalData.height / 100, 2)
+    ).toFixed(2);
+
     return (
         <React.Fragment>
             <Typography className={classes.title} variant="h4">
                 Моя медицинская карта
             </Typography>
+
             <div className={classes.userMain}>
                 <Avatar
                     size={88}
@@ -75,7 +136,7 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                     alt="Ваше фото"
                 />
                 <div className={classes.userInfo}>
-                    <Typography variant="body1">
+                    <Typography className={classes.userFullname} variant="body1">
                         {currentUser.surname} {currentUser.name}{" "}
                         {currentUser.middleName}
                     </Typography>
@@ -84,8 +145,9 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                     </Typography>
                 </div>
             </div>
-            <div className={classes.userAdditional}>
-                <div className={classes.userParams}>
+
+            <div className={classes.userParams}>
+                <div className={classes.userParamsFlex}>
                     <div className={classes.paramsItem}>
                         <span className={classes.paramsItemContent}>
                             <Typography variant="h6">Рост</Typography>
@@ -102,32 +164,53 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                             </Typography>
                         </span>
                     </div>
-                    <div
-                        className={clsx(classes.paramsItem, classes.paramsItemLarge)}
-                    >
-                        <Typography variant="h5" color="textSecondary">
-                            Ваш ИМТ в норме
-                        </Typography>
-                        <span className={classes.paramsItemContent}>
-                            <Typography variant="h6">ИМТ</Typography>
-                            <Typography variant="body2" color="primary">
-                                24,5
-                            </Typography>
-                        </span>
-                    </div>
                 </div>
+                <div className={clsx(classes.paramsItem, classes.paramsItemLarge)}>
+                    <Typography variant="h5" color="textSecondary">
+                        Ваш ИМТ в норме
+                    </Typography>
+                    <span className={classes.paramsItemContent}>
+                        <Typography variant="h6">ИМТ</Typography>
+                        <Typography variant="body2" color="primary">
+                            {IMT}
+                        </Typography>
+                    </span>
+                </div>
+            </div>
+
+            <div className={classes.userAdditional}>
                 <div className={classes.userAdditionalList}>
                     <AdditionalDataItem
                         title="Группа крови"
                         data={`${currentUser.additionalData.bloodType} группа`}
+                        icon={<BloodIcon />}
                     />
                     <AdditionalDataItem
-                        title="Группа крови"
-                        data={`${currentUser.additionalData.bloodType} группа`}
+                        title="Вредные привычки"
+                        data={currentUser.additionalData.badHabits}
+                        icon={<BadHabitsIcon />}
                     />
                     <AdditionalDataItem
-                        title="Группа крови"
-                        data={`${currentUser.additionalData.bloodType} группа`}
+                        title="Аллергия"
+                        data={currentUser.additionalData.allergies}
+                        icon={<AllergiesIcon />}
+                    />
+                </div>
+                <div className={classes.userAdditionalList}>
+                    <AdditionalDataItem
+                        title="Хронические заболевания"
+                        data={currentUser.additionalData.chronicDiseases}
+                        icon={<ChronicDiseasesIcon />}
+                    />
+                    <AdditionalDataItem
+                        title="Операции"
+                        data={currentUser.additionalData.operations}
+                        icon={<OperationsIcon />}
+                    />
+                    <AdditionalDataItem
+                        title="Переливание крови"
+                        data={currentUser.additionalData.bloodTransfusion}
+                        icon={<TransfusionIcon />}
                     />
                 </div>
             </div>

@@ -74,7 +74,9 @@ export const AppointmentResultItem: React.FC<IAppointmentResultItem> = ({
                     {formatDate(result.receptionDate.toString(), "dd MMMM yyyy")}
                 </Typography>
             </div>
-            <Typography variant="body1">{result.appointment}</Typography>
+            <Typography variant="body1">
+                {result.appointment || <i>Врач не написал назначения</i>}
+            </Typography>
         </div>
     );
 };
