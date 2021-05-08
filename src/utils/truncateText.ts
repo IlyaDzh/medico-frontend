@@ -1,4 +1,4 @@
-const truncateText = (
+export const truncateText = (
     text: string,
     limit: number = 20,
     lengthStart: number = 8,
@@ -8,5 +8,3 @@ const truncateText = (
         ? text.slice(0, lengthStart) + "..." + text.slice(-lengthEnd)
         : text;
 };
-
-export default truncateText;

@@ -4,9 +4,10 @@ import { observer } from "mobx-react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { AdditionalDataItem } from "../components";
-import { Avatar } from "components";
+import { Avatar, DialogUpdateMedicalCard } from "components";
 import { useStores } from "stores/useStore";
 import { getAge } from "utils/getAge";
+import { getDescriptionByIMT } from "utils/getDescriptionByIMT";
 import {
     BloodIcon,
     BadHabitsIcon,
@@ -107,8 +108,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const PatientMedicalCardPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore } = useStores();
+    const { userStore, modalsStore } = useStores();
     const { currentUser } = userStore;
+    const { setModalIsOpen } = modalsStore;
 
     if (!currentUser || !currentUser.additionalData) {
         return null;
@@ -118,6 +120,11 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
         currentUser.additionalData.weight /
         Math.pow(currentUser.additionalData.height / 100, 2)
     ).toFixed(2);
+
+    const handleEditData = (name: string): void => {
+        setModalIsOpen("update-medical-card", true);
+        console.log("set modal state:", name);
+    };
 
     return (
         <React.Fragment>
@@ -168,7 +175,7 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                 </div>
                 <div className={clsx(classes.paramsItem, classes.paramsItemLarge)}>
                     <Typography variant="h5" color="textSecondary">
-                        Ваш ИМТ в норме
+                        {getDescriptionByIMT(Number(IMT))}
                     </Typography>
                     <span className={classes.paramsItemContent}>
                         <Typography variant="h6">ИМТ</Typography>
@@ -183,18 +190,25 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                 <div className={classes.userAdditionalList}>
                     <AdditionalDataItem
                         title="Группа крови"
-                        data={`${currentUser.additionalData.bloodType} группа`}
+                        data={`${currentUser.additionalData.bloodType} группа, ${currentUser.additionalData.RHFactor}`}
                         icon={<BloodIcon />}
+                        onEdit={() => handleEditData("blood-type")}
                     />
                     <AdditionalDataItem
                         title="Вредные привычки"
-                        data={currentUser.additionalData.badHabits}
+                        data={[
+                            `Курение - ${currentUser.additionalData.isSmoker}`,
+                            `Алкоголь - ${currentUser.additionalData.isAlcoholic}`,
+                            currentUser.additionalData.badHabits
+                        ]}
                         icon={<BadHabitsIcon />}
+                        onEdit={() => handleEditData("bad-habits")}
                     />
                     <AdditionalDataItem
                         title="Аллергия"
                         data={currentUser.additionalData.allergies}
                         icon={<AllergiesIcon />}
+                        onEdit={() => handleEditData("allergies")}
                     />
                 </div>
                 <div className={classes.userAdditionalList}>
@@ -202,19 +216,24 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                         title="Хронические заболевания"
                         data={currentUser.additionalData.chronicDiseases}
                         icon={<ChronicDiseasesIcon />}
+                        onEdit={() => handleEditData("chronic-diseases")}
                     />
                     <AdditionalDataItem
                         title="Операции"
                         data={currentUser.additionalData.operations}
                         icon={<OperationsIcon />}
+                        onEdit={() => handleEditData("operations")}
                     />
                     <AdditionalDataItem
                         title="Переливание крови"
                         data={currentUser.additionalData.bloodTransfusion}
                         icon={<TransfusionIcon />}
+                        onEdit={() => handleEditData("blood-transfusion")}
                     />
                 </div>
             </div>
+
+            <DialogUpdateMedicalCard />
         </React.Fragment>
     );
 });

@@ -17,10 +17,10 @@ import { Remove as RemoveIcon } from "@material-ui/icons";
 import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "./useFormStyles";
 import { Button, Select, Loader, SubmissionError } from "components";
-import { FormPhotoIcon, FormResumeIcon } from "icons";
 import { useStores } from "stores/useStore";
 import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
-import truncateText from "utils/truncateText";
+import { truncateText } from "utils/truncateText";
+import { FormPhotoIcon, FormResumeIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     formGroup: {

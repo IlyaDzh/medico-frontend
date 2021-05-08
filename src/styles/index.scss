@@ -45,3 +45,23 @@ ol {
     padding: 0;
     border: 0;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+
+    &-track {
+        background-color: #f6f9fc;
+    }
+
+    &-thumb {
+        background-color: #b7b7b7;
+
+        &:hover {
+            background-color: #a8a8a8;
+        }
+
+        &:active {
+            background-color: #999999;
+        }
+    }
+}

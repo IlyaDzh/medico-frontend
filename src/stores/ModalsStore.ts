@@ -31,6 +31,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "delete-analysis",
             isOpen: false
+        },
+        {
+            name: "update-medical-card",
+            isOpen: false
         }
     ];
 
@@ -40,6 +44,7 @@ export class ModalsStore implements IModalsStore {
 
     getModalIsOpen = (modalName: TModalsName) => {
         const currentModal = this.modals.find(modal => modal.name === modalName);
+
         return currentModal ? currentModal.isOpen : false;
     };
 

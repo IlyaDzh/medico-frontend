@@ -18,9 +18,9 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import { DialogBase } from "./DialogBase";
 import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
-import { PlusIcon } from "icons";
 import { AnalysisType } from "stores/interfaces/Dashboard";
-import truncateText from "utils/truncateText";
+import { truncateText } from "utils/truncateText";
+import { PlusIcon } from "icons";
 
 const useStyles = makeStyles((theme: Theme) => ({
     uploadFile: {

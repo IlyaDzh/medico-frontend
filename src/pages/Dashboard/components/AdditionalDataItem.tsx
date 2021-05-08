@@ -5,8 +5,9 @@ import { PencilIcon } from "icons";
 
 interface IAdditionalDataItem {
     title: string;
-    data: string;
+    data: string | string[];
     icon: React.ReactNode;
+    onEdit?: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const AdditionalDataItem: React.FC<IAdditionalDataItem> = ({
     title,
     data,
-    icon
+    icon,
+    onEdit
 }) => {
     const classes = useStyles();
 
@@ -57,16 +59,37 @@ export const AdditionalDataItem: React.FC<IAdditionalDataItem> = ({
                         {title}
                     </Typography>
                 </div>
-                <IconButton
-                    className={classes.editButton}
-                    aria-label={`Редактировать ${title}`}
-                >
-                    <PencilIcon />
-                </IconButton>
+                {onEdit && (
+                    <IconButton
+                        className={classes.editButton}
+                        onClick={onEdit}
+                        aria-label={`Редактировать ${title}`}
+                    >
+                        <PencilIcon />
+                    </IconButton>
+                )}
             </div>
-            <Typography variant="body1" color="textSecondary">
-                {data || <i>Не заполнено</i>}
-            </Typography>
+            {data ? (
+                typeof data === "object" ? (
+                    <ul>
+                        {data.map((item, index) => (
+                            <li key={index}>
+                                <Typography variant="body1" color="textSecondary">
+                                    {item}
+                                </Typography>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <Typography variant="body1" color="textSecondary">
+                        {data}
+                    </Typography>
+                )
+            ) : (
+                <Typography variant="body1" color="textSecondary">
+                    <i>Не заполнено</i>
+                </Typography>
+            )}
         </div>
     );
 };
