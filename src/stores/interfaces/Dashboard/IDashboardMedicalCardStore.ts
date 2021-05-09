@@ -1,16 +1,17 @@
+import { AdditionalData } from "../IUserStore";
+
 export interface IDashboardMedicalCardStore {
     changeCardForm: IChangeMedicalCardForm;
-    changeCardFormErrors: IChangeMedicalCardFormErrors;
     currentModalState: AdditionalTypes | null;
     pending: boolean;
     submissionError: string | undefined;
     changeMedicalCard: () => void;
     setCurrentModalState: (state: AdditionalTypes) => void;
-    // validateForm: () => boolean;
     setFormValue: <K extends KeysOfMedicalCardForm>(
         key: K,
         value: IChangeMedicalCardForm[K]
     ) => void;
+    setChangeCardForm: (data: AdditionalData | null) => void;
     resetForm: () => void;
 }
 
@@ -28,17 +29,8 @@ export interface IChangeMedicalCardForm {
     bloodTransfusion: string | undefined;
 }
 
-export interface IChangeMedicalCardFormErrors {
-    weight: undefined | string;
-    height: undefined | string;
-    bloodType: undefined | string;
-    RHFactor: undefined | string;
-    isSmoker: undefined | string;
-    isAlcoholic: undefined | string;
-    bloodTransfusion: undefined | string;
-}
-
 export type AdditionalTypes =
+    | "height-weight"
     | "blood-type"
     | "bad-habits"
     | "allergies"

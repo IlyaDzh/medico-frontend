@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography, IconButton, makeStyles, Theme } from "@material-ui/core";
+import { Typography, makeStyles, Theme } from "@material-ui/core";
 
-import { PencilIcon } from "icons";
+import { EditIconButton } from "./";
 
 interface IAdditionalDataItem {
     title: string;
@@ -34,11 +34,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     itemTitle: {
         fontSize: 16,
         marginLeft: 12
-    },
-    editButton: {
-        width: 36,
-        height: 36,
-        padding: 0
     }
 }));
 
@@ -59,15 +54,7 @@ export const AdditionalDataItem: React.FC<IAdditionalDataItem> = ({
                         {title}
                     </Typography>
                 </div>
-                {onEdit && (
-                    <IconButton
-                        className={classes.editButton}
-                        onClick={onEdit}
-                        aria-label={`Редактировать ${title}`}
-                    >
-                        <PencilIcon />
-                    </IconButton>
-                )}
+                {onEdit && <EditIconButton title={title} onEdit={onEdit} />}
             </div>
             {data ? (
                 typeof data === "object" ? (

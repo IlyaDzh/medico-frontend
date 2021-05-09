@@ -5,7 +5,6 @@ import {
     TextField,
     FormControl,
     FormControlLabel,
-    FormHelperText,
     RadioGroup,
     Radio,
     FormLabel
@@ -17,15 +16,13 @@ import { useFormStyles } from "styles/material/useFormStyles";
 
 export const BadHabitsForm: React.FC = observer(() => {
     const formClasses = useFormStyles();
-    const { userStore, dashboardMedicalCard } = useStores();
+    const { dashboardMedicalCard } = useStores();
     const {
         changeCardForm,
-        changeCardFormErrors,
         pending,
         submissionError,
         setFormValue
     } = dashboardMedicalCard;
-    const { currentUser } = userStore;
 
     return (
         <React.Fragment>
@@ -34,11 +31,7 @@ export const BadHabitsForm: React.FC = observer(() => {
                     Курение:
                 </FormLabel>
                 <RadioGroup
-                    value={
-                        changeCardForm.isSmoker === undefined
-                            ? currentUser?.additionalData?.isSmoker
-                            : changeCardForm.isSmoker || ""
-                    }
+                    value={changeCardForm.isSmoker}
                     onChange={event => setFormValue("isSmoker", event.target.value)}
                     aria-label="Курение"
                 >
@@ -70,20 +63,13 @@ export const BadHabitsForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText error={Boolean(changeCardFormErrors.isSmoker)}>
-                    {changeCardFormErrors.isSmoker}
-                </FormHelperText>
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Алкоголь:
                 </FormLabel>
                 <RadioGroup
-                    value={
-                        changeCardForm.isAlcoholic === undefined
-                            ? currentUser?.additionalData?.isAlcoholic
-                            : changeCardForm.isAlcoholic || ""
-                    }
+                    value={changeCardForm.isAlcoholic}
                     onChange={event =>
                         setFormValue("isAlcoholic", event.target.value)
                     }
@@ -126,9 +112,6 @@ export const BadHabitsForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText error={Boolean(changeCardFormErrors.isAlcoholic)}>
-                    {changeCardFormErrors.isAlcoholic}
-                </FormHelperText>
             </FormControl>
             <FormControl
                 className={formClasses.formGroup}
@@ -142,11 +125,7 @@ export const BadHabitsForm: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="Заполните поле, если таковые имеются"
-                    value={
-                        changeCardForm.badHabits === undefined
-                            ? currentUser?.additionalData?.badHabits
-                            : changeCardForm.badHabits || ""
-                    }
+                    value={changeCardForm.badHabits}
                     onChange={event => setFormValue("badHabits", event.target.value)}
                     fullWidth
                 />

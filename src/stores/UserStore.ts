@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios";
-import { action, makeAutoObservable } from "mobx";
+import { makeObservable, action, observable } from "mobx";
 
 import { UserApi, IGetUserSuccessResponse, ISignInSuccessResponse } from "api";
 import { IUserStore, IUser } from "./interfaces/IUserStore";
+import IStores from "./interfaces";
 
 export class UserStore implements IUserStore {
     currentUser: IUser | undefined = undefined;
@@ -11,8 +12,18 @@ export class UserStore implements IUserStore {
 
     pending: boolean = false;
 
-    constructor() {
-        makeAutoObservable(this);
+    private rootStore: IStores;
+
+    constructor(rootStore: IStores) {
+        this.rootStore = rootStore;
+
+        makeObservable(this, {
+            currentUser: observable,
+            isAuthorized: observable,
+            pending: observable,
+            fetchUser: action,
+            doLogout: action
+        });
     }
 
     fetchUser = () => {
@@ -29,6 +40,9 @@ export class UserStore implements IUserStore {
                 action(({ data }: AxiosResponse<IGetUserSuccessResponse>) => {
                     this.currentUser = data.data;
                     this.isAuthorized = true;
+                    this.rootStore.dashboardMedicalCard.setChangeCardForm(
+                        data.data.additionalData
+                    );
                 })
             )
             .catch(

@@ -6,7 +6,7 @@ import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 import { useFormStyles } from "styles/material/useFormStyles";
 
-export const AllergiesForm: React.FC = observer(() => {
+export const HeightWeightForm: React.FC = observer(() => {
     const formClasses = useFormStyles();
     const { dashboardMedicalCard } = useStores();
     const {
@@ -18,21 +18,32 @@ export const AllergiesForm: React.FC = observer(() => {
 
     return (
         <React.Fragment>
-            <FormControl
-                className={formClasses.formGroup}
-                component="fieldset"
-                fullWidth
-            >
+            <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
-                    Аллергия
+                    Укажите Ваш вес (кг)
                 </FormLabel>
                 <TextField
+                    type="number"
                     variant="outlined"
                     color="secondary"
-                    placeholder="Есть аллергия сезонная на полынь"
-                    value={changeCardForm.allergies}
-                    onChange={event => setFormValue("allergies", event.target.value)}
-                    fullWidth
+                    placeholder="60"
+                    InputProps={{ inputProps: { min: 1 } }}
+                    value={changeCardForm.weight}
+                    onChange={event => setFormValue("weight", event.target.value)}
+                />
+            </FormControl>
+            <FormControl className={formClasses.formGroup} component="fieldset">
+                <FormLabel className={formClasses.groupLabel} component="legend">
+                    Укажите Ваш рост (см)
+                </FormLabel>
+                <TextField
+                    type="number"
+                    variant="outlined"
+                    color="secondary"
+                    placeholder="180"
+                    InputProps={{ inputProps: { min: 1 } }}
+                    value={changeCardForm.height}
+                    onChange={event => setFormValue("height", event.target.value)}
                 />
             </FormControl>
             <SubmissionError align="center">{submissionError}</SubmissionError>

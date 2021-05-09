@@ -6,7 +6,7 @@ import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 import { useFormStyles } from "styles/material/useFormStyles";
 
-export const AllergiesForm: React.FC = observer(() => {
+export const OperationsForm: React.FC = observer(() => {
     const formClasses = useFormStyles();
     const { dashboardMedicalCard } = useStores();
     const {
@@ -24,14 +24,16 @@ export const AllergiesForm: React.FC = observer(() => {
                 fullWidth
             >
                 <FormLabel className={formClasses.groupLabel} component="legend">
-                    Аллергия
+                    Операции
                 </FormLabel>
                 <TextField
                     variant="outlined"
                     color="secondary"
-                    placeholder="Есть аллергия сезонная на полынь"
-                    value={changeCardForm.allergies}
-                    onChange={event => setFormValue("allergies", event.target.value)}
+                    placeholder="Операция - дата, ..."
+                    value={changeCardForm.operations}
+                    onChange={event =>
+                        setFormValue("operations", event.target.value)
+                    }
                     fullWidth
                 />
             </FormControl>

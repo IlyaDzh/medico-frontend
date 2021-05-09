@@ -61,7 +61,7 @@ export class RootStore implements IStores {
         this.routerStore = new RouterStore(history);
         this.signUpStore = new SignUpStore(this);
         this.signInStore = new SignInStore(this);
-        this.userStore = new UserStore();
+        this.userStore = new UserStore(this);
         this.modalsStore = new ModalsStore();
         this.questionnaireStore = new QuestionnaireStore(this);
         this.specialtiesStore = new SpecialtiesStore();

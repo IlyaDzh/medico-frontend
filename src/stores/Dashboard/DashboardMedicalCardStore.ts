@@ -11,40 +11,28 @@ import {
     IDashboardMedicalCardStore,
     AdditionalTypes,
     IChangeMedicalCardForm,
-    IChangeMedicalCardFormErrors,
     KeysOfMedicalCardForm
 } from "stores/interfaces/Dashboard";
 import IStores from "stores/interfaces";
 import { clearEmptyObject } from "utils/clearEmptyObject";
+import { AdditionalData } from "stores/interfaces/IUserStore";
 
 const INITIAL_CHANGE_MEDICAL_CARD_FORM: IChangeMedicalCardForm = {
-    weight: undefined,
-    height: undefined,
-    bloodType: undefined,
-    RHFactor: undefined,
-    allergies: undefined,
-    chronicDiseases: undefined,
-    operations: undefined,
-    isSmoker: undefined,
-    isAlcoholic: undefined,
-    badHabits: undefined,
-    bloodTransfusion: undefined
-};
-
-const INITIAL_CHANGE_MEDICAL_CARD_FORM_ERRORS: IChangeMedicalCardFormErrors = {
-    weight: undefined,
-    height: undefined,
-    bloodType: undefined,
-    RHFactor: undefined,
-    isSmoker: undefined,
-    isAlcoholic: undefined,
-    bloodTransfusion: undefined
+    weight: "",
+    height: "",
+    bloodType: "",
+    RHFactor: "",
+    allergies: "",
+    chronicDiseases: "",
+    operations: "",
+    isSmoker: "",
+    isAlcoholic: "",
+    badHabits: "",
+    bloodTransfusion: ""
 };
 
 export class DashboardMedicalCardStore implements IDashboardMedicalCardStore {
     changeCardForm = INITIAL_CHANGE_MEDICAL_CARD_FORM;
-
-    changeCardFormErrors = INITIAL_CHANGE_MEDICAL_CARD_FORM_ERRORS;
 
     currentModalState: AdditionalTypes | null = null;
 
@@ -59,22 +47,18 @@ export class DashboardMedicalCardStore implements IDashboardMedicalCardStore {
 
         makeObservable(this, {
             changeCardForm: observable,
-            changeCardFormErrors: observable,
             currentModalState: observable,
             pending: observable,
             submissionError: observable,
             changeMedicalCard: action,
             setCurrentModalState: action,
             setFormValue: action,
+            setChangeCardForm: action,
             resetForm: action
         });
     }
 
     changeMedicalCard = () => {
-        // if (!this.validateForm()) {
-        //     return;
-        // }
-
         this.pending = true;
         this.submissionError = undefined;
 
@@ -109,6 +93,7 @@ export class DashboardMedicalCardStore implements IDashboardMedicalCardStore {
                             "update-medical-card",
                             false
                         );
+                        this.setChangeCardForm(data.data);
                         this.resetForm();
                     }
                 )
@@ -136,9 +121,25 @@ export class DashboardMedicalCardStore implements IDashboardMedicalCardStore {
         this.changeCardForm[key] = value;
     };
 
+    setChangeCardForm = (data: AdditionalData | null) => {
+        if (data) {
+            this.changeCardForm = {
+                RHFactor: data.RHFactor,
+                allergies: data.allergies,
+                badHabits: data.badHabits,
+                bloodTransfusion: data.bloodTransfusion,
+                bloodType: data.bloodType,
+                chronicDiseases: data.chronicDiseases,
+                isAlcoholic: data.isAlcoholic,
+                isSmoker: data.isSmoker,
+                operations: data.operations,
+                height: data.height.toString(),
+                weight: data.weight.toString()
+            };
+        }
+    };
+
     resetForm = () => {
-        this.changeCardForm = INITIAL_CHANGE_MEDICAL_CARD_FORM;
-        this.changeCardFormErrors = INITIAL_CHANGE_MEDICAL_CARD_FORM_ERRORS;
         this.submissionError = undefined;
     };
 }

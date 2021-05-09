@@ -3,9 +3,13 @@ import { observer } from "mobx-react";
 
 import { DialogBase } from "./DialogBase";
 import {
+    HeightWeightForm,
     BloodTypeForm,
     AllergiesForm,
-    BadHabitsForm
+    BadHabitsForm,
+    BloodTransfusionForm,
+    ChronicDiseasesForm,
+    OperationsForm
 } from "pages/Dashboard/components";
 import { useStores } from "stores/useStore";
 import { AdditionalTypes } from "stores/interfaces/Dashboard";
@@ -16,12 +20,13 @@ type ModalStates = {
 };
 
 const MODAL_STATES: ModalStates = {
+    "height-weight": <HeightWeightForm />,
     "blood-type": <BloodTypeForm />,
     allergies: <AllergiesForm />,
     "bad-habits": <BadHabitsForm />,
-    "blood-transfusion": <div>blood-transfusion</div>,
-    "chronic-diseases": <div>chronic-diseases</div>,
-    operations: <div>operations</div>
+    "blood-transfusion": <BloodTransfusionForm />,
+    "chronic-diseases": <ChronicDiseasesForm />,
+    operations: <OperationsForm />
 };
 
 export const DialogUpdateMedicalCard: React.FC = observer(() => {

@@ -6,8 +6,7 @@ import {
     FormControlLabel,
     Radio,
     FormControl,
-    FormLabel,
-    FormHelperText
+    FormLabel
 } from "@material-ui/core";
 
 import { Button, SubmissionError } from "components";
@@ -16,15 +15,13 @@ import { useFormStyles } from "styles/material/useFormStyles";
 
 export const BloodTypeForm: React.FC = observer(() => {
     const formClasses = useFormStyles();
-    const { userStore, dashboardMedicalCard } = useStores();
+    const { dashboardMedicalCard } = useStores();
     const {
         changeCardForm,
-        changeCardFormErrors,
         pending,
         submissionError,
         setFormValue
     } = dashboardMedicalCard;
-    const { currentUser } = userStore;
 
     return (
         <React.Fragment>
@@ -33,10 +30,7 @@ export const BloodTypeForm: React.FC = observer(() => {
                     Группа крови:
                 </FormLabel>
                 <RadioGroup
-                    value={
-                        changeCardForm.bloodType ||
-                        currentUser?.additionalData?.bloodType
-                    }
+                    value={changeCardForm.bloodType}
                     onChange={event => setFormValue("bloodType", event.target.value)}
                     aria-label="Группа крови"
                 >
@@ -77,19 +71,13 @@ export const BloodTypeForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText error={Boolean(changeCardFormErrors.bloodType)}>
-                    {changeCardFormErrors.bloodType}
-                </FormHelperText>
             </FormControl>
             <FormControl className={formClasses.formGroup} component="fieldset">
                 <FormLabel className={formClasses.groupLabel} component="legend">
                     Резус фактор:
                 </FormLabel>
                 <RadioGroup
-                    value={
-                        changeCardForm.RHFactor ||
-                        currentUser?.additionalData?.RHFactor
-                    }
+                    value={changeCardForm.RHFactor}
                     onChange={event => setFormValue("RHFactor", event.target.value)}
                     aria-label="Резус фактор"
                 >
@@ -112,9 +100,6 @@ export const BloodTypeForm: React.FC = observer(() => {
                         }
                     />
                 </RadioGroup>
-                <FormHelperText error={Boolean(changeCardFormErrors.RHFactor)}>
-                    {changeCardFormErrors.RHFactor}
-                </FormHelperText>
             </FormControl>
             <SubmissionError align="center">{submissionError}</SubmissionError>
             <Button

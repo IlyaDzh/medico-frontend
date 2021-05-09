@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { observer } from "mobx-react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
-import { AdditionalDataItem } from "../components";
+import { AdditionalDataItem, EditIconButton } from "../components";
 import { Avatar, DialogUpdateMedicalCard } from "components";
 import { useStores } from "stores/useStore";
 import { AdditionalTypes } from "stores/interfaces/Dashboard";
@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     paramsItem: {
+        position: "relative",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
@@ -87,6 +88,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     paramsItemContent: {
         textAlign: "center"
+    },
+    editButton: {
+        position: "absolute",
+        top: 4,
+        right: 4
     },
     userAdditional: {
         display: "flex",
@@ -165,6 +171,12 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                                 {currentUser.additionalData.height} см
                             </Typography>
                         </span>
+                        <div className={classes.editButton}>
+                            <EditIconButton
+                                title="Рост"
+                                onEdit={() => handleEditData("height-weight")}
+                            />
+                        </div>
                     </div>
                     <div className={classes.paramsItem}>
                         <span className={classes.paramsItemContent}>
@@ -173,6 +185,12 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                                 {currentUser.additionalData.weight} кг
                             </Typography>
                         </span>
+                        <div className={classes.editButton}>
+                            <EditIconButton
+                                title="Рост"
+                                onEdit={() => handleEditData("height-weight")}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className={clsx(classes.paramsItem, classes.paramsItemLarge)}>
