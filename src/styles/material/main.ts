@@ -318,6 +318,11 @@ const theme = createMuiTheme(
                         color: "#fff"
                     }
                 }
+            },
+            MuiAvatar: {
+                rounded: {
+                    borderRadius: 8
+                }
             }
         }
     },
