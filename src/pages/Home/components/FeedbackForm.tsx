@@ -6,6 +6,7 @@ import {
     TextField,
     FormControlLabel,
     Checkbox,
+    Paper,
     makeStyles,
     Theme
 } from "@material-ui/core";
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     feedbackWrapper: {
         display: "flex",
         alignItems: "center",
-        border: `4px solid ${theme.palette.background.dark}`,
         borderRadius: 16,
         background: theme.palette.background.default,
         padding: "60px 74px",
@@ -97,7 +97,7 @@ export const FeedbackForm: React.FC = () => {
     return (
         <section id="feedback" className={classes.feedbackSection}>
             <Container>
-                <div className={classes.feedbackWrapper}>
+                <Paper className={classes.feedbackWrapper} variant="outlined">
                     <div className={classes.leftSide}>
                         <Typography className={classes.feedbackTitle} variant="h2">
                             Остались вопросы? <br /> Напишите нам
@@ -203,7 +203,7 @@ export const FeedbackForm: React.FC = () => {
                             </Button>
                         </form>
                     </div>
-                </div>
+                </Paper>
             </Container>
         </section>
     );

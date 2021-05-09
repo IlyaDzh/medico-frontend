@@ -4,6 +4,7 @@ import {
     Consultation,
     AppointmentResult
 } from "stores/interfaces/Dashboard";
+import { AdditionalData } from "stores/interfaces/IUserStore";
 
 export interface ICancelConsultationPostData {
     consultationId: number;
@@ -11,6 +12,20 @@ export interface ICancelConsultationPostData {
 
 export interface IDeleteAnalysisPostData {
     analysisId: number;
+}
+
+export interface IChangeMedicalCardPostData {
+    weight?: number;
+    height?: number;
+    bloodType?: string;
+    RHFactor?: string;
+    allergies?: string;
+    chronicDiseases?: string;
+    operations?: string;
+    isSmoker?: string;
+    isAlcoholic?: string;
+    badHabits?: string;
+    bloodTransfusion?: string;
 }
 
 export interface IGetConsultationsSuccessResponse extends BaseResponse {
@@ -29,12 +44,12 @@ export interface ICancelConsultationErrorResponse extends BaseResponse {
 }
 
 export interface IGetAnalyzesSuccessResponse extends BaseResponse {
-    error: 1;
+    error: 0;
     data: Analysis[];
 }
 
 export interface IAppendAnalysisSuccessResponse extends BaseResponse {
-    error: 1;
+    error: 0;
     data: Analysis;
 }
 
@@ -44,6 +59,16 @@ export interface IAppendAnalysisErrorResponse extends BaseResponse {
 }
 
 export interface IGetAppointmentResultsSuccessResponse extends BaseResponse {
-    error: 1;
+    error: 0;
     data: AppointmentResult[];
+}
+
+export interface IChangeMedicalCardSuccessResponse extends BaseResponse {
+    error: 0;
+    data: AdditionalData;
+}
+
+export interface IChangeMedicalCardErrorResponse extends BaseResponse {
+    error: 1;
+    data: null | string[];
 }

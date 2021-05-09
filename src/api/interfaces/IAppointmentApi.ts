@@ -10,7 +10,7 @@ export interface IAppointmentPostData {
 }
 
 export interface IGetMetaInfoSuccessResponse extends BaseResponse {
-    error: 1;
+    error: 0;
     data: {
         communicationMethods: CommunicationMethod[];
         doctor: IDoctor;
@@ -23,7 +23,7 @@ export type CommunicationMethod = {
 };
 
 export interface IGetFreeDoctorTimeSuccessResponse extends BaseResponse {
-    error: 1;
+    error: 0;
     data: AvailableTime[];
 }
 

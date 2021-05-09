@@ -15,8 +15,8 @@ import {
 import { Remove as RemoveIcon } from "@material-ui/icons";
 
 import { FormWrapper } from "./FormWrapper";
-import { useFormStyles } from "./useFormStyles";
 import { Button, Select, Loader, SubmissionError } from "components";
+import { useFormStyles } from "styles/material/useFormStyles";
 import { useStores } from "stores/useStore";
 import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
 import { truncateText } from "utils/truncateText";

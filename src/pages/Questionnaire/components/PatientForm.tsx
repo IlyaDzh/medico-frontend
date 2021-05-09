@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { FormWrapper } from "./FormWrapper";
-import { useFormStyles } from "./useFormStyles";
+import { useFormStyles } from "styles/material/useFormStyles";
 import { Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 

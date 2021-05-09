@@ -6,6 +6,7 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 import { AdditionalDataItem } from "../components";
 import { Avatar, DialogUpdateMedicalCard } from "components";
 import { useStores } from "stores/useStore";
+import { AdditionalTypes } from "stores/interfaces/Dashboard";
 import { getAge } from "utils/getAge";
 import { getDescriptionByIMT } from "utils/getDescriptionByIMT";
 import {
@@ -108,9 +109,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const PatientMedicalCardPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore, modalsStore } = useStores();
+    const { userStore, modalsStore, dashboardMedicalCard } = useStores();
     const { currentUser } = userStore;
     const { setModalIsOpen } = modalsStore;
+    const { setCurrentModalState } = dashboardMedicalCard;
 
     if (!currentUser || !currentUser.additionalData) {
         return null;
@@ -121,9 +123,9 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
         Math.pow(currentUser.additionalData.height / 100, 2)
     ).toFixed(2);
 
-    const handleEditData = (name: string): void => {
+    const handleEditData = (name: AdditionalTypes): void => {
         setModalIsOpen("update-medical-card", true);
-        console.log("set modal state:", name);
+        setCurrentModalState(name);
     };
 
     return (
