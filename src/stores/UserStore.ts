@@ -40,9 +40,13 @@ export class UserStore implements IUserStore {
                 action(({ data }: AxiosResponse<IGetUserSuccessResponse>) => {
                     this.currentUser = data.data;
                     this.isAuthorized = true;
-                    this.rootStore.dashboardMedicalCard.setChangeCardForm(
-                        data.data.additionalData
-                    );
+
+                    if (data.data.userType === "patient") {
+                        this.rootStore.dashboardMedicalCard.setChangeCardForm(
+                            data.data.additionalData
+                        );
+                    }
+
                     this.rootStore.dashboardSettings.setUpdateInfoForm(data.data);
                 })
             )
