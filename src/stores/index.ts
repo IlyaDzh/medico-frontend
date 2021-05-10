@@ -16,7 +16,8 @@ import {
     DashboardAnalyzesStore,
     DashboardConsultationsStore,
     DashboardResultsStore,
-    DashboardMedicalCardStore
+    DashboardMedicalCardStore,
+    DashboardSettingsStore
 } from "./Dashboard";
 
 import IStores from "./interfaces";
@@ -36,7 +37,8 @@ import {
     IDashboardAnalyzesStore,
     IDashboardConsultationsStore,
     IDashboardResultsStore,
-    IDashboardMedicalCardStore
+    IDashboardMedicalCardStore,
+    IDashboardSettingsStore
 } from "./interfaces/Dashboard";
 
 export class RootStore implements IStores {
@@ -56,6 +58,7 @@ export class RootStore implements IStores {
     dashboardAnalyzes: IDashboardAnalyzesStore;
     dashboardResults: IDashboardResultsStore;
     dashboardMedicalCard: IDashboardMedicalCardStore;
+    dashboardSettings: IDashboardSettingsStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -74,5 +77,6 @@ export class RootStore implements IStores {
         this.dashboardAnalyzes = new DashboardAnalyzesStore(this);
         this.dashboardResults = new DashboardResultsStore();
         this.dashboardMedicalCard = new DashboardMedicalCardStore(this);
+        this.dashboardSettings = new DashboardSettingsStore(this);
     }
 }

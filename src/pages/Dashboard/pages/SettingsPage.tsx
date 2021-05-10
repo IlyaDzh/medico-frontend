@@ -15,7 +15,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Photo as PhotoIcon } from "@material-ui/icons";
 
-import { Avatar, Button } from "components";
+import { Avatar, Button, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 8
     },
     radioGroup: {
-        padding: "4px 0",
+        padding: "5px 0",
         [theme.breakpoints.down("xs")]: {
             padding: 0
         }
@@ -91,24 +91,40 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     columnLeft: {
+        width: "50%",
         marginRight: 56,
         [theme.breakpoints.down("sm")]: {
             marginRight: 32
         },
         [theme.breakpoints.down("xs")]: {
+            width: "100%",
             marginRight: 0
+        }
+    },
+    columnRight: {
+        width: "50%",
+        [theme.breakpoints.down("xs")]: {
+            width: "100%"
         }
     }
 }));
 
 export const SettingsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore } = useStores();
+    const { dashboardSettings, userStore } = useStores();
+    const {
+        updateForm,
+        updateFormErrors,
+        submissionError,
+        pending,
+        setFormValue,
+        updateUserInfo
+    } = dashboardSettings;
     const { currentUser } = userStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // doSignUp();
+        updateUserInfo();
     };
 
     const handleFileAttachment = (files: any): void => {
@@ -116,6 +132,10 @@ export const SettingsPage: React.FC = observer(() => {
             // setGroupAvatar(files[0]);
             console.log(files[0]);
         }
+    };
+
+    const handleDateChange = (date: any): void => {
+        setFormValue("birthDate", date);
     };
 
     return (
@@ -170,13 +190,12 @@ export const SettingsPage: React.FC = observer(() => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="Фамилия*"
-                                    value={currentUser?.surname}
-                                    // value={signUpForm.lastName}
-                                    // onChange={event =>
-                                    //     setFormValue("lastName", event.target.value)
-                                    // }
-                                    // error={Boolean(signUpFormErrors.lastName)}
-                                    // helperText={signUpFormErrors.lastName}
+                                    value={updateForm.surname}
+                                    onChange={event =>
+                                        setFormValue("surname", event.target.value)
+                                    }
+                                    error={Boolean(updateFormErrors.surname)}
+                                    helperText={updateFormErrors.surname}
                                 />
                             </FormControl>
                             <FormControl
@@ -194,13 +213,12 @@ export const SettingsPage: React.FC = observer(() => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="Имя*"
-                                    value={currentUser?.name}
-                                    // value={signUpForm.lastName}
-                                    // onChange={event =>
-                                    //     setFormValue("lastName", event.target.value)
-                                    // }
-                                    // error={Boolean(signUpFormErrors.lastName)}
-                                    // helperText={signUpFormErrors.lastName}
+                                    value={updateForm.name}
+                                    onChange={event =>
+                                        setFormValue("name", event.target.value)
+                                    }
+                                    error={Boolean(updateFormErrors.name)}
+                                    helperText={updateFormErrors.name}
                                 />
                             </FormControl>
                             <FormControl
@@ -218,17 +236,17 @@ export const SettingsPage: React.FC = observer(() => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="Отчество*"
-                                    value={currentUser?.middleName}
-                                    // value={signUpForm.lastName}
-                                    // onChange={event =>
-                                    //     setFormValue("lastName", event.target.value)
-                                    // }
-                                    // error={Boolean(signUpFormErrors.lastName)}
-                                    // helperText={signUpFormErrors.lastName}
+                                    value={updateForm.middleName}
+                                    onChange={event =>
+                                        setFormValue(
+                                            "middleName",
+                                            event.target.value
+                                        )
+                                    }
                                 />
                             </FormControl>
                         </div>
-                        <div>
+                        <div className={classes.columnRight}>
                             <FormControl
                                 className={classes.formControl}
                                 component="fieldset"
@@ -245,12 +263,10 @@ export const SettingsPage: React.FC = observer(() => {
                                     color="secondary"
                                     placeholder="ДД/ММ/ГГ"
                                     format="dd/MM/yyyy"
-                                    value={currentUser?.birthDate}
-                                    // value={signUpForm.birthDate}
-                                    onChange={() => console.log("kek")}
-                                    // onChange={handleDateChange}
-                                    // error={Boolean(signUpFormErrors.birthDate)}
-                                    // helperText={signUpFormErrors.birthDate}
+                                    value={updateForm.birthDate}
+                                    onChange={handleDateChange}
+                                    error={Boolean(updateFormErrors.birthDate)}
+                                    helperText={updateFormErrors.birthDate}
                                     KeyboardButtonProps={{
                                         "aria-label": "Изменение даты рождения"
                                     }}
@@ -275,13 +291,12 @@ export const SettingsPage: React.FC = observer(() => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="+7 (XXX) XXX-XX-XX"
-                                    value={currentUser?.phone}
-                                    // value={signUpForm.phoneNumber}
-                                    // onChange={event =>
-                                    //     setFormValue("phoneNumber", event.target.value)
-                                    // }
-                                    // error={Boolean(signUpFormErrors.phoneNumber)}
-                                    // helperText={signUpFormErrors.phoneNumber}
+                                    value={updateForm.phone}
+                                    onChange={event =>
+                                        setFormValue("phone", event.target.value)
+                                    }
+                                    error={Boolean(updateFormErrors.phone)}
+                                    helperText={updateFormErrors.phone}
                                 />
                             </FormControl>
                             <FormControl
@@ -297,11 +312,13 @@ export const SettingsPage: React.FC = observer(() => {
                                 </FormLabel>
                                 <RadioGroup
                                     className={classes.radioGroup}
-                                    value={currentUser?.sex}
-                                    // value={signUpForm.gender}
-                                    // onChange={event =>
-                                    //     setFormValue("gender", event.target.value)
-                                    // }
+                                    value={updateForm.sex}
+                                    onChange={event =>
+                                        setFormValue(
+                                            "sex",
+                                            event.target.value as "male" | "female"
+                                        )
+                                    }
                                     name="user_gender"
                                     aria-label="Ваш пол"
                                     row
@@ -336,7 +353,15 @@ export const SettingsPage: React.FC = observer(() => {
                             </FormControl>
                         </div>
                     </div>
-                    <Button variant="contained">Сохранить изменения</Button>
+                    <SubmissionError>{submissionError}</SubmissionError>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        disabled={pending}
+                        isLoaded={pending}
+                    >
+                        Сохранить изменения
+                    </Button>
                 </form>
             </div>
         </React.Fragment>

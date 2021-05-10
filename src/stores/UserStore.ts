@@ -43,6 +43,7 @@ export class UserStore implements IUserStore {
                     this.rootStore.dashboardMedicalCard.setChangeCardForm(
                         data.data.additionalData
                     );
+                    this.rootStore.dashboardSettings.setUpdateInfoForm(data.data);
                 })
             )
             .catch(

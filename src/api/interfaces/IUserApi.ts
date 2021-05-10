@@ -7,7 +7,7 @@ export interface IChangeUserInfoPostData {
     middleName: string;
     birthDate: Date;
     phone: string;
-    sex: string;
+    sex: "male" | "female";
 }
 
 export interface ChangeUserInfoData extends IChangeUserInfoPostData {}
