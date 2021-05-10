@@ -120,7 +120,9 @@ export const DoctorProfile: React.FC = observer(() => {
     const {
         currentDoctor,
         pendingProfile,
+        pendingProfileReviews,
         fetchingProfileError,
+        fetchReviews,
         getDoctorProfile,
         resetProfile
     } = doctorStore;
@@ -264,7 +266,15 @@ export const DoctorProfile: React.FC = observer(() => {
                         </div>
                     </div>
                 </div>
-                <ProfileTabs currentDoctor={currentDoctor} />
+                <ProfileTabs
+                    reviews={currentDoctor.reviews}
+                    education={currentDoctor.education}
+                    workplaces={currentDoctor.workplaces}
+                    specialties={currentDoctor.specialties}
+                    countOfReviews={currentDoctor.countOfReviews}
+                    pendingReviews={pendingProfileReviews}
+                    onMoreReviews={fetchReviews}
+                />
             </div>
         </div>
     );

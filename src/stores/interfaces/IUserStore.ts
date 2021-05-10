@@ -1,3 +1,6 @@
+import { Review } from "./IDoctorStore";
+import { Specialty } from "./ISpecialtiesStore";
+
 export interface IUserStore {
     currentUser: IUser | undefined;
     isAuthorized: boolean;
@@ -38,16 +41,24 @@ export type PatientAdditionalData = {
 
 export type DoctorAdditionalData = {
     IIN: string;
-    experience: string;
-    photo: string;
-    summary: string;
+    about: string;
+    costOfConsultation: number;
+    countOfReviews: number;
     diploma: string;
-    specialties: ISpecialty[];
+    specialties: Specialty[];
+    education: string[];
+    experience: string;
     isVerified: boolean;
+    photo: string;
+    rating: null | number;
+    reviews: Review[];
+    summary: string;
+    weeklySchedule: Schedule[];
+    workTime: string;
+    workplaces: string[];
 };
 
-type ISpecialty = {
-    id: number;
-    name: string;
-    slug: string;
+type Schedule = {
+    dayNumber: number;
+    workingHours: number[];
 };

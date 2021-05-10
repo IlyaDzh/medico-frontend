@@ -4,10 +4,17 @@ import { Tabs, Tab, makeStyles, Theme } from "@material-ui/core";
 import { CommentsList } from "./CommentsList";
 import { ExperienceList } from "./ExperienceList";
 import { SpecialtiesList } from "./SpecialtiesList";
-import { IDoctor } from "stores/interfaces/IDoctorStore";
+import { Review } from "stores/interfaces/IDoctorStore";
+import { Specialty } from "stores/interfaces/ISpecialtiesStore";
 
 interface IProfileTabs {
-    currentDoctor: IDoctor;
+    reviews: Review[];
+    education: string[];
+    workplaces: string[];
+    specialties: Specialty[];
+    countOfReviews: number;
+    pendingReviews: boolean;
+    onMoreReviews: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,7 +43,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
+export const ProfileTabs: React.FC<IProfileTabs> = ({
+    reviews,
+    education,
+    workplaces,
+    specialties,
+    countOfReviews,
+    pendingReviews,
+    onMoreReviews
+}) => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = useState(0);
 
@@ -61,16 +76,21 @@ export const ProfileTabs: React.FC<IProfileTabs> = ({ currentDoctor }) => {
                 <Tab className={classes.tabItem} label="Основные направления" />
             </Tabs>
             <div hidden={currentTab !== 0}>
-                <CommentsList reviews={currentDoctor.reviews} />
+                <CommentsList
+                    reviews={reviews}
+                    count={countOfReviews}
+                    pending={pendingReviews}
+                    onMore={onMoreReviews}
+                />
             </div>
             <div hidden={currentTab !== 1}>
-                <ExperienceList list={currentDoctor.education} />
+                <ExperienceList list={education} />
             </div>
             <div hidden={currentTab !== 2}>
-                <ExperienceList list={currentDoctor.workplaces} />
+                <ExperienceList list={workplaces} />
             </div>
             <div hidden={currentTab !== 3}>
-                <SpecialtiesList specialties={currentDoctor.specialties} />
+                <SpecialtiesList specialties={specialties} />
             </div>
         </div>
     );
