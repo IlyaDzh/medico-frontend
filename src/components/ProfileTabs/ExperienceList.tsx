@@ -39,14 +39,18 @@ export const ExperienceList: React.FC<IExperienceList> = ({ list }) => {
 
     return (
         <ul className={classes.list}>
-            {list.map((item, index) => (
-                <li key={index} className={classes.listItem}>
-                    <Typography variant="h5">1996</Typography>
-                    <Typography className={classes.listItemText} variant="body1">
-                        {item}
-                    </Typography>
-                </li>
-            ))}
+            {list.length > 0 ? (
+                list.map((item, index) => (
+                    <li key={index} className={classes.listItem}>
+                        <Typography variant="h5">1996</Typography>
+                        <Typography className={classes.listItemText} variant="body1">
+                            {item}
+                        </Typography>
+                    </li>
+                ))
+            ) : (
+                <Typography variant="body1">Не заполнено</Typography>
+            )}
         </ul>
     );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import { Typography, makeStyles } from "@material-ui/core";
 
 import { Comment } from "./Comment";
 import { Button } from "components";
@@ -29,9 +29,13 @@ export const CommentsList: React.FC<ICommentsList> = ({
     return (
         <React.Fragment>
             <div className={classes.commentsList}>
-                {reviews.map(review => (
-                    <Comment key={review.id} review={review} />
-                ))}
+                {reviews.length > 0 ? (
+                    reviews.map(review => (
+                        <Comment key={review.id} review={review} />
+                    ))
+                ) : (
+                    <Typography variant="body1">Комментариев ещё нет</Typography>
+                )}
             </div>
             {reviews.length < count && (
                 <Button
