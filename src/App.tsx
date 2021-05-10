@@ -26,7 +26,7 @@ import { useStores } from "stores/useStore";
 
 export const App: React.FC = observer(() => {
     const { userStore } = useStores();
-    const { isAuthorized, currentUser, pending, fetchUser } = userStore;
+    const { isAuthorized, pending, fetchUser } = userStore;
 
     useEffect(() => {
         if (localStorage.getItem("accessToken")) {
@@ -37,14 +37,6 @@ export const App: React.FC = observer(() => {
     if (pending) {
         return <Backdrop />;
     }
-
-    const dashboardIsActive = currentUser
-        ? currentUser.userType === "patient"
-            ? Boolean(currentUser.additionalData)
-            : Boolean(currentUser.additionalData?.isVerified)
-        : localStorage.getItem("accessToken")
-        ? true
-        : false;
 
     return (
         <React.Fragment>
@@ -89,7 +81,7 @@ export const App: React.FC = observer(() => {
                 <PrivateRoute
                     path="/dashboard"
                     component={DashboardPage}
-                    canRoute={dashboardIsActive}
+                    canRoute={isAuthorized}
                 />
                 <Route component={ErrorPage} />
             </Switch>

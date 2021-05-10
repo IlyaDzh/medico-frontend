@@ -28,17 +28,6 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
         const { setDrawerExpanded } = drawerStore;
         const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-        const patientPath = currentUser?.additionalData
-            ? "/dashboard"
-            : "/questionnaire";
-
-        const doctorPath = currentUser?.additionalData?.isVerified
-            ? "/dashboard"
-            : "/questionnaire";
-
-        const accountRedirectPath =
-            currentUser?.userType === "patient" ? patientPath : doctorPath;
-
         const handleMenuClick = (
             event: React.MouseEvent<HTMLButtonElement>
         ): void => {
@@ -130,7 +119,7 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                                 }}
                             >
                                 <Link
-                                    to={accountRedirectPath}
+                                    to="/dashboard"
                                     className={classes.accountMenuItemLink}
                                 >
                                     <MenuItem

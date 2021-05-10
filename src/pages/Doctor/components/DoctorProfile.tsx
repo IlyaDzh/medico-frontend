@@ -115,7 +115,7 @@ export const DoctorProfile: React.FC = observer(() => {
     const classes = useStyles();
     const { id } = useParams<{ id: string }>();
     const { userStore, modalsStore, doctorStore } = useStores();
-    const { isAuthorized } = userStore;
+    const { isAuthorized, currentUser } = userStore;
     const { setModalIsOpen } = modalsStore;
     const {
         currentDoctor,
@@ -124,6 +124,8 @@ export const DoctorProfile: React.FC = observer(() => {
         getDoctorProfile,
         resetProfile
     } = doctorStore;
+
+    const isDoctor: boolean = currentUser?.userType === "doctor";
 
     const specialty = currentDoctor && formatSpecialties(currentDoctor.specialties);
 
@@ -255,6 +257,7 @@ export const DoctorProfile: React.FC = observer(() => {
                                 size="large"
                                 icon={<ArrowRightIcon color="#fff" />}
                                 onClick={handleButtonClick}
+                                disabled={isDoctor}
                             >
                                 Записаться на приём
                             </Button>

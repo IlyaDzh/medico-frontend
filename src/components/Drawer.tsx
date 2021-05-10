@@ -46,16 +46,6 @@ export const Drawer: React.FC = observer(() => {
 
     const isPatient: boolean = currentUser?.userType === "patient";
 
-    const patientPath = currentUser?.additionalData
-        ? "/dashboard"
-        : "/questionnaire";
-
-    const doctorPath = currentUser?.additionalData?.isVerified
-        ? "/dashboard"
-        : "/questionnaire";
-
-    const accountRedirectPath = isPatient ? patientPath : doctorPath;
-
     const toggleDrawer = (open: boolean) => (
         event: React.KeyboardEvent | React.MouseEvent
     ) => {
@@ -127,7 +117,7 @@ export const Drawer: React.FC = observer(() => {
                             <ListItem
                                 className={classes.listItem}
                                 component={Link}
-                                to={accountRedirectPath}
+                                to="/dashboard"
                                 button
                             >
                                 <ListItemIcon>
