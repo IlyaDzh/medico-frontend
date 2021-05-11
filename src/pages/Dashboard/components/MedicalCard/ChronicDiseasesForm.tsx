@@ -24,7 +24,7 @@ export const ChronicDiseasesForm: React.FC = observer(() => {
                 fullWidth
             >
                 <FormLabel className={formClasses.groupLabel} component="legend">
-                    6. Хронические заболевания
+                    Хронические заболевания
                 </FormLabel>
                 <TextField
                     variant="outlined"

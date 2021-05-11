@@ -16,7 +16,7 @@ export const DOCTOR_MENU = [
     {
         icon: <CalendarIcon />,
         label: "График работы",
-        to: "/dashboard/calendar"
+        to: "/dashboard/schedule"
     },
     {
         icon: <CaseIcon />,

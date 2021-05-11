@@ -323,6 +323,13 @@ const theme = createMuiTheme(
                 rounded: {
                     borderRadius: 8
                 }
+            },
+            MuiFormLabel: {
+                root: {
+                    "&$focused": {
+                        color: globalTheme.palette.text.secondary
+                    }
+                }
             }
         }
     },

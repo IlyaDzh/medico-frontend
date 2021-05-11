@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         [theme.breakpoints.down("xs")]: {
             marginBottom: 18,
-            marginRight: "-14px",
-            marginLeft: "-14px"
+            marginRight: -14,
+            marginLeft: -14
         }
     },
     actions: {
@@ -79,11 +79,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     allDoctorsBtn: {
         [theme.breakpoints.down("sm")]: {
             padding: "7px 24px",
-            fontSize: "18px"
+            fontSize: 18
         },
         [theme.breakpoints.down("xs")]: {
             padding: "6px 22px",
-            fontSize: "16px"
+            fontSize: 16
         }
     },
     sliderArrow: {

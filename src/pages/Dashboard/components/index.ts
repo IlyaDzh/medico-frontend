@@ -4,3 +4,4 @@ export * from "./MedicalCard";
 export * from "./ContentLayout";
 export * from "./ConsultationItem";
 export * from "./AppointmentResultItem";
+export * from "./ScheduleItem";
