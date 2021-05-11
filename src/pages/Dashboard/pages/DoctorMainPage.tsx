@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, useMediaQuery, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar, ProfileTabs } from "components";
 import { useStores } from "stores/useStore";
@@ -40,6 +40,7 @@ export const DoctorMainPage: React.FC = observer(() => {
     const { userStore, dashboardDoctorProfile } = useStores();
     const { currentUser } = userStore;
     const { pendingReviews, fetchReviews } = dashboardDoctorProfile;
+    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
 
     if (!currentUser || !currentUser.additionalData) {
         return null;
@@ -51,7 +52,7 @@ export const DoctorMainPage: React.FC = observer(() => {
 
             <div className={classes.userMain}>
                 <Avatar
-                    size={140}
+                    size={matches ? 88 : 140}
                     src={
                         currentUser.additionalData.photo
                             ? process.env.REACT_APP_API_BASE_URL +

@@ -1,5 +1,7 @@
 import React from "react";
 
-export const ErrorPage: React.FC = () => {
-    return <div>Page is not found!</div>;
-};
+import { ErrorAnimation } from "components";
+
+export const ErrorPage: React.FC = () => (
+    <ErrorAnimation path="/dashboard" title="В личный кабинет" />
+);
