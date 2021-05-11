@@ -16,7 +16,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { DialogBase } from "./DialogBase";
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { AnalysisType } from "stores/interfaces/Dashboard";
 import { truncateText } from "utils/truncateText";
@@ -206,7 +206,9 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                         />
                     </FormControl>
                 </div>
-                <SubmissionError align="center">{submissionError}</SubmissionError>
+                <SubmissionResult align="center" isError>
+                    {submissionError}
+                </SubmissionResult>
                 <Button
                     type="submit"
                     variant="contained"

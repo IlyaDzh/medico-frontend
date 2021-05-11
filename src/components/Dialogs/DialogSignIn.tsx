@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import {
@@ -9,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { UserIcon } from "icons";
 
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             textDecoration: "none"
         }
+    },
+    forgotPassword: {
+        marginBottom: 12
     }
 }));
 
@@ -83,7 +87,7 @@ export const DialogSignIn: React.FC = observer(() => {
                 />
                 <div className={classes.linkCenter}>
                     <MaterialLink
-                        className={classes.dialogLink}
+                        className={clsx(classes.dialogLink, classes.forgotPassword)}
                         type="button"
                         component="button"
                         variant="h6"
@@ -94,7 +98,9 @@ export const DialogSignIn: React.FC = observer(() => {
                         Забыли пароль?
                     </MaterialLink>
                 </div>
-                <SubmissionError align="center">{submissionError}</SubmissionError>
+                <SubmissionResult align="center" isError>
+                    {submissionError}
+                </SubmissionResult>
                 <Button
                     type="submit"
                     variant="contained"

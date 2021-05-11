@@ -17,7 +17,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import { PasswordRequirement } from "./PasswordRequirement";
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { UserPlusIcon } from "icons";
 
@@ -441,7 +441,9 @@ export const SignUpForm: React.FC = observer(() => {
                         </Typography>
                     }
                 />
-                <SubmissionError align="center">{submissionError}</SubmissionError>
+                <SubmissionResult align="center" isError>
+                    {submissionError}
+                </SubmissionResult>
                 <Button
                     type="submit"
                     variant="contained"

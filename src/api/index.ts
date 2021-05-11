@@ -7,3 +7,4 @@ export * from "./SpecialtiesApi";
 export * from "./DoctorApi";
 export * from "./AppointmentApi";
 export * from "./DashboardPatientApi";
+export * from "./FeedbackApi";

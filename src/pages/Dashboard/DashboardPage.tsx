@@ -17,20 +17,21 @@ export const DashboardPage: React.FC = observer(() => {
     const classes = useStyles();
     const { userStore, routerStore } = useStores();
     const { currentUser } = userStore;
+    const { push } = routerStore;
 
     useEffect(() => {
         if (currentUser) {
             if (currentUser.userType === "doctor") {
                 if (!currentUser.additionalData?.isVerified) {
-                    routerStore.push("/questionnaire");
+                    push("/questionnaire");
                 }
             } else {
                 if (!currentUser.additionalData) {
-                    routerStore.push("/questionnaire");
+                    push("/questionnaire");
                 }
             }
         }
-    }, [currentUser]);
+    }, [currentUser, push]);
 
     const isDoctor: boolean = currentUser?.userType === "doctor";
 

@@ -15,7 +15,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Photo as PhotoIcon } from "@material-ui/icons";
 
-import { Avatar, Button, Loader, SubmissionError } from "components";
+import { Avatar, Button, Loader, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -359,7 +359,7 @@ export const SettingsPage: React.FC = observer(() => {
                             </FormControl>
                         </div>
                     </div>
-                    <SubmissionError>{submissionError}</SubmissionError>
+                    <SubmissionResult isError>{submissionError}</SubmissionResult>
                     <Button
                         type="submit"
                         variant="contained"

@@ -11,7 +11,7 @@ export * from "./PaddingLine";
 export * from "./ScrollHandler";
 export * from "./Loader";
 export * from "./Backdrop";
-export * from "./SubmissionError";
+export * from "./SubmissionResult";
 export * from "./ErrorAnimation";
 export * from "./Drawer";
 export * from "./Lightbox";

@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import {
     Container,
@@ -11,7 +12,8 @@ import {
     Theme
 } from "@material-ui/core";
 
-import { Button } from "components";
+import { Button, SubmissionResult } from "components";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     feedbackSection: {
@@ -82,16 +84,28 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     submitButton: {
-        display: "block"
+        [theme.breakpoints.down("xs")]: {
+            width: "100%"
+        }
     }
 }));
 
-export const FeedbackForm: React.FC = () => {
+export const FeedbackForm: React.FC = observer(() => {
     const classes = useStyles();
+    const { homeStore } = useStores();
+    const {
+        feedbackForm,
+        feedbackFormErrors,
+        pendingFeedback,
+        submissionSuccess,
+        submissionError,
+        setFormValue,
+        sendFeedback
+    } = homeStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // sendFeedback();
+        sendFeedback();
     };
 
     return (
@@ -114,12 +128,12 @@ export const FeedbackForm: React.FC = () => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="Ваше имя"
-                                    // value={appointmentForm.symptoms}
-                                    // onChange={event =>
-                                    //     setFormValue("symptoms", event.target.value)
-                                    // }
-                                    // error={Boolean(appointmentFormErrors.symptoms)}
-                                    // helperText={appointmentFormErrors.symptoms}
+                                    value={feedbackForm.name}
+                                    onChange={event =>
+                                        setFormValue("name", event.target.value)
+                                    }
+                                    error={Boolean(feedbackFormErrors.name)}
+                                    helperText={feedbackFormErrors.name}
                                     fullWidth
                                 />
                                 <TextField
@@ -127,12 +141,12 @@ export const FeedbackForm: React.FC = () => {
                                     variant="outlined"
                                     color="secondary"
                                     placeholder="Email"
-                                    // value={appointmentForm.symptoms}
-                                    // onChange={event =>
-                                    //     setFormValue("symptoms", event.target.value)
-                                    // }
-                                    // error={Boolean(appointmentFormErrors.symptoms)}
-                                    // helperText={appointmentFormErrors.symptoms}
+                                    value={feedbackForm.email}
+                                    onChange={event =>
+                                        setFormValue("email", event.target.value)
+                                    }
+                                    error={Boolean(feedbackFormErrors.email)}
+                                    helperText={feedbackFormErrors.email}
                                     fullWidth
                                 />
                             </div>
@@ -141,12 +155,12 @@ export const FeedbackForm: React.FC = () => {
                                 variant="outlined"
                                 color="secondary"
                                 placeholder="Тема письма"
-                                // value={appointmentForm.symptoms}
-                                // onChange={event =>
-                                //     setFormValue("symptoms", event.target.value)
-                                // }
-                                // error={Boolean(appointmentFormErrors.symptoms)}
-                                // helperText={appointmentFormErrors.symptoms}
+                                value={feedbackForm.subject}
+                                onChange={event =>
+                                    setFormValue("subject", event.target.value)
+                                }
+                                error={Boolean(feedbackFormErrors.subject)}
+                                helperText={feedbackFormErrors.subject}
                                 fullWidth
                             />
                             <TextField
@@ -154,13 +168,13 @@ export const FeedbackForm: React.FC = () => {
                                 variant="outlined"
                                 color="secondary"
                                 placeholder="Текст вопроса"
-                                // value={appointmentForm.symptoms}
-                                // onChange={event =>
-                                //     setFormValue("symptoms", event.target.value)
-                                // }
+                                value={feedbackForm.text}
+                                onChange={event =>
+                                    setFormValue("text", event.target.value)
+                                }
+                                error={Boolean(feedbackFormErrors.text)}
+                                helperText={feedbackFormErrors.text}
                                 rows={4}
-                                // error={Boolean(appointmentFormErrors.symptoms)}
-                                // helperText={appointmentFormErrors.symptoms}
                                 multiline
                                 fullWidth
                             />
@@ -169,13 +183,13 @@ export const FeedbackForm: React.FC = () => {
                                 control={
                                     <Checkbox
                                         color="secondary"
-                                        // checked={signUpForm.acceptedUserAgreement}
-                                        // onChange={(_, checked) =>
-                                        //     setFormValue(
-                                        //         "acceptedUserAgreement",
-                                        //         checked
-                                        //     )
-                                        // }
+                                        checked={feedbackForm.acceptedAgreement}
+                                        onChange={(_, checked) =>
+                                            setFormValue(
+                                                "acceptedAgreement",
+                                                checked
+                                            )
+                                        }
                                     />
                                 }
                                 label={
@@ -193,11 +207,22 @@ export const FeedbackForm: React.FC = () => {
                                     </Typography>
                                 }
                             />
+                            <SubmissionResult align="center">
+                                {submissionSuccess}
+                            </SubmissionResult>
+                            <SubmissionResult align="center" isError>
+                                {submissionError}
+                            </SubmissionResult>
                             <Button
                                 className={classes.submitButton}
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                disabled={
+                                    !feedbackForm.acceptedAgreement ||
+                                    pendingFeedback
+                                }
+                                isLoaded={pendingFeedback}
                             >
                                 Отправить
                             </Button>
@@ -207,4 +232,4 @@ export const FeedbackForm: React.FC = () => {
             </Container>
         </section>
     );
-};
+});

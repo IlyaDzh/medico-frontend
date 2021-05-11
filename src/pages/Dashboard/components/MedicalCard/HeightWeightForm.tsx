@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { TextField, FormControl, FormLabel } from "@material-ui/core";
 
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { useFormStyles } from "styles/material/useFormStyles";
 
@@ -46,7 +46,9 @@ export const HeightWeightForm: React.FC = observer(() => {
                     onChange={event => setFormValue("height", event.target.value)}
                 />
             </FormControl>
-            <SubmissionError align="center">{submissionError}</SubmissionError>
+            <SubmissionResult align="center" isError>
+                {submissionError}
+            </SubmissionResult>
             <Button
                 type="submit"
                 variant="contained"

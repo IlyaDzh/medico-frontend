@@ -77,9 +77,7 @@ export class DashboardSettingsStore implements IDashboardSettingsStore {
 
         reaction(
             () => this.updateForm.birthDate,
-            birthDate =>
-                birthDate.toLocaleDateString() !== new Date().toLocaleDateString() &&
-                (this.updateFormErrors.birthDate = isAdult(birthDate))
+            birthDate => (this.updateFormErrors.birthDate = isAdult(birthDate))
         );
 
         reaction(

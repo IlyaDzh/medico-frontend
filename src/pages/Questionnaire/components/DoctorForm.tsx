@@ -15,7 +15,7 @@ import {
 import { Remove as RemoveIcon } from "@material-ui/icons";
 
 import { FormWrapper } from "./FormWrapper";
-import { Button, Select, Loader, SubmissionError } from "components";
+import { Button, Select, Loader, SubmissionResult } from "components";
 import { useFormStyles } from "styles/material/useFormStyles";
 import { useStores } from "stores/useStore";
 import { KeysOfFile } from "stores/interfaces/IQuestionnaireStore";
@@ -460,7 +460,7 @@ export const DoctorForm: React.FC = observer(() => {
                     </FormHelperText>
                 </FormControl>
             </div>
-            <SubmissionError>{submissionError}</SubmissionError>
+            <SubmissionResult isError>{submissionError}</SubmissionResult>
             <Button
                 type="submit"
                 variant="contained"

@@ -13,7 +13,7 @@ import {
 
 import { FormWrapper } from "./FormWrapper";
 import { useFormStyles } from "styles/material/useFormStyles";
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 
 export const PatientForm: React.FC = observer(() => {
@@ -354,7 +354,7 @@ export const PatientForm: React.FC = observer(() => {
                     {questionnaireFormErrors.bloodTransfusion}
                 </FormHelperText>
             </FormControl>
-            <SubmissionError>{submissionError}</SubmissionError>
+            <SubmissionResult isError>{submissionError}</SubmissionResult>
             <Button
                 type="submit"
                 variant="contained"

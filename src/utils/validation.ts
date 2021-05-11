@@ -22,13 +22,17 @@ export const isNotEmpty = (value: any) => {
     }
 };
 
-export const isLength = (value: string, length: number) => {
+export const isLength = (value: string, lengthStart: number, lengthEnd?: number) => {
     if (value === "") {
         return "Заполните поле";
     }
 
-    if (value.length < length) {
-        return `Поле должно содержать не менее ${length} символов`;
+    if (value.length < lengthStart) {
+        return `Поле должно содержать не менее ${lengthStart} символов`;
+    }
+
+    if (lengthEnd && value.length > lengthEnd) {
+        return `Поле должно содержать не более ${lengthEnd} символов`;
     }
 };
 

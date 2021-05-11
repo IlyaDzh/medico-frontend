@@ -9,7 +9,7 @@ import {
     FormLabel
 } from "@material-ui/core";
 
-import { Button, SubmissionError } from "components";
+import { Button, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { useFormStyles } from "styles/material/useFormStyles";
 
@@ -56,7 +56,9 @@ export const BloodTransfusionForm: React.FC = observer(() => {
                     />
                 </RadioGroup>
             </FormControl>
-            <SubmissionError align="center">{submissionError}</SubmissionError>
+            <SubmissionResult align="center" isError>
+                {submissionError}
+            </SubmissionResult>
             <Button
                 type="submit"
                 variant="contained"
