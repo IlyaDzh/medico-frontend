@@ -31,3 +31,13 @@ export interface IChangeUserInfoErrorResponse extends BaseResponse {
     error: 1;
     data: null | string;
 }
+
+export interface IChangeAvatarSuccessResponse extends BaseResponse {
+    error: 0;
+    data: string;
+}
+
+export interface IChangeAvatarErrorResponse extends BaseResponse {
+    error: 1;
+    data: null | string[];
+}

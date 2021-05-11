@@ -2,6 +2,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import { makeObservable, action, observable, reaction } from "mobx";
 
 import {
+    IChangeAvatarErrorResponse,
+    IChangeAvatarSuccessResponse,
     IChangeUserInfoErrorResponse,
     IChangeUserInfoPostData,
     IChangeUserInfoSuccessResponse,
@@ -42,6 +44,8 @@ export class DashboardSettingsStore implements IDashboardSettingsStore {
 
     submissionError: string | undefined = undefined;
 
+    avatarPending: boolean = false;
+
     private rootStore: IStores;
 
     constructor(rootStore: IStores) {
@@ -51,10 +55,12 @@ export class DashboardSettingsStore implements IDashboardSettingsStore {
             updateForm: observable,
             updateFormErrors: observable,
             pending: observable,
+            avatarPending: observable,
             submissionError: observable,
             updateUserInfo: action,
             setUpdateInfoForm: action,
             setFormValue: action,
+            setAvatar: action,
             validateForm: action
         });
 
@@ -161,6 +167,35 @@ export class DashboardSettingsStore implements IDashboardSettingsStore {
         value: IUpdateInfoForm[K]
     ) => {
         this.updateForm[key] = value;
+    };
+
+    setAvatar = (avatar: File) => {
+        this.avatarPending = true;
+
+        const formData = new FormData();
+        formData.append("file", avatar as any);
+
+        UserApi.changeAvatar(formData)
+            .then(
+                action(({ data }: AxiosResponse<IChangeAvatarSuccessResponse>) => {
+                    this.avatarPending = false;
+
+                    const currentUser = this.rootStore.userStore.currentUser;
+
+                    if (currentUser && currentUser.additionalData) {
+                        if (currentUser.userType === "patient") {
+                            currentUser.additionalData.avatar = data.data;
+                        } else {
+                            currentUser.additionalData.photo = data.data;
+                        }
+                    }
+                })
+            )
+            .catch(
+                action((error: AxiosError<IChangeAvatarErrorResponse>) => {
+                    this.submissionError = error.response?.data.message;
+                })
+            );
     };
 
     resetForm = () => {

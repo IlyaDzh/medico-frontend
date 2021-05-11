@@ -53,9 +53,9 @@ export const DoctorMainPage: React.FC = observer(() => {
                 <Avatar
                     size={140}
                     src={
-                        currentUser.additionalData.avatar
+                        currentUser.additionalData.photo
                             ? process.env.REACT_APP_API_BASE_URL +
-                              currentUser.additionalData.avatar
+                              currentUser.additionalData.photo
                             : undefined
                     }
                     alt="Ваше фото"

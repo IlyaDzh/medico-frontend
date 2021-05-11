@@ -19,11 +19,6 @@ export const DOCTOR_MENU = [
         to: "/dashboard/calendar"
     },
     {
-        icon: <HistoryIcon />,
-        label: "Журнал записей",
-        to: "/dashboard/logbook"
-    },
-    {
         icon: <CaseIcon />,
         label: "Пациенты",
         to: "/dashboard/patients"

@@ -15,7 +15,7 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Photo as PhotoIcon } from "@material-ui/icons";
 
-import { Avatar, Button, SubmissionError } from "components";
+import { Avatar, Button, Loader, SubmissionError } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -117,10 +117,20 @@ export const SettingsPage: React.FC = observer(() => {
         updateFormErrors,
         submissionError,
         pending,
+        avatarPending,
         setFormValue,
+        setAvatar,
         updateUserInfo
     } = dashboardSettings;
     const { currentUser } = userStore;
+
+    const avatarSrc = currentUser?.additionalData
+        ? currentUser.userType === "doctor"
+            ? currentUser.additionalData.photo &&
+              process.env.REACT_APP_API_BASE_URL + currentUser.additionalData.photo
+            : currentUser.additionalData.avatar &&
+              process.env.REACT_APP_API_BASE_URL + currentUser.additionalData.avatar
+        : undefined;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -129,8 +139,7 @@ export const SettingsPage: React.FC = observer(() => {
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
-            // setGroupAvatar(files[0]);
-            console.log(files[0]);
+            setAvatar(files[0]);
         }
     };
 
@@ -146,28 +155,25 @@ export const SettingsPage: React.FC = observer(() => {
             <div className={classes.settings}>
                 <div>
                     <div className={classes.avatarAttachmentWrapper}>
-                        <Avatar
-                            variant="rounded"
-                            size={102}
-                            src={
-                                currentUser?.additionalData?.avatar
-                                    ? "123"
-                                    : undefined
-                            }
-                        />
+                        <Avatar variant="rounded" size={102} src={avatarSrc} />
                         <MaterialButton
                             component="label"
                             variant="outlined"
                             className={classes.avatarUploadButton}
+                            disabled={avatarPending}
                         >
-                            <PhotoIcon style={{ color: "#fff" }} />
+                            {avatarPending ? (
+                                <Loader level={2.5} isCenter />
+                            ) : (
+                                <PhotoIcon style={{ color: "#fff" }} />
+                            )}
                             <input
                                 type="file"
-                                style={{ display: "none" }}
                                 accept="image/png, image/jpg, image/jpeg"
                                 onChange={event =>
                                     handleFileAttachment(event.target.files)
                                 }
+                                hidden
                             />
                         </MaterialButton>
                     </div>

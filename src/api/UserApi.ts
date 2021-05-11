@@ -13,4 +13,8 @@ export class UserApi {
     static changeUserInfo(postData: IChangeUserInfoPostData) {
         return axiosInstance.post("/api/v1/user/change-user-info", postData);
     }
+
+    static changeAvatar(formData: FormData) {
+        return axiosInstance.post("/api/v1/user/change-photo", formData);
+    }
 }

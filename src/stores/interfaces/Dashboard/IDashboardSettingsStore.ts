@@ -5,6 +5,7 @@ export interface IDashboardSettingsStore {
     updateFormErrors: IUpdateInfoFormErrors;
     pending: boolean;
     submissionError: string | undefined;
+    avatarPending: boolean;
     updateUserInfo: () => void;
     validateForm: () => boolean;
     setFormValue: <K extends KeysOfUpdateInfoForm>(
@@ -12,6 +13,7 @@ export interface IDashboardSettingsStore {
         value: IUpdateInfoForm[K]
     ) => void;
     setUpdateInfoForm: (data: IUser) => void;
+    setAvatar: (file: File) => void;
     resetForm: () => void;
 }
 

@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     doctorInfo: {
         display: "flex",
         alignItems: "center",
+        textDecoration: "none",
         [theme.breakpoints.down("sm")]: {
             marginLeft: 18
         },
@@ -140,7 +141,10 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                 <Hidden smDown>
                     <div className={classes.separate} />
                 </Hidden>
-                <div className={classes.doctorInfo}>
+                <Link
+                    className={classes.doctorInfo}
+                    to={`/doctor/${consultation.doctor.id}`}
+                >
                     <Avatar
                         src={
                             process.env.REACT_APP_API_BASE_URL +
@@ -158,7 +162,7 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                             {consultation.doctor.middleName}
                         </Typography>
                     </div>
-                </div>
+                </Link>
             </div>
             {onCancel ? (
                 <div className={classes.alertRight}>

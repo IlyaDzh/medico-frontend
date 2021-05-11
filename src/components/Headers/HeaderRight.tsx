@@ -28,6 +28,16 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
         const { setDrawerExpanded } = drawerStore;
         const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+        const avatarSrc = currentUser?.additionalData
+            ? currentUser.userType === "doctor"
+                ? currentUser.additionalData.photo &&
+                  process.env.REACT_APP_API_BASE_URL +
+                      currentUser.additionalData.photo
+                : currentUser.additionalData.avatar &&
+                  process.env.REACT_APP_API_BASE_URL +
+                      currentUser.additionalData.avatar
+            : undefined;
+
         const handleMenuClick = (
             event: React.MouseEvent<HTMLButtonElement>
         ): void => {
@@ -92,7 +102,7 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                                     <Avatar
                                         componentTag="span"
                                         alt={`${currentUser?.name} avatar`}
-                                        src={undefined}
+                                        src={avatarSrc}
                                     />
                                 }
                                 onClick={handleMenuClick}

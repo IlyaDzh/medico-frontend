@@ -64,10 +64,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         overflow: "hidden",
         maxWidth: 420,
         width: "100%",
+        height: "100%",
         "& img": {
             display: "block",
             objectFit: "cover",
-            width: "100%"
+            width: "100%",
+            height: "100%"
         },
         [theme.breakpoints.down("md")]: {
             maxWidth: 360

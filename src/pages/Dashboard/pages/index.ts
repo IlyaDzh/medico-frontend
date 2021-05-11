@@ -1,6 +1,5 @@
 export * from "./DoctorMainPage";
 export * from "./DoctorCalendarPage";
-export * from "./DoctorLogbookPage";
 export * from "./DoctorPatientsPage";
 export * from "./PatientAlertsPage";
 export * from "./PatientResultsPage";

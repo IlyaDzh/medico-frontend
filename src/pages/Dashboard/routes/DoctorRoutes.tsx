@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import {
     DoctorMainPage,
     DoctorCalendarPage,
-    DoctorLogbookPage,
     DoctorPatientsPage,
     MessagesPage,
     SettingsPage,
@@ -19,7 +18,6 @@ export const DoctorRoutes: React.FC = () => (
             component={DoctorMainPage}
         />
         <Route exact path="/dashboard/calendar" component={DoctorCalendarPage} />
-        <Route exact path="/dashboard/logbook" component={DoctorLogbookPage} />
         <Route exact path="/dashboard/patients" component={DoctorPatientsPage} />
         <Route exact path="/dashboard/messages" component={MessagesPage} />
         <Route exact path="/dashboard/settings" component={SettingsPage} />
