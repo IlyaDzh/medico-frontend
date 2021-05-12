@@ -42,12 +42,14 @@ export class UserStore implements IUserStore {
                     this.isAuthorized = true;
 
                     if (data.data.userType === "patient") {
-                        this.rootStore.dashboardMedicalCard.setChangeCardForm(
+                        this.rootStore.dashboardMedicalCardStore.setChangeCardForm(
                             data.data.additionalData
                         );
                     }
 
-                    this.rootStore.dashboardSettings.setUpdateInfoForm(data.data);
+                    this.rootStore.dashboardSettingsStore.setUpdateInfoForm(
+                        data.data
+                    );
                 })
             )
             .catch(

@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DialogAddAnalysis: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore, dashboardAnalyzes } = useStores();
+    const { modalsStore, dashboardAnalyzesStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
     const {
         appendForm,
@@ -69,7 +69,7 @@ export const DialogAddAnalysis: React.FC = observer(() => {
         setFormValue,
         appendAnalysis,
         resetForm
-    } = dashboardAnalyzes;
+    } = dashboardAnalyzesStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();

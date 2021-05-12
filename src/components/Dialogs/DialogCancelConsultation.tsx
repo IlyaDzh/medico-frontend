@@ -18,9 +18,9 @@ const useStyles = makeStyles(() => ({
 
 export const DialogCancelConsultation: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore, dashboardConsultations } = useStores();
+    const { modalsStore, dashboardConsultationsStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const { cancelConsultation } = dashboardConsultations;
+    const { cancelConsultation } = dashboardConsultationsStore;
 
     const handleClose = (): void => {
         setModalIsOpen("cancel-consultation", false);

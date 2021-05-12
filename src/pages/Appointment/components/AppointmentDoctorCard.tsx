@@ -129,7 +129,7 @@ export const AppointmentDoctorCard: React.FC<IAppointmentDoctorCard> = observer(
                                 process.env.REACT_APP_API_BASE_URL +
                                 chosenDoctor.photo
                             }
-                            alt={`Фото ${chosenDoctor.surname} ${chosenDoctor.name}`}
+                            alt={`${chosenDoctor.name} аватар`}
                         />
                     </div>
                     <div>

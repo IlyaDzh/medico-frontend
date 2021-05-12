@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 export const PatientAlertsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { dashboardConsultations, modalsStore } = useStores();
+    const { dashboardConsultationsStore, modalsStore } = useStores();
     const {
         activeConsultations,
         waitingConsultations,
@@ -29,7 +29,7 @@ export const PatientAlertsPage: React.FC = observer(() => {
         getWaitingConsultations,
         getDoneConsultations,
         setCancelConsultationId
-    } = dashboardConsultations;
+    } = dashboardConsultationsStore;
     const { setModalIsOpen } = modalsStore;
 
     useEffect(() => {

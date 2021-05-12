@@ -57,7 +57,7 @@ export const AppointmentResultItem: React.FC<IAppointmentResultItem> = ({
                         src={
                             process.env.REACT_APP_API_BASE_URL + result.doctor.photo
                         }
-                        alt={`Фото ${result.doctor.surname} ${result.doctor.name}`}
+                        alt={`${result.doctor.name} аватар`}
                         isPositionTop
                     />
                     <div className={classes.doctorData}>

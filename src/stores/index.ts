@@ -18,7 +18,8 @@ import {
     DashboardResultsStore,
     DashboardMedicalCardStore,
     DashboardSettingsStore,
-    DashboardDoctorProfileStore
+    DashboardDoctorProfileStore,
+    DashboardScheduleStore
 } from "./Dashboard";
 
 import IStores from "./interfaces";
@@ -40,7 +41,8 @@ import {
     IDashboardResultsStore,
     IDashboardMedicalCardStore,
     IDashboardSettingsStore,
-    IDashboardDoctorProfileStore
+    IDashboardDoctorProfileStore,
+    IDashboardScheduleStore
 } from "./interfaces/Dashboard";
 
 export class RootStore implements IStores {
@@ -56,12 +58,13 @@ export class RootStore implements IStores {
     homeStore: IHomeStore;
     drawerStore: IDrawerStore;
     appointmentStore: IAppointmentStore;
-    dashboardConsultations: IDashboardConsultationsStore;
-    dashboardAnalyzes: IDashboardAnalyzesStore;
-    dashboardResults: IDashboardResultsStore;
-    dashboardMedicalCard: IDashboardMedicalCardStore;
-    dashboardSettings: IDashboardSettingsStore;
-    dashboardDoctorProfile: IDashboardDoctorProfileStore;
+    dashboardConsultationsStore: IDashboardConsultationsStore;
+    dashboardAnalyzesStore: IDashboardAnalyzesStore;
+    dashboardResultsStore: IDashboardResultsStore;
+    dashboardMedicalCardStore: IDashboardMedicalCardStore;
+    dashboardSettingsStore: IDashboardSettingsStore;
+    dashboardDoctorProfileStore: IDashboardDoctorProfileStore;
+    dashboardScheduleStore: IDashboardScheduleStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -76,11 +79,12 @@ export class RootStore implements IStores {
         this.homeStore = new HomeStore();
         this.drawerStore = new DrawerStore();
         this.appointmentStore = new AppointmentStore();
-        this.dashboardConsultations = new DashboardConsultationsStore();
-        this.dashboardAnalyzes = new DashboardAnalyzesStore(this);
-        this.dashboardResults = new DashboardResultsStore();
-        this.dashboardMedicalCard = new DashboardMedicalCardStore(this);
-        this.dashboardSettings = new DashboardSettingsStore(this);
-        this.dashboardDoctorProfile = new DashboardDoctorProfileStore(this);
+        this.dashboardConsultationsStore = new DashboardConsultationsStore();
+        this.dashboardAnalyzesStore = new DashboardAnalyzesStore(this);
+        this.dashboardResultsStore = new DashboardResultsStore();
+        this.dashboardMedicalCardStore = new DashboardMedicalCardStore(this);
+        this.dashboardSettingsStore = new DashboardSettingsStore(this);
+        this.dashboardDoctorProfileStore = new DashboardDoctorProfileStore(this);
+        this.dashboardScheduleStore = new DashboardScheduleStore();
     }
 }

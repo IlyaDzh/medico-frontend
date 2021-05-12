@@ -35,14 +35,14 @@ export const AnalyzesList: React.FC = observer(() => {
     const [currentChip, setCurrentChip] = useState<ChipTypes>("all");
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [photoIndex, setPhotoIndex] = useState<number>(0);
-    const { dashboardAnalyzes, modalsStore } = useStores();
+    const { dashboardAnalyzesStore, modalsStore } = useStores();
     const {
         analyzes,
         analyzesPending,
         getAnalyzes,
         sortAnalyzesByType,
         setDeleteAnalysisId
-    } = dashboardAnalyzes;
+    } = dashboardAnalyzesStore;
     const { setModalIsOpen } = modalsStore;
 
     useEffect(() => {

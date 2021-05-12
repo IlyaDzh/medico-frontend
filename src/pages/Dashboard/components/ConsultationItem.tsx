@@ -150,7 +150,7 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                             process.env.REACT_APP_API_BASE_URL +
                             consultation.doctor.photo
                         }
-                        alt={`Фото ${consultation.doctor.surname} ${consultation.doctor.name}`}
+                        alt={`${consultation.doctor.name} аватар`}
                         isPositionTop
                     />
                     <div className={classes.doctorData}>

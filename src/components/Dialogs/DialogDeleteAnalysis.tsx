@@ -18,9 +18,9 @@ const useStyles = makeStyles(() => ({
 
 export const DialogDeleteAnalysis: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore, dashboardAnalyzes } = useStores();
+    const { modalsStore, dashboardAnalyzesStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const { deleteAnalysis } = dashboardAnalyzes;
+    const { deleteAnalysis } = dashboardAnalyzesStore;
 
     const handleClose = (): void => {
         setModalIsOpen("delete-analysis", false);

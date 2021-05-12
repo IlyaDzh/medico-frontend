@@ -208,7 +208,7 @@ export const DoctorProfile: React.FC = observer(() => {
                                     process.env.REACT_APP_API_BASE_URL +
                                     currentDoctor.photo
                                 }
-                                alt={`Фото ${currentDoctor.surname} ${currentDoctor.name}`}
+                                alt={`${currentDoctor.name} аватар`}
                             />
                         </div>
                         <div className={classes.profileInfo}>

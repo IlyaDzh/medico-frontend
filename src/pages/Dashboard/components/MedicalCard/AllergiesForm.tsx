@@ -8,13 +8,13 @@ import { useFormStyles } from "styles/material/useFormStyles";
 
 export const AllergiesForm: React.FC = observer(() => {
     const formClasses = useFormStyles();
-    const { dashboardMedicalCard } = useStores();
+    const { dashboardMedicalCardStore } = useStores();
     const {
         changeCardForm,
         pending,
         submissionError,
         setFormValue
-    } = dashboardMedicalCard;
+    } = dashboardMedicalCardStore;
 
     return (
         <React.Fragment>

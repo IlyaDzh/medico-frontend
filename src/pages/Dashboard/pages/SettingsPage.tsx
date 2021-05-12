@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const SettingsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { dashboardSettings, userStore } = useStores();
+    const { dashboardSettingsStore, userStore } = useStores();
     const {
         updateForm,
         updateFormErrors,
@@ -121,7 +121,7 @@ export const SettingsPage: React.FC = observer(() => {
         setFormValue,
         setAvatar,
         updateUserInfo
-    } = dashboardSettings;
+    } = dashboardSettingsStore;
     const { currentUser } = userStore;
 
     const avatarSrc = currentUser?.additionalData

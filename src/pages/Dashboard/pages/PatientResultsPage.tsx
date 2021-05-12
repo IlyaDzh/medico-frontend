@@ -14,8 +14,9 @@ const useStyles = makeStyles(() => ({
 
 export const PatientResultsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { dashboardResults } = useStores();
-    const { appointmentResults, pending, getAppointmentResults } = dashboardResults;
+    const { dashboardResultsStore } = useStores();
+    const { appointmentResults, pending, getAppointmentResults } =
+        dashboardResultsStore;
 
     useEffect(() => {
         if (!appointmentResults.length) {

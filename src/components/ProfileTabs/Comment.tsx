@@ -57,7 +57,7 @@ export const Comment: React.FC<IComment> = ({ review }) => {
                 <div className={classes.commentOwner}>
                     <Avatar
                         size={58}
-                        alt={`Фото ${review.name} ${review.surname}`}
+                        alt={`${review.name} аватар`}
                         src={
                             review.avatar
                                 ? process.env.REACT_APP_API_BASE_URL + review.avatar

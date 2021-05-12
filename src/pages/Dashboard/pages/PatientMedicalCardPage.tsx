@@ -115,10 +115,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const PatientMedicalCardPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore, modalsStore, dashboardMedicalCard } = useStores();
+    const { userStore, modalsStore, dashboardMedicalCardStore } = useStores();
     const { currentUser } = userStore;
     const { setModalIsOpen } = modalsStore;
-    const { setCurrentModalState } = dashboardMedicalCard;
+    const { setCurrentModalState } = dashboardMedicalCardStore;
 
     if (!currentUser || !currentUser.additionalData) {
         return null;

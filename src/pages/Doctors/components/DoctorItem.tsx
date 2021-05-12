@@ -102,7 +102,7 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                 <div className={classes.doctorImage}>
                     <img
                         src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
-                        alt={`Фото ${doctor.surname} ${doctor.name}`}
+                        alt={`${doctor.name} аватар`}
                     />
                 </div>
                 <div className={classes.doctorInfo}>

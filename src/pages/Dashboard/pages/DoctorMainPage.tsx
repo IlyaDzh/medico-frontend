@@ -37,9 +37,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorMainPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore, dashboardDoctorProfile } = useStores();
+    const { userStore, dashboardDoctorProfileStore } = useStores();
     const { currentUser } = userStore;
-    const { pendingReviews, fetchReviews } = dashboardDoctorProfile;
+    const { pendingReviews, fetchReviews } = dashboardDoctorProfileStore;
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
 
     if (!currentUser || !currentUser.additionalData) {

@@ -30,9 +30,10 @@ const MODAL_STATES: ModalStates = {
 };
 
 export const DialogUpdateMedicalCard: React.FC = observer(() => {
-    const { modalsStore, dashboardMedicalCard } = useStores();
+    const { modalsStore, dashboardMedicalCardStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const { currentModalState, changeMedicalCard, resetForm } = dashboardMedicalCard;
+    const { currentModalState, changeMedicalCard, resetForm } =
+        dashboardMedicalCardStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();

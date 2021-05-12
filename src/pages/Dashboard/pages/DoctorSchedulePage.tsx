@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
-import { Typography, Paper, makeStyles, Theme } from "@material-ui/core";
+import { Typography, Paper, makeStyles } from "@material-ui/core";
 
-import { Button } from "components";
+import { Button, Loader } from "components";
 import { useStores } from "stores/useStore";
 import { ScheduleItem } from "../components";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     title: {
         marginBottom: 24
     },
@@ -24,7 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorSchedulePage: React.FC = observer(() => {
     const classes = useStyles();
-    const {} = useStores();
+    const { dashboardScheduleStore } = useStores();
+    const { schedule, pendingGetSchedule, submissionError, fetchSchedule } =
+        dashboardScheduleStore;
+
+    useEffect(() => {
+        if (pendingGetSchedule) {
+            return;
+        }
+
+        fetchSchedule();
+    }, [fetchSchedule]); // eslint-disable-line
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -38,25 +48,29 @@ export const DoctorSchedulePage: React.FC = observer(() => {
             </Typography>
 
             <Paper className={classes.scheduleWrapper} variant="outlined">
-                <form onSubmit={handleSubmit}>
-                    <div className={classes.formFields}>
-                        <ScheduleItem title="Понедельник" />
-                        <ScheduleItem title="Вторник" />
-                        <ScheduleItem title="Среда" />
-                        <ScheduleItem title="Четверг" />
-                        <ScheduleItem title="Пятница" />
-                        <ScheduleItem title="Суббота" isWeekend />
-                        <ScheduleItem title="Воскресенье" isWeekend />
-                    </div>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        // disabled={pending}
-                        // isLoaded={pending}
-                    >
-                        Сохранить изменения
-                    </Button>
-                </form>
+                {pendingGetSchedule ? (
+                    <Loader level={2.5} />
+                ) : (
+                    <form onSubmit={handleSubmit}>
+                        <div className={classes.formFields}>
+                            <ScheduleItem title="Понедельник" />
+                            <ScheduleItem title="Вторник" />
+                            <ScheduleItem title="Среда" />
+                            <ScheduleItem title="Четверг" />
+                            <ScheduleItem title="Пятница" />
+                            <ScheduleItem title="Суббота" isWeekend />
+                            <ScheduleItem title="Воскресенье" isWeekend />
+                        </div>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            // disabled={pending}
+                            // isLoaded={pending}
+                        >
+                            Сохранить изменения
+                        </Button>
+                    </form>
+                )}
             </Paper>
         </React.Fragment>
     );

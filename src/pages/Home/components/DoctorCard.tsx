@@ -58,7 +58,7 @@ export const DoctorCard: React.FC<IDoctorCard> = ({ doctor }) => {
                 <div className={classes.cardImage}>
                     <img
                         src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
-                        alt="Фото Елена Леонидовна Докторова"
+                        alt={`${doctor.name} аватар`}
                     />
                 </div>
                 <div className={classes.cardContent}>
