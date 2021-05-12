@@ -120,12 +120,6 @@ const settings: Settings = {
 
 const reviews = [
     {
-        fullname: "Илья Долженко",
-        image: person1,
-        rating: 5,
-        text: "Отличный сервис! Помог защитить дипломную работу. Ставлю 5 звезд."
-    },
-    {
         fullname: "Елена Левченко",
         image: person2,
         rating: 5,
@@ -173,7 +167,13 @@ const reviews = [
         rating: 5,
         text:
             "Все хорошо. Врач мне все расписал, описал подробные шаги и последовательность моих действий. Я доволен, никаких негативных моментов не было."
-    }
+    },
+    {
+        fullname: "Олег Кубарев",
+        image: person1,
+        rating: 5,
+        text: "Отличный сервис! Ставлю 5 звезд."
+    },
 ];
 
 export const ReviewsSection: React.FC = () => {
