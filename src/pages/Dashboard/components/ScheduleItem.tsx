@@ -90,9 +90,12 @@ export const ScheduleItem: React.FC<IScheduleItem> = ({
                     className={classes.select}
                     value={scheduleFrom}
                     onChange={event => onFromChange(Number(event.target.value))}
+                    disabled={scheduleTo === -1}
                 >
+                    <MenuItem value={-1}>Нет приёма</MenuItem>
                     {new Array(13).fill(undefined).map((_, index) => (
                         <MenuItem
+                            key={index}
                             value={index + 8}
                             disabled={scheduleTo < index + 8}
                         >
@@ -110,9 +113,12 @@ export const ScheduleItem: React.FC<IScheduleItem> = ({
                     className={classes.select}
                     value={scheduleTo}
                     onChange={event => onToChange(Number(event.target.value))}
+                    disabled={scheduleFrom === -1}
                 >
+                    <MenuItem value={-1}>Нет приёма</MenuItem>
                     {new Array(13).fill(undefined).map((_, index) => (
                         <MenuItem
+                            key={index}
                             value={index + 8}
                             disabled={scheduleFrom > index + 8}
                         >
