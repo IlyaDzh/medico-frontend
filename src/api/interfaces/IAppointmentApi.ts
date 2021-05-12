@@ -24,7 +24,7 @@ export type CommunicationMethod = {
 
 export interface IGetFreeDoctorTimeSuccessResponse extends BaseResponse {
     error: 0;
-    data: AvailableTime[];
+    data: AvailableTime[] | null;
 }
 
 export type AvailableTime = {

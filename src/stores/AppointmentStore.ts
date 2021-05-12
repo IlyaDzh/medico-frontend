@@ -102,17 +102,32 @@ export class AppointmentStore implements IAppointmentStore {
         AppointmentApi.getFreeDoctorTime(
             this.chosenDoctor.id,
             correctDate.toISOString()
-        ).then(
-            action(({ data }: AxiosResponse<IGetFreeDoctorTimeSuccessResponse>) => {
-                this.availableTime = data.data;
+        )
+            .then(
+                action(
+                    ({ data }: AxiosResponse<IGetFreeDoctorTimeSuccessResponse>) => {
+                        this.availableTime = data.data;
 
-                const availableFirstTime = data.data.find(time => !time.isClosed);
-                this.setFormValue(
-                    "time",
-                    availableFirstTime ? availableFirstTime.time : ""
-                );
-            })
-        );
+                        if (data.data) {
+                            const availableFirstTime = data.data.find(
+                                time => !time.isClosed
+                            );
+                            this.setFormValue(
+                                "time",
+                                availableFirstTime ? availableFirstTime.time : "-1"
+                            );
+                        } else {
+                            this.setFormValue("time", "-1");
+                        }
+                    }
+                )
+            )
+            .catch(
+                action(() => {
+                    this.availableTime = null;
+                    this.setFormValue("time", "-1");
+                })
+            );
     };
 
     createAppointment = () => {

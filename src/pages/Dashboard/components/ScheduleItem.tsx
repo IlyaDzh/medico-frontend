@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 12
     },
     formLabelWeekend: {
-        color: `${theme.palette.primary.dark} !important`
+        color: "#e34242"
     },
     selectLabel: {
         width: 28,

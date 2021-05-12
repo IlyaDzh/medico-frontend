@@ -141,15 +141,22 @@ export const StepTime: React.FC = observer(() => {
                                             availableTime.length === 0
                                         }
                                     >
-                                        {availableTime?.map(time => (
-                                            <MenuItem
-                                                key={time.time}
-                                                value={time.time}
-                                                disabled={time.isClosed}
-                                            >
-                                                {time.time}
+                                        {availableTime &&
+                                        availableTime.length > 0 ? (
+                                            availableTime.map(time => (
+                                                <MenuItem
+                                                    key={time.time}
+                                                    value={time.time}
+                                                    disabled={time.isClosed}
+                                                >
+                                                    {time.time}
+                                                </MenuItem>
+                                            ))
+                                        ) : (
+                                            <MenuItem value="-1">
+                                                Нет приёма
                                             </MenuItem>
-                                        ))}
+                                        )}
                                     </Select>
                                 </FormControl>
                             </div>
@@ -218,7 +225,14 @@ export const StepTime: React.FC = observer(() => {
                                 </FormControl>
                             </div>
                         </div>
-                        <Button variant="contained" onClick={onNextStep}>
+                        <Button
+                            variant="contained"
+                            onClick={onNextStep}
+                            disabled={
+                                !appointmentForm.time ||
+                                appointmentForm.time === "-1"
+                            }
+                        >
                             Выбрать и продолжить
                         </Button>
                     </form>
