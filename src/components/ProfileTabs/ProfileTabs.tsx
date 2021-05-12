@@ -20,7 +20,7 @@ interface IProfileTabs {
 const useStyles = makeStyles((theme: Theme) => ({
     profileTabs: {
         "& .MuiTabScrollButton-root.Mui-disabled": {
-            display: "none"
+            opacity: 0.25
         }
     },
     tabs: {
@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: "6px 28px",
         whiteSpace: "nowrap",
         [theme.breakpoints.down("xs")]: {
-            padding: "6px 16px"
+            padding: "6px 10px",
+            fontSize: 14
         }
     },
     tabsIndicator: {

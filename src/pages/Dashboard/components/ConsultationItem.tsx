@@ -53,7 +53,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         [theme.breakpoints.down("xs")]: {
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            flexWrap: "wrap"
         }
     },
     separate: {
@@ -101,10 +102,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     appointmentLink: {
         fontSize: 14,
-        marginRight: 32,
+        marginRight: 20,
+        textDecoration: "underline",
+        textAlign: "center",
         "&:hover": {
             textDecoration: "none"
-        }
+        },
+        [theme.breakpoints.down("md")]: {
+            marginRight: 16
+        },
+        [theme.breakpoints.down("sm")]: {}
     }
 }));
 
@@ -215,19 +222,30 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                             className={classes.appointmentLink}
                             component={Link}
                             to={`/dashboard/chat/${consultation.id}`}
-                            underline="always"
                         >
                             Перейти к консультации
                         </MaterialLink>
                     ) : (
-                        <MaterialLink
-                            className={classes.appointmentLink}
-                            component={Link}
-                            to={`/appointment/${consultation.doctor.id}`}
-                            underline="always"
-                        >
-                            Записаться на прием
-                        </MaterialLink>
+                        <React.Fragment>
+                            <MaterialLink
+                                className={classes.appointmentLink}
+                                type="button"
+                                component="button"
+                                variant="h6"
+                                onClick={() => {
+                                    console.info("open add-comment dialog");
+                                }}
+                            >
+                                Оставить отзыв
+                            </MaterialLink>
+                            <MaterialLink
+                                className={classes.appointmentLink}
+                                component={Link}
+                                to={`/appointment/${consultation.doctor.id}`}
+                            >
+                                Записаться на прием
+                            </MaterialLink>
+                        </React.Fragment>
                     )}
                 </div>
             )}

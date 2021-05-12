@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core";
 
 interface IBreadcrumbs {
-    items: TBreadcrumb[];
+    items: Breadcrumb[];
     itemClassName?: string;
 }
 
-type TBreadcrumb = {
+export type Breadcrumb = {
     to?: string;
     title: string;
 };

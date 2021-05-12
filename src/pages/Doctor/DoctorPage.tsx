@@ -11,7 +11,10 @@ export const DoctorPage: React.FC = () => {
                 <Header isHeader />
             </Hidden>
             <Hidden mdUp>
-                <ExtendedHeader title="Специалисты" />
+                <ExtendedHeader
+                    title="Специалист"
+                    breadcrumbs={[{ to: "/doctors", title: "Специалисты" }]}
+                />
             </Hidden>
             <main>
                 <Container>

@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Container, Typography, Hidden, makeStyles, Theme } from "@material-ui/core";
 
-import { Breadcrumbs, Button } from "components";
+import { Breadcrumbs, Button, Breadcrumb } from "components";
 import { Header } from "./Header";
 
 import headerBackground from "images/header/header-background.jpg";
@@ -10,6 +10,7 @@ import { useStores } from "stores/useStore";
 
 interface IExtendedHeader {
     title: string;
+    breadcrumbs: Breadcrumb[];
     action?: React.ReactNode;
 }
 
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ExtendedHeader: React.FC<IExtendedHeader> = observer(
-    ({ title, action }) => {
+    ({ title, breadcrumbs, action }) => {
         const classes = useStyles();
         const { userStore } = useStores();
         const { isAuthorized } = userStore;
@@ -61,7 +62,7 @@ export const ExtendedHeader: React.FC<IExtendedHeader> = observer(
                 </Hidden>
                 <Container>
                     <Breadcrumbs
-                        items={[{ to: "/", title: "Главная" }, { title: title }]}
+                        items={[{ to: "/", title: "Главная" }, ...breadcrumbs]}
                     />
                     <div className={classes.headerContent}>
                         <Typography className={classes.headerTitle} variant="h1">

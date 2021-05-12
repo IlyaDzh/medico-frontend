@@ -17,6 +17,7 @@ export const DoctorsHeader: React.FC = () => {
     return (
         <ExtendedHeader
             title="Специалисты"
+            breadcrumbs={[{ title: "Специалисты" }]}
             action={
                 <Hidden smDown>
                     <div className={classes.headerSearchWrapper}>
