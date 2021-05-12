@@ -50,8 +50,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     profileInner: {
         display: "flex",
         alignItems: "center",
+        width: "100%",
         [theme.breakpoints.down("sm")]: {
-            alignItems: "initial"
+            alignItems: "initial",
+            width: "unset"
         },
         [theme.breakpoints.down("xs")]: {
             display: "block",

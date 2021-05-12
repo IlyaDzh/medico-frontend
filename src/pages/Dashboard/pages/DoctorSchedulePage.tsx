@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { Typography, Paper, makeStyles } from "@material-ui/core";
 
-import { Button, Loader } from "components";
+import { Button, Loader, SubmissionResult } from "components";
 import { useStores } from "stores/useStore";
 import { ScheduleItem } from "../components";
 
@@ -25,20 +25,33 @@ const useStyles = makeStyles(() => ({
 export const DoctorSchedulePage: React.FC = observer(() => {
     const classes = useStyles();
     const { dashboardScheduleStore } = useStores();
-    const { schedule, pendingGetSchedule, submissionError, fetchSchedule } =
-        dashboardScheduleStore;
+    const {
+        schedule,
+        pendingGetSchedule,
+        pendingSubmit,
+        submissionSuccess,
+        submissionError,
+        fetchSchedule,
+        setSchedule,
+        changeSchedule,
+        resetSubmissionResult
+    } = dashboardScheduleStore;
 
     useEffect(() => {
-        if (pendingGetSchedule) {
+        if (pendingGetSchedule || schedule.length > 0) {
             return;
         }
 
         fetchSchedule();
-    }, [fetchSchedule]); // eslint-disable-line
+    }, [schedule, fetchSchedule]); // eslint-disable-line
+
+    useEffect(() => {
+        return () => resetSubmissionResult();
+    }, [resetSubmissionResult]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // updateUserInfo();
+        changeSchedule();
     };
 
     return (
@@ -48,24 +61,44 @@ export const DoctorSchedulePage: React.FC = observer(() => {
             </Typography>
 
             <Paper className={classes.scheduleWrapper} variant="outlined">
-                {pendingGetSchedule ? (
-                    <Loader level={2.5} />
+                {pendingGetSchedule || schedule.length === 0 ? (
+                    <Loader level={2.5} isCenter />
                 ) : (
                     <form onSubmit={handleSubmit}>
                         <div className={classes.formFields}>
-                            <ScheduleItem title="Понедельник" />
-                            <ScheduleItem title="Вторник" />
-                            <ScheduleItem title="Среда" />
-                            <ScheduleItem title="Четверг" />
-                            <ScheduleItem title="Пятница" />
-                            <ScheduleItem title="Суббота" isWeekend />
-                            <ScheduleItem title="Воскресенье" isWeekend />
+                            {[
+                                "Понедельник",
+                                "Вторник",
+                                "Среда",
+                                "Четверг",
+                                "Пятница",
+                                "Суббота",
+                                "Воскресенье"
+                            ].map((title, index) => (
+                                <ScheduleItem
+                                    key={title}
+                                    title={title}
+                                    scheduleFrom={schedule[index].from}
+                                    scheduleTo={schedule[index].to}
+                                    onFromChange={time =>
+                                        setSchedule(time, index, "from")
+                                    }
+                                    onToChange={time =>
+                                        setSchedule(time, index, "to")
+                                    }
+                                    isWeekend={index === 5 || index === 6}
+                                />
+                            ))}
                         </div>
+                        <SubmissionResult>{submissionSuccess}</SubmissionResult>
+                        <SubmissionResult isError>
+                            {submissionError}
+                        </SubmissionResult>
                         <Button
                             type="submit"
                             variant="contained"
-                            // disabled={pending}
-                            // isLoaded={pending}
+                            disabled={pendingSubmit}
+                            isLoaded={pendingSubmit}
                         >
                             Сохранить изменения
                         </Button>
