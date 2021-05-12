@@ -101,7 +101,7 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                                 startIcon={
                                     <Avatar
                                         componentTag="span"
-                                        alt={`${currentUser?.name} avatar`}
+                                        alt={`${currentUser?.name} аватар`}
                                         src={avatarSrc}
                                     />
                                 }

@@ -53,12 +53,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const SearchInput: React.FC<TextFieldProps> = observer(({ ...props }) => {
     const classes = useStyles();
     const { searchDoctorStore } = useStores();
-    const {
-        searchText,
-        dropdownDoctors,
-        pendingSearchDoctors,
-        setSearchText
-    } = searchDoctorStore;
+    const { searchText, dropdownDoctors, pendingSearchDoctors, setSearchText } =
+        searchDoctorStore;
 
     useEffect(() => {
         return () => setSearchText("");
@@ -80,6 +76,7 @@ export const SearchInput: React.FC<TextFieldProps> = observer(({ ...props }) => 
                     <Avatar
                         size={48}
                         src={process.env.REACT_APP_API_BASE_URL + doctor.photo}
+                        alt={`${doctor.name} аватар`}
                     />
                 </ListItemAvatar>
                 <ListItemText

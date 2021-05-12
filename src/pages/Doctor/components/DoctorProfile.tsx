@@ -200,7 +200,7 @@ export const DoctorProfile: React.FC = observer(() => {
                             {specialty}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                            {currentDoctor.workTime}
+                            Сегодня {currentDoctor.workTime}
                         </Typography>
                     </Hidden>
                     <div className={classes.profileInner}>
@@ -219,7 +219,7 @@ export const DoctorProfile: React.FC = observer(() => {
                                     {specialty}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {currentDoctor.workTime}
+                                    Сегодня {currentDoctor.workTime}
                                 </Typography>
                             </Hidden>
                             <Typography variant="h2">

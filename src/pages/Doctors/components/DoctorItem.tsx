@@ -94,7 +94,7 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                         {specialty}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {doctor.workTime}
+                        Сегодня {doctor.workTime}
                     </Typography>
                 </div>
             </Hidden>
@@ -111,7 +111,7 @@ export const DoctorItem: React.FC<IDoctorItem> = ({ doctor }) => {
                             {specialty}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                            {doctor.workTime}
+                            Сегодня {doctor.workTime}
                         </Typography>
                     </Hidden>
                     <Typography variant="h3">

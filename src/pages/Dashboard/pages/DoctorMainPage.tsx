@@ -59,7 +59,7 @@ export const DoctorMainPage: React.FC = observer(() => {
                               currentUser.additionalData.photo
                             : undefined
                     }
-                    alt="Ваше фото"
+                    alt={`${currentUser.name} аватар`}
                 />
                 <div className={classes.userInfo}>
                     <Typography

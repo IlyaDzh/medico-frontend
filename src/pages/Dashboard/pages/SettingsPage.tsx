@@ -77,9 +77,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         bottom: 0,
         borderRadius: 8,
         border: "none",
-        background: "rgba(0, 0, 0, 0.6)",
+        background: "rgba(0, 0, 0, 0.3)",
         "&:hover": {
-            background: "rgba(0, 0, 0, 0.3)"
+            background: "rgba(0, 0, 0, 0.6)"
         }
     },
     formColumns: {

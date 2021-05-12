@@ -149,7 +149,7 @@ export const PatientMedicalCardPage: React.FC = observer(() => {
                               currentUser.additionalData.avatar
                             : undefined
                     }
-                    alt="Ваше фото"
+                    alt={`${currentUser.name} аватар`}
                 />
                 <div className={classes.userInfo}>
                     <Typography className={classes.userFullname} variant="body1">
