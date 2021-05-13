@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     button: {
+        "&:first-child": {
+            [theme.breakpoints.down("xs")]: {
+                marginBottom: 8
+            }
+        },
         [theme.breakpoints.down("xs")]: {
             width: "100%"
         }

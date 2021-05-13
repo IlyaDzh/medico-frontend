@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import {
-    Button as MaterialButton,
     FormControlLabel,
     Checkbox,
     Typography,
@@ -36,9 +35,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         "& a": {
             color: theme.palette.text.secondary
         }
-    },
-    paymentButton: {
-        marginBottom: 16
     }
 }));
 
@@ -46,21 +42,12 @@ export const StepPayment: React.FC = () => {
     const classes = useStyles();
     const { onNextStep } = useContext(StepsContext);
     const [checked, setChecked] = useState<boolean>(false);
-    const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
     const { appointmentStore } = useStores();
     const { createAppointment } = appointmentStore;
 
     const handlePaymentClick = () => {
-        setPaymentSuccess(true);
         createAppointment();
-    };
-
-    const handleCheckPaymentClick = () => {
-        setLoading(true);
-        setTimeout(() => {
-            onNextStep();
-        }, 2000);
+        onNextStep();
     };
 
     return (
@@ -83,32 +70,16 @@ export const StepPayment: React.FC = () => {
                             color="textSecondary"
                         >
                             Проверил(а) данные и готов(а) к оплате
-                            {/* Принимаю условия{" "}
-                            <Link to="/">пользовательского соглашения</Link> и даю
-                            согласие на{" "}
-                            <Link to="/">обработку моих персональных данных</Link> */}
                         </Typography>
                     }
                 />
-                <MaterialButton
-                    className={classes.paymentButton}
-                    href="https://www.google.ru/"
-                    target="_blank"
+                <Button
                     variant="contained"
                     color="primary"
                     onClick={handlePaymentClick}
                     disabled={!checked}
-                    disableElevation
                 >
                     Оплатить
-                </MaterialButton>
-                <Button
-                    variant="outlined"
-                    onClick={handleCheckPaymentClick}
-                    disabled={!paymentSuccess || loading}
-                    isLoaded={loading}
-                >
-                    Проверить оплату
                 </Button>
             </form>
         </div>
