@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Typography, makeStyles } from "@material-ui/core";
 
 import { ConsultationItem } from "../components";
-import { DialogCancelConsultation, Loader } from "components";
+import { DialogCancelConsultation, DialogAddComment, Loader } from "components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles(() => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 export const PatientAlertsPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { dashboardConsultationsStore, modalsStore } = useStores();
+    const { dashboardConsultationsStore, modalsStore, commentStore } = useStores();
     const {
         activeConsultations,
         waitingConsultations,
@@ -31,6 +31,7 @@ export const PatientAlertsPage: React.FC = observer(() => {
         setCancelConsultationId
     } = dashboardConsultationsStore;
     const { setModalIsOpen } = modalsStore;
+    const { setDoctorId } = commentStore;
 
     useEffect(() => {
         if (
@@ -49,6 +50,11 @@ export const PatientAlertsPage: React.FC = observer(() => {
     const handleCancelConsultation = (id: number): void => {
         setCancelConsultationId(id);
         setModalIsOpen("cancel-consultation", true);
+    };
+
+    const handleOpenCommentDialog = (id: number): void => {
+        setDoctorId(id);
+        setModalIsOpen("add-comment", true);
     };
 
     return (
@@ -109,6 +115,9 @@ export const PatientAlertsPage: React.FC = observer(() => {
                             <ConsultationItem
                                 key={index}
                                 consultation={consultation}
+                                onSendComment={() =>
+                                    handleOpenCommentDialog(consultation.doctor.id)
+                                }
                             />
                         ))
                     ) : (
@@ -122,6 +131,7 @@ export const PatientAlertsPage: React.FC = observer(() => {
             </article>
 
             <DialogCancelConsultation />
+            <DialogAddComment />
         </React.Fragment>
     );
 });

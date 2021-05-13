@@ -8,6 +8,7 @@ export * from "./IAppointmentApi";
 export * from "./IDashboardPatientApi";
 export * from "./IDashboardDoctorApi";
 export * from "./IFeedbackApi";
+export * from "./ICommentApi";
 
 export interface BaseResponse {
     data?: any;

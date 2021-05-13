@@ -9,3 +9,4 @@ export * from "./AppointmentApi";
 export * from "./DashboardPatientApi";
 export * from "./DashboardDoctorApi";
 export * from "./FeedbackApi";
+export * from "./CommentApi";

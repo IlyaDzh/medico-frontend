@@ -12,6 +12,7 @@ import { SearchDoctorStore } from "./SearchDoctorStore";
 import { HomeStore } from "./HomeStore";
 import { DrawerStore } from "./DrawerStore";
 import { AppointmentStore } from "./AppointmentStore";
+import { CommentStore } from "./CommentStore";
 import {
     DashboardAnalyzesStore,
     DashboardConsultationsStore,
@@ -35,6 +36,7 @@ import { ISearchDoctorStore } from "./interfaces/ISearchDoctorStore";
 import { IHomeStore } from "./interfaces/IHomeStore";
 import { IDrawerStore } from "./interfaces/IDrawerStore";
 import { IAppointmentStore } from "./interfaces/IAppointmentStore";
+import { ICommentStore } from "./interfaces/ICommentStore";
 import {
     IDashboardAnalyzesStore,
     IDashboardConsultationsStore,
@@ -58,6 +60,7 @@ export class RootStore implements IStores {
     homeStore: IHomeStore;
     drawerStore: IDrawerStore;
     appointmentStore: IAppointmentStore;
+    commentStore: ICommentStore;
     dashboardConsultationsStore: IDashboardConsultationsStore;
     dashboardAnalyzesStore: IDashboardAnalyzesStore;
     dashboardResultsStore: IDashboardResultsStore;
@@ -79,6 +82,7 @@ export class RootStore implements IStores {
         this.homeStore = new HomeStore();
         this.drawerStore = new DrawerStore();
         this.appointmentStore = new AppointmentStore();
+        this.commentStore = new CommentStore(this);
         this.dashboardConsultationsStore = new DashboardConsultationsStore();
         this.dashboardAnalyzesStore = new DashboardAnalyzesStore(this);
         this.dashboardResultsStore = new DashboardResultsStore();

@@ -1,8 +1,10 @@
 import { differenceInYears } from "date-fns";
 
-const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const EMAIL_REGEXP =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const PHONE_NUMBER_REGEXP = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
+const PHONE_NUMBER_REGEXP =
+    /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
 
 const ONLY_LETTERS_REGEXP = /^[a-zA-Zа-яА-ЯЁё]+$/;
 
@@ -116,5 +118,11 @@ export const isIIN = (value: string) => {
 
     if (value.length !== 12) {
         return "Неверный формат ввода";
+    }
+};
+
+export const isRating = (value: any) => {
+    if (!value) {
+        return "Необходимо поставить оценку";
     }
 };

@@ -35,6 +35,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "update-medical-card",
             isOpen: false
+        },
+        {
+            name: "add-comment",
+            isOpen: false
         }
     ];
 

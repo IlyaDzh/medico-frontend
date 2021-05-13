@@ -20,6 +20,7 @@ import { formatDate } from "utils/formatDate";
 interface IConsultationItem {
     consultation: Consultation;
     onCancel?: () => void;
+    onSendComment?: () => void;
     isActive?: boolean;
 }
 
@@ -118,6 +119,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const ConsultationItem: React.FC<IConsultationItem> = ({
     consultation,
     onCancel,
+    onSendComment,
     isActive
 }) => {
     const classes = useStyles();
@@ -217,7 +219,7 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                 </div>
             ) : (
                 <div className={classes.alertRight}>
-                    {isActive ? (
+                    {isActive && (
                         <MaterialLink
                             className={classes.appointmentLink}
                             component={Link}
@@ -225,27 +227,26 @@ export const ConsultationItem: React.FC<IConsultationItem> = ({
                         >
                             Перейти к консультации
                         </MaterialLink>
-                    ) : (
-                        <React.Fragment>
-                            <MaterialLink
-                                className={classes.appointmentLink}
-                                type="button"
-                                component="button"
-                                variant="h6"
-                                onClick={() => {
-                                    console.info("open add-comment dialog");
-                                }}
-                            >
-                                Оставить отзыв
-                            </MaterialLink>
-                            <MaterialLink
-                                className={classes.appointmentLink}
-                                component={Link}
-                                to={`/appointment/${consultation.doctor.id}`}
-                            >
-                                Записаться на прием
-                            </MaterialLink>
-                        </React.Fragment>
+                    )}
+                    {onSendComment && (
+                        <MaterialLink
+                            className={classes.appointmentLink}
+                            type="button"
+                            component="button"
+                            variant="h6"
+                            onClick={onSendComment}
+                        >
+                            Оставить отзыв
+                        </MaterialLink>
+                    )}
+                    {!isActive && (
+                        <MaterialLink
+                            className={classes.appointmentLink}
+                            component={Link}
+                            to={`/appointment/${consultation.doctor.id}`}
+                        >
+                            Записаться на прием
+                        </MaterialLink>
                     )}
                 </div>
             )}

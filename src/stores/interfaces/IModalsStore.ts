@@ -17,4 +17,5 @@ export type TModalsName =
     | "cancel-consultation"
     | "add-analysis"
     | "delete-analysis"
-    | "update-medical-card";
+    | "update-medical-card"
+    | "add-comment";
