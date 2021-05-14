@@ -5,3 +5,4 @@ export * from "./ContentLayout";
 export * from "./ConsultationItem";
 export * from "./AppointmentResultItem";
 export * from "./ScheduleItem";
+export * from "./PatientItem";

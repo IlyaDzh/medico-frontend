@@ -3,8 +3,6 @@ import { makeAutoObservable, action, autorun } from "mobx";
 
 import { AppointmentApi } from "api";
 import {
-    AvailableTime,
-    CommunicationMethod,
     IAppointmentPostData,
     ICreateAppointmentErrorResponse,
     IGetFreeDoctorTimeSuccessResponse,
@@ -14,7 +12,9 @@ import {
     IAppointmentStore,
     IAppointmentForm,
     IAppointmentFormErrors,
-    KeysOfAppointmentForm
+    KeysOfAppointmentForm,
+    CommunicationMethod,
+    AvailableTime
 } from "./interfaces/IAppointmentStore";
 import { IDoctor } from "./interfaces/IDoctorStore";
 import { formatDate } from "utils/formatDate";

@@ -1,8 +1,12 @@
-export const CameraIcon: React.FC = () => (
-    <svg width="25" height="19" viewBox="0 0 25 19" fill="none">
+export const CameraIcon: React.FC<{
+    color?: string;
+    width?: number;
+    height?: number;
+}> = ({ color = "#fff", width = 25, height = 19 }) => (
+    <svg width={width} height={height} viewBox="0 0 25 19" fill="none">
         <path
             d="M17.3332 14.9375c0 2.2437-1.7582 4.0625-3.9271 4.0625H4.3436C2.1747 19 .4165 17.1812.4165 14.9375V4.3125C.4165 2.0688 2.1747.25 4.3435.25h9.0626c2.1689 0 3.9271 1.8188 3.9271 4.0625v10.625zm6.9623-12.9458c.1857.226.2877.5129.2877.8095v13.6473c0 .6903-.541 1.25-1.2084 1.25-.2867 0-.564-.1055-.7825-.2975l-4.0508-3.5623V5.4099l4.0508-3.5612c.5085-.447 1.2711-.383 1.7032.143z"
-            fill="#fff"
+            fill={color}
         />
     </svg>
 );

@@ -1,5 +1,6 @@
 import { axiosInstance } from "./axios-instance";
 import { IChangeSchedulePostData } from "./interfaces";
+import { GetPatientsType } from "stores/interfaces/Dashboard";
 
 export class DashboardDoctorApi {
     static getSchedule() {
@@ -7,6 +8,15 @@ export class DashboardDoctorApi {
     }
 
     static changeSchedule(postData: IChangeSchedulePostData) {
-        return axiosInstance.post("/api/v1/doctor/profile/change-schedule", postData);
+        return axiosInstance.post(
+            "/api/v1/doctor/profile/change-schedule",
+            postData
+        );
+    }
+
+    static getPatients(date: string, state: GetPatientsType) {
+        return axiosInstance.get(
+            `/api/v1/consultation/patients-for-doctor?date=${date}&state=${state}`
+        );
     }
 }

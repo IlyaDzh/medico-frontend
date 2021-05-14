@@ -1,5 +1,4 @@
 import { IDoctor } from "./IDoctorStore";
-import { AvailableTime, CommunicationMethod } from "api";
 
 export interface IAppointmentStore {
     chosenDoctor: IDoctor | null;
@@ -35,3 +34,13 @@ export interface IAppointmentFormErrors {
 }
 
 export type KeysOfAppointmentForm = keyof IAppointmentForm;
+
+export type CommunicationMethod = {
+    id: number;
+    method: string;
+};
+
+export type AvailableTime = {
+    time: string;
+    isClosed: boolean;
+};

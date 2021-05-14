@@ -23,3 +23,4 @@ export * from "./ValidationRedIcon";
 export * from "./FormPhotoIcon";
 export * from "./FormResumeIcon";
 export * from "./PlusIcon";
+export * from "./ClockIcon";
