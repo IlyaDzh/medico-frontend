@@ -102,7 +102,7 @@ export const DoctorPatientsPage: React.FC = observer(() => {
                     onChange={handleChange}
                     indicatorColor="primary"
                 >
-                    <Tab value="waiting" className={classes.tabItem} label="Новые" />
+                    <Tab value="new" className={classes.tabItem} label="Новые" />
                     <Tab value="done" className={classes.tabItem} label="История" />
                 </Tabs>
                 <Typography

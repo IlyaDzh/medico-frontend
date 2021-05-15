@@ -23,4 +23,4 @@ export interface PatientItem {
     communicationMethod: CommunicationMethod;
 }
 
-export type GetPatientsType = "waiting" | "done";
+export type GetPatientsType = "new" | "done";

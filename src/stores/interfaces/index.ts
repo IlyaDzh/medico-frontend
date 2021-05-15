@@ -19,7 +19,8 @@ import {
     IDashboardSettingsStore,
     IDashboardDoctorProfileStore,
     IDashboardScheduleStore,
-    IDashboardPatientsStore
+    IDashboardPatientsStore,
+    IDashboardPatientInfoStore
 } from "./Dashboard";
 
 export default interface IStores {
@@ -44,4 +45,5 @@ export default interface IStores {
     dashboardDoctorProfileStore: IDashboardDoctorProfileStore;
     dashboardScheduleStore: IDashboardScheduleStore;
     dashboardPatientsStore: IDashboardPatientsStore;
+    dashboardPatientInfoStore: IDashboardPatientInfoStore;
 }

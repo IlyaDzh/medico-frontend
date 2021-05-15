@@ -13,7 +13,7 @@ export class DashboardPatientsStore implements IDashboardPatientsStore {
 
     currentDate: Date = new Date();
 
-    currentType: GetPatientsType = "waiting";
+    currentType: GetPatientsType = "new";
 
     pending: boolean = false;
 

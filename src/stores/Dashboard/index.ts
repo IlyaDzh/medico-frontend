@@ -6,3 +6,4 @@ export * from "./DashboardSettingsStore";
 export * from "./DashboardDoctorProfileStore";
 export * from "./DashboardScheduleStore";
 export * from "./DashboardPatientsStore";
+export * from "./DashboardPatientInfoStore";

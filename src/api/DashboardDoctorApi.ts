@@ -19,4 +19,10 @@ export class DashboardDoctorApi {
             `/api/v1/consultation/patients-for-doctor?date=${date}&state=${state}`
         );
     }
+
+    static getConsultationInfo(patientId: number, consultationId: number) {
+        return axiosInstance.get(
+            `/api/v1/patient/consultation-info?patientId=${patientId}&consultationId=${consultationId}`
+        );
+    }
 }

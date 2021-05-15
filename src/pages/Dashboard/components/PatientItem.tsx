@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { intervalToDuration } from "date-fns";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         marginBottom: 3
     },
+    greenTime: {
+        color: "#2ab841"
+    },
     date: {
         marginLeft: 12
     },
@@ -104,6 +108,14 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            if (
+                new Date(consultation.receptionDate).getTime() < new Date().getTime()
+            ) {
+                setDurationTime("");
+                clearInterval(interval);
+                return;
+            }
+
             const duration = intervalToDuration({
                 start: new Date(consultation.receptionDate),
                 end: new Date()
@@ -121,7 +133,7 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
 
     return (
         <Link
-            to={`/dashboard/patient/${consultation.patient.id}`}
+            to={`/dashboard/patient/${consultation.patient.id}/consultation/${consultation.id}`}
             className={classes.patient}
         >
             <div className={classes.patientTitle}>
@@ -132,8 +144,13 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
                 </Typography>
                 <Typography className={classes.timeToConsultation} variant="h6">
                     до начала консультации <br />
-                    <Typography component="span" variant="h6" color="textSecondary">
-                        {durationTime}
+                    <Typography
+                        className={clsx(!durationTime && classes.greenTime)}
+                        component="span"
+                        variant="h6"
+                        color="textSecondary"
+                    >
+                        {durationTime || "Консультация уже идёт"}
                     </Typography>
                 </Typography>
             </div>
