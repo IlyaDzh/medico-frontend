@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { intervalToDuration } from "date-fns";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar } from "components";
 import { CalendarIcon, ClockIcon, EnvelopeIcon, PhoneIcon, CameraIcon } from "icons";
 import { PatientItem as PatientItemData } from "stores/interfaces/Dashboard";
 import { formatDate } from "utils/formatDate";
+import { formatDuration } from "utils/formatDuration";
 
 interface IPatientItem {
     consultation: PatientItemData;
@@ -98,6 +100,24 @@ const communicationMethods = {
 
 export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
     const classes = useStyles();
+    const [durationTime, setDurationTime] = useState("Ожидание...");
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const duration = intervalToDuration({
+                start: new Date(consultation.receptionDate),
+                end: new Date()
+            });
+
+            const formatedDuration = formatDuration(duration);
+
+            setDurationTime(formatedDuration);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []); // eslint-disable-line
+
+    const time = formatDate(consultation.receptionDate.toString(), "HH");
 
     return (
         <Link
@@ -113,7 +133,7 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
                 <Typography className={classes.timeToConsultation} variant="h6">
                     до начала консультации <br />
                     <Typography component="span" variant="h6" color="textSecondary">
-                        10 минут
+                        {durationTime}
                     </Typography>
                 </Typography>
             </div>
@@ -134,7 +154,7 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
                 <div className={classes.consultationTime}>
                     <ClockIcon />
                     <Typography className={classes.time} variant="h5">
-                        13:00 - 13:30
+                        {time}:00 - {+time + 1}:00
                     </Typography>
                 </div>
             </div>
