@@ -140,11 +140,8 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation, isHistory })
 
     const time = formatDate(consultation.receptionDate.toString(), "HH");
 
-    return (
-        <Link
-            to={`/dashboard/patient/${consultation.patient.id}/consultation/${consultation.id}`}
-            className={classes.patient}
-        >
+    const content = (
+        <React.Fragment>
             <div className={classes.patientTitle}>
                 <Typography className={classes.title} variant="h5">
                     {consultation.isFirstConsultation
@@ -219,6 +216,17 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation, isHistory })
                     </div>
                 </div>
             </div>
+        </React.Fragment>
+    );
+
+    return isHistory ? (
+        <div className={classes.patient}>{content}</div>
+    ) : (
+        <Link
+            to={`/dashboard/patient/${consultation.patient.id}/consultation/${consultation.id}`}
+            className={classes.patient}
+        >
+            {content}
         </Link>
     );
 };

@@ -1,6 +1,7 @@
 export * from "./Menu";
 export * from "./Analyzes";
 export * from "./MedicalCard";
+export * from "./PatientProfile";
 export * from "./ContentLayout";
 export * from "./ConsultationItem";
 export * from "./AppointmentResultItem";
