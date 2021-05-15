@@ -118,6 +118,7 @@ export const DoctorPatientsPage: React.FC = observer(() => {
                             <PatientItem
                                 key={consultation.id}
                                 consultation={consultation}
+                                isHistory={currentType === "done"}
                             />
                         ))
                     ) : (

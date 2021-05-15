@@ -12,6 +12,7 @@ import { formatDuration } from "utils/formatDuration";
 
 interface IPatientItem {
     consultation: PatientItemData;
+    isHistory: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -66,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     greenTime: {
         color: "#2ab841"
     },
+    redTime: {
+        color: "#e34242"
+    },
     date: {
         marginLeft: 12
     },
@@ -102,16 +106,17 @@ const communicationMethods = {
     3: <CameraIcon color="#5ea1f0" width={22} height={22} />
 };
 
-export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
+export const PatientItem: React.FC<IPatientItem> = ({ consultation, isHistory }) => {
     const classes = useStyles();
-    const [durationTime, setDurationTime] = useState("Ожидание...");
+    const [durationTime, setDurationTime] = useState<string>("Ожидание...");
+    const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
             if (
                 new Date(consultation.receptionDate).getTime() < new Date().getTime()
             ) {
-                setDurationTime("");
+                setIsActive(true);
                 clearInterval(interval);
                 return;
             }
@@ -125,6 +130,10 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
 
             setDurationTime(formatedDuration);
         }, 1000);
+
+        if (isHistory) {
+            clearInterval(interval);
+        }
 
         return () => clearInterval(interval);
     }, []); // eslint-disable-line
@@ -145,12 +154,19 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation }) => {
                 <Typography className={classes.timeToConsultation} variant="h6">
                     до начала консультации <br />
                     <Typography
-                        className={clsx(!durationTime && classes.greenTime)}
+                        className={clsx(
+                            isHistory && classes.redTime,
+                            isActive && classes.greenTime
+                        )}
                         component="span"
                         variant="h6"
                         color="textSecondary"
                     >
-                        {durationTime || "Консультация уже идёт"}
+                        {isHistory
+                            ? "Консультация закончилась"
+                            : isActive
+                            ? "Консультация уже идёт"
+                            : durationTime}
                     </Typography>
                 </Typography>
             </div>

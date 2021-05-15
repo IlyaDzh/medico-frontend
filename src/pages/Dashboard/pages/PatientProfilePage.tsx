@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const PatientProfilePage: React.FC = observer(() => {
     const classes = useStyles();
     const { dashboardPatientInfoStore } = useStores();
-    const { patientInfo, pending, fetchingError, getPatientInfo } =
+    const { patientInfo, pending, fetchingError, getPatientInfo, resetProfile } =
         dashboardPatientInfoStore;
     const { patientId, consultationId } =
         useParams<{ patientId: string; consultationId: string }>();
@@ -22,10 +22,17 @@ export const PatientProfilePage: React.FC = observer(() => {
         getPatientInfo(Number(patientId), Number(consultationId));
     }, [patientId, consultationId, getPatientInfo]);
 
+    useEffect(() => {
+        return () => resetProfile();
+    }, [resetProfile]);
+
     if (fetchingError) {
         return (
             <div className={classes.error}>
-                <ErrorAnimation path="/doctors" title="Перейти к списку врачей" />
+                <ErrorAnimation
+                    path="/dashboard/patients"
+                    title="Перейти к списку консультаций"
+                />
             </div>
         );
     }
@@ -33,13 +40,13 @@ export const PatientProfilePage: React.FC = observer(() => {
     return (
         <React.Fragment>
             <h1 className="visually-hidden">Профиль пациента</h1>
-            {!pending ? (
+            {pending ? (
+                <Loader level={3} isCenter />
+            ) : (
                 <div>
-                    {patientId} <br />
+                    {patientInfo?.patient.bloodType} <br />
                     {consultationId}
                 </div>
-            ) : (
-                <Loader level={3} isCenter />
             )}
         </React.Fragment>
     );

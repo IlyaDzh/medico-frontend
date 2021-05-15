@@ -5,6 +5,7 @@ export interface IDashboardResultsStore {
 }
 
 export interface AppointmentResult {
+    id: number;
     appointment: string;
     receptionDate: Date;
     doctor: {

@@ -1,4 +1,5 @@
-import { Analysis } from "./";
+import { Analysis, AppointmentResult } from "./";
+import { PatientAdditionalData } from "../IUserStore";
 
 export interface IDashboardPatientInfoStore {
     patientInfo: PatientInfo | undefined;
@@ -9,9 +10,12 @@ export interface IDashboardPatientInfoStore {
 }
 
 export interface PatientInfo {
-    patient: {
+    patient: PatientAdditionalData & {
         analyzes: Analysis[];
     };
-    currentConsultation: {};
-    history: {};
+    currentConsultation: {
+        id: number;
+        symptoms: string;
+    };
+    history: AppointmentResult[];
 }

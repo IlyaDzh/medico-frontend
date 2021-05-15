@@ -31,8 +31,8 @@ export const PatientResultsPage: React.FC = observer(() => {
             </Typography>
             {!pending ? (
                 appointmentResults.length > 0 ? (
-                    appointmentResults.map((result, index) => (
-                        <AppointmentResultItem key={index} result={result} />
+                    appointmentResults.map(result => (
+                        <AppointmentResultItem key={result.id} result={result} />
                     ))
                 ) : (
                     <Typography variant="body1">
