@@ -1,18 +1,24 @@
 import { AxiosResponse } from "axios";
 import { makeAutoObservable, action } from "mobx";
 
-import {
-    DashboardDoctorApi,
-    IConsultationInfoSuccessResponse,
-    IConsultationInfoErrorResponse
-} from "api";
+import { DashboardDoctorApi, IConsultationInfoSuccessResponse } from "api";
 import {
     IDashboardPatientInfoStore,
-    PatientInfo
+    PatientProfile,
+    CurrentConsultation,
+    AnalysisType,
+    Analysis,
+    AppointmentResult
 } from "stores/interfaces/Dashboard";
 
 export class DashboardPatientInfoStore implements IDashboardPatientInfoStore {
-    patientInfo: PatientInfo | undefined = undefined;
+    patient: PatientProfile | undefined = undefined;
+
+    consultation: CurrentConsultation | undefined = undefined;
+
+    analyzes: Analysis[] = [] as Analysis[];
+
+    history: AppointmentResult[] = [] as AppointmentResult[];
 
     pending: boolean = false;
 
@@ -30,7 +36,10 @@ export class DashboardPatientInfoStore implements IDashboardPatientInfoStore {
             .then(
                 action(
                     ({ data }: AxiosResponse<IConsultationInfoSuccessResponse>) => {
-                        this.patientInfo = data.data;
+                        this.patient = data.data.patient;
+                        this.consultation = data.data.currentConsultation;
+                        this.analyzes = data.data.patient.analyzes;
+                        this.history = data.data.history;
                     }
                 )
             )
@@ -46,7 +55,13 @@ export class DashboardPatientInfoStore implements IDashboardPatientInfoStore {
             );
     };
 
+    sortAnalyzesByType = (type: AnalysisType) => {
+        return this.analyzes.filter(analysis => analysis.type === type);
+    };
+
     resetProfile = () => {
         this.fetchingError = false;
+        this.patient = undefined;
+        this.consultation = undefined;
     };
 }

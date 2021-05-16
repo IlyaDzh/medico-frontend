@@ -39,6 +39,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "add-comment",
             isOpen: false
+        },
+        {
+            name: "add-appointment",
+            isOpen: false
         }
     ];
 

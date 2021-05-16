@@ -7,3 +7,4 @@ export * from "./DialogAddAnalysis";
 export * from "./DialogDeleteAnalysis";
 export * from "./DialogUpdateMedicalCard";
 export * from "./DialogAddComment";
+export * from "./DialogAddAppointment";

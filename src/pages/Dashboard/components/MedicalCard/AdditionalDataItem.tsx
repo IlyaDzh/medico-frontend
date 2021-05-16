@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         background: "#fff",
         border: `1px solid ${theme.palette.other!.main}`,
         borderRadius: 8,
-        padding: "16px",
+        padding: 16,
         marginBottom: 18,
         [theme.breakpoints.down("xs")]: {
             marginBottom: 12

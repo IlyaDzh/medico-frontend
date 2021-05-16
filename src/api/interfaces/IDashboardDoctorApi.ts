@@ -1,5 +1,11 @@
 import { BaseResponse } from "./";
-import { ScheduleItem, PatientItem, PatientInfo } from "stores/interfaces/Dashboard";
+import {
+    ScheduleItem,
+    PatientItem,
+    PatientProfile,
+    CurrentConsultation,
+    AppointmentResult
+} from "stores/interfaces/Dashboard";
 
 export interface IChangeSchedulePostData {
     schedule: ScheduleItem[];
@@ -27,7 +33,11 @@ export interface IGetPatientsSuccessResponse extends BaseResponse {
 
 export interface IConsultationInfoSuccessResponse extends BaseResponse {
     error: 0;
-    data: PatientInfo;
+    data: {
+        patient: PatientProfile;
+        currentConsultation: CurrentConsultation;
+        history: AppointmentResult[];
+    };
 }
 
 export interface IConsultationInfoErrorResponse extends BaseResponse {

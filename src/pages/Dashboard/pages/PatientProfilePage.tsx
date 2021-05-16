@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, useMediaQuery, makeStyles, Theme } from "@material-ui/core";
 
 import { PatientTabs } from "../components";
-import { Button, Avatar, Loader, ErrorAnimation } from "components";
+import {
+    Button,
+    Avatar,
+    Loader,
+    ErrorAnimation,
+    DialogAddAppointment
+} from "components";
 import { EnvelopeIcon, PhoneIcon, CameraIcon } from "icons";
 import { useStores } from "stores/useStore";
 import { formatDate } from "utils/formatDate";
@@ -24,13 +30,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     patientMain: {
         display: "flex",
         alignItems: "center",
-        marginBottom: 50
+        marginBottom: 50,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 20
+        }
     },
     patientInfo: {
-        marginLeft: 32
+        marginLeft: 32,
+        [theme.breakpoints.down("xs")]: {
+            marginLeft: 20
+        }
     },
     patientFullname: {
-        marginBottom: 20
+        marginBottom: 20,
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: 10
+        }
     }
 }));
 
@@ -43,10 +58,17 @@ const communicationMethods = {
 export const PatientProfilePage: React.FC = observer(() => {
     const classes = useStyles();
     const { dashboardPatientInfoStore } = useStores();
-    const { patientInfo, pending, fetchingError, getPatientInfo, resetProfile } =
-        dashboardPatientInfoStore;
+    const {
+        patient,
+        consultation,
+        pending,
+        fetchingError,
+        getPatientInfo,
+        resetProfile
+    } = dashboardPatientInfoStore;
     const { patientId, consultationId } =
         useParams<{ patientId: string; consultationId: string }>();
+    const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
 
     useEffect(() => {
         getPatientInfo(Number(patientId), Number(consultationId));
@@ -71,15 +93,14 @@ export const PatientProfilePage: React.FC = observer(() => {
                 <Typography className={classes.title} variant="h4">
                     Пациент
                 </Typography>
-                {!pending && patientInfo && (
+                {!pending && consultation && (
                     <Button
                         variant="contained"
                         size="large"
-                        to="/doctors"
+                        to={`/dashboard/chat/3`}
                         icon={
                             communicationMethods[
-                                patientInfo.currentConsultation.communicationMethod
-                                    .id as 1 | 2 | 3
+                                consultation.communicationMethod.id as 1 | 2 | 3
                             ]
                         }
                     >
@@ -87,34 +108,32 @@ export const PatientProfilePage: React.FC = observer(() => {
                     </Button>
                 )}
             </div>
-            {pending || !patientInfo ? (
+            {pending || !patient ? (
                 <Loader level={3} isCenter />
             ) : (
                 <React.Fragment>
                     <div className={classes.patientMain}>
                         <Avatar
-                            size={142}
+                            size={matches ? 88 : 140}
                             src={
-                                patientInfo.patient.avatar
+                                patient.avatar
                                     ? process.env.REACT_APP_API_BASE_URL +
-                                      patientInfo.patient.avatar
+                                      patient.avatar
                                     : undefined
                             }
-                            alt={`${patientInfo.patient.name} аватар`}
+                            alt={`${patient.name} аватар`}
                         />
                         <div className={classes.patientInfo}>
                             <Typography
                                 className={classes.patientFullname}
                                 variant="h3"
                             >
-                                {patientInfo.patient.surname}{" "}
-                                {patientInfo.patient.name}{" "}
-                                {patientInfo.patient.middleName}
+                                {patient.surname} {patient.name} {patient.middleName}
                             </Typography>
                             <Typography variant="body1" color="textSecondary">
                                 Дата рождения{" "}
                                 {formatDate(
-                                    patientInfo.patient.birthDate.toString(),
+                                    patient.birthDate.toString(),
                                     "dd.MM.yyyy"
                                 )}
                             </Typography>
@@ -124,6 +143,8 @@ export const PatientProfilePage: React.FC = observer(() => {
                     <PatientTabs />
                 </React.Fragment>
             )}
+
+            <DialogAddAppointment />
         </React.Fragment>
     );
 });

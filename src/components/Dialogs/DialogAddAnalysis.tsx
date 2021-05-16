@@ -105,7 +105,7 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                     variant="h5"
                     color="textSecondary"
                 >
-                    Допустимые форматы: jpeg, png, txt,pdf
+                    Допустимые форматы: jpeg, png
                 </Typography>
                 <div className={classes.uploadFile}>
                     <div className={classes.uploadFileInput}>
@@ -122,7 +122,7 @@ export const DialogAddAnalysis: React.FC = observer(() => {
                         <input
                             id="analysis-file"
                             type="file"
-                            accept="image/png, image/jpg, image/jpeg, text/plain, application/pdf"
+                            accept="image/png, image/jpg, image/jpeg"
                             onChange={event =>
                                 handleFileAttachment(event.target.files)
                             }
