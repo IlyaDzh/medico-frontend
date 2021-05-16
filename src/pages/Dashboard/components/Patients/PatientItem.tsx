@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import clsx from "clsx";
+import React from "react";
 import { Link } from "react-router-dom";
-import { intervalToDuration } from "date-fns";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { ConsultationTimer } from "./ConsultationTimer";
 import { Avatar } from "components";
 import { CalendarIcon, ClockIcon, EnvelopeIcon, PhoneIcon, CameraIcon } from "icons";
 import { PatientItem as PatientItemData } from "stores/interfaces/Dashboard";
 import { formatDate } from "utils/formatDate";
-import { formatDuration } from "utils/formatDuration";
 
 interface IPatientItem {
     consultation: PatientItemData;
@@ -64,12 +62,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         marginBottom: 3
     },
-    greenTime: {
-        color: "#2ab841"
-    },
-    redTime: {
-        color: "#e34242"
-    },
     date: {
         marginLeft: 12
     },
@@ -108,35 +100,6 @@ const communicationMethods = {
 
 export const PatientItem: React.FC<IPatientItem> = ({ consultation, isHistory }) => {
     const classes = useStyles();
-    const [durationTime, setDurationTime] = useState<string>("Ожидание...");
-    const [isActive, setIsActive] = useState<boolean>(false);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (
-                new Date(consultation.receptionDate).getTime() < new Date().getTime()
-            ) {
-                setIsActive(true);
-                clearInterval(interval);
-                return;
-            }
-
-            const duration = intervalToDuration({
-                start: new Date(consultation.receptionDate),
-                end: new Date()
-            });
-
-            const formatedDuration = formatDuration(duration);
-
-            setDurationTime(formatedDuration);
-        }, 1000);
-
-        if (isHistory) {
-            clearInterval(interval);
-        }
-
-        return () => clearInterval(interval);
-    }, []); // eslint-disable-line
 
     const time = formatDate(consultation.receptionDate.toString(), "HH");
 
@@ -150,21 +113,10 @@ export const PatientItem: React.FC<IPatientItem> = ({ consultation, isHistory })
                 </Typography>
                 <Typography className={classes.timeToConsultation} variant="h6">
                     до начала консультации <br />
-                    <Typography
-                        className={clsx(
-                            isHistory && classes.redTime,
-                            isActive && classes.greenTime
-                        )}
-                        component="span"
-                        variant="h6"
-                        color="textSecondary"
-                    >
-                        {isHistory
-                            ? "Консультация закончилась"
-                            : isActive
-                            ? "Консультация уже идёт"
-                            : durationTime}
-                    </Typography>
+                    <ConsultationTimer
+                        toDate={consultation.receptionDate}
+                        isHistory={isHistory}
+                    />
                 </Typography>
             </div>
             <div className={classes.patientDateTime}>
