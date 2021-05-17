@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             }
         },
         "&:hover": {
-            background: "#ECEFF9",
+            background: theme.palette.other!.main,
             "& svg path": {
                 fill: theme.palette.text.primary
             }

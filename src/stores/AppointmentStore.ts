@@ -146,7 +146,7 @@ export class AppointmentStore implements IAppointmentStore {
 
         const postData: IAppointmentPostData = {
             doctorId: this.chosenDoctor!.id,
-            receptionDate: new Date(formatedDate),
+            receptionDate: new Date(formatedDate).toISOString(),
             communicationMethodId: JSON.parse(
                 this.appointmentForm.communicationMethod!
             ).id,

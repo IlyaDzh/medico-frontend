@@ -130,7 +130,7 @@ export class SignUpStore implements ISignUpStore {
             name: this.signUpForm.firstName,
             surname: this.signUpForm.lastName,
             middleName: this.signUpForm.middleName,
-            birthDate: this.signUpForm.birthDate,
+            birthDate: this.signUpForm.birthDate.toISOString(),
             sex: this.signUpForm.gender,
             phone: this.signUpForm.phoneNumber,
             email: this.signUpForm.email,

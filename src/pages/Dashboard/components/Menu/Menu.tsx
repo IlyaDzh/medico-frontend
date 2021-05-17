@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, Theme } from "@material-ui/core";
 
 import { MenuItem } from "./MenuItem";
-import { SettingsIcon } from "icons";
+import { MessagesIcon, SettingsIcon } from "icons";
 import { DOCTOR_MENU, PATIENT_MENU } from "utils/constants";
 
 interface IMenu {
@@ -25,6 +25,11 @@ export const Menu: React.FC<IMenu> = ({ isDoctor }) => {
             {(isDoctor ? DOCTOR_MENU : PATIENT_MENU).map(item => (
                 <MenuItem key={item.label} {...item} />
             ))}
+            <MenuItem
+                to="/dashboard/chat"
+                icon={<MessagesIcon />}
+                label="Сообщения"
+            />
             <MenuItem
                 to="/dashboard/settings"
                 icon={<SettingsIcon />}

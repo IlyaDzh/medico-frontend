@@ -6,7 +6,7 @@ import {
     DoctorSchedulePage,
     DoctorPatientsPage,
     PatientProfilePage,
-    MessagesPage,
+    ChatPage,
     SettingsPage,
     ErrorPage
 } from "../pages";
@@ -25,7 +25,11 @@ export const DoctorRoutes: React.FC = () => (
             path="/dashboard/patient/:patientId/consultation/:consultationId"
             component={PatientProfilePage}
         />
-        <Route exact path="/dashboard/messages" component={MessagesPage} />
+        <Route
+            exact
+            path={["/dashboard/chat", "/dashboard/chat/:chatId"]}
+            component={ChatPage}
+        />
         <Route exact path="/dashboard/settings" component={SettingsPage} />
         <Route component={ErrorPage} />
     </Switch>

@@ -5,7 +5,7 @@ export interface ISignUpPostData {
     name: string;
     surname: string;
     middleName: string;
-    birthDate: Date;
+    birthDate: string;
     sex: string;
     phone: string;
     email: string;

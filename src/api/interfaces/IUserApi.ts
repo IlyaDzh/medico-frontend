@@ -5,12 +5,10 @@ export interface IChangeUserInfoPostData {
     name: string;
     surname: string;
     middleName: string;
-    birthDate: Date;
+    birthDate: string;
     phone: string;
     sex: "male" | "female";
 }
-
-export interface ChangeUserInfoData extends IChangeUserInfoPostData {}
 
 export interface IGetUserSuccessResponse extends BaseResponse {
     error: 0;
@@ -24,7 +22,14 @@ export interface IGetUserErrorResponse extends BaseResponse {
 
 export interface IChangeUserInfoSuccessResponse extends BaseResponse {
     error: 0;
-    data: ChangeUserInfoData;
+    data: {
+        name: string;
+        surname: string;
+        middleName: string;
+        birthDate: Date;
+        phone: string;
+        sex: "male" | "female";
+    };
 }
 
 export interface IChangeUserInfoErrorResponse extends BaseResponse {

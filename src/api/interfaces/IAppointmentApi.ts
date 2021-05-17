@@ -7,7 +7,7 @@ import {
 
 export interface IAppointmentPostData {
     doctorId: number;
-    receptionDate: Date;
+    receptionDate: string;
     communicationMethodId: number;
     doctorSpecialtyId: number;
     symptoms: string;

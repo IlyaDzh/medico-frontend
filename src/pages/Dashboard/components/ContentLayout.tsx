@@ -3,6 +3,7 @@ import { makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
     layout: {
+        position: "relative",
         padding: "56px 80px",
         width: "100%",
         [theme.breakpoints.down("sm")]: {

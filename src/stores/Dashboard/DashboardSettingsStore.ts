@@ -97,7 +97,7 @@ export class DashboardSettingsStore implements IDashboardSettingsStore {
             surname: this.updateForm.surname,
             name: this.updateForm.name,
             middleName: this.updateForm.middleName,
-            birthDate: this.updateForm.birthDate,
+            birthDate: this.updateForm.birthDate.toISOString(),
             phone: this.updateForm.phone,
             sex: this.updateForm.sex
         };

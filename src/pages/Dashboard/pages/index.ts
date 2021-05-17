@@ -6,6 +6,6 @@ export * from "./PatientAlertsPage";
 export * from "./PatientResultsPage";
 export * from "./PatientAnalyzesPage";
 export * from "./PatientMedicalCardPage";
-export * from "./MessagesPage";
+export * from "./ChatPage";
 export * from "./SettingsPage";
 export * from "./ErrorPage";

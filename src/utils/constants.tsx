@@ -1,11 +1,4 @@
-import {
-    CalendarIcon,
-    HistoryIcon,
-    AnalyzesIcon,
-    AppsIcon,
-    CaseIcon,
-    MessagesIcon
-} from "icons";
+import { CalendarIcon, HistoryIcon, AnalyzesIcon, AppsIcon, CaseIcon } from "icons";
 
 export const DOCTOR_MENU = [
     {
@@ -22,11 +15,6 @@ export const DOCTOR_MENU = [
         icon: <CaseIcon />,
         label: "Пациенты",
         to: "/dashboard/patients"
-    },
-    {
-        icon: <MessagesIcon />,
-        label: "Сообщения",
-        to: "/dashboard/messages"
     }
 ];
 
@@ -50,10 +38,5 @@ export const PATIENT_MENU = [
         icon: <AppsIcon />,
         label: "Мед карта",
         to: "/dashboard/medical-card"
-    },
-    {
-        icon: <MessagesIcon />,
-        label: "Сообщения",
-        to: "/dashboard/messages"
     }
 ];
