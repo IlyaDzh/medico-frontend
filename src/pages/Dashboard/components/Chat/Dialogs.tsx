@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import { TextField, InputAdornment, makeStyles, Theme } from "@material-ui/core";
 
 import { DialogItem } from "./DialogItem";
@@ -8,18 +9,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     dialogs: {
         width: 540,
         background: theme.palette.other!.main,
-        padding: "12px 8px 0px"
+        padding: "14px 8px 0"
     },
     search: {
+        padding: "0 8px",
         marginBottom: 14
     },
     dialogList: {
-        height: "calc(100% - 82px)",
-        overflowY: "auto"
+        height: "calc(100% - 80px)",
+        overflowY: "auto",
+        padding: "0 8px"
     }
 }));
 
-export const DialogList: React.FC = () => {
+export const Dialogs: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -39,7 +42,7 @@ export const DialogList: React.FC = () => {
                 }}
                 fullWidth
             />
-            <div className={classes.dialogList}>
+            <div className={clsx(classes.dialogList, "chat-scrollbar")}>
                 {new Array(10).fill(undefined).map((_, index) => (
                     <DialogItem key={index} index={index} />
                 ))}

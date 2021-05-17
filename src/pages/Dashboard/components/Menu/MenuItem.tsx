@@ -17,14 +17,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 130,
         textDecoration: "none",
         color: theme.palette.text.secondary,
-        "&:hover": {
-            backgroundColor: theme.palette.primary.main,
-            "& h6": {
-                color: "#f6f9fc"
-            },
-            "& svg path, & svg rect": {
-                fill: "#f6f9fc"
-            }
+        "&:hover:not($menuItemActive)": {
+            backgroundColor: "#f6f9fc"
         }
     },
     menuItemActive: {

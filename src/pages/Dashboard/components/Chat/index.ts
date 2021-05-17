@@ -1,2 +1,2 @@
-export * from "./DialogList";
-export * from "./MessageList";
+export * from "./Dialogs";
+export * from "./Messages";

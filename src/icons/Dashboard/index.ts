@@ -15,3 +15,5 @@ export * from "./ChronicDiseasesIcon";
 export * from "./OperationsIcon";
 export * from "./TransfusionIcon";
 export * from "./PencilIcon";
+export * from "./AppendFileIcon";
+export * from "./SendMessageIcon";

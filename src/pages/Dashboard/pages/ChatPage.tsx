@@ -1,8 +1,7 @@
 import React from "react";
-import clsx from "clsx";
 import { makeStyles, Theme } from "@material-ui/core";
 
-import { DialogList, MessageList } from "../components";
+import { Dialogs, Messages } from "../components";
 
 const useStyles = makeStyles((theme: Theme) => ({
     chat: {
@@ -23,9 +22,9 @@ export const ChatPage: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <div className={clsx(classes.chat, "chat-scrollbar")}>
-            <DialogList />
-            <MessageList />
+        <div className={classes.chat}>
+            <Dialogs />
+            <Messages />
         </div>
     );
 };

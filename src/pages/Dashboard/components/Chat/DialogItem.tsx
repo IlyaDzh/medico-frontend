@@ -14,16 +14,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         justifyContent: "space-between",
         padding: "9px 22px 9px 8px",
-        background: "#fff",
+        backgroundColor: "#fff",
         borderRadius: 8,
         marginBottom: 6,
         textDecoration: "none",
+        "&:hover:not($dialogActive)": {
+            backgroundColor: "#f6f9fc"
+        },
         "&:last-child": {
             marginBottom: 0
         }
     },
     dialogActive: {
-        background: theme.palette.background.blue,
+        backgroundColor: theme.palette.background.blue,
         "& .MuiTypography-root": {
             color: "#fff"
         }
@@ -47,7 +50,7 @@ export const DialogItem: React.FC<IDialogItem> = ({ index }) => {
             className={classes.dialog}
         >
             <div className={classes.dialogUser}>
-                <Avatar size={50} src={undefined} alt={`Илья аватар`} />
+                <Avatar size={52} src={undefined} alt={`Илья аватар`} />
                 <div className={classes.dialogUserInfo}>
                     <Typography variant="body2" color="textSecondary">
                         Алла Иванова

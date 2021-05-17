@@ -46,29 +46,6 @@ ol {
     border: 0;
 }
 
-.chat-scrollbar {
-    &::-webkit-scrollbar {
-        width: 10px;
-        border-radius: 8px;
-    
-        &-track {
-            background-color: #f6f9fc;
-        }
-    
-        &-thumb {
-            background-color: #b7b7b7;
-    
-            &:hover {
-                background-color: #a8a8a8;
-            }
-    
-            &:active {
-                background-color: #999999;
-            }
-        }
-    }
-}
-
 ::-webkit-scrollbar {
     width: 10px;
 
@@ -85,6 +62,20 @@ ol {
 
         &:active {
             background-color: #999999;
+        }
+    }
+}
+
+.chat-scrollbar {
+    &::-webkit-scrollbar {
+        width: 6px;
+
+        &-track {
+            background-color: transparent;
+        }
+
+        &-thumb {
+            border-radius: 8px;
         }
     }
 }
