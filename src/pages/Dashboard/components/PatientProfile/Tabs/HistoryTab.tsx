@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import { AppointmentResultItem } from "../../AppointmentResultItem";
 import { useStores } from "stores/useStore";
