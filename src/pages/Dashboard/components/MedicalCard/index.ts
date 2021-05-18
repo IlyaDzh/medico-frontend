@@ -1,5 +1,4 @@
 export * from "./AdditionalDataItem";
-export * from "./EditIconButton";
 export * from "./HeightWeightForm";
 export * from "./BloodTypeForm";
 export * from "./AllergiesForm";

@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { Typography, useMediaQuery, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar, ProfileTabs } from "components";
+import { EditIconButton } from "../components";
 import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -11,7 +12,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         marginBottom: 48,
         [theme.breakpoints.down("xs")]: {
-            marginBottom: 24
+            marginBottom: 24,
+            alignItems: "unset"
         }
     },
     userInfo: {
@@ -21,10 +23,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     userFullname: {
-        marginBottom: 18,
-        [theme.breakpoints.down("xs")]: {
-            marginBottom: 12
-        }
+        marginBottom: 8
+    },
+    userPrice: {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 6
+    },
+    userAbout: {
+        display: "flex",
+        alignItems: "center",
+        maxWidth: 600,
+        marginBottom: 8
     },
     userRating: {
         display: "flex",
@@ -32,6 +42,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     ratingTitle: {
         marginRight: 16
+    },
+    editButton: {
+        marginLeft: 10
     }
 }));
 
@@ -70,6 +83,28 @@ export const DoctorMainPage: React.FC = observer(() => {
                         {currentUser.surname} {currentUser.name}{" "}
                         {currentUser.middleName}
                     </Typography>
+                    <div className={classes.userPrice}>
+                        <Typography variant="h4" color="textSecondary">
+                            Стоимость консультации:{" "}
+                            {currentUser.additionalData.costOfConsultation} руб.
+                        </Typography>
+                        <EditIconButton
+                            className={classes.editButton}
+                            title="Стоимость консультации"
+                            onEdit={() => console.log("edit cost")}
+                        />
+                    </div>
+                    <div className={classes.userAbout}>
+                        <Typography variant="body1" color="textSecondary">
+                            О себе:{" "}
+                            {currentUser.additionalData.about || <i>Не заполнено</i>}
+                        </Typography>
+                        <EditIconButton
+                            className={classes.editButton}
+                            title="О себе"
+                            onEdit={() => console.log("edit about")}
+                        />
+                    </div>
                     <div className={classes.userRating}>
                         <Typography
                             className={classes.ratingTitle}
@@ -79,7 +114,10 @@ export const DoctorMainPage: React.FC = observer(() => {
                             Рейтинг
                         </Typography>
                         <Typography variant="h4" color="textPrimary">
-                            {currentUser.additionalData.rating?.toFixed(1)}/5.0
+                            {currentUser.additionalData.rating
+                                ? currentUser.additionalData.rating.toFixed(1)
+                                : "-"}
+                            /5.0
                         </Typography>
                     </div>
                 </div>

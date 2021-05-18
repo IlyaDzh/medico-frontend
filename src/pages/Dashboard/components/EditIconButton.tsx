@@ -1,5 +1,6 @@
 import React from "react";
-import { IconButton, makeStyles } from "@material-ui/core";
+import clsx from "clsx";
+import { IconButton, makeStyles, IconButtonProps } from "@material-ui/core";
 
 import { PencilIcon } from "icons";
 
@@ -16,12 +17,16 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export const EditIconButton: React.FC<IEditIconButton> = ({ title, onEdit }) => {
+export const EditIconButton: React.FC<IEditIconButton & IconButtonProps> = ({
+    title,
+    onEdit,
+    className
+}) => {
     const classes = useStyles();
 
     return (
         <IconButton
-            className={classes.editButton}
+            className={clsx(classes.editButton, className)}
             onClick={onEdit}
             aria-label={`Редактировать ${title}`}
         >

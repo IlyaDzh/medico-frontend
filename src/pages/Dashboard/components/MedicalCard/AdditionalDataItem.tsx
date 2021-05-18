@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
-import { EditIconButton } from "./";
+import { EditIconButton } from "../";
 
 interface IAdditionalDataItem {
     title: string;
