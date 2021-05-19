@@ -24,6 +24,7 @@ export type PatientProfile = PatientAdditionalData & {
 
 export type CurrentConsultation = {
     id: number;
+    chatId: number;
     symptoms: string;
     communicationMethod: CommunicationMethod;
 };
