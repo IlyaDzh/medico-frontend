@@ -22,23 +22,23 @@ export class DashboardPatientsStore implements IDashboardPatientsStore {
 
         reaction(
             () => this.currentDate,
-            date => this.getPatients(date.toISOString(), this.currentType)
+            date => this.getPatients(date, this.currentType)
         );
 
         reaction(
             () => this.currentType,
-            type => this.getPatients(this.currentDate.toISOString(), type)
+            type => this.getPatients(this.currentDate, type)
         );
     }
 
-    getPatients = (
-        date = this.currentDate.toISOString(),
-        type = this.currentType
-    ) => {
+    getPatients = (date = this.currentDate, type = this.currentType) => {
         this.pending = true;
         this.patients = [];
 
-        DashboardDoctorApi.getPatients(date, type)
+        const correctDate = new Date(date);
+        correctDate.setUTCHours(0, 0, 0, 0);
+
+        DashboardDoctorApi.getPatients(correctDate.toISOString(), type)
             .then(
                 action(({ data }: AxiosResponse<IGetPatientsSuccessResponse>) => {
                     this.patients = data.data;

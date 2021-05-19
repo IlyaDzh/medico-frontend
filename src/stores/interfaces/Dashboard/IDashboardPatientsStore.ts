@@ -5,7 +5,7 @@ export interface IDashboardPatientsStore {
     currentDate: Date;
     currentType: GetPatientsType;
     pending: boolean;
-    getPatients: (date?: string, type?: GetPatientsType) => void;
+    getPatients: (date?: Date, type?: GetPatientsType) => void;
     setCurrentDate: (date: Date) => void;
     setCurrentType: (type: GetPatientsType) => void;
 }
