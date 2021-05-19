@@ -97,7 +97,7 @@ export const PatientProfilePage: React.FC = observer(() => {
                     <Button
                         variant="contained"
                         size="large"
-                        to={`/dashboard/chat/3`}
+                        to={`/dashboard/chat/${consultation.id}`}
                         icon={
                             communicationMethods[
                                 consultation.communicationMethod.id as 1 | 2 | 3
