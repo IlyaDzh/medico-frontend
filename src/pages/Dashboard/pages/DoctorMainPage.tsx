@@ -15,12 +15,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginBottom: 24,
             alignItems: "unset"
+        },
+        [theme.breakpoints.down(360)]: {
+            display: "block"
         }
     },
     userInfo: {
         marginLeft: 32,
         [theme.breakpoints.down("xs")]: {
             marginLeft: 20
+        },
+        [theme.breakpoints.down(360)]: {
+            marginLeft: 0,
+            marginTop: 20
         }
     },
     userFullname: {

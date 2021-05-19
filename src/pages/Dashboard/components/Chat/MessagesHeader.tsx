@@ -3,6 +3,12 @@ import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar, Button } from "components";
 import { PhoneIcon, CameraIcon } from "icons";
+import { Dialog } from "stores/interfaces/IChatStore";
+import { formatSpecialties } from "utils/formatSpecialties";
+
+interface IMessagesHeader {
+    dialog: Dialog;
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {
@@ -30,19 +36,30 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const MessagesHeader: React.FC = () => {
+export const MessagesHeader: React.FC<IMessagesHeader> = ({ dialog }) => {
     const classes = useStyles();
 
     return (
         <div className={classes.header}>
             <div className={classes.headerFlex}>
-                <Avatar size={48} src={undefined} alt={`Алла аватар`} />
+                <Avatar
+                    size={48}
+                    src={
+                        dialog.interlocutor.avatar
+                            ? process.env.REACT_APP_API_BASE_URL +
+                              dialog.interlocutor.avatar
+                            : undefined
+                    }
+                    alt={`${dialog.interlocutor.name} аватар`}
+                />
                 <Typography className={classes.fullName} variant="body2">
-                    Алла Иванова
+                    {dialog.interlocutor.name} {dialog.interlocutor.surname}
                 </Typography>
-                <Typography variant="h6" color="textPrimary">
-                    Терапевт
-                </Typography>
+                {dialog.interlocutor.specialties && (
+                    <Typography variant="h6" color="textPrimary">
+                        {formatSpecialties(dialog.interlocutor.specialties)}
+                    </Typography>
+                )}
             </div>
             <div className={classes.headerFlex}>
                 <Button

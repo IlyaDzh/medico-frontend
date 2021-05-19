@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
-import { TextField, InputAdornment, makeStyles, Theme } from "@material-ui/core";
+import { observer } from "mobx-react";
+import {
+    Typography,
+    TextField,
+    InputAdornment,
+    makeStyles,
+    Theme
+} from "@material-ui/core";
 
+import { Loader } from "components";
 import { DialogItem } from "./DialogItem";
 import { SearchIcon } from "icons";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     dialogs: {
-        width: 540,
+        maxWidth: 420,
+        width: "100%",
         background: theme.palette.other!.main,
         padding: "14px 8px 0"
     },
@@ -17,13 +27,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dialogList: {
         height: "calc(100% - 80px)",
-        overflowY: "auto",
+        overflow: "hidden auto",
         padding: "0 8px"
     }
 }));
 
-export const Dialogs: React.FC = () => {
+export const Dialogs: React.FC = observer(() => {
     const classes = useStyles();
+    const { chatStore } = useStores();
+    const { dialogs, pendingDialogs, getDialogs } = chatStore;
+
+    useEffect(() => {
+        if (dialogs.length > 0 || pendingDialogs) {
+            return;
+        }
+
+        getDialogs();
+    }, [dialogs, pendingDialogs, getDialogs]);
 
     return (
         <div className={classes.dialogs}>
@@ -43,10 +63,18 @@ export const Dialogs: React.FC = () => {
                 fullWidth
             />
             <div className={clsx(classes.dialogList, "chat-scrollbar")}>
-                {new Array(10).fill(undefined).map((_, index) => (
-                    <DialogItem key={index} index={index} />
-                ))}
+                {pendingDialogs ? (
+                    <Loader level={2} isCenter />
+                ) : dialogs.length > 0 ? (
+                    dialogs.map(dialog => (
+                        <DialogItem key={dialog.id} dialog={dialog} />
+                    ))
+                ) : (
+                    <Typography variant="body1" color="textSecondary">
+                        <i>Диалогов не найдено</i>
+                    </Typography>
+                )}
             </div>
         </div>
     );
-};
+});

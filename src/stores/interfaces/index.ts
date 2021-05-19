@@ -11,6 +11,7 @@ import { IHomeStore } from "./IHomeStore";
 import { IDrawerStore } from "./IDrawerStore";
 import { IAppointmentStore } from "./IAppointmentStore";
 import { ICommentStore } from "./ICommentStore";
+import { IChatStore } from "./IChatStore";
 import {
     IDashboardConsultationsStore,
     IDashboardAnalyzesStore,
@@ -46,4 +47,5 @@ export default interface IStores {
     dashboardScheduleStore: IDashboardScheduleStore;
     dashboardPatientsStore: IDashboardPatientsStore;
     dashboardPatientInfoStore: IDashboardPatientInfoStore;
+    chatStore: IChatStore;
 }

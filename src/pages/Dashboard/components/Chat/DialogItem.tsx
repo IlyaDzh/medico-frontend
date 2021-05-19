@@ -3,9 +3,12 @@ import { NavLink } from "react-router-dom";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar } from "components";
+import { Dialog } from "stores/interfaces/IChatStore";
+import { formatSpecialties } from "utils/formatSpecialties";
+import { formatDate } from "utils/formatDate";
 
 interface IDialogItem {
-    index: number;
+    dialog: Dialog;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,36 +36,51 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dialogUser: {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        width: "100%"
     },
     dialogUserInfo: {
+        overflow: "hidden",
         marginLeft: 12
     }
 }));
 
-export const DialogItem: React.FC<IDialogItem> = ({ index }) => {
+export const DialogItem: React.FC<IDialogItem> = ({ dialog }) => {
     const classes = useStyles();
 
     return (
         <NavLink
-            to={`/dashboard/chat/${index}`}
+            to={`/dashboard/chat/${dialog.id}`}
             activeClassName={classes.dialogActive}
             className={classes.dialog}
         >
             <div className={classes.dialogUser}>
-                <Avatar size={52} src={undefined} alt={`Илья аватар`} />
+                <Avatar
+                    size={52}
+                    src={
+                        dialog.interlocutor.avatar
+                            ? process.env.REACT_APP_API_BASE_URL +
+                              dialog.interlocutor.avatar
+                            : undefined
+                    }
+                    alt={`${dialog.interlocutor.name} аватар`}
+                />
                 <div className={classes.dialogUserInfo}>
-                    <Typography variant="body2" color="textSecondary">
-                        Алла Иванова
+                    <Typography variant="body2" color="textSecondary" noWrap>
+                        {dialog.interlocutor.name} {dialog.interlocutor.surname}
                     </Typography>
-                    <Typography variant="h6" color="textSecondary">
-                        Терапевт
-                    </Typography>
+                    {dialog.interlocutor.specialties && (
+                        <Typography variant="h6" color="textSecondary" noWrap>
+                            {formatSpecialties(dialog.interlocutor.specialties)}
+                        </Typography>
+                    )}
                 </div>
             </div>
-            <Typography variant="h6" color="textSecondary">
-                11:38
-            </Typography>
+            {dialog.messages.length > 0 && (
+                <Typography variant="h6" color="textSecondary">
+                    {formatDate(dialog.messages[0].createdAt.toString())}
+                </Typography>
+            )}
         </NavLink>
     );
 };

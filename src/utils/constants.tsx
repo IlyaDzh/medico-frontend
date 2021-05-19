@@ -1,5 +1,7 @@
 import { CalendarIcon, HistoryIcon, AnalyzesIcon, AppsIcon, CaseIcon } from "icons";
 
+export const MAX_MESSAGE_COUNT = 300;
+
 export const DOCTOR_MENU = [
     {
         icon: <AppsIcon />,

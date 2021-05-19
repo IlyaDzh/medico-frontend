@@ -10,3 +10,4 @@ export * from "./DashboardPatientApi";
 export * from "./DashboardDoctorApi";
 export * from "./FeedbackApi";
 export * from "./CommentApi";
+export * from "./ChatApi";

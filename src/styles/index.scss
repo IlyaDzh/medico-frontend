@@ -46,25 +46,25 @@ ol {
     border: 0;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
+// ::-webkit-scrollbar {
+//     width: 10px;
 
-    &-track {
-        background-color: #f6f9fc;
-    }
+//     &-track {
+//         background-color: #f6f9fc;
+//     }
 
-    &-thumb {
-        background-color: #b7b7b7;
+//     &-thumb {
+//         background-color: #b7b7b7;
 
-        &:hover {
-            background-color: #a8a8a8;
-        }
+//         &:hover {
+//             background-color: #a8a8a8;
+//         }
 
-        &:active {
-            background-color: #999999;
-        }
-    }
-}
+//         &:active {
+//             background-color: #999999;
+//         }
+//     }
+// }
 
 .chat-scrollbar {
     &::-webkit-scrollbar {
@@ -72,10 +72,20 @@ ol {
 
         &-track {
             background-color: transparent;
+            background-color: #f6f9fc;
         }
 
         &-thumb {
             border-radius: 8px;
+            background-color: #b7b7b7;
+
+            &:hover {
+                background-color: #a8a8a8;
+            }
+
+            &:active {
+                background-color: #999999;
+            }
         }
     }
 }

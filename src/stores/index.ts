@@ -13,6 +13,7 @@ import { HomeStore } from "./HomeStore";
 import { DrawerStore } from "./DrawerStore";
 import { AppointmentStore } from "./AppointmentStore";
 import { CommentStore } from "./CommentStore";
+import { ChatStore } from "./ChatStore";
 import {
     DashboardAnalyzesStore,
     DashboardConsultationsStore,
@@ -39,6 +40,7 @@ import { IHomeStore } from "./interfaces/IHomeStore";
 import { IDrawerStore } from "./interfaces/IDrawerStore";
 import { IAppointmentStore } from "./interfaces/IAppointmentStore";
 import { ICommentStore } from "./interfaces/ICommentStore";
+import { IChatStore } from "./interfaces/IChatStore";
 import {
     IDashboardAnalyzesStore,
     IDashboardConsultationsStore,
@@ -74,6 +76,7 @@ export class RootStore implements IStores {
     dashboardScheduleStore: IDashboardScheduleStore;
     dashboardPatientsStore: IDashboardPatientsStore;
     dashboardPatientInfoStore: IDashboardPatientInfoStore;
+    chatStore: IChatStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -98,5 +101,6 @@ export class RootStore implements IStores {
         this.dashboardScheduleStore = new DashboardScheduleStore();
         this.dashboardPatientsStore = new DashboardPatientsStore();
         this.dashboardPatientInfoStore = new DashboardPatientInfoStore();
+        this.chatStore = new ChatStore(this);
     }
 }

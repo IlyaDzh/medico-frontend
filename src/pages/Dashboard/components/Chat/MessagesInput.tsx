@@ -1,7 +1,9 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { TextField, IconButton, makeStyles, Theme } from "@material-ui/core";
 
 import { AppendFileIcon, SendMessageIcon } from "icons";
+import { useStores } from "stores/useStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
     messagesInput: {
@@ -21,36 +23,55 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export const MessagesInput: React.FC = () => {
+export const MessagesInput: React.FC = observer(() => {
     const classes = useStyles();
+    const { chatStore } = useStores();
+    const { messageText, setMessageText, sendMessage } = chatStore;
+
+    const handleFileAttachment = (files: any): void => {
+        if (files && files.length !== 0) {
+            // setFile(files[0]);
+            console.log(files[0]);
+        }
+    };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
         if (event.key === "Enter") {
             if (!event.shiftKey) {
                 event.preventDefault();
                 event.stopPropagation();
-                // sendMessage();
-                console.log("send message");
+                sendMessage();
             }
         }
     };
 
     return (
         <div className={classes.messagesInput}>
-            <IconButton className={classes.iconButton} aria-label="Прикрепить файл">
-                <AppendFileIcon />
-            </IconButton>
+            <label htmlFor="message-file">
+                <IconButton
+                    className={classes.iconButton}
+                    component="span"
+                    aria-label="Прикрепить файл"
+                >
+                    <AppendFileIcon />
+                </IconButton>
+            </label>
+            <input
+                id="message-file"
+                type="file"
+                onChange={event => handleFileAttachment(event.target.files)}
+                multiple
+                hidden
+            />
             <TextField
                 className={classes.textField}
                 variant="outlined"
                 color="secondary"
                 placeholder="Введите текст"
                 onKeyDown={onKeyDown}
-                // value={commentForm.text}
-                // onChange={event => setFormValue("text", event.target.value)}
+                value={messageText}
+                onChange={event => setMessageText(event.target.value)}
                 rowsMax={4}
-                // error={Boolean(commentFormErrors.text)}
-                // helperText={commentFormErrors.text}
                 InputProps={{
                     classes: {
                         root: classes.inputBase
@@ -67,4 +88,4 @@ export const MessagesInput: React.FC = () => {
             </IconButton>
         </div>
     );
-};
+});
