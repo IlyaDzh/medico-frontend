@@ -97,7 +97,7 @@ export class AppointmentStore implements IAppointmentStore {
         }
 
         const correctDate = new Date(date);
-        correctDate.setHours(date.getHours() + 3);
+        correctDate.setUTCHours(0, 0, 0, 0);
 
         AppointmentApi.getFreeDoctorTime(
             this.chosenDoctor.id,
