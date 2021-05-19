@@ -14,7 +14,5 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const MessageItem: React.FC<IMessageItem> = memo(({ message }) => {
     const classes = useStyles();
 
-    console.log("render: ", message.id);
-
     return <div className={classes.message}>{message.text}</div>;
 });

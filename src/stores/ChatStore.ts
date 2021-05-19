@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import { makeAutoObservable, observable, action } from "mobx";
-// import { v4 as uuidv4 } from "uuid";
 
 import {
     ChatApi,
@@ -115,9 +114,8 @@ export class ChatStore implements IChatStore {
             return;
         }
 
-        const randomMessageId: number = Math.random() * 99999;
         const message: Message = {
-            id: randomMessageId,
+            id: Math.floor(new Date().valueOf() * Math.random()),
             text: this.messageText,
             createdAt: new Date(),
             user: {

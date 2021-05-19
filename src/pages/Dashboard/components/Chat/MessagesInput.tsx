@@ -45,6 +45,10 @@ export const MessagesInput: React.FC = observer(() => {
         }
     };
 
+    const handleSendClick = (): void => {
+        sendMessage();
+    };
+
     return (
         <div className={classes.messagesInput}>
             <label htmlFor="message-file">
@@ -82,6 +86,7 @@ export const MessagesInput: React.FC = observer(() => {
             />
             <IconButton
                 className={classes.iconButton}
+                onClick={handleSendClick}
                 aria-label="Отправить сообщение"
             >
                 <SendMessageIcon />
