@@ -2,9 +2,10 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Typography, useMediaQuery, makeStyles, Theme } from "@material-ui/core";
 
-import { Avatar, ProfileTabs } from "components";
+import { Avatar, ProfileTabs, DialogUpdateDoctorProfile } from "components";
 import { EditIconButton } from "../components";
 import { useStores } from "stores/useStore";
+import { ChangeDoctorProfileTypes } from "stores/interfaces/Dashboard";
 
 const useStyles = makeStyles((theme: Theme) => ({
     userMain: {
@@ -50,10 +51,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const DoctorMainPage: React.FC = observer(() => {
     const classes = useStyles();
-    const { userStore, dashboardDoctorProfileStore } = useStores();
+    const { userStore, dashboardDoctorProfileStore, modalsStore } = useStores();
     const { currentUser } = userStore;
-    const { pendingReviews, fetchReviews } = dashboardDoctorProfileStore;
+    const { pendingReviews, fetchReviews, setCurrentModalState } =
+        dashboardDoctorProfileStore;
+    const { setModalIsOpen } = modalsStore;
     const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("xs"));
+
+    const handleEditData = (name: ChangeDoctorProfileTypes): void => {
+        setModalIsOpen("update-doctor-profile", true);
+        setCurrentModalState(name);
+    };
 
     if (!currentUser || !currentUser.additionalData) {
         return null;
@@ -91,7 +99,7 @@ export const DoctorMainPage: React.FC = observer(() => {
                         <EditIconButton
                             className={classes.editButton}
                             title="Стоимость консультации"
-                            onEdit={() => console.log("edit cost")}
+                            onEdit={() => handleEditData("cost")}
                         />
                     </div>
                     <div className={classes.userAbout}>
@@ -102,7 +110,7 @@ export const DoctorMainPage: React.FC = observer(() => {
                         <EditIconButton
                             className={classes.editButton}
                             title="О себе"
-                            onEdit={() => console.log("edit about")}
+                            onEdit={() => handleEditData("about")}
                         />
                     </div>
                     <div className={classes.userRating}>
@@ -122,6 +130,7 @@ export const DoctorMainPage: React.FC = observer(() => {
                     </div>
                 </div>
             </div>
+
             <ProfileTabs
                 reviews={currentUser.additionalData.reviews}
                 education={currentUser.additionalData.education}
@@ -131,6 +140,8 @@ export const DoctorMainPage: React.FC = observer(() => {
                 pendingReviews={pendingReviews}
                 onMoreReviews={fetchReviews}
             />
+
+            <DialogUpdateDoctorProfile />
         </React.Fragment>
     );
 });

@@ -121,22 +121,20 @@ export class DashboardMedicalCardStore implements IDashboardMedicalCardStore {
         this.changeCardForm[key] = value;
     };
 
-    setChangeCardForm = (data: AdditionalData | null) => {
-        if (data) {
-            this.changeCardForm = {
-                RHFactor: data.RHFactor,
-                allergies: data.allergies,
-                badHabits: data.badHabits,
-                bloodTransfusion: data.bloodTransfusion,
-                bloodType: data.bloodType,
-                chronicDiseases: data.chronicDiseases,
-                isAlcoholic: data.isAlcoholic,
-                isSmoker: data.isSmoker,
-                operations: data.operations,
-                height: data.height.toString(),
-                weight: data.weight.toString()
-            };
-        }
+    setChangeCardForm = (data: AdditionalData) => {
+        this.changeCardForm = {
+            RHFactor: data.RHFactor,
+            allergies: data.allergies,
+            badHabits: data.badHabits,
+            bloodTransfusion: data.bloodTransfusion,
+            bloodType: data.bloodType,
+            chronicDiseases: data.chronicDiseases,
+            isAlcoholic: data.isAlcoholic,
+            isSmoker: data.isSmoker,
+            operations: data.operations,
+            height: data.height.toString(),
+            weight: data.weight.toString()
+        };
     };
 
     resetForm = () => {

@@ -19,4 +19,5 @@ export type TModalsName =
     | "delete-analysis"
     | "update-medical-card"
     | "add-comment"
-    | "add-appointment";
+    | "add-appointment"
+    | "update-doctor-profile";

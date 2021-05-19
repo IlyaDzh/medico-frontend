@@ -1,12 +1,38 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 import { makeObservable, observable, action } from "mobx";
 
-import { DoctorApi, IGetReviewsSuccessResponse } from "api";
-import { IDashboardDoctorProfileStore } from "stores/interfaces/Dashboard";
+import {
+    DashboardDoctorApi,
+    DoctorApi,
+    IGetReviewsSuccessResponse,
+    IUpdateDoctorProfileErrorResponse,
+    IUpdateDoctorProfilePostData,
+    IUpdateDoctorProfileSuccessResponse
+} from "api";
+import {
+    IDashboardDoctorProfileStore,
+    IUpdateDoctorProfileForm,
+    ChangeDoctorProfileTypes,
+    KeysOfDoctorProfileForm
+} from "stores/interfaces/Dashboard";
 import IStores from "stores/interfaces";
+import { AdditionalData } from "stores/interfaces/IUserStore";
+
+const INITIAL_UPDATE_DOCTOR_PROFILE_FORM: IUpdateDoctorProfileForm = {
+    cost: "",
+    about: ""
+};
 
 export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore {
     pendingReviews: boolean = false;
+
+    doctorProfileForm = INITIAL_UPDATE_DOCTOR_PROFILE_FORM;
+
+    currentModalState: ChangeDoctorProfileTypes | null = null;
+
+    pendingUpdate: boolean = false;
+
+    submissionError: string | undefined = undefined;
 
     private rootStore: IStores;
 
@@ -15,7 +41,16 @@ export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore
 
         makeObservable(this, {
             pendingReviews: observable,
-            fetchReviews: action
+            doctorProfileForm: observable,
+            currentModalState: observable,
+            pendingUpdate: observable,
+            submissionError: observable,
+            fetchReviews: action,
+            updateDoctorProfile: action,
+            setCurrentModalState: action,
+            setFormValue: action,
+            setDoctorProfileForm: action,
+            resetForm: action
         });
     }
 
@@ -39,5 +74,70 @@ export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore
                     this.pendingReviews = false;
                 })
             );
+    };
+
+    updateDoctorProfile = () => {
+        this.pendingUpdate = true;
+        this.submissionError = undefined;
+
+        const postData: IUpdateDoctorProfilePostData = {
+            costOfConsultation: Number(this.doctorProfileForm.cost),
+            about: this.doctorProfileForm.about
+        };
+
+        DashboardDoctorApi.updateProfile(postData)
+            .then(
+                action(
+                    ({
+                        data
+                    }: AxiosResponse<IUpdateDoctorProfileSuccessResponse>) => {
+                        if (this.rootStore.userStore.currentUser) {
+                            this.rootStore.userStore.currentUser.additionalData = {
+                                ...this.rootStore.userStore.currentUser
+                                    .additionalData,
+                                ...data.data
+                            };
+                        }
+                        this.rootStore.modalsStore.setModalIsOpen(
+                            "update-doctor-profile",
+                            false
+                        );
+                        this.setDoctorProfileForm(data.data);
+                        this.resetForm();
+                    }
+                )
+            )
+            .catch(
+                action((error: AxiosError<IUpdateDoctorProfileErrorResponse>) => {
+                    this.submissionError = error.response?.data.message;
+                })
+            )
+            .finally(
+                action(() => {
+                    this.pendingUpdate = false;
+                })
+            );
+    };
+
+    setCurrentModalState = (state: ChangeDoctorProfileTypes) => {
+        this.currentModalState = state;
+    };
+
+    setFormValue = <K extends KeysOfDoctorProfileForm>(
+        key: K,
+        value: IUpdateDoctorProfileForm[K]
+    ) => {
+        this.doctorProfileForm[key] = value;
+    };
+
+    setDoctorProfileForm = (data: AdditionalData) => {
+        this.doctorProfileForm = {
+            cost: data.costOfConsultation.toString(),
+            about: data.about
+        };
+    };
+
+    resetForm = () => {
+        this.submissionError = undefined;
     };
 }

@@ -41,10 +41,16 @@ export class UserStore implements IUserStore {
                     this.currentUser = data.data;
                     this.isAuthorized = true;
 
-                    if (data.data.userType === "patient") {
-                        this.rootStore.dashboardMedicalCardStore.setChangeCardForm(
-                            data.data.additionalData
-                        );
+                    if (data.data.additionalData) {
+                        if (data.data.userType === "patient") {
+                            this.rootStore.dashboardMedicalCardStore.setChangeCardForm(
+                                data.data.additionalData
+                            );
+                        } else {
+                            this.rootStore.dashboardDoctorProfileStore.setDoctorProfileForm(
+                                data.data.additionalData
+                            );
+                        }
                     }
 
                     this.rootStore.dashboardSettingsStore.setUpdateInfoForm(

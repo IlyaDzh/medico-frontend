@@ -3,6 +3,7 @@ export * from "./Analyzes";
 export * from "./MedicalCard";
 export * from "./Patients";
 export * from "./PatientProfile";
+export * from "./DoctorProfile";
 export * from "./Chat";
 export * from "./ContentLayout";
 export * from "./ConsultationItem";

@@ -11,7 +11,7 @@ export interface IDashboardMedicalCardStore {
         key: K,
         value: IChangeMedicalCardForm[K]
     ) => void;
-    setChangeCardForm: (data: AdditionalData | null) => void;
+    setChangeCardForm: (data: AdditionalData) => void;
     resetForm: () => void;
 }
 

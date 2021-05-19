@@ -46,8 +46,8 @@ export class SignInStore implements ISignInStore {
         this.submissionError = undefined;
 
         const postData: ISignInPostData = {
-            email: this.signInForm.email,
-            password: this.signInForm.password
+            email: this.signInForm.email.toLowerCase(),
+            password: this.signInForm.password.trim()
         };
 
         SignInApi.signIn(postData)

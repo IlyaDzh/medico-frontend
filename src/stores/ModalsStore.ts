@@ -43,6 +43,10 @@ export class ModalsStore implements IModalsStore {
         {
             name: "add-appointment",
             isOpen: false
+        },
+        {
+            name: "update-doctor-profile",
+            isOpen: false
         }
     ];
 

@@ -6,9 +6,15 @@ import {
     CurrentConsultation,
     AppointmentResult
 } from "stores/interfaces/Dashboard";
+import { AdditionalData } from "stores/interfaces/IUserStore";
 
 export interface IChangeSchedulePostData {
     schedule: ScheduleItem[];
+}
+
+export interface IUpdateDoctorProfilePostData {
+    costOfConsultation: number;
+    about: string;
 }
 
 export interface IGetScheduleSuccessResponse extends BaseResponse {
@@ -41,6 +47,16 @@ export interface IConsultationInfoSuccessResponse extends BaseResponse {
 }
 
 export interface IConsultationInfoErrorResponse extends BaseResponse {
+    error: 1;
+    data: null | string[];
+}
+
+export interface IUpdateDoctorProfileSuccessResponse extends BaseResponse {
+    error: 0;
+    data: AdditionalData;
+}
+
+export interface IUpdateDoctorProfileErrorResponse extends BaseResponse {
     error: 1;
     data: null | string[];
 }
