@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
         width: "100%"
     },
     animation: {
-        maxWidth: 250,
+        maxWidth: 200,
         width: "100%",
         margin: "0 auto"
     }

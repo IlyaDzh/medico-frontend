@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { observer } from "mobx-react";
 import {
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const Dialogs: React.FC = observer(() => {
     const classes = useStyles();
+    const [searchText, setSearchText] = useState<string>("");
     const { chatStore } = useStores();
     const { dialogs, pendingDialogs, getDialogs } = chatStore;
 
@@ -45,14 +46,18 @@ export const Dialogs: React.FC = observer(() => {
         getDialogs();
     }, [dialogs, pendingDialogs, getDialogs]);
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setSearchText(event.target.value.toLowerCase());
+    };
+
     return (
         <div className={classes.dialogs}>
             <TextField
                 className={classes.search}
                 variant="outlined"
                 placeholder="Поиск диалога"
-                // value={searchText}
-                // onChange={handleChange}
+                value={searchText}
+                onChange={handleChange}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -66,9 +71,14 @@ export const Dialogs: React.FC = observer(() => {
                 {pendingDialogs ? (
                     <Loader level={2} isCenter />
                 ) : dialogs.length > 0 ? (
-                    dialogs.map(dialog => (
-                        <DialogItem key={dialog.id} dialog={dialog} />
-                    ))
+                    (searchText
+                        ? dialogs.filter(({ interlocutor }) =>
+                              `${interlocutor.name} ${interlocutor.surname}`
+                                  .toLowerCase()
+                                  .includes(searchText)
+                          )
+                        : dialogs
+                    ).map(dialog => <DialogItem key={dialog.id} dialog={dialog} />)
                 ) : (
                     <Typography variant="body1" color="textSecondary">
                         <i>Диалогов не найдено</i>

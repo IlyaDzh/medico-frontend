@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         left: 0,
         display: "flex",
         height: "calc(100vh - 83px)",
+        minHeight: 350,
         [theme.breakpoints.down("sm")]: {
             height: "calc(100vh - 61px)"
         }
