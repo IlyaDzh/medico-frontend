@@ -35,5 +35,6 @@ export type Message = {
     user: {
         id: number;
         avatar: string | null;
+        name: string;
     };
 };

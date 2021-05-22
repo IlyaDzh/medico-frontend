@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import { MessagesHeader } from "./MessagesHeader";
 import { MessagesList } from "./MessagesList";
 import { MessagesInput } from "./MessagesInput";
+import { DialogNotSelected } from "./DialogNotSelected";
 import { useStores } from "stores/useStore";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     messages: {
+        position: "relative",
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
@@ -25,16 +27,17 @@ export const Messages: React.FC = observer(() => {
         chatStore;
 
     useEffect(() => {
-        if (dialogs.length === 0 || !chatId) {
+        if (!chatId) {
+            resetCurrentDialog();
+            return;
+        }
+
+        if (dialogs.length === 0) {
             return;
         }
 
         setCurrentDialog(chatId);
-    }, [dialogs, chatId, setCurrentDialog]);
-
-    useEffect(() => {
-        return () => resetCurrentDialog();
-    }, [resetCurrentDialog]);
+    }, [dialogs, chatId, setCurrentDialog, resetCurrentDialog]);
 
     return currentDialog ? (
         <div className={classes.messages}>
@@ -43,6 +46,6 @@ export const Messages: React.FC = observer(() => {
             <MessagesInput />
         </div>
     ) : (
-        <div>Диалог не выбран</div>
+        <DialogNotSelected />
     );
 });

@@ -114,15 +114,22 @@ export class ChatStore implements IChatStore {
             return;
         }
 
+        const user = this.rootStore.userStore.currentUser;
+
+        const avatar = user.additionalData
+            ? user.userType === "doctor"
+                ? user.additionalData.photo
+                : user.additionalData.avatar
+            : null;
+
         const message: Message = {
             id: Math.floor(new Date().valueOf() * Math.random()),
             text: this.messageText,
             createdAt: new Date(),
             user: {
-                id: this.rootStore.userStore.currentUser.id,
-                avatar:
-                    this.rootStore.userStore.currentUser.additionalData?.avatar ||
-                    null
+                id: user.id,
+                avatar: avatar,
+                name: user.name
             }
         };
 
