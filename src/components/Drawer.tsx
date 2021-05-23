@@ -20,7 +20,7 @@ import {
 } from "@material-ui/icons";
 
 import { useStores } from "stores/useStore";
-import { ExitIcon, SettingsIcon, UserIcon } from "icons";
+import { ExitIcon, UserIcon } from "icons";
 import { DOCTOR_MENU, PATIENT_MENU } from "utils/constants";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -46,20 +46,19 @@ export const Drawer: React.FC = observer(() => {
 
     const isPatient: boolean = currentUser?.userType === "patient";
 
-    const toggleDrawer = (open: boolean) => (
-        event: React.KeyboardEvent | React.MouseEvent
-    ) => {
-        if (
-            event &&
-            event.type === "keydown" &&
-            ((event as React.KeyboardEvent).key === "Tab" ||
-                (event as React.KeyboardEvent).key === "Shift")
-        ) {
-            return;
-        }
+    const toggleDrawer =
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (
+                event &&
+                event.type === "keydown" &&
+                ((event as React.KeyboardEvent).key === "Tab" ||
+                    (event as React.KeyboardEvent).key === "Shift")
+            ) {
+                return;
+            }
 
-        setDrawerExpanded(open);
-    };
+            setDrawerExpanded(open);
+        };
 
     const handleEntryClick = (): void => {
         setModalIsOpen("sign-in", true);
@@ -149,23 +148,6 @@ export const Drawer: React.FC = observer(() => {
                                     />
                                 </ListItem>
                             ))}
-                            <ListItem
-                                className={classes.listItem}
-                                component={Link}
-                                to="/dashboard/settings"
-                                button
-                            >
-                                <ListItemIcon>
-                                    <SettingsIcon />
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={
-                                        <Typography variant="body2">
-                                            Настройки
-                                        </Typography>
-                                    }
-                                />
-                            </ListItem>
                         </List>
                         <Divider />
                         <List>

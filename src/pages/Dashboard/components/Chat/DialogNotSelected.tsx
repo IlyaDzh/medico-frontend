@@ -1,20 +1,24 @@
 import React from "react";
 import Lottie from "react-lottie";
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import animationData from "images/dialog-not-selected.json";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     notSelected: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "100%"
+        width: "100%",
+        padding: 20
     },
     animation: {
         maxWidth: 200,
         width: "100%",
-        margin: "0 auto"
+        margin: "0 auto",
+        [theme.breakpoints.down("sm")]: {
+            maxWidth: 150
+        }
     }
 }));
 
@@ -36,7 +40,9 @@ export const DialogNotSelected: React.FC = () => {
                 <div className={classes.animation}>
                     <Lottie options={defaultOptions} isClickToPauseDisabled={true} />
                 </div>
-                <Typography variant="h3">Выберите диалог, чтобы начать</Typography>
+                <Typography variant="h3" align="center">
+                    Выберите диалог, чтобы начать
+                </Typography>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
-import { makeStyles } from "@material-ui/core";
+import { Hidden, makeStyles } from "@material-ui/core";
 
 import { MessagesHeader } from "./MessagesHeader";
 import { MessagesList } from "./MessagesList";
@@ -46,6 +46,8 @@ export const Messages: React.FC = observer(() => {
             <MessagesInput />
         </div>
     ) : (
-        <DialogNotSelected />
+        <Hidden xsDown>
+            <DialogNotSelected />
+        </Hidden>
     );
 });

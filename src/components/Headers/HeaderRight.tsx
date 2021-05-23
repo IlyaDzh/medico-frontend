@@ -127,6 +127,7 @@ export const HeaderRight: React.FC<IHeaderRight> = observer(
                                     vertical: "top",
                                     horizontal: "center"
                                 }}
+                                keepMounted
                             >
                                 <Link
                                     to="/dashboard"

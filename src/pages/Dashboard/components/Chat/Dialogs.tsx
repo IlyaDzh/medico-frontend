@@ -19,7 +19,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 420,
         width: "100%",
         background: theme.palette.other!.main,
-        padding: "14px 8px 0"
+        padding: "14px 8px 0",
+        [theme.breakpoints.down("xs")]: {
+            maxWidth: "unset"
+        }
     },
     search: {
         padding: "0 8px",
