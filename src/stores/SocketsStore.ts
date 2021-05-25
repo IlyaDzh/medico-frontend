@@ -6,9 +6,12 @@ import { Message } from "./interfaces/IChatStore";
 import { SendMessageSocketData } from "./interfaces/ISocketsStore";
 
 export class SocketsStore {
-    socket: Socket = io("https://medico-back-end.herokuapp.com/", {
-        autoConnect: false
-    });
+    socket: Socket = io(
+        process.env.REACT_APP_API_BASE_URL || "http://localhost:3003",
+        {
+            autoConnect: false
+        }
+    );
 
     private rootStore: IStores;
 
