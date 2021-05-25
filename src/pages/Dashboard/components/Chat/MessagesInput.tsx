@@ -1,11 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { TextField, IconButton, makeStyles, Theme } from "@material-ui/core";
+import { TextField, IconButton, makeStyles } from "@material-ui/core";
 
 import { AppendFileIcon, SendMessageIcon } from "icons";
 import { useStores } from "stores/useStore";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     messagesInput: {
         display: "flex",
         padding: "8px 14px",

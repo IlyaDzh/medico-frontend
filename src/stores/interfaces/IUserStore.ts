@@ -46,7 +46,7 @@ export type DoctorAdditionalData = {
     countOfReviews: number;
     diploma: string;
     specialties: Specialty[];
-    education: string[];
+    education: Experience[];
     experience: string;
     isVerified: boolean;
     photo: string;
@@ -55,10 +55,15 @@ export type DoctorAdditionalData = {
     summary: string;
     weeklySchedule: Schedule[];
     workTime: string;
-    workplaces: string[];
+    workplaces: Experience[];
 };
 
 type Schedule = {
     dayNumber: number;
     workingHours: number[];
+};
+
+export type Experience = {
+    year: number;
+    name: string;
 };

@@ -20,7 +20,9 @@ import { AdditionalData } from "stores/interfaces/IUserStore";
 
 const INITIAL_UPDATE_DOCTOR_PROFILE_FORM: IUpdateDoctorProfileForm = {
     cost: "",
-    about: ""
+    about: "",
+    education: [],
+    workplaces: []
 };
 
 export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore {
@@ -50,6 +52,9 @@ export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore
             setCurrentModalState: action,
             setFormValue: action,
             setDoctorProfileForm: action,
+            setTabValue: action,
+            removeTabValue: action,
+            addTabValue: action,
             resetForm: action
         });
     }
@@ -82,7 +87,9 @@ export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore
 
         const postData: IUpdateDoctorProfilePostData = {
             costOfConsultation: Number(this.doctorProfileForm.cost),
-            about: this.doctorProfileForm.about
+            about: this.doctorProfileForm.about,
+            education: this.doctorProfileForm.education,
+            workplaces: this.doctorProfileForm.workplaces
         };
 
         DashboardDoctorApi.updateProfile(postData)
@@ -133,8 +140,38 @@ export class DashboardDoctorProfileStore implements IDashboardDoctorProfileStore
     setDoctorProfileForm = (data: AdditionalData) => {
         this.doctorProfileForm = {
             cost: data.costOfConsultation.toString(),
-            about: data.about
+            about: data.about,
+            education: data.education,
+            workplaces: data.workplaces
         };
+    };
+
+    setTabValue = (
+        object: "education" | "workplaces",
+        key: "year" | "name",
+        index: number,
+        value: string
+    ) => {
+        if (this.doctorProfileForm[object][index]) {
+            if (key === "name") {
+                this.doctorProfileForm[object][index].name = value;
+            } else {
+                this.doctorProfileForm[object][index].year = Number(value);
+            }
+        }
+    };
+
+    removeTabValue = (object: "education" | "workplaces", index: number) => {
+        const tempArray = [...this.doctorProfileForm[object]];
+        tempArray.splice(index, 1);
+        this.doctorProfileForm[object] = tempArray;
+    };
+
+    addTabValue = (object: "education" | "workplaces") => {
+        this.doctorProfileForm[object].push({
+            year: new Date().getFullYear(),
+            name: ""
+        });
     };
 
     resetForm = () => {

@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import clsx from "clsx";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
 import { Avatar } from "components";

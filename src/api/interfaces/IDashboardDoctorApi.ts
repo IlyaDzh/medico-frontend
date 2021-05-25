@@ -6,7 +6,7 @@ import {
     CurrentConsultation,
     AppointmentResult
 } from "stores/interfaces/Dashboard";
-import { AdditionalData } from "stores/interfaces/IUserStore";
+import { AdditionalData, Experience } from "stores/interfaces/IUserStore";
 
 export interface IChangeSchedulePostData {
     schedule: ScheduleItem[];
@@ -15,6 +15,8 @@ export interface IChangeSchedulePostData {
 export interface IUpdateDoctorProfilePostData {
     costOfConsultation: number;
     about: string;
+    education: Experience[];
+    workplaces: Experience[];
 }
 
 export interface IGetScheduleSuccessResponse extends BaseResponse {

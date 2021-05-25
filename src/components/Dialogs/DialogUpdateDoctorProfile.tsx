@@ -2,7 +2,12 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import { DialogBase } from "./DialogBase";
-import { CostForm, AboutForm } from "pages/Dashboard/components";
+import {
+    CostForm,
+    AboutForm,
+    EducationForm,
+    WorkplacesForm
+} from "pages/Dashboard/components";
 import { useStores } from "stores/useStore";
 import { ChangeDoctorProfileTypes } from "stores/interfaces/Dashboard";
 import { PlusIcon } from "icons";
@@ -13,7 +18,9 @@ type ModalStates = {
 
 const MODAL_STATES: ModalStates = {
     cost: <CostForm />,
-    about: <AboutForm />
+    about: <AboutForm />,
+    education: <EducationForm />,
+    workplaces: <WorkplacesForm />
 };
 
 export const DialogUpdateDoctorProfile: React.FC = observer(() => {

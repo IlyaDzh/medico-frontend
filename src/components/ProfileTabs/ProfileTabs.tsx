@@ -6,15 +6,18 @@ import { ExperienceList } from "./ExperienceList";
 import { SpecialtiesList } from "./SpecialtiesList";
 import { Review } from "stores/interfaces/IDoctorStore";
 import { Specialty } from "stores/interfaces/ISpecialtiesStore";
+import { Experience } from "stores/interfaces/IUserStore";
 
 interface IProfileTabs {
     reviews: Review[];
-    education: string[];
-    workplaces: string[];
+    education: Experience[];
+    workplaces: Experience[];
     specialties: Specialty[];
     countOfReviews: number;
     pendingReviews: boolean;
     onMoreReviews: () => void;
+    onEditEducation?: () => void;
+    onEditWorkplaces?: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -51,7 +54,9 @@ export const ProfileTabs: React.FC<IProfileTabs> = ({
     specialties,
     countOfReviews,
     pendingReviews,
-    onMoreReviews
+    onMoreReviews,
+    onEditEducation,
+    onEditWorkplaces
 }) => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = useState(0);
@@ -85,10 +90,10 @@ export const ProfileTabs: React.FC<IProfileTabs> = ({
                 />
             </div>
             <div hidden={currentTab !== 1}>
-                <ExperienceList list={education} />
+                <ExperienceList list={education} onEdit={onEditEducation} />
             </div>
             <div hidden={currentTab !== 2}>
-                <ExperienceList list={workplaces} />
+                <ExperienceList list={workplaces} onEdit={onEditWorkplaces} />
             </div>
             <div hidden={currentTab !== 3}>
                 <SpecialtiesList specialties={specialties} />

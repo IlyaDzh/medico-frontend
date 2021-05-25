@@ -1,4 +1,5 @@
 import { Specialty } from "./ISpecialtiesStore";
+import { Experience } from "./IUserStore";
 
 export interface IDoctorStore {
     currentDoctor: IDoctor | null;
@@ -22,8 +23,8 @@ export interface IDoctor {
     costOfConsultation: number;
     workTime: string;
     specialties: Specialty[];
-    education: string[];
-    workplaces: string[];
+    education: Experience[];
+    workplaces: Experience[];
     reviews: Review[];
     countOfReviews: number;
 }

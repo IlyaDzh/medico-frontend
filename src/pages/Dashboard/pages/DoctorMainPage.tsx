@@ -146,6 +146,8 @@ export const DoctorMainPage: React.FC = observer(() => {
                 countOfReviews={currentUser.additionalData.countOfReviews}
                 pendingReviews={pendingReviews}
                 onMoreReviews={fetchReviews}
+                onEditEducation={() => handleEditData("education")}
+                onEditWorkplaces={() => handleEditData("workplaces")}
             />
 
             <DialogUpdateDoctorProfile />

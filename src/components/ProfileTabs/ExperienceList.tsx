@@ -1,7 +1,13 @@
 import React from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
+import { Button } from "components";
+import { Experience } from "stores/interfaces/IUserStore";
+
 const useStyles = makeStyles((theme: Theme) => ({
+    experienceList: {
+        marginBottom: 36
+    },
     list: {
         paddingLeft: 24
     },
@@ -31,26 +37,39 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface IExperienceList {
-    list: string[];
+    list: Experience[];
+    onEdit?: () => void;
 }
 
-export const ExperienceList: React.FC<IExperienceList> = ({ list }) => {
+export const ExperienceList: React.FC<IExperienceList> = ({ list, onEdit }) => {
     const classes = useStyles();
 
     return (
-        <ul className={classes.list}>
-            {list.length > 0 ? (
-                list.map((item, index) => (
-                    <li key={index} className={classes.listItem}>
-                        <Typography variant="h5">1996</Typography>
-                        <Typography className={classes.listItemText} variant="body1">
-                            {item}
-                        </Typography>
-                    </li>
-                ))
-            ) : (
-                <Typography variant="body1">Не заполнено</Typography>
+        <React.Fragment>
+            <div className={classes.experienceList}>
+                {list.length > 0 ? (
+                    <ul className={classes.list}>
+                        {list.map((item, index) => (
+                            <li key={index} className={classes.listItem}>
+                                <Typography variant="h5">{item.year}</Typography>
+                                <Typography
+                                    className={classes.listItemText}
+                                    variant="body1"
+                                >
+                                    {item.name}
+                                </Typography>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <Typography variant="body1">Не заполнено</Typography>
+                )}
+            </div>
+            {onEdit && (
+                <Button variant="outlined" onClick={onEdit}>
+                    Добавить
+                </Button>
             )}
-        </ul>
+        </React.Fragment>
     );
 };
