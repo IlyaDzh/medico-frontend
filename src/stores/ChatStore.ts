@@ -40,7 +40,8 @@ export class ChatStore implements IChatStore {
             setCurrentDialog: action,
             setMessageText: action,
             sendMessage: action,
-            resetCurrentDialog: action
+            resetCurrentDialog: action,
+            resetAll: action
         });
     }
 
@@ -140,5 +141,14 @@ export class ChatStore implements IChatStore {
 
     resetCurrentDialog = () => {
         this.currentDialog = undefined;
+    };
+
+    resetAll = () => {
+        this.currentDialog = undefined;
+        this.dialogs = [];
+        this.pendingDialogs = false;
+        this.pendingMessages = false;
+        this.hasMore = true;
+        this.messageText = "";
     };
 }

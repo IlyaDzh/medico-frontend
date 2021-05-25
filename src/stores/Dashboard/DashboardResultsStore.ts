@@ -35,4 +35,9 @@ export class DashboardResultsStore implements IDashboardResultsStore {
                 })
             );
     };
+
+    resetAll = () => {
+        this.appointmentResults = [];
+        this.pending = false;
+    };
 }

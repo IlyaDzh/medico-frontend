@@ -75,5 +75,8 @@ export class UserStore implements IUserStore {
         this.currentUser = undefined;
         this.isAuthorized = false;
         localStorage.removeItem("accessToken");
+        this.rootStore.chatStore.resetAll();
+        this.rootStore.dashboardPatientsStore.resetAll();
+        this.rootStore.dashboardResultsStore.resetAll();
     };
 }

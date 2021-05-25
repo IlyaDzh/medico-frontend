@@ -58,4 +58,9 @@ export class DashboardPatientsStore implements IDashboardPatientsStore {
     setCurrentType = (type: GetPatientsType) => {
         this.currentType = type;
     };
+
+    resetAll = () => {
+        this.patients = [];
+        this.currentType = "new";
+    };
 }

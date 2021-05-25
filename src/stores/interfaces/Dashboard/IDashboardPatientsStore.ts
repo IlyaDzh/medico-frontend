@@ -8,6 +8,7 @@ export interface IDashboardPatientsStore {
     getPatients: (date?: Date, type?: GetPatientsType) => void;
     setCurrentDate: (date: Date) => void;
     setCurrentType: (type: GetPatientsType) => void;
+    resetAll: () => void;
 }
 
 export interface PatientItem {

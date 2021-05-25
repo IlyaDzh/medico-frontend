@@ -2,6 +2,7 @@ export interface IDashboardResultsStore {
     appointmentResults: AppointmentResult[];
     pending: boolean;
     getAppointmentResults: () => void;
+    resetAll: () => void;
 }
 
 export interface AppointmentResult {

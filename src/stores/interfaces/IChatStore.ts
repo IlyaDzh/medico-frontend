@@ -14,6 +14,7 @@ export interface IChatStore {
     setMessageText: (text: string) => void;
     sendMessage: () => void;
     resetCurrentDialog: () => void;
+    resetAll: () => void;
 }
 
 export type Dialog = {
