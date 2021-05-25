@@ -17,3 +17,4 @@ export * from "./TransfusionIcon";
 export * from "./PencilIcon";
 export * from "./AppendFileIcon";
 export * from "./SendMessageIcon";
+export * from "./DialogsLeftArrowIcon";

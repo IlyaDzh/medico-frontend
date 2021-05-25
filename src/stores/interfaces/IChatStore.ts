@@ -1,4 +1,5 @@
 import { Specialty } from "./ISpecialtiesStore";
+import { CommunicationMethod } from "./IAppointmentStore";
 
 export interface IChatStore {
     dialogs: Dialog[];
@@ -26,6 +27,7 @@ export type Dialog = {
         specialties?: Specialty[];
     };
     messages: Message[];
+    communicationMethod: CommunicationMethod | null;
 };
 
 export type Message = {

@@ -1,25 +1,41 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { TextField, IconButton, makeStyles } from "@material-ui/core";
+import { TextField, IconButton, makeStyles, Theme } from "@material-ui/core";
 
 import { AppendFileIcon, SendMessageIcon } from "icons";
 import { useStores } from "stores/useStore";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     messagesInput: {
         display: "flex",
+        alignItems: "center",
         padding: "8px 14px",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        [theme.breakpoints.down("sm")]: {
+            padding: "6px 10px"
+        }
     },
     textField: {
-        margin: "0 12px"
+        margin: "0 12px",
+        [theme.breakpoints.down("xs")]: {
+            margin: "0 8px"
+        }
     },
     inputBase: {
         padding: "12px 16px"
     },
     iconButton: {
         width: 52,
-        height: 52
+        height: 52,
+        padding: 0,
+        [theme.breakpoints.down("sm")]: {
+            width: 48,
+            height: 48
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: 42,
+            height: 42
+        }
     }
 }));
 
