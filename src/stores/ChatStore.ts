@@ -142,7 +142,8 @@ export class ChatStore implements IChatStore {
                 avatar: avatar,
                 name: user.name
             },
-            pending: true
+            pending: true,
+            uuid: randomId.toString()
         };
 
         dialog.messages.unshift(message);
