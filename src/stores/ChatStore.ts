@@ -175,7 +175,6 @@ export class ChatStore implements IChatStore {
 
                 if (pendingMessage) {
                     pendingMessage.id = message.id;
-                    pendingMessage.text = message.text; // ????
                     pendingMessage.createdAt = message.createdAt;
                     pendingMessage.pending = false;
                 }
