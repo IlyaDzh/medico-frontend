@@ -6,7 +6,7 @@ import { Message } from "./interfaces/IChatStore";
 import { SendMessageSocketData } from "./interfaces/ISocketsStore";
 
 export class SocketsStore {
-    socket: Socket = io("http://medico-back-end.herokuapp.com/", {
+    socket: Socket = io("https://medico-back-end.herokuapp.com/", {
         autoConnect: false
     });
 
