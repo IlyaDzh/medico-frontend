@@ -133,7 +133,7 @@ export class ChatStore implements IChatStore {
         const randomId = uuidv4();
 
         const message: Message = {
-            id: randomId,
+            id: randomId.toString(),
             chatId: dialog.id,
             text: messageText,
             createdAt: new Date(),
@@ -142,8 +142,7 @@ export class ChatStore implements IChatStore {
                 avatar: avatar,
                 name: user.name
             },
-            pending: true,
-            uuid: randomId.toString()
+            pending: true
         };
 
         dialog.messages.unshift(message);
@@ -171,13 +170,12 @@ export class ChatStore implements IChatStore {
                 message.user.id === this.rootStore.userStore.currentUser.id
             ) {
                 const pendingMessage = appendedDialog.messages.filter(
-                    item => item.uuid === message.uuid
+                    item => item.id === message.uuid
                 )[0];
-
-                console.log(pendingMessage);
 
                 if (pendingMessage) {
                     pendingMessage.id = message.id;
+                    pendingMessage.text = message.text; // ????
                     pendingMessage.createdAt = message.createdAt;
                     pendingMessage.pending = false;
                 }

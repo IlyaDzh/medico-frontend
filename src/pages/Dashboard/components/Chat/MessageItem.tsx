@@ -60,7 +60,7 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
                 variant="body1"
                 color="textSecondary"
             >
-                {message.text}
+                {message.text} {message.id}
             </Typography>
             {message.pending ? (
                 <Typography className={classes.messageDate} variant="h6">
