@@ -14,6 +14,7 @@ import { DrawerStore } from "./DrawerStore";
 import { AppointmentStore } from "./AppointmentStore";
 import { CommentStore } from "./CommentStore";
 import { ChatStore } from "./ChatStore";
+import { SocketsStore } from "./SocketsStore";
 import {
     DashboardAnalyzesStore,
     DashboardConsultationsStore,
@@ -41,6 +42,7 @@ import { IDrawerStore } from "./interfaces/IDrawerStore";
 import { IAppointmentStore } from "./interfaces/IAppointmentStore";
 import { ICommentStore } from "./interfaces/ICommentStore";
 import { IChatStore } from "./interfaces/IChatStore";
+import { ISocketsStore } from "./interfaces/ISocketsStore";
 import {
     IDashboardAnalyzesStore,
     IDashboardConsultationsStore,
@@ -77,6 +79,7 @@ export class RootStore implements IStores {
     dashboardPatientsStore: IDashboardPatientsStore;
     dashboardPatientInfoStore: IDashboardPatientInfoStore;
     chatStore: IChatStore;
+    socketsStore: ISocketsStore;
 
     constructor(history: History) {
         this.routerStore = new RouterStore(history);
@@ -102,5 +105,6 @@ export class RootStore implements IStores {
         this.dashboardPatientsStore = new DashboardPatientsStore();
         this.dashboardPatientInfoStore = new DashboardPatientInfoStore();
         this.chatStore = new ChatStore(this);
+        this.socketsStore = new SocketsStore(this);
     }
 }

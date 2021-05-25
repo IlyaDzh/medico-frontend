@@ -62,9 +62,15 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
             >
                 {message.text}
             </Typography>
-            <Typography className={classes.messageDate} variant="h6">
-                {formatDate(message.createdAt.toString())}
-            </Typography>
+            {message.pending ? (
+                <Typography className={classes.messageDate} variant="h6">
+                    доставляется...
+                </Typography>
+            ) : (
+                <Typography className={classes.messageDate} variant="h6">
+                    {formatDate(message.createdAt.toString())}
+                </Typography>
+            )}
             <Avatar
                 className={classes.avatar}
                 size={48}

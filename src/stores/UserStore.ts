@@ -32,6 +32,7 @@ export class UserStore implements IUserStore {
         UserApi.refreshToken().then(
             action(({ data }: AxiosResponse<ISignInSuccessResponse>) => {
                 localStorage.setItem("accessToken", data.data.accessToken);
+                this.rootStore.socketsStore.initSocket(data.data.accessToken);
             })
         );
 

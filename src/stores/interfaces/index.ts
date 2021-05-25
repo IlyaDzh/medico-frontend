@@ -12,6 +12,7 @@ import { IDrawerStore } from "./IDrawerStore";
 import { IAppointmentStore } from "./IAppointmentStore";
 import { ICommentStore } from "./ICommentStore";
 import { IChatStore } from "./IChatStore";
+import { ISocketsStore } from "./ISocketsStore";
 import {
     IDashboardConsultationsStore,
     IDashboardAnalyzesStore,
@@ -48,4 +49,5 @@ export default interface IStores {
     dashboardPatientsStore: IDashboardPatientsStore;
     dashboardPatientInfoStore: IDashboardPatientInfoStore;
     chatStore: IChatStore;
+    socketsStore: ISocketsStore;
 }

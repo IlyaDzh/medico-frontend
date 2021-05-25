@@ -13,6 +13,7 @@ export interface IChatStore {
     setCurrentDialog: (id: string) => void;
     setMessageText: (text: string) => void;
     sendMessage: () => void;
+    appendMessage: (message: Message) => void;
     resetCurrentDialog: () => void;
     resetAll: () => void;
 }
@@ -33,6 +34,7 @@ export type Dialog = {
 
 export type Message = {
     id: number;
+    chatId: number;
     text: string;
     createdAt: Date;
     user: {
@@ -40,4 +42,5 @@ export type Message = {
         avatar: string | null;
         name: string;
     };
+    pending?: boolean;
 };

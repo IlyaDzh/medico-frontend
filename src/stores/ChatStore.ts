@@ -9,6 +9,7 @@ import {
 import { IChatStore, Dialog, Message } from "./interfaces/IChatStore";
 import { MAX_MESSAGE_COUNT } from "utils/constants";
 import IStores from "./interfaces";
+import { SendMessageSocketData } from "./interfaces/ISocketsStore";
 
 export class ChatStore implements IChatStore {
     dialogs: Dialog[] = [] as Dialog[];
@@ -40,6 +41,7 @@ export class ChatStore implements IChatStore {
             setCurrentDialog: action,
             setMessageText: action,
             sendMessage: action,
+            appendMessage: action,
             resetCurrentDialog: action,
             resetAll: action
         });
@@ -117,6 +119,10 @@ export class ChatStore implements IChatStore {
 
         const user = this.rootStore.userStore.currentUser;
 
+        const dialog = this.currentDialog;
+
+        const messageText = this.messageText;
+
         const avatar = user.additionalData
             ? user.userType === "doctor"
                 ? user.additionalData.photo
@@ -125,18 +131,49 @@ export class ChatStore implements IChatStore {
 
         const message: Message = {
             id: Math.floor(new Date().valueOf() * Math.random()),
-            text: this.messageText,
+            chatId: dialog.id,
+            text: messageText,
             createdAt: new Date(),
             user: {
                 id: user.id,
                 avatar: avatar,
                 name: user.name
-            }
+            },
+            pending: true
         };
 
-        this.currentDialog.messages.unshift(message);
+        dialog.messages.unshift(message);
+
+        const socketMessage: SendMessageSocketData = {
+            chatId: dialog.id,
+            authorId: user.id,
+            text: messageText
+        };
+
+        this.rootStore.socketsStore.sendMessage(socketMessage);
 
         this.messageText = "";
+    };
+
+    appendMessage = (message: Message) => {
+        const appendedDialog = this.dialogs.filter(
+            dialog => dialog.id === message.chatId
+        )[0];
+
+        if (
+            this.rootStore.userStore.currentUser &&
+            message.user.id === this.rootStore.userStore.currentUser.id
+        ) {
+            // const pendingMessage = appendedDialog.messages.filter(
+            //     item => item.id === message.id
+            // )[0];
+
+            // console.log(pendingMessage);
+
+            // pendingMessage.pending = false;
+        } else {
+            appendedDialog.messages.unshift(message);
+        }
     };
 
     resetCurrentDialog = () => {
