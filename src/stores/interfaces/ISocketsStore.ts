@@ -10,4 +10,5 @@ export type SendMessageSocketData = {
     chatId: number;
     authorId: number;
     text: string;
+    uuid: string;
 }

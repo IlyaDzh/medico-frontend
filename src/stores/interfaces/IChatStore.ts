@@ -33,7 +33,7 @@ export type Dialog = {
 };
 
 export type Message = {
-    id: number;
+    id: number | string;
     chatId: number;
     text: string;
     createdAt: Date;
@@ -42,5 +42,6 @@ export type Message = {
         avatar: string | null;
         name: string;
     };
+    uuid?: string;
     pending?: boolean;
 };

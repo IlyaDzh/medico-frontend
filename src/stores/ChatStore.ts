@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { makeAutoObservable, observable, action } from "mobx";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     ChatApi,
@@ -74,7 +75,7 @@ export class ChatStore implements IChatStore {
             this.currentDialog.messages[this.currentDialog.messages.length - 1].id;
         const currentDialogId = this.currentDialog.id;
 
-        ChatApi.getMessages(currentDialogId, 20, lastMessageId)
+        ChatApi.getMessages(currentDialogId, 20, Number(lastMessageId))
             .then(
                 action(({ data }: AxiosResponse<IGetMessagesSuccessResponse>) => {
                     if (data.data.length > 0) {
@@ -129,8 +130,10 @@ export class ChatStore implements IChatStore {
                 : user.additionalData.avatar
             : null;
 
+        const randomId = uuidv4();
+
         const message: Message = {
-            id: Math.floor(new Date().valueOf() * Math.random()),
+            id: randomId,
             chatId: dialog.id,
             text: messageText,
             createdAt: new Date(),
@@ -147,7 +150,8 @@ export class ChatStore implements IChatStore {
         const socketMessage: SendMessageSocketData = {
             chatId: dialog.id,
             authorId: user.id,
-            text: messageText
+            text: messageText,
+            uuid: randomId.toString()
         };
 
         this.rootStore.socketsStore.sendMessage(socketMessage);
@@ -160,19 +164,25 @@ export class ChatStore implements IChatStore {
             dialog => dialog.id === message.chatId
         )[0];
 
-        if (
-            this.rootStore.userStore.currentUser &&
-            message.user.id === this.rootStore.userStore.currentUser.id
-        ) {
-            // const pendingMessage = appendedDialog.messages.filter(
-            //     item => item.id === message.id
-            // )[0];
+        if (appendedDialog) {
+            if (
+                this.rootStore.userStore.currentUser &&
+                message.user.id === this.rootStore.userStore.currentUser.id
+            ) {
+                const pendingMessage = appendedDialog.messages.filter(
+                    item => item.uuid === message.uuid
+                )[0];
 
-            // console.log(pendingMessage);
+                console.log(pendingMessage);
 
-            // pendingMessage.pending = false;
-        } else {
-            appendedDialog.messages.unshift(message);
+                if (pendingMessage) {
+                    pendingMessage.id = message.id;
+                    pendingMessage.createdAt = message.createdAt;
+                    pendingMessage.pending = false;
+                }
+            } else {
+                appendedDialog.messages.unshift(message);
+            }
         }
     };
 
