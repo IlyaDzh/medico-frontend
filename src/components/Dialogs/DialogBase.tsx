@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 8
     },
     dialogContent: {
+        overflowY: "visible",
         padding: "32px 48px",
         [theme.breakpoints.down("sm")]: {
             padding: "30px 36px"
@@ -92,7 +93,10 @@ export const DialogBase: React.FC<IDialogBase> = ({
                     </Typography>
                 </div>
                 <div className={classes.closeButton}>
-                    <IconButton aria-label="Закрыть диалоговое окно" onClick={onClose}>
+                    <IconButton
+                        aria-label="Закрыть диалоговое окно"
+                        onClick={onClose}
+                    >
                         <CrossIcon />
                     </IconButton>
                 </div>

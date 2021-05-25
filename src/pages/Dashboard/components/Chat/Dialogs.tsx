@@ -42,12 +42,8 @@ export const Dialogs: React.FC = observer(() => {
     const { dialogs, pendingDialogs, getDialogs } = chatStore;
 
     useEffect(() => {
-        if (dialogs.length > 0 || pendingDialogs) {
-            return;
-        }
-
         getDialogs();
-    }, [dialogs, pendingDialogs, getDialogs]);
+    }, [getDialogs]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setSearchText(event.target.value.toLowerCase());
@@ -83,7 +79,7 @@ export const Dialogs: React.FC = observer(() => {
                         : dialogs
                     ).map(dialog => <DialogItem key={dialog.id} dialog={dialog} />)
                 ) : (
-                    <Typography variant="body1" color="textSecondary">
+                    <Typography variant="body1" color="textSecondary" align="center">
                         <i>Диалогов не найдено</i>
                     </Typography>
                 )}
