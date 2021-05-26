@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
+import { useReactMediaRecorder } from "react-media-recorder";
 import { TextField, IconButton, makeStyles, Theme } from "@material-ui/core";
+import { MicNone as MicNoneIcon } from "@material-ui/icons";
 
 import { AppendFileIcon, SendMessageIcon } from "icons";
 import { useStores } from "stores/useStore";
@@ -17,6 +19,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textField: {
         margin: "0 12px",
+        [theme.breakpoints.down("xs")]: {
+            margin: "0 8px"
+        }
+    },
+    audio: {
+        width: "100%",
+        margin: "0 12px",
+        "&:focus": {
+            outline: "none"
+        },
         [theme.breakpoints.down("xs")]: {
             margin: "0 8px"
         }
@@ -41,13 +53,30 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const MessagesInput: React.FC = observer(() => {
     const classes = useStyles();
+    const [isRecording, setIsRecording] = useState<boolean>(false);
     const { chatStore } = useStores();
     const { messageText, setMessageText, sendMessage } = chatStore;
+    const { startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({
+        audio: true,
+        video: false
+    });
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
             // setFile(files[0]);
             console.log(files[0]);
+        }
+    };
+
+    const handleAudioClick = (): void => {
+        if (!isRecording) {
+            console.log("start recording");
+            setIsRecording(true);
+            startRecording();
+        } else {
+            console.log("stop recording");
+            setIsRecording(false);
+            stopRecording();
         }
     };
 
@@ -64,6 +93,8 @@ export const MessagesInput: React.FC = observer(() => {
     const handleSendClick = (): void => {
         sendMessage();
     };
+
+    console.log(mediaBlobUrl);
 
     return (
         <div className={classes.messagesInput}>
@@ -83,23 +114,37 @@ export const MessagesInput: React.FC = observer(() => {
                 multiple
                 hidden
             />
-            <TextField
-                className={classes.textField}
-                variant="outlined"
-                color="secondary"
-                placeholder="Введите текст"
-                onKeyDown={onKeyDown}
-                value={messageText}
-                onChange={event => setMessageText(event.target.value)}
-                rowsMax={4}
-                InputProps={{
-                    classes: {
-                        root: classes.inputBase
-                    }
-                }}
-                multiline
-                fullWidth
-            />
+            <IconButton
+                className={classes.iconButton}
+                onClick={handleAudioClick}
+                aria-label="Записать головое сообщение"
+            >
+                <MicNoneIcon htmlColor="#212121" />
+            </IconButton>
+            {!mediaBlobUrl ? (
+                <TextField
+                    className={classes.textField}
+                    variant="outlined"
+                    color="secondary"
+                    placeholder="Введите текст"
+                    onKeyDown={onKeyDown}
+                    value={messageText}
+                    onChange={event => setMessageText(event.target.value)}
+                    rowsMax={4}
+                    InputProps={{
+                        classes: {
+                            root: classes.inputBase
+                        }
+                    }}
+                    multiline
+                    fullWidth
+                />
+            ) : (
+                <audio className={classes.audio} controls>
+                    <source src={mediaBlobUrl} type="audio/wav" />
+                    Your browser does not support the audio tag.
+                </audio>
+            )}
             <IconButton
                 className={classes.iconButton}
                 onClick={handleSendClick}

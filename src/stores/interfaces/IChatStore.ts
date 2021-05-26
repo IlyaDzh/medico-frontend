@@ -35,7 +35,8 @@ export type Dialog = {
 export type Message = {
     id: number | string;
     chatId: number;
-    text: string;
+    text?: string;
+    file?: string;
     createdAt: Date;
     user: {
         id: number;
