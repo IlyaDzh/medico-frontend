@@ -56,10 +56,11 @@ export const MessagesInput: React.FC = observer(() => {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const { chatStore } = useStores();
     const { messageText, setMessageText, sendMessage } = chatStore;
-    const { startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({
-        audio: true,
-        video: false
-    });
+    const { startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
+        useReactMediaRecorder({
+            audio: true,
+            video: false
+        });
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
@@ -69,6 +70,11 @@ export const MessagesInput: React.FC = observer(() => {
     };
 
     const handleAudioClick = (): void => {
+        if (mediaBlobUrl) {
+            clearBlobUrl();
+            return;
+        }
+
         if (!isRecording) {
             console.log("start recording");
             setIsRecording(true);
