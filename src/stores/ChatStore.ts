@@ -153,7 +153,6 @@ export class ChatStore implements IChatStore {
 
         const socketMessage: SendMessageSocketData = {
             chatId: dialog.id,
-            authorId: user.id,
             text: messageText,
             uuid: randomId
         };
@@ -208,7 +207,6 @@ export class ChatStore implements IChatStore {
 
         const formData = new FormData();
         formData.append("chatId", dialog.id.toString());
-        formData.append("authorId", user.id.toString());
         formData.append("file", audioBlob);
         formData.append("type", "audio");
         formData.append("uuid", randomId);

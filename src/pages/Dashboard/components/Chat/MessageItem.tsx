@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
 
-import { Avatar } from "components";
+import { Avatar, Loader } from "components";
 import { Message } from "stores/interfaces/IChatStore";
 import { formatDate } from "utils/formatDate";
 
@@ -59,7 +59,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             width: 250
         }
-    }
+    },
+    loader: isMy => ({
+        position: "absolute",
+        left: isMy ? 2 : "unset",
+        right: isMy ? "unset" : 2,
+        bottom: -24
+    })
 }));
 
 export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
@@ -86,9 +92,9 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
                 </Typography>
             )}
             {message.pending ? (
-                <Typography className={classes.messageDate} variant="h6">
-                    доставляется...
-                </Typography>
+                <span className={classes.loader}>
+                    <Loader level={1} />
+                </span>
             ) : (
                 <Typography className={classes.messageDate} variant="h6">
                     {formatDate(message.createdAt.toString())}
