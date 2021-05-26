@@ -64,6 +64,7 @@ export const MessagesList: React.FC = observer(() => {
                     <Loader level={2} />
                 </div>
             )}
+            
             {currentDialog?.messages.map(message => (
                 <MessageItem
                     key={message.id}
@@ -71,6 +72,8 @@ export const MessagesList: React.FC = observer(() => {
                     isMy={message.user.id === currentUser!.id}
                 />
             ))}
+
+            <br />
         </div>
     );
 });
