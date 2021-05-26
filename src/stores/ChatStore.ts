@@ -211,8 +211,7 @@ export class ChatStore implements IChatStore {
         formData.append("type", "audio");
         formData.append("uuid", randomId);
 
-        // this.rootStore.socketsStore.sendMessage(formData);
-        console.log("отправка файла");
+        ChatApi.sendMedia(formData);
 
         this.audioBlobUrl = undefined;
     };

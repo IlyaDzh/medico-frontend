@@ -10,4 +10,8 @@ export class ChatApi {
             `/api/v1/chat/message/list?chatId=${chatId}&count=${count}&lastMessageId=${lastMessageId}`
         );
     }
+
+    static sendMedia(postData: FormData) {
+        return axiosInstance.post("/api/v1/chat/message/send-media", postData);
+    }
 }
