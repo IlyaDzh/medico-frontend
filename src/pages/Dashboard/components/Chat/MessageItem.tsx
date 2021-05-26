@@ -76,7 +76,15 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
             {message.file ? (
                 message.file.type === "audio" ? (
                     <audio className={classes.audio} controls>
-                        <source src={message.file.path} type="audio/wav" />
+                        <source
+                            src={
+                                message.uuid
+                                    ? message.file.path
+                                    : process.env.REACT_APP_API_BASE_URL +
+                                      message.file.path
+                            }
+                            type="audio/wav"
+                        />
                         Your browser does not support the audio tag.
                     </audio>
                 ) : (
