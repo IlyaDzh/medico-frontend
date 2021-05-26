@@ -8,12 +8,15 @@ export interface IChatStore {
     pendingMessages: boolean;
     hasMore: boolean;
     messageText: string;
+    audioBlobUrl: string | undefined;
     getDialogs: () => void;
     getMessages: () => void;
     setCurrentDialog: (id: string) => void;
     setMessageText: (text: string) => void;
     sendMessage: () => void;
+    sendFile: () => void;
     appendMessage: (message: Message) => void;
+    setAudioBlobUrl: (blobUrl: string) => void;
     resetCurrentDialog: () => void;
     resetAll: () => void;
 }
@@ -36,7 +39,10 @@ export type Message = {
     id: number | string;
     chatId: number;
     text?: string;
-    file?: string;
+    file?: {
+        path: string;
+        type: "image" | "audio";
+    } | null;
     createdAt: Date;
     user: {
         id: number;

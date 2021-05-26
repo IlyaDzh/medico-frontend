@@ -25,6 +25,8 @@ export class ChatStore implements IChatStore {
 
     messageText: string = "";
 
+    audioBlobUrl: string | undefined = undefined;
+
     private rootStore: IStores;
 
     constructor(rootStore: IStores) {
@@ -42,7 +44,9 @@ export class ChatStore implements IChatStore {
             setCurrentDialog: action,
             setMessageText: action,
             sendMessage: action,
+            sendFile: action,
             appendMessage: action,
+            setAudioBlobUrl: action,
             resetCurrentDialog: action,
             resetAll: action
         });
@@ -133,7 +137,7 @@ export class ChatStore implements IChatStore {
         const randomId = uuidv4();
 
         const message: Message = {
-            id: randomId.toString(),
+            id: randomId,
             chatId: dialog.id,
             text: messageText,
             createdAt: new Date(),
@@ -151,12 +155,68 @@ export class ChatStore implements IChatStore {
             chatId: dialog.id,
             authorId: user.id,
             text: messageText,
-            uuid: randomId.toString()
+            uuid: randomId
         };
 
         this.rootStore.socketsStore.sendMessage(socketMessage);
 
         this.messageText = "";
+    };
+
+    sendFile = async () => {
+        if (
+            !this.audioBlobUrl ||
+            !this.currentDialog ||
+            !this.rootStore.userStore.currentUser
+        ) {
+            return;
+        }
+
+        const user = this.rootStore.userStore.currentUser;
+
+        const dialog = this.currentDialog;
+
+        const audioBlobUrl = this.audioBlobUrl;
+
+        const audioBlob = await fetch(audioBlobUrl).then(r => r.blob());
+
+        const avatar = user.additionalData
+            ? user.userType === "doctor"
+                ? user.additionalData.photo
+                : user.additionalData.avatar
+            : null;
+
+        const randomId = uuidv4();
+
+        const message: Message = {
+            id: randomId,
+            chatId: dialog.id,
+            file: {
+                path: audioBlobUrl,
+                type: "audio"
+            },
+            createdAt: new Date(),
+            user: {
+                id: user.id,
+                avatar: avatar,
+                name: user.name
+            },
+            pending: true
+        };
+
+        dialog.messages.unshift(message);
+
+        const formData = new FormData();
+        formData.append("chatId", dialog.id.toString());
+        formData.append("authorId", user.id.toString());
+        formData.append("file", audioBlob);
+        formData.append("type", "audio");
+        formData.append("uuid", randomId);
+
+        // this.rootStore.socketsStore.sendMessage(formData);
+        console.log("отправка файла");
+
+        this.audioBlobUrl = undefined;
     };
 
     appendMessage = (message: Message) => {
@@ -182,6 +242,10 @@ export class ChatStore implements IChatStore {
                 appendedDialog.messages.unshift(message);
             }
         }
+    };
+
+    setAudioBlobUrl = (blobUrl: string) => {
+        this.audioBlobUrl = blobUrl;
     };
 
     resetCurrentDialog = () => {

@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useReactMediaRecorder } from "react-media-recorder";
-import { TextField, IconButton, makeStyles, Theme } from "@material-ui/core";
-import { MicNone as MicNoneIcon } from "@material-ui/icons";
+import {
+    Typography,
+    TextField,
+    IconButton,
+    makeStyles,
+    Theme
+} from "@material-ui/core";
+import {
+    MicNone as MicNoneIcon,
+    StopOutlined as StopOutlinedIcon,
+    DeleteOutline as DeleteOutlineIcon
+} from "@material-ui/icons";
 
 import { AppendFileIcon, SendMessageIcon } from "icons";
 import { useStores } from "stores/useStore";
@@ -18,6 +28,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     textField: {
+        margin: "0 12px",
+        [theme.breakpoints.down("xs")]: {
+            margin: "0 8px"
+        }
+    },
+    audioCaption: {
+        width: "100%",
         margin: "0 12px",
         [theme.breakpoints.down("xs")]: {
             margin: "0 8px"
@@ -55,12 +72,19 @@ export const MessagesInput: React.FC = observer(() => {
     const classes = useStyles();
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const { chatStore } = useStores();
-    const { messageText, setMessageText, sendMessage } = chatStore;
+    const { messageText, setMessageText, sendMessage, sendFile, setAudioBlobUrl } =
+        chatStore;
     const { startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
         useReactMediaRecorder({
             audio: true,
             video: false
         });
+
+    useEffect(() => {
+        if (mediaBlobUrl) {
+            setAudioBlobUrl(mediaBlobUrl);
+        }
+    }, [mediaBlobUrl, setAudioBlobUrl]);
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
@@ -91,16 +115,24 @@ export const MessagesInput: React.FC = observer(() => {
             if (!event.shiftKey) {
                 event.preventDefault();
                 event.stopPropagation();
-                sendMessage();
+                if (mediaBlobUrl) {
+                    sendFile();
+                    clearBlobUrl();
+                } else {
+                    sendMessage();
+                }
             }
         }
     };
 
     const handleSendClick = (): void => {
-        sendMessage();
+        if (mediaBlobUrl) {
+            sendFile();
+            clearBlobUrl();
+        } else {
+            sendMessage();
+        }
     };
-
-    console.log(mediaBlobUrl);
 
     return (
         <div className={classes.messagesInput}>
@@ -123,28 +155,44 @@ export const MessagesInput: React.FC = observer(() => {
             <IconButton
                 className={classes.iconButton}
                 onClick={handleAudioClick}
-                aria-label="Записать головое сообщение"
+                aria-label="Записать голосовое сообщение"
             >
-                <MicNoneIcon htmlColor="#212121" />
+                {mediaBlobUrl ? (
+                    <DeleteOutlineIcon htmlColor="#212121" />
+                ) : isRecording ? (
+                    <StopOutlinedIcon htmlColor="#212121" />
+                ) : (
+                    <MicNoneIcon htmlColor="#212121" />
+                )}
             </IconButton>
             {!mediaBlobUrl ? (
-                <TextField
-                    className={classes.textField}
-                    variant="outlined"
-                    color="secondary"
-                    placeholder="Введите текст"
-                    onKeyDown={onKeyDown}
-                    value={messageText}
-                    onChange={event => setMessageText(event.target.value)}
-                    rowsMax={4}
-                    InputProps={{
-                        classes: {
-                            root: classes.inputBase
-                        }
-                    }}
-                    multiline
-                    fullWidth
-                />
+                !isRecording ? (
+                    <TextField
+                        className={classes.textField}
+                        variant="outlined"
+                        color="secondary"
+                        placeholder="Введите текст"
+                        onKeyDown={onKeyDown}
+                        value={messageText}
+                        onChange={event => setMessageText(event.target.value)}
+                        rowsMax={4}
+                        InputProps={{
+                            classes: {
+                                root: classes.inputBase
+                            }
+                        }}
+                        multiline
+                        fullWidth
+                    />
+                ) : (
+                    <Typography
+                        className={classes.audioCaption}
+                        variant="body1"
+                        color="textSecondary"
+                    >
+                        Идет запись аудио...
+                    </Typography>
+                )
             ) : (
                 <audio className={classes.audio} controls>
                     <source src={mediaBlobUrl} type="audio/wav" />

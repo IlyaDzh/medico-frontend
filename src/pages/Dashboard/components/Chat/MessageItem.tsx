@@ -47,7 +47,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         right: isMy ? -52 : "unset",
         left: isMy ? "unset" : -52,
         bottom: 0
-    })
+    }),
+    audio: {
+        width: 350,
+        "&:focus": {
+            outline: "none"
+        },
+        [theme.breakpoints.down("sm")]: {
+            width: 300
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: 250
+        }
+    }
 }));
 
 export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
@@ -55,13 +67,24 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
 
     return (
         <div className={classes.message}>
-            <Typography
-                className={classes.messageText}
-                variant="body1"
-                color="textSecondary"
-            >
-                {message.text}
-            </Typography>
+            {message.file ? (
+                message.file.type === "audio" ? (
+                    <audio className={classes.audio} controls>
+                        <source src={message.file.path} type="audio/wav" />
+                        Your browser does not support the audio tag.
+                    </audio>
+                ) : (
+                    <div>file</div>
+                )
+            ) : (
+                <Typography
+                    className={classes.messageText}
+                    variant="body1"
+                    color="textSecondary"
+                >
+                    {message.text}
+                </Typography>
+            )}
             {message.pending ? (
                 <Typography className={classes.messageDate} variant="h6">
                     доставляется...
