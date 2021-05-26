@@ -237,6 +237,7 @@ export class ChatStore implements IChatStore {
                     pendingMessage.pending = false;
                 }
             } else {
+                message.uuid = undefined;
                 appendedDialog.messages.unshift(message);
             }
         }
