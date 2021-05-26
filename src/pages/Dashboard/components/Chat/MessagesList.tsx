@@ -14,13 +14,21 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: "100%",
         padding: "0 40px",
         marginRight: 6,
-        overflowY: "auto"
+        overflowY: "auto",
+        overflowX: "hidden",
+        [theme.breakpoints.down("sm")]: {
+            padding: "0 16px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "0 10px"
+        }
     },
     loader: {
         position: "absolute",
         top: 64,
         left: "50%",
-        transform: "translateX(-50%)"
+        transform: "translateX(-50%)",
+        zIndex: 1
     }
 }));
 
@@ -64,7 +72,7 @@ export const MessagesList: React.FC = observer(() => {
                     <Loader level={2} />
                 </div>
             )}
-            
+
             {currentDialog?.messages.map(message => (
                 <MessageItem
                     key={message.id}

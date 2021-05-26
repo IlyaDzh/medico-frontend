@@ -12,6 +12,7 @@ interface IMessageItem {
 
 const useStyles = makeStyles((theme: Theme) => ({
     message: isMy => ({
+        display: "inline-flex",
         position: "relative",
         padding: "14px 18px",
         backgroundColor: isMy ? "#cdeafc" : "#eceff9",
@@ -28,6 +29,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             borderTop: "26px solid transparent",
             borderLeft: isMy ? "14px solid #cdeafc" : "unset",
             borderRight: isMy ? "unset" : "14px solid #eceff9"
+        },
+        [theme.breakpoints.down("sm")]: {
+            padding: "10px 14px"
+        },
+        [theme.breakpoints.down("xs")]: {
+            padding: "8px 12px"
         }
     }),
     messageText: {
@@ -53,11 +60,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:focus": {
             outline: "none"
         },
-        [theme.breakpoints.down("sm")]: {
-            width: 300
+        [theme.breakpoints.down("md")]: {
+            width: 280
         },
-        [theme.breakpoints.down("xs")]: {
-            width: 250
+        [theme.breakpoints.down("sm")]: {
+            width: 220
         }
     },
     loader: isMy => ({

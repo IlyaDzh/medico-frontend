@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: "100%"
     },
     dialogUserInfo: {
+        display: "grid",
         overflow: "hidden",
         marginLeft: 12
     }
