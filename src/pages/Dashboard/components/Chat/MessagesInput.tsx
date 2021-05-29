@@ -72,8 +72,14 @@ export const MessagesInput: React.FC = observer(() => {
     const classes = useStyles();
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const { chatStore } = useStores();
-    const { messageText, setMessageText, sendMessage, sendFile, setAudioBlobUrl } =
-        chatStore;
+    const {
+        messageText,
+        setMessageText,
+        sendMessage,
+        sendAudio,
+        sendFile,
+        setAudioBlobUrl
+    } = chatStore;
     const { startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
         useReactMediaRecorder({
             audio: true,
@@ -88,8 +94,7 @@ export const MessagesInput: React.FC = observer(() => {
 
     const handleFileAttachment = (files: any): void => {
         if (files && files.length !== 0) {
-            // setFile(files[0]);
-            console.log(files[0]);
+            sendFile(files[0]);
         }
     };
 
@@ -100,11 +105,9 @@ export const MessagesInput: React.FC = observer(() => {
         }
 
         if (!isRecording) {
-            console.log("start recording");
             setIsRecording(true);
             startRecording();
         } else {
-            console.log("stop recording");
             setIsRecording(false);
             stopRecording();
         }
@@ -116,7 +119,7 @@ export const MessagesInput: React.FC = observer(() => {
                 event.preventDefault();
                 event.stopPropagation();
                 if (mediaBlobUrl) {
-                    sendFile();
+                    sendAudio();
                     clearBlobUrl();
                 } else {
                     sendMessage();
@@ -127,7 +130,7 @@ export const MessagesInput: React.FC = observer(() => {
 
     const handleSendClick = (): void => {
         if (mediaBlobUrl) {
-            sendFile();
+            sendAudio();
             clearBlobUrl();
         } else {
             sendMessage();
@@ -149,7 +152,6 @@ export const MessagesInput: React.FC = observer(() => {
                 id="message-file"
                 type="file"
                 onChange={event => handleFileAttachment(event.target.files)}
-                multiple
                 hidden
             />
             <IconButton

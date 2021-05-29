@@ -1,13 +1,7 @@
 import React from "react";
-import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
-import {
-    TextField,
-    Link as MaterialLink,
-    makeStyles,
-    Theme
-} from "@material-ui/core";
+import { TextField, makeStyles, Theme } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
 import { Button, SubmissionResult } from "components";
@@ -19,7 +13,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 18
     },
     formInput: {
-        marginBottom: 12
+        marginBottom: 12,
+        "&:last-child": {
+            marginBottom: 24
+        }
     },
     linkCenter: {
         textAlign: "center"
@@ -31,9 +28,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             textDecoration: "none"
         }
-    },
-    forgotPassword: {
-        marginBottom: 12
     }
 }));
 
@@ -41,13 +35,8 @@ export const DialogSignIn: React.FC = observer(() => {
     const classes = useStyles();
     const { modalsStore, signInStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
-    const {
-        signInForm,
-        pending,
-        submissionError,
-        setFormValue,
-        doSignIn
-    } = signInStore;
+    const { signInForm, pending, submissionError, setFormValue, doSignIn } =
+        signInStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -66,37 +55,28 @@ export const DialogSignIn: React.FC = observer(() => {
             onClose={handleClose}
         >
             <form className={classes.dialogForm} onSubmit={handleSubmit}>
-                <TextField
-                    className={classes.formInput}
-                    variant="outlined"
-                    color="secondary"
-                    placeholder="E-mail"
-                    value={signInForm.email}
-                    onChange={event => setFormValue("email", event.target.value)}
-                    fullWidth
-                />
-                <TextField
-                    type="password"
-                    className={classes.formInput}
-                    variant="outlined"
-                    color="secondary"
-                    placeholder="Пароль"
-                    value={signInForm.password}
-                    onChange={event => setFormValue("password", event.target.value)}
-                    fullWidth
-                />
-                <div className={classes.linkCenter}>
-                    <MaterialLink
-                        className={clsx(classes.dialogLink, classes.forgotPassword)}
-                        type="button"
-                        component="button"
-                        variant="h6"
-                        onClick={() => {
-                            console.info("open forget-password dialog");
-                        }}
-                    >
-                        Забыли пароль?
-                    </MaterialLink>
+                <div>
+                    <TextField
+                        className={classes.formInput}
+                        variant="outlined"
+                        color="secondary"
+                        placeholder="E-mail"
+                        value={signInForm.email}
+                        onChange={event => setFormValue("email", event.target.value)}
+                        fullWidth
+                    />
+                    <TextField
+                        type="password"
+                        className={classes.formInput}
+                        variant="outlined"
+                        color="secondary"
+                        placeholder="Пароль"
+                        value={signInForm.password}
+                        onChange={event =>
+                            setFormValue("password", event.target.value)
+                        }
+                        fullWidth
+                    />
                 </div>
                 <SubmissionResult align="center" isError>
                     {submissionError}

@@ -18,7 +18,6 @@ import {
     ScrollHandler,
     Drawer,
     DialogSignIn,
-    DialogReset,
     DialogEmail,
     PrivateRoute
 } from "components";
@@ -87,7 +86,6 @@ export const App: React.FC = observer(() => {
             </Switch>
 
             <DialogSignIn />
-            <DialogReset />
             <DialogEmail />
         </React.Fragment>
     );

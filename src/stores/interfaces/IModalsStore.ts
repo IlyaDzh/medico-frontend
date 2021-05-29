@@ -13,7 +13,6 @@ export type TModalsName =
     | "sign-in"
     | "confirmation"
     | "email"
-    | "reset"
     | "cancel-consultation"
     | "add-analysis"
     | "delete-analysis"

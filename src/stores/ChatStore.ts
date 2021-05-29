@@ -8,9 +8,10 @@ import {
     IGetMessagesSuccessResponse
 } from "api";
 import { IChatStore, Dialog, Message } from "./interfaces/IChatStore";
-import { MAX_MESSAGE_COUNT } from "utils/constants";
 import IStores from "./interfaces";
 import { SendMessageSocketData } from "./interfaces/ISocketsStore";
+import { MAX_MESSAGE_COUNT } from "utils/constants";
+import { isFileImage } from "utils/isFileImage";
 
 export class ChatStore implements IChatStore {
     dialogs: Dialog[] = [] as Dialog[];
@@ -44,7 +45,7 @@ export class ChatStore implements IChatStore {
             setCurrentDialog: action,
             setMessageText: action,
             sendMessage: action,
-            sendFile: action,
+            sendAudio: action,
             appendMessage: action,
             setAudioBlobUrl: action,
             resetCurrentDialog: action,
@@ -162,7 +163,7 @@ export class ChatStore implements IChatStore {
         this.messageText = "";
     };
 
-    sendFile = async () => {
+    sendAudio = async () => {
         if (
             !this.audioBlobUrl ||
             !this.currentDialog ||
@@ -210,6 +211,55 @@ export class ChatStore implements IChatStore {
         formData.append("chatId", dialog.id.toString());
         formData.append("file", audioBlob);
         formData.append("type", "audio");
+        formData.append("uuid", randomId);
+
+        ChatApi.sendMedia(formData);
+
+        this.audioBlobUrl = undefined;
+    };
+
+    sendFile = (file: File) => {
+        if (!file || !this.currentDialog || !this.rootStore.userStore.currentUser) {
+            return;
+        }
+
+        const user = this.rootStore.userStore.currentUser;
+
+        const dialog = this.currentDialog;
+
+        const avatar = user.additionalData
+            ? user.userType === "doctor"
+                ? user.additionalData.photo
+                : user.additionalData.avatar
+            : null;
+
+        const randomId = uuidv4();
+
+        const isImage = isFileImage(file);
+
+        const message: Message = {
+            id: randomId,
+            chatId: dialog.id,
+            file: {
+                path: URL.createObjectURL(file),
+                type: isImage ? "image" : "file"
+            },
+            createdAt: new Date(),
+            user: {
+                id: user.id,
+                avatar: avatar,
+                name: user.name
+            },
+            uuid: randomId,
+            pending: true
+        };
+
+        dialog.messages.unshift(message);
+
+        const formData = new FormData();
+        formData.append("chatId", dialog.id.toString());
+        formData.append("file", file);
+        formData.append("type", isImage ? "image" : "file");
         formData.append("uuid", randomId);
 
         ChatApi.sendMedia(formData);

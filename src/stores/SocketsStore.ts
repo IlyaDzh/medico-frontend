@@ -32,20 +32,20 @@ export class SocketsStore {
         this.socket.connect();
 
         this.socket.on("connect", () => {
-            console.log("success");
+            // console.log("success");
         });
 
         this.socket.on("connect_error", error => {
-            console.log(error);
+            // console.log(error);
         });
 
         this.socket.on("newMessage-success", (data: Message) => {
-            console.log("success send message", data);
+            // console.log("success send message", data);
             this.rootStore.chatStore.appendMessage(data);
         });
 
         this.socket.on("newMessage-error", data => {
-            console.log("error send message", data);
+            // console.log("error send message", data);
         });
     };
 

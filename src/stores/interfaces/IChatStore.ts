@@ -14,7 +14,8 @@ export interface IChatStore {
     setCurrentDialog: (id: string) => void;
     setMessageText: (text: string) => void;
     sendMessage: () => void;
-    sendFile: () => void;
+    sendAudio: () => void;
+    sendFile: (file: File) => void;
     appendMessage: (message: Message) => void;
     setAudioBlobUrl: (blobUrl: string) => void;
     resetCurrentDialog: () => void;
@@ -41,7 +42,7 @@ export type Message = {
     text?: string;
     file?: {
         path: string;
-        type: "image" | "audio";
+        type: "image" | "audio" | "file";
     } | null;
     createdAt: Date;
     user: {

@@ -1,9 +1,12 @@
 import React, { memo } from "react";
+import clsx from "clsx";
 import { Typography, makeStyles, Theme } from "@material-ui/core";
+import { InsertDriveFile as InsertDriveFileIcon } from "@material-ui/icons";
 
 import { Avatar, Loader } from "components";
 import { Message } from "stores/interfaces/IChatStore";
 import { formatDate } from "utils/formatDate";
+import { bytesToMegaBytes } from "utils/bytesToMegaBytes";
 
 interface IMessageItem {
     message: Message;
@@ -37,6 +40,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: "8px 12px"
         }
     }),
+    messageRemovePadding: {
+        padding: "0 !important",
+        background: "none !important",
+        minWidth: 60,
+        "&::after": {
+            content: "none !important"
+        }
+    },
     messageText: {
         wordBreak: "break-word",
         whiteSpace: "pre-line",
@@ -67,6 +78,25 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: 220
         }
     },
+    image: {
+        width: "100%",
+        borderRadius: 8
+    },
+    file: {
+        display: "flex",
+        alignItems: "center",
+        textDecoration: "none"
+    },
+    fileIcon: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: 44,
+        minHeight: 44,
+        borderRadius: "50%",
+        backgroundColor: theme.palette.background.blue,
+        marginRight: 12
+    },
     loader: isMy => ({
         position: "absolute",
         left: isMy ? 2 : "unset",
@@ -79,7 +109,15 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
     const classes = useStyles(isMy);
 
     return (
-        <div className={classes.message}>
+        <div
+            className={clsx(
+                classes.message,
+                message.file &&
+                    (message.file.type === "audio" ||
+                        message.file.type === "image") &&
+                    classes.messageRemovePadding
+            )}
+        >
             {message.file ? (
                 message.file.type === "audio" ? (
                     <audio className={classes.audio} controls>
@@ -94,8 +132,41 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
                         />
                         Your browser does not support the audio tag.
                     </audio>
+                ) : message.file.type === "file" ? (
+                    <a
+                        className={classes.file}
+                        href={
+                            message.uuid
+                                ? message.file.path
+                                : process.env.REACT_APP_API_BASE_URL +
+                                  message.file.path
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <div className={classes.fileIcon}>
+                            <InsertDriveFileIcon htmlColor="#fff" />
+                        </div>
+                        <div>
+                            <Typography variant="body1" color="textSecondary">
+                                Имя файла
+                            </Typography>
+                            <Typography variant="h6" color="textSecondary">
+                                {bytesToMegaBytes(987654321)}
+                            </Typography>
+                        </div>
+                    </a>
                 ) : (
-                    <div>file</div>
+                    <img
+                        className={classes.image}
+                        src={
+                            message.uuid
+                                ? message.file.path
+                                : process.env.REACT_APP_API_BASE_URL +
+                                  message.file.path
+                        }
+                        alt="Отправленное изображение"
+                    />
                 )
             ) : (
                 <Typography
