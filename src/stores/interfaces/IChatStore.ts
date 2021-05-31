@@ -43,6 +43,8 @@ export type Message = {
     file?: {
         path: string;
         type: "image" | "audio" | "file";
+        name?: string;
+        size?: number;
     } | null;
     createdAt: Date;
     user: {

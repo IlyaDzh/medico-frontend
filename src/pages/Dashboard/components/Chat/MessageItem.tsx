@@ -149,10 +149,10 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
                         </div>
                         <div>
                             <Typography variant="body1" color="textSecondary">
-                                Имя файла
+                                {message.file.name || <i>Неизвестно</i>}
                             </Typography>
                             <Typography variant="h6" color="textSecondary">
-                                {bytesToMegaBytes(987654321)}
+                                {bytesToMegaBytes(message.file.size || 0)}
                             </Typography>
                         </div>
                     </a>

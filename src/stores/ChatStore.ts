@@ -242,7 +242,9 @@ export class ChatStore implements IChatStore {
             chatId: dialog.id,
             file: {
                 path: URL.createObjectURL(file),
-                type: isImage ? "image" : "file"
+                type: isImage ? "image" : "file",
+                name: file.name,
+                size: file.size
             },
             createdAt: new Date(),
             user: {
