@@ -93,7 +93,8 @@ export const HowItWorksSection: React.FC = () => {
                             Зарегистрируйтесь
                         </Typography>
                         <Typography variant="body1" color="textSecondary">
-                            Врач высшей категории таким образом реализация
+                            Пройдите форму регистрации и подтвердите аккаунт через
+                            почту
                         </Typography>
                     </li>
                     <li className={classes.stage}>
@@ -107,32 +108,32 @@ export const HowItWorksSection: React.FC = () => {
                             Выберите врача
                         </Typography>
                         <Typography variant="body1" color="textSecondary">
-                            Врач высшей категории таким образом реализация
+                            С помощью фильтров выберите подходящего вам специалиста
                         </Typography>
                     </li>
                     <li className={classes.stage}>
                         <div className={classes.stageImage}>
-                            <img src={stage3} alt="Выбор симптомов" />
+                            <img src={stage3} alt="Выбор времени" />
                             <div className={classes.stageArrow}>
                                 <img src={stageArrow} alt="" />
                             </div>
                         </div>
                         <Typography className={classes.stageTitle} variant="h4">
-                            Укажите симптомы
+                            Выберите время
                         </Typography>
                         <Typography variant="body1" color="textSecondary">
-                            Врач высшей категории таким образом реализация
+                            Назначьте удобное время консультации для вас
                         </Typography>
                     </li>
                     <li className={classes.stage}>
                         <div className={classes.stageImage}>
-                            <img src={stage4} alt="Выбор времени" />
+                            <img src={stage4} alt="Выбор симптомов" />
                         </div>
                         <Typography className={classes.stageTitle} variant="h4">
-                            Выберите время
+                            Укажите симптомы
                         </Typography>
                         <Typography variant="body1" color="textSecondary">
-                            Врач высшей категории таким образом реализация
+                            Опишите проблемы, которые вас беспокоят
                         </Typography>
                     </li>
                 </ol>

@@ -80,7 +80,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     image: {
         width: "100%",
-        borderRadius: 8
+        borderRadius: 8,
+        lineHeight: "48px"
     },
     file: {
         display: "flex",
@@ -165,7 +166,7 @@ export const MessageItem: React.FC<IMessageItem> = memo(({ message, isMy }) => {
                                 : process.env.REACT_APP_API_BASE_URL +
                                   message.file.path
                         }
-                        alt="Отправленное изображение"
+                        alt="Изображение не найдено"
                     />
                 )
             ) : (
