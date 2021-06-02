@@ -19,6 +19,12 @@ export interface IUpdateDoctorProfilePostData {
     workplaces: Experience[];
 }
 
+export interface IAddAppointmentPostData {
+    patientId: number;
+    consultationId: number;
+    appointmentText: string;
+}
+
 export interface IGetScheduleSuccessResponse extends BaseResponse {
     error: 0;
     data: ScheduleItem[];

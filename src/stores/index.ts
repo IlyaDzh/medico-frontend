@@ -103,7 +103,7 @@ export class RootStore implements IStores {
         this.dashboardDoctorProfileStore = new DashboardDoctorProfileStore(this);
         this.dashboardScheduleStore = new DashboardScheduleStore();
         this.dashboardPatientsStore = new DashboardPatientsStore();
-        this.dashboardPatientInfoStore = new DashboardPatientInfoStore();
+        this.dashboardPatientInfoStore = new DashboardPatientInfoStore(this);
         this.chatStore = new ChatStore(this);
         this.socketsStore = new SocketsStore(this);
     }

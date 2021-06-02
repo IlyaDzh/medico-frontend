@@ -9,12 +9,20 @@ export interface IDashboardPatientInfoStore {
     history: AppointmentResult[];
     pending: boolean;
     fetchingError: boolean;
+    appointmentText: string;
+    pendingAppointment: boolean;
+    appointmentError: string;
     getPatientInfo: (patientId: number, consultationId: number) => void;
     sortAnalyzesByType: (type: AnalysisType) => Analysis[];
+    sendAppointment: () => void;
+    setAppointmentText: (text: string) => void;
+    resetAppointmentError: () => void;
+    validateAppointmentText: () => boolean;
     resetProfile: () => void;
 }
 
 export type PatientProfile = PatientAdditionalData & {
+    id: number;
     surname: string;
     name: string;
     middleName: string;

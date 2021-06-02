@@ -6,6 +6,7 @@ import { Hidden, makeStyles } from "@material-ui/core";
 import { MessagesHeader } from "./MessagesHeader";
 import { MessagesList } from "./MessagesList";
 import { MessagesInput } from "./MessagesInput";
+import { MessagesClosed } from "./MessagesClosed";
 import { DialogNotSelected } from "./DialogNotSelected";
 import { useStores } from "stores/useStore";
 
@@ -43,7 +44,7 @@ export const Messages: React.FC = observer(() => {
         <div className={classes.messages}>
             <MessagesHeader dialog={currentDialog} />
             <MessagesList />
-            <MessagesInput />
+            {currentDialog.isOpenedAccess ? <MessagesInput /> : <MessagesClosed />}
         </div>
     ) : (
         <Hidden xsDown>

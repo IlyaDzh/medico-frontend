@@ -55,8 +55,6 @@ export const MessagesList: React.FC = observer(() => {
             offset = e.currentTarget.scrollTop;
         }
 
-        // console.log(e.currentTarget.scrollTop, offset)
-
         if (offset < 160 && hasMore && !pendingMessages) {
             getMessages();
         }

@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { TextField, makeStyles, Theme } from "@material-ui/core";
 
 import { DialogBase } from "./DialogBase";
-import { Button, SubmissionResult } from "components";
+import { Button } from "components";
 import { useStores } from "stores/useStore";
 import { PlusIcon } from "icons";
 
@@ -13,23 +13,31 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down("xs")]: {
             marginBottom: 16
         }
-    },
-    button: {}
+    }
 }));
 
 export const DialogAddAppointment: React.FC = observer(() => {
     const classes = useStyles();
-    const { modalsStore } = useStores();
+    const { modalsStore, dashboardPatientInfoStore } = useStores();
     const { getModalIsOpen, setModalIsOpen } = modalsStore;
+    const {
+        appointmentText,
+        pendingAppointment,
+        appointmentError,
+        sendAppointment,
+        setAppointmentText,
+        resetAppointmentError
+    } = dashboardPatientInfoStore;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // sendAppointment();
+        sendAppointment();
     };
 
     const handleClose = (): void => {
         setModalIsOpen("add-appointment", false);
-        // resetForm();
+        setAppointmentText("");
+        resetAppointmentError();
     };
 
     return (
@@ -46,24 +54,20 @@ export const DialogAddAppointment: React.FC = observer(() => {
                     variant="outlined"
                     color="secondary"
                     placeholder="Парацетамол - по 1 таблетке - 3 раза в день, ..."
-                    // value={commentForm.text}
-                    // onChange={event => setFormValue("text", event.target.value)}
+                    value={appointmentText}
+                    onChange={event => setAppointmentText(event.target.value)}
                     rows={5}
-                    // error={Boolean(commentFormErrors.text)}
-                    // helperText={commentFormErrors.text}
+                    error={Boolean(appointmentError)}
+                    helperText={appointmentError}
                     multiline
                     fullWidth
                 />
-                <SubmissionResult align="center" isError>
-                    {/* {submissionError} */}
-                </SubmissionResult>
                 <Button
-                    className={classes.button}
                     type="submit"
                     variant="contained"
                     color="primary"
-                    // disabled={pending}
-                    // isLoaded={pending}
+                    disabled={pendingAppointment}
+                    isLoaded={pendingAppointment}
                 >
                     Назначить
                 </Button>

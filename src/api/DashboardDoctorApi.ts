@@ -1,5 +1,9 @@
 import { axiosInstance } from "./axios-instance";
-import { IChangeSchedulePostData, IUpdateDoctorProfilePostData } from "./interfaces";
+import {
+    IChangeSchedulePostData,
+    IUpdateDoctorProfilePostData,
+    IAddAppointmentPostData
+} from "./interfaces";
 import { GetPatientsType } from "stores/interfaces/Dashboard";
 
 export class DashboardDoctorApi {
@@ -28,5 +32,9 @@ export class DashboardDoctorApi {
 
     static updateProfile(postData: IUpdateDoctorProfilePostData) {
         return axiosInstance.post("/api/v1/doctor/profile/change-info", postData);
+    }
+
+    static sendAppointment(postData: IAddAppointmentPostData) {
+        return axiosInstance.post("/api/v1/consultation/add-appointment", postData);
     }
 }
