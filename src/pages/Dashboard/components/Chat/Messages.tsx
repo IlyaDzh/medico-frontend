@@ -44,7 +44,8 @@ export const Messages: React.FC = observer(() => {
         <div className={classes.messages}>
             <MessagesHeader dialog={currentDialog} />
             <MessagesList />
-            {currentDialog.isOpenedAccess ? <MessagesInput /> : <MessagesClosed />}
+            {/* {currentDialog.isOpenedAccess ? <MessagesInput /> : <MessagesClosed />} */}
+            <MessagesInput />
         </div>
     ) : (
         <Hidden xsDown>
